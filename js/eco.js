@@ -85,3 +85,31 @@ document.getElementById("showCards").addEventListener("click", () => {
   }
 });
 
+const saved = JSON.parse(localStorage.getItem("eco_thoughts")) || [];
+
+function renderSavedThoughts() {
+  saved.forEach((text, i) => {
+    const p = document.createElement("p");
+    p.textContent = text;
+    p.style.animationDelay = `${(pensamientos.length + i) * 0.4}s`;
+    container.appendChild(p);
+  });
+}
+renderSavedThoughts();
+
+document.getElementById("saveThought").addEventListener("click", () => {
+  const input = document.getElementById("thoughtInput");
+  const text = input.value.trim();
+  if (text) {
+    saved.push(text);
+    localStorage.setItem("eco_thoughts", JSON.stringify(saved));
+
+    const p = document.createElement("p");
+    p.textContent = text;
+    p.style.animationDelay = "0s";
+    container.appendChild(p);
+
+    input.value = "";
+  }
+});
+
