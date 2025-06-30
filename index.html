@@ -2,74 +2,26 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Bienvenido</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;600&display=swap');
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-      color: #ffffff;
-      font-family: 'Raleway', sans-serif;
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      padding: 30px;
-    }
-
-    .container {
-      max-width: 600px;
-      background-color: rgba(255, 255, 255, 0.05);
-      padding: 40px;
-      border-radius: 16px;
-      backdrop-filter: blur(10px);
-      box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
-      transition: all 0.3s ease-in-out;
-    }
-
-    h1 {
-      font-size: 2.5em;
-      margin-bottom: 20px;
-      font-weight: 600;
-    }
-
-    p {
-      font-size: 1.2em;
-      opacity: 0.8;
-    }
-
-    .footer {
-      margin-top: 30px;
-      font-size: 0.9em;
-      color: #aaa;
-    }
-
-    a {
-      color: #fbd0ff;
-      text-decoration: none;
-    }
-
-    a:hover {
-      text-decoration: underline;
-    }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sebas | Refugio Digital</title>
+  <link rel="stylesheet" href="style/main.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
-  <div class="container">
-    <h1>Bienvenido a mi rincón digital</h1>
-    <p>Este es el comienzo de algo pequeño pero especial. 🌌</p>
+  <div class="background"></div>
 
-    <div class="footer">
-      Hecho con 💜 · <a href="https://github.com/" target="_blank">Ver en GitHub</a>
-    </div>
-  </div>
+  <main class="container">
+    <h1 class="title">bienvenido a mi rincón digital</h1>
+    <p class="subtitle">tocá, explorá, imaginá.</p>
+    <nav class="menu">
+      <a href="pages/pensamientos.html">🧠 pensamientos</a>
+      <a href="pages/juegos.html">🕹 juegos</a>
+      <a href="pages/proyectos.html">📂 proyectos</a>
+      <a href="pages/experimentos.html">🌌 experimentos</a>
+      <a href="pages/sobre.html">📜 sobre mí</a>
+    </nav>
+  </main>
+
+  <script src="js/main.js"></script>
 </body>
 </html>
