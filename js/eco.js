@@ -25,12 +25,13 @@ pensamientos.forEach((text, i) => {
   container.appendChild(p);
 });
 
-// 💾 Render saved thoughts
+// 💾 Cargar pensamientos guardados
 const saved = JSON.parse(localStorage.getItem("eco_thoughts")) || [];
 function renderSavedThoughts() {
-  saved.forEach((text, i) => {
+  saved.forEach((item, i) => {
     const p = document.createElement("p");
-    p.textContent = text;
+    p.classList.add("personal-thought");
+    p.innerHTML = `<span>${item.text}</span><time>${item.date}</time>`;
     p.style.animationDelay = `${(pensamientos.length + i) * 0.4}s`;
     container.appendChild(p);
   });
@@ -42,15 +43,29 @@ document.getElementById("saveThought").addEventListener("click", () => {
   const input = document.getElementById("thoughtInput");
   const text = input.value.trim();
   if (text) {
-    saved.push(text);
+    const newThought = {
+      text,
+      date: new Date().toLocaleDateString("es-CR", { day: "2-digit", month: "short", year: "numeric" })
+    };
+
+    saved.push(newThought);
     localStorage.setItem("eco_thoughts", JSON.stringify(saved));
 
     const p = document.createElement("p");
-    p.textContent = text;
-    p.style.animationDelay = "0s";
+    p.classList.add("personal-thought");
+    p.innerHTML = `<span>${newThought.text}</span><time>${newThought.date}</time>`;
     container.appendChild(p);
-
     input.value = "";
+
+    // 🎉 Animación flotante de pensamiento enviado
+    const floating = document.createElement("span");
+    floating.className = "floating-phrase soft-fade";
+    floating.textContent = "pensamiento guardado";
+    floating.style.left = "50%";
+    floating.style.top = "60%";
+    floating.style.transform = "translateX(-50%)";
+    document.body.appendChild(floating);
+    setTimeout(() => floating.remove(), 4000);
   }
 });
 
@@ -60,9 +75,8 @@ document.getElementById("showCards").addEventListener("click", () => {
   section.classList.toggle("hidden");
 
   const grid = document.getElementById("card-grid");
-
   if (grid.childElementCount === 0) {
-    frasesCartas.forEach((frase, index) => {
+    frasesCartas.forEach((frase) => {
       const box = document.createElement("div");
       box.className = "card-box";
 
@@ -90,7 +104,7 @@ document.getElementById("showCards").addEventListener("click", () => {
   }
 });
 
-// 🌠 Frase flotante animada
+// 🌠 Frase flotante mejorada
 document.getElementById("spawnFloating").addEventListener("click", () => {
   const span = document.createElement("span");
   span.className = "floating-phrase";
@@ -99,4 +113,12 @@ document.getElementById("spawnFloating").addEventListener("click", () => {
   span.style.top = `${Math.random() * 70 + 20}%`;
   document.body.appendChild(span);
   setTimeout(() => span.remove(), 8000);
+});
+
+// 🗑 Botón para borrar todo
+document.getElementById("clearThoughts").addEventListener("click", () => {
+  if (confirm("¿Seguro que querés borrar todos tus pensamientos guardados?")) {
+    localStorage.removeItem("eco_thoughts");
+    location.reload();
+  }
 });

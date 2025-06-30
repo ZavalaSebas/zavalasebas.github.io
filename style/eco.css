@@ -148,6 +148,30 @@
   margin-top: 3rem;
 }
 
+.personal-thought {
+  background-color: #ffffff08;
+  border-left: 3px solid #f9c74f;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1.5rem;
+  position: relative;
+  animation: fadeInUp 1s forwards;
+}
+
+.personal-thought time {
+  display: block;
+  font-size: 0.8rem;
+  color: #ffffff80;
+  margin-top: 0.3rem;
+  font-style: italic;
+}
+
+.soft-fade {
+  font-size: 0.9rem;
+  opacity: 0.6;
+  font-style: italic;
+}
+
+
 #thoughtInput {
   width: 100%;
   max-width: 600px;
