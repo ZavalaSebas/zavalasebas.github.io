@@ -25,31 +25,36 @@ pensamientos.forEach((text, i) => {
   container.appendChild(p);
 });
 
-// 📜 Mostrar cartas
-document.getElementById("showCards").addEventListener("click", () => {
-  document.getElementById("card-section").classList.toggle("hidden");
-  const grid = document.getElementById("card-grid");
-  if (grid.childElementCount === 0) {
-    frasesCartas.forEach(frase => {
-      const card = document.createElement("div");
-      card.className = "card-box";
-      card.textContent = frase;
-      grid.appendChild(card);
-    });
+// 💾 Render saved thoughts
+const saved = JSON.parse(localStorage.getItem("eco_thoughts")) || [];
+function renderSavedThoughts() {
+  saved.forEach((text, i) => {
+    const p = document.createElement("p");
+    p.textContent = text;
+    p.style.animationDelay = `${(pensamientos.length + i) * 0.4}s`;
+    container.appendChild(p);
+  });
+}
+renderSavedThoughts();
+
+// 💭 Guardar nuevo pensamiento
+document.getElementById("saveThought").addEventListener("click", () => {
+  const input = document.getElementById("thoughtInput");
+  const text = input.value.trim();
+  if (text) {
+    saved.push(text);
+    localStorage.setItem("eco_thoughts", JSON.stringify(saved));
+
+    const p = document.createElement("p");
+    p.textContent = text;
+    p.style.animationDelay = "0s";
+    container.appendChild(p);
+
+    input.value = "";
   }
 });
 
-// 🌠 Frase flotante
-document.getElementById("spawnFloating").addEventListener("click", () => {
-  const span = document.createElement("span");
-  span.className = "floating-phrase";
-  span.textContent = pensamientos[Math.floor(Math.random() * pensamientos.length)];
-  span.style.left = `${Math.random() * 80 + 10}%`;
-  span.style.top = `${Math.random() * 70 + 20}%`;
-  document.body.appendChild(span);
-  setTimeout(() => span.remove(), 8000);
-});
-
+// 📜 Mostrar cartas animadas
 document.getElementById("showCards").addEventListener("click", () => {
   const section = document.getElementById("card-section");
   section.classList.toggle("hidden");
@@ -85,31 +90,13 @@ document.getElementById("showCards").addEventListener("click", () => {
   }
 });
 
-const saved = JSON.parse(localStorage.getItem("eco_thoughts")) || [];
-
-function renderSavedThoughts() {
-  saved.forEach((text, i) => {
-    const p = document.createElement("p");
-    p.textContent = text;
-    p.style.animationDelay = `${(pensamientos.length + i) * 0.4}s`;
-    container.appendChild(p);
-  });
-}
-renderSavedThoughts();
-
-document.getElementById("saveThought").addEventListener("click", () => {
-  const input = document.getElementById("thoughtInput");
-  const text = input.value.trim();
-  if (text) {
-    saved.push(text);
-    localStorage.setItem("eco_thoughts", JSON.stringify(saved));
-
-    const p = document.createElement("p");
-    p.textContent = text;
-    p.style.animationDelay = "0s";
-    container.appendChild(p);
-
-    input.value = "";
-  }
+// 🌠 Frase flotante animada
+document.getElementById("spawnFloating").addEventListener("click", () => {
+  const span = document.createElement("span");
+  span.className = "floating-phrase";
+  span.textContent = pensamientos[Math.floor(Math.random() * pensamientos.length)];
+  span.style.left = `${Math.random() * 80 + 10}%`;
+  span.style.top = `${Math.random() * 70 + 20}%`;
+  document.body.appendChild(span);
+  setTimeout(() => span.remove(), 8000);
 });
-
