@@ -8,13 +8,15 @@
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
+  <div class="background-stars"></div>
+
   <header>
     <h2>Refugio Digital</h2>
-    <span class="icon">🌙</span>
+    <button id="audioBtn" title="Activar sonido">🎧</button>
   </header>
 
   <section class="hero">
-    <h1>bienvenido a mi rincón digital</h1>
+    <h1 class="typewriter">bienvenido a mi rincón digital</h1>
     <p>explorá, tocá, imaginá.</p>
   </section>
 
@@ -27,8 +29,12 @@
   </section>
 
   <footer>
-    <p>hecho con calma y un poco de magia ✨</p>
+    <p id="frase-footer"></p>
   </footer>
+
+  <audio id="audioAmbiente" loop>
+    <source src="assets/audio/ambient.mp3" type="audio/mpeg">
+  </audio>
 
   <script src="js/main.js"></script>
 </body>
