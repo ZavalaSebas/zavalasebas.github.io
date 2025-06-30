@@ -1,78 +1,102 @@
-body {
-  margin: 0;
-  padding: 0;
+.section-title {
+  text-align: center;
+  margin-top: 3rem;
+  font-size: 1.8rem;
+  color: #f9c74f;
+}
+
+.diary {
+  padding: 2rem;
+  max-width: 800px;
+  margin: auto;
+}
+
+.thoughts p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  opacity: 0;
+  animation: fadeInUp 1s forwards;
+}
+
+.eco-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin: 2rem 0;
+}
+
+.eco-actions button {
+  background-color: #ffffff10;
+  border: 1px solid #f9c74f;
+  padding: 0.5rem 1rem;
+  color: #f9c74f;
   font-family: 'Quicksand', sans-serif;
-  background-color: #0a0a23;
-  color: #fbd0ff;
-  overflow: hidden;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
-.background {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(circle at 50% 50%, #1a1a40, #0a0a23);
-  z-index: -2;
+.eco-actions button:hover {
+  background-color: #f9c74f;
+  color: #0a0a23;
 }
 
-.bubbles {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  z-index: -1;
+.card-section {
+  padding: 2rem;
+  max-width: 1000px;
+  margin: auto;
 }
 
-.bubble {
+.card-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.card-box {
+  width: 160px;
+  height: 120px;
+  background-color: #ffffff10;
+  border: 1px solid #f9c74f;
+  border-radius: 8px;
+  padding: 1rem;
+  color: #f9c74f;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.card-box:hover {
+  background-color: #f9c74f;
+  color: #0a0a23;
+  transform: scale(1.05) rotateZ(1deg);
+}
+
+.hidden {
+  display: none;
+}
+
+.floating-phrase {
   position: absolute;
-  bottom: -120px;
-  width: 20px;
-  height: 20px;
-  background: #dab3f7;
-  opacity: 0.3;
-  border-radius: 50%;
-  animation: floatUp calc(var(--i) * 1s) infinite ease-in-out;
-  left: calc(10% + var(--i) * 8%);
+  font-size: 1rem;
+  color: #f9c74f;
+  animation: float 8s linear forwards;
+  pointer-events: none;
+  opacity: 0.8;
 }
 
-@keyframes floatUp {
-  0% {
-    transform: translateY(0) scale(1);
-    opacity: 0.3;
+@keyframes float {
+  from {
+    transform: translateY(0);
+    opacity: 0.8;
   }
-  50% {
-    opacity: 0.6;
-  }
-  100% {
-    transform: translateY(-120vh) scale(1.4);
+  to {
+    transform: translateY(-200px);
     opacity: 0;
   }
-}
-
-.content {
-  position: relative;
-  z-index: 1;
-  text-align: center;
-  padding-top: 30vh;
-}
-
-#title {
-  font-size: 3rem;
-  letter-spacing: 1px;
-  margin-bottom: 1rem;
-  color: #fbd0ff;
-}
-
-#subtitle {
-  font-size: 1.2rem;
-  color: #dab3f7;
-  opacity: 0;
-  animation: fadeBlink 2s infinite;
-}
-
-@keyframes fadeBlink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.2; }
 }

@@ -4,30 +4,32 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>eco</title>
+  <link rel="stylesheet" href="../style/main.css" />
   <link rel="stylesheet" href="../style/eco.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
 </head>
 <body>
-  <div class="background"></div>
-  <div class="bubbles">
-    <div class="bubble" style="--i:7;"></div>
-    <div class="bubble" style="--i:12;"></div>
-    <div class="bubble" style="--i:15;"></div>
-    <div class="bubble" style="--i:9;"></div>
-    <div class="bubble" style="--i:14;"></div>
-    <div class="bubble" style="--i:6;"></div>
-    <div class="bubble" style="--i:10;"></div>
-    <div class="bubble" style="--i:8;"></div>
-    <div class="bubble" style="--i:13;"></div>
-    <div class="bubble" style="--i:11;"></div>
-  </div>
+  <div class="background-stars"></div>
 
-  <div class="content">
-    <h1 id="title"></h1>
-    <p id="subtitle">.</p>
-  </div>
+  <header>
+    <h2>eco</h2>
+    <a href="../index.html" class="back-btn">← volver</a>
+  </header>
 
-  <audio id="bg-music" src="../assets/strangeAmbientLoop.mp3" autoplay loop></audio>
+  <section class="diary">
+    <h1 class="section-title">fragmentos que quedaron en el aire</h1>
+    <div class="thoughts" id="thoughts-container"></div>
+
+    <div class="eco-actions">
+      <button id="showCards">📜 ver cartas</button>
+      <button id="spawnFloating">🌠 frase flotante</button>
+    </div>
+  </section>
+
+  <section class="card-section hidden" id="card-section">
+    <h2>cartas del viento</h2>
+    <div class="card-grid" id="card-grid"></div>
+  </section>
 
   <script src="../js/eco.js"></script>
 </body>

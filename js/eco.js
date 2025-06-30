@@ -1,50 +1,51 @@
-const title = document.getElementById('title');
-const subtitle = document.getElementById('subtitle');
-const variants = [
-  "Sibilum", "sibilum", "𝓢𝓲𝓫𝓲𝓵𝓾𝓶", "Ｓｉｂｉｌｕｍ", "s!bilum", "S🜁bilum", "siB!LUM", "Śïbįlūm"
+const pensamientos = [
+  "hay cosas que solo se entienden en silencio.",
+  "no todo lo que se va, se pierde.",
+  "hay fragmentos de mí en lo que no digo.",
+  "el eco no es más que un intento de no desaparecer.",
+  "los recuerdos flotan como papel en el viento.",
+  "pensé en escribirte, pero me convertí en tinta."
 ];
 
-let firstTitleDone = false;
-let i = 0;
+const frasesCartas = [
+  "te guardé en un rincón que no existe.",
+  "nunca fue olvido, fue cuidado.",
+  "hay palabras que solo el viento entiende.",
+  "esto también es una forma de quedarme.",
+  "la distancia no borra lo sentido.",
+  "cada carta es una despedida que no se dio."
+];
 
-function animateText(text, delay = 260) {
-  return new Promise(resolve => {
-    title.innerHTML = '';
-    let j = 0;
-    const interval = setInterval(() => {
-      if (j >= text.length) {
-        clearInterval(interval);
-        resolve();
-        return;
-      }
-      const span = document.createElement('span');
-      span.textContent = text[j];
-      span.style.fontSize = Math.random() > 0.5 ? '48px' : '42px';
-      span.style.fontWeight = Math.random() > 0.5 ? 'bold' : 'normal';
-      span.style.color = Math.random() > 0.5 ? '#fbd0ff' : '#dab3f7';
-      title.appendChild(span);
-      j++;
-    }, delay);
-  });
-}
+// 📖 Diario base
+const container = document.getElementById("thoughts-container");
+pensamientos.forEach((text, i) => {
+  const p = document.createElement("p");
+  p.textContent = text;
+  p.style.animationDelay = `${i * 0.5}s`;
+  container.appendChild(p);
+});
 
-async function startAnimationLoop() {
-  await new Promise(res => setTimeout(res, 1000));
-
-  while (true) {
-    await animateText(variants[i % variants.length]);
-
-    if (!firstTitleDone) {
-      firstTitleDone = true;
-      setTimeout(() => {
-        subtitle.textContent = "Presiona para continuar...";
-        subtitle.style.opacity = 1;
-      }, 10000);
-    }
-
-    i++;
-    await new Promise(res => setTimeout(res, 4500));
+// 📜 Mostrar cartas
+document.getElementById("showCards").addEventListener("click", () => {
+  document.getElementById("card-section").classList.toggle("hidden");
+  const grid = document.getElementById("card-grid");
+  if (grid.childElementCount === 0) {
+    frasesCartas.forEach(frase => {
+      const card = document.createElement("div");
+      card.className = "card-box";
+      card.textContent = frase;
+      grid.appendChild(card);
+    });
   }
-}
+});
 
-window.onload = startAnimationLoop;
+// 🌠 Frase flotante
+document.getElementById("spawnFloating").addEventListener("click", () => {
+  const span = document.createElement("span");
+  span.className = "floating-phrase";
+  span.textContent = pensamientos[Math.floor(Math.random() * pensamientos.length)];
+  span.style.left = `${Math.random() * 80 + 10}%`;
+  span.style.top = `${Math.random() * 70 + 20}%`;
+  document.body.appendChild(span);
+  setTimeout(() => span.remove(), 8000);
+});
