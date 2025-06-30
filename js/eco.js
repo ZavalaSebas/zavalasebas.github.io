@@ -49,3 +49,39 @@ document.getElementById("spawnFloating").addEventListener("click", () => {
   document.body.appendChild(span);
   setTimeout(() => span.remove(), 8000);
 });
+
+document.getElementById("showCards").addEventListener("click", () => {
+  const section = document.getElementById("card-section");
+  section.classList.toggle("hidden");
+
+  const grid = document.getElementById("card-grid");
+
+  if (grid.childElementCount === 0) {
+    frasesCartas.forEach((frase, index) => {
+      const box = document.createElement("div");
+      box.className = "card-box";
+
+      const inner = document.createElement("div");
+      inner.className = "card-inner";
+
+      const front = document.createElement("div");
+      front.className = "card-front";
+      front.textContent = "📜 abrir";
+
+      const back = document.createElement("div");
+      back.className = "card-back";
+      back.textContent = frase;
+
+      inner.appendChild(front);
+      inner.appendChild(back);
+      box.appendChild(inner);
+
+      box.addEventListener("click", () => {
+        box.classList.toggle("open");
+      });
+
+      grid.appendChild(box);
+    });
+  }
+});
+
