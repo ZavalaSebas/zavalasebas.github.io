@@ -122,3 +122,27 @@ document.getElementById("clearThoughts").addEventListener("click", () => {
     location.reload();
   }
 });
+
+// 🐚 Nota secreta
+const secretTrigger = document.getElementById("secret-trigger");
+const secretBox = document.getElementById("secret-note");
+const secretContent = document.getElementById("secret-content");
+const editSecret = document.getElementById("editSecret");
+
+function loadSecret() {
+  const stored = localStorage.getItem("eco_secret");
+  secretContent.textContent = stored || "aquí no hay nada… ¿aún?";
+}
+loadSecret();
+
+secretTrigger.addEventListener("click", () => {
+  secretBox.classList.toggle("hidden");
+});
+
+editSecret.addEventListener("click", () => {
+  const nuevo = prompt("¿Qué querés susurrar y esconder aquí?");
+  if (nuevo) {
+    localStorage.setItem("eco_secret", nuevo);
+    loadSecret();
+  }
+});
