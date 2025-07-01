@@ -1,0 +1,55 @@
+.section-title {
+  text-align: center;
+  margin-top: 3rem;
+  font-size: 1.8rem;
+  color: #f9c74f;
+}
+
+.gallery {
+  padding: 2rem;
+  max-width: 1000px;
+  margin: auto;
+}
+
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.artefacto-card {
+  width: 220px;
+  height: 180px;
+  background-color: #ffffff08;
+  border: 1px solid #f9c74f;
+  border-radius: 10px;
+  padding: 1rem;
+  color: #f9c74f;
+  font-family: 'Quicksand', sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: 0 0 12px #00000020;
+}
+
+.artefacto-card:hover {
+  background-color: #f9c74f;
+  color: #0a0a23;
+  transform: scale(1.05);
+}
+
+.artefacto-card h3 {
+  margin: 0.5rem 0 0.3rem;
+  font-size: 1.2rem;
+}
+
+.artefacto-card p {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
