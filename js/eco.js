@@ -123,26 +123,33 @@ document.getElementById("clearThoughts").addEventListener("click", () => {
   }
 });
 
-// 🐚 Nota secreta
-const secretTrigger = document.getElementById("secret-trigger");
+// 🐚🌙🩵🐾 Notas secretas múltiples
+let currentKey = null;
+
+const triggers = document.querySelectorAll(".secret-trigger");
 const secretBox = document.getElementById("secret-note");
 const secretContent = document.getElementById("secret-content");
 const editSecret = document.getElementById("editSecret");
 
-function loadSecret() {
-  const stored = localStorage.getItem("eco_secret");
+function loadSecretByKey(key) {
+  currentKey = key;
+  const stored = localStorage.getItem(key);
   secretContent.textContent = stored || "aquí no hay nada… ¿aún?";
+  secretBox.classList.remove("hidden");
 }
-loadSecret();
 
-secretTrigger.addEventListener("click", () => {
-  secretBox.classList.toggle("hidden");
+triggers.forEach(trigger => {
+  trigger.addEventListener("click", () => {
+    const key = trigger.getAttribute("data-key");
+    loadSecretByKey(key);
+  });
 });
 
 editSecret.addEventListener("click", () => {
+  if (!currentKey) return;
   const nuevo = prompt("¿Qué querés susurrar y esconder aquí?");
   if (nuevo) {
-    localStorage.setItem("eco_secret", nuevo);
-    loadSecret();
+    localStorage.setItem(currentKey, nuevo);
+    loadSecretByKey(currentKey);
   }
 });
