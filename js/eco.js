@@ -153,3 +153,4 @@ editSecret.addEventListener("click", () => {
     loadSecretByKey(currentKey);
   }
 });
+
