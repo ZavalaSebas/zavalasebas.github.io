@@ -1,0 +1,48 @@
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.photo-card {
+  background-color: #ffffff10;
+  border: 1px solid #f9c74f;
+  border-radius: 10px;
+  padding: 1rem;
+  max-width: 300px;
+  text-align: center;
+  color: #f9c74f;
+  font-family: 'Quicksand', sans-serif;
+  transition: transform 0.3s ease;
+}
+
+.photo-card img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 0.8rem;
+}
+
+.photo-card h3 {
+  margin: 0.5rem 0;
+  font-size: 1.2rem;
+  color: #f9c74f;
+}
+
+.photo-card p {
+  font-size: 0.95rem;
+  opacity: 0.8;
+}
+
+.photo-card:hover {
+  transform: scale(1.03);
+}
+
+.interview p {
+  margin: 1rem 0;
+  font-size: 1.05rem;
+  color: #f9c74f;
+  line-height: 1.6;
+}
