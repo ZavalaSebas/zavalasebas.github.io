@@ -1,48 +1,104 @@
-.gallery {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1.5rem;
-  justify-content: center;
-  margin-top: 2rem;
+body {
+  margin: 0;
+  background-color: #0a0a23;
+  color: #f9c74f;
+  font-family: 'Quicksand', sans-serif;
 }
 
-.photo-card {
+.background-stars {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(#ffffff10 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  z-index: -1;
+}
+
+header {
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header h2 {
+  font-size: 1.5rem;
+  color: #f9c74f;
+}
+
+.back-btn {
+  color: #f9c74f;
+  text-decoration: none;
+  border: 1px solid #f9c74f;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+}
+
+.back-btn:hover {
+  background-color: #f9c74f;
+  color: #0a0a23;
+}
+
+.initials-title {
+  text-align: center;
+  font-size: 4rem;
+  color: #f9c74f;
+  margin: 3rem 0 2rem;
+  letter-spacing: 0.15rem;
+}
+
+.collage {
+  padding: 0 2rem 4rem;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.collage-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  justify-items: center;
+}
+
+.collage-tile {
   background-color: #ffffff10;
   border: 1px solid #f9c74f;
   border-radius: 10px;
   padding: 1rem;
-  max-width: 300px;
+  width: 100%;
+  max-width: 280px;
   text-align: center;
   color: #f9c74f;
-  font-family: 'Quicksand', sans-serif;
   transition: transform 0.3s ease;
 }
 
-.photo-card img {
+.collage-tile:hover {
+  transform: scale(1.04);
+}
+
+.image-placeholder {
   width: 100%;
-  height: auto;
+  height: 160px;
+  background-color: #ffffff08;
+  border: 1px dashed #f9c74f;
   border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
   margin-bottom: 0.8rem;
+  color: #f9c74f88;
 }
 
-.photo-card h3 {
-  margin: 0.5rem 0;
-  font-size: 1.2rem;
-  color: #f9c74f;
+.collage-tile h3 {
+  font-size: 1.1rem;
+  margin-bottom: 0.3rem;
 }
 
-.photo-card p {
-  font-size: 0.95rem;
-  opacity: 0.8;
-}
-
-.photo-card:hover {
-  transform: scale(1.03);
-}
-
-.interview p {
-  margin: 1rem 0;
-  font-size: 1.05rem;
-  color: #f9c74f;
-  line-height: 1.6;
+.collage-desc {
+  font-size: 0.9rem;
+  opacity: 0.7;
 }
