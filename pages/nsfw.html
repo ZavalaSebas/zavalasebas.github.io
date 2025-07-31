@@ -6,7 +6,9 @@
   <title>?</title>
   <style>
     body {
-      background-color: black;
+      background: linear-gradient(-45deg, #ff69b4, #ff6b6b, #ffcc70, #ccf381);
+      background-size: 400% 400%;
+      animation: gradient 10s ease infinite;
       margin: 0;
       padding: 0;
       overflow: hidden;
@@ -14,17 +16,30 @@
       align-items: center;
       justify-content: center;
       height: 100vh;
+      position: relative;
+      font-family: sans-serif;
+    }
+
+    @keyframes gradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
     button {
       padding: 20px 40px;
       font-size: 24px;
-      background-color: #ff69b4;
+      background-color: #fff;
       border: none;
       border-radius: 12px;
       cursor: pointer;
       z-index: 2;
       position: relative;
+      transition: transform 0.2s;
+    }
+
+    button:hover {
+      transform: scale(1.1);
     }
 
     video {
@@ -43,29 +58,62 @@
     video.expanded {
       transform: translate(-50%, -50%) scale(10);
     }
+
+    #volume-toggle {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      padding: 10px 15px;
+      font-size: 20px;
+      border: none;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 8px;
+      cursor: pointer;
+      display: none;
+      z-index: 3;
+    }
   </style>
 </head>
 <body>
   <button id="trust">Trust me</button>
-<video id="ditto" loop preload="auto">
-  <source src="/assets/video/DittoKonga.mp4" type="video/mp4" />
-  Tu navegador no soporta el video.
-</video>
+
+  <video id="ditto" loop preload="auto">
+    <source src="/assets/video/DittoKonga.mp4" type="video/mp4" />
+    Tu navegador no soporta el video.
+  </video>
+
+  <button id="volume-toggle">🔊</button>
+
+  <!-- 🎉 Confetti lib -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
   <script>
     const button = document.getElementById('trust');
     const video = document.getElementById('ditto');
+    const volumeBtn = document.getElementById('volume-toggle');
+
+    let lowVolume = false;
 
     button.addEventListener('click', () => {
       button.style.display = 'none';
       video.classList.add('expanded');
-
-      // Intenta reproducir el video (debe hacerse después de interacción del usuario)
+      video.volume = 1;
       video.muted = false;
-      video.play().catch(err => {
-        console.error('Error al reproducir el video:', err);
-        alert('Tu navegador bloqueó la reproducción automática con sonido. Intenta tocar el video directamente.');
+      video.play();
+      volumeBtn.style.display = 'block';
+
+      // 🎉 Lanza confeti
+      confetti({
+        particleCount: 200,
+        spread: 120,
+        origin: { y: 0.6 }
       });
+    });
+
+    volumeBtn.addEventListener('click', () => {
+      lowVolume = !lowVolume;
+      video.volume = lowVolume ? 0.2 : 1;
+      volumeBtn.textContent = lowVolume ? "🔉" : "🔊";
     });
   </script>
 </body>
