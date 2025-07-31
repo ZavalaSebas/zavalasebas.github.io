@@ -2,37 +2,21 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>?</title>
+  <link rel="icon" href="/favicon.ico" />
   <style>
     html, body {
       margin: 0;
       padding: 0;
-      height: 100%;
-    }
-
-    body {
       background: black;
+      height: 100%;
+      width: 100%;
       overflow: hidden;
       display: flex;
       align-items: center;
       justify-content: center;
       flex-direction: column;
-      position: relative;
-      font-family: sans-serif;
-      transition: background 2s ease;
-    }
-
-    body.gradient-active {
-      background: linear-gradient(-45deg, #ff69b4, #ff6b6b, #ffcc70, #ccf381);
-      background-size: 400% 400%;
-      animation: gradient 10s ease infinite;
-    }
-
-    @keyframes gradient {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
     }
 
     #trust {
@@ -77,53 +61,10 @@
 
     video.expanded {
       transform: translate(-50%, -50%) scale(10);
-      filter: contrast(1.2) saturate(1.3) hue-rotate(30deg);
+      border-radius: 0;
     }
 
-    #volume-toggle {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      padding: 10px 15px;
-      font-size: 20px;
-      border: none;
-      background: rgba(255, 255, 255, 0.9);
-      border-radius: 8px;
-      cursor: pointer;
-      display: none;
-      z-index: 3;
-    }
-
-    #intensifies {
-      position: absolute;
-      bottom: 40px;
-      width: 100%;
-      text-align: center;
-      color: white;
-      font-size: 36px;
-      font-weight: bold;
-      opacity: 0;
-      transition: opacity 1s ease;
-      text-shadow: 0 0 10px #000;
-      z-index: 3;
-    }
-
-    #intensifies.show {
-      opacity: 1;
-    }
-
-    /* Mobile adjustments */
-    body.mobile {
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-    }
-
-    body.mobile #trust {
-      position: static;
-      margin-top: 30vh;
-    }
-
+    /* MOBILE FULLSCREEN MODE */
     body.mobile video.expanded {
       width: 100vw;
       height: 100vh;
@@ -131,71 +72,20 @@
       transform: none;
       top: 0;
       left: 0;
-      border-radius: 0;
     }
 
-    body.mobile #volume-toggle {
-      top: 15px;
-      right: 15px;
-    }
-
-    body.mobile #intensifies {
-      bottom: 50px;
-      font-size: 20px;
-      padding: 0 10px;
-      text-align: center;
-    }
-
-    @media (max-width: 768px) {
-      #trust {
-        font-size: 20px;
-        padding: 15px 30px;
-      }
-
-      #volume-toggle {
-        font-size: 18px;
-        padding: 8px 12px;
-      }
-
-      #intensifies {
-        font-size: 24px;
-        bottom: 20px;
-      }
-
-      video.expanded {
-        transform: translate(-50%, -50%) scale(5);
-      }
-    }
-
-    @media (max-width: 480px) {
-      #trust {
-        font-size: 18px;
-        padding: 12px 24px;
-      }
-
-      #volume-toggle {
-        font-size: 16px;
-        padding: 6px 10px;
-      }
-
-      #intensifies {
-        font-size: 20px;
-      }
-
-      video.expanded {
-        transform: translate(-50%, -50%) scale(4);
-      }
+    body.mobile #trust {
+      position: static;
+      margin-top: 30vh;
     }
   </style>
 </head>
 <body>
   <button id="trust">Trust me</button>
-  <video id="ditto" loop playsinline webkit-playsinline preload="auto" muted>
-    <source src="./assets/video/DittoKonga.mp4" type="video/mp4" />
+  <video id="ditto" loop playsinline webkit-playsinline preload="auto">
+    <source src="/assets/video/DittoKonga.mp4" type="video/mp4" />
     Your browser does not support the video tag.
   </video>
-  <button id="volume-toggle">🔊</button>
-  <div id="intensifies">DITTO INTENSIFIES</div>
 
   <script>
     const isMobile = /Mobi|Android|iPhone/i.test(navigator.userAgent);
@@ -205,24 +95,12 @@
 
     const video = document.getElementById("ditto");
     const button = document.getElementById("trust");
-    const muteBtn = document.getElementById("volume-toggle");
-    const intensifies = document.getElementById("intensifies");
 
     button.addEventListener("click", () => {
       document.title = "KONGA!";
-      document.body.classList.add("gradient-active");
       button.style.display = "none";
       video.classList.add("expanded");
-      video.muted = false;
-      video.volume = 0.25;
-      video.play();
-      muteBtn.style.display = "block";
-      intensifies.classList.add("show");
-    });
-
-    muteBtn.addEventListener("click", () => {
-      video.volume = video.volume > 0.1 ? 0.05 : 0.25;
-      muteBtn.textContent = video.volume > 0.1 ? "🔊" : "🔈";
+      video.play().catch(err => console.error("Video playback failed", err));
     });
   </script>
 </body>
