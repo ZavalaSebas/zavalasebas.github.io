@@ -30,4 +30,4 @@ No hay objetivo final. Solo seguir armando.
 
 ---
 
-> _“La mejor canción es la que aún no hemos terminado de tocar.”_ 🎸🎤
+> _“Quiero el fin del secreto entre tus labios de plata y mi acero inoxidable.”_ 🎸🎤
