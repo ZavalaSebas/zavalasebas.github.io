@@ -29,25 +29,47 @@ function cambiarFraseFooter() {
 cambiarFraseFooter();
 setInterval(cambiarFraseFooter, 4000); // cada 4 segundos
 
-const audioBtn = document.getElementById("audioControl");
-const vinyl = document.querySelector(".vinyl");
 const audio = document.getElementById("audioAmbiente");
+const audioControl = document.getElementById("audioControl");
+const vinyl = document.querySelector(".vinyl");
+const hint = document.querySelector(".audio-hint");
 
-audioBtn.addEventListener("click", () => {
-  if (audio.paused) {
+let audioActivo = false; // manejamos el estado manualmente
+
+// Intentar iniciar el audio al cargar
+window.addEventListener("load", () => {
+  audio.muted = false;
+  audio.play().then(() => {
+    console.log("Autoplay exitoso");
+    vinyl.classList.remove("paused");
+    audioActivo = true;
+    if (hint) hint.innerHTML = "🎶 sonando...";
+  }).catch(() => {
+    console.log("Autoplay bloqueado. Esperando interacción.");
+  });
+});
+
+// Clic para alternar audio
+audioControl.addEventListener("click", () => {
+  if (audioActivo) {
+    audio.pause();
+    vinyl.classList.add("paused");
+    if (hint) hint.innerHTML = "🚫 silenciado";
+    audioActivo = false;
+    console.log("Audio pausado");
+  } else {
     audio.muted = false;
     audio.play().then(() => {
       vinyl.classList.remove("paused");
-      console.log("Audio reproducido");
+      if (hint) hint.innerHTML = "🎶 sonando...";
+      audioActivo = true;
+      console.log("Audio activado");
     }).catch((e) => {
-      console.log("Error al intentar reproducir audio:", e);
+      console.log("Error al reproducir audio:", e);
     });
-  } else {
-    audio.pause();
-    vinyl.classList.add("paused");
-    console.log("Audio pausado");
   }
 });
+
 
 // glitch canvas background effect
 const canvas = document.getElementById("glitchCanvas");
