@@ -80,6 +80,20 @@
       filter: contrast(1.2) saturate(1.3) hue-rotate(30deg);
     }
 
+    #volume-toggle {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      padding: 10px 15px;
+      font-size: 20px;
+      border: none;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 8px;
+      cursor: pointer;
+      display: none;
+      z-index: 3;
+    }
+
     #intensifies {
       position: absolute;
       bottom: 40px;
@@ -98,6 +112,7 @@
       opacity: 1;
     }
 
+    /* Mobile adjustments */
     body.mobile {
       flex-direction: column;
       justify-content: center;
@@ -119,6 +134,11 @@
       border-radius: 0;
     }
 
+    body.mobile #volume-toggle {
+      top: 15px;
+      right: 15px;
+    }
+
     body.mobile #intensifies {
       bottom: 50px;
       font-size: 20px;
@@ -130,6 +150,11 @@
       #trust {
         font-size: 20px;
         padding: 15px 30px;
+      }
+
+      #volume-toggle {
+        font-size: 18px;
+        padding: 8px 12px;
       }
 
       #intensifies {
@@ -148,6 +173,11 @@
         padding: 12px 24px;
       }
 
+      #volume-toggle {
+        font-size: 16px;
+        padding: 6px 10px;
+      }
+
       #intensifies {
         font-size: 20px;
       }
@@ -164,7 +194,8 @@
     <source src="./assets/video/DittoKonga.mp4" type="video/mp4" />
     Your browser does not support the video tag.
   </video>
-  <div id="intensifies">KONGA!</div>
+  <button id="volume-toggle">🔊</button>
+  <div id="intensifies">DITTO INTENSIFIES</div>
 
   <script>
     const isMobile = /Mobi|Android|iPhone/i.test(navigator.userAgent);
@@ -174,6 +205,7 @@
 
     const video = document.getElementById("ditto");
     const button = document.getElementById("trust");
+    const muteBtn = document.getElementById("volume-toggle");
     const intensifies = document.getElementById("intensifies");
 
     button.addEventListener("click", () => {
@@ -184,11 +216,13 @@
       video.muted = false;
       video.volume = 0.25;
       video.play();
+      muteBtn.style.display = "block";
+      intensifies.classList.add("show");
+    });
 
-      // Mostrar texto "KONGA!" luego de 30 segundos
-      setTimeout(() => {
-        intensifies.classList.add("show");
-      }, 30000);
+    muteBtn.addEventListener("click", () => {
+      video.volume = video.volume > 0.1 ? 0.05 : 0.25;
+      muteBtn.textContent = video.volume > 0.1 ? "🔊" : "🔈";
     });
   </script>
 </body>
