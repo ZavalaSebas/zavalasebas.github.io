@@ -11,15 +11,21 @@
   <div class="background-gradient"></div>
   <canvas id="glitchCanvas"></canvas>
 
-  <header>
-    <h2 id="logo">ROCKSHOW</h2>
-    <button id="audioBtn" title="Activar sonido">🎧</button>
-  </header>
+<header>
+  <h2 id="logo">ROCKSHOW</h2>
+<div id="audioControl">
+  <div class="vinyl"></div>
+  <div class="audio-hint">
+    <span>¡click aquí!</span>
+    <div class="arrow">⬇️</div>
+  </div>
+</div>
+</header>
 
-  <section class="hero">
-    <h1 class="typewriter">el show empieza cuando tocás algo</h1>
-    <p>cada click, una canción distinta.</p>
-  </section>
+<section class="hero">
+  <h1 id="mainTitle">ROCKSHOW</h1>
+  <p class="subtext">código sin compilar</p>
+</section>
 
   <section class="menu-grid">
     <a href="pages/mylove.html" class="card">🖤<span>mylove</span></a>
@@ -31,9 +37,9 @@
     <p id="frase-footer"></p>
   </footer>
 
-  <audio id="audioAmbiente" loop>
-    <source src="assets/audio/ambientrock.mp3" type="audio/mpeg">
-  </audio>
+<audio id="audioAmbiente" autoplay muted loop>
+  <source src="assets/audio/ambientrock.mp3" type="audio/mpeg">
+</audio>
 
   <script src="js/main.js"></script>
 </body>

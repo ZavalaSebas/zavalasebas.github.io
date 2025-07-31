@@ -120,6 +120,91 @@ footer {
   border-top: 1px solid #ffffff10;
 }
 
+#mainTitle {
+  font-size: 3.5rem;
+  color: #4fc3f7;
+  text-align: center;
+  margin-bottom: 1rem;
+  text-shadow: 0 0 10px #4fc3f755;
+}
+
+.subtext {
+  font-size: 1.1rem;
+  color: #b3e5fc;
+  text-align: center;
+}
+
+#logo {
+  font-size: 1.8rem;
+  font-weight: bold;
+  letter-spacing: 0.08rem;
+  animation: pulse 3s infinite;
+  color: #4fc3f7;
+  text-shadow: 0 0 3px #4fc3f777;
+}
+
+#audioControl {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+}
+
+.vinyl {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: radial-gradient(#000 40%, #444 41%, #222 60%, #000 61%);
+  border: 3px solid #4fc3f7;
+  animation: spin 4s linear infinite;
+  box-shadow: 0 0 10px #4fc3f744;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.audio-hint {
+  margin-top: 0.3rem;
+  font-size: 0.7rem;
+  color: #4fc3f7aa;
+  text-align: center;
+  animation: hintPulse 2s ease-in-out infinite;
+}
+
+#frase-footer {
+  font-family: 'Quicksand', monospace;
+  font-size: 0.9rem;
+  text-align: center;
+  color: #ffffff80;
+  animation: blinkText 1.5s steps(1, end) infinite;
+  letter-spacing: 0.05rem;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+@keyframes blinkText {
+  0%   { opacity: 1; }
+  49%  { opacity: 0.3; }
+  50%  { opacity: 0.6; }
+  100% { opacity: 1; }
+}
+
+
+@keyframes hintPulse {
+  0%, 100% { opacity: 0.5; transform: translateY(0); }
+  50% { opacity: 1; transform: translateY(-3px); }
+}
+
+
+@keyframes pulse {
+  0% { opacity: 0.9; }
+  50% { opacity: 1; text-shadow: 0 0 8px #4fc3f7; }
+  100% { opacity: 0.9; }
+}
+
 @keyframes fadeInUp {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
