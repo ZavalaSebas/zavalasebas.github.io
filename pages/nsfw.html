@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>?</title>
+  <style>
+    body {
+      background-color: black;
+      color: white;
+      text-align: center;
+      font-family: sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    #ditto {
+      display: none;
+      width: 300px;
+      margin-top: 20px;
+    }
+
+    button {
+      margin-top: 40vh;
+      padding: 20px 40px;
+      font-size: 24px;
+      background-color: #ff69b4;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    button:hover {
+      transform: scale(1.1);
+    }
+
+    audio {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <button id="trust">Trust me</button>
+  <br>
+  <img id="ditto" src="https://media.tenor.com/JT6Ewfn5MRcAAAAd/ditto-dance.gif" alt="Ditto dancing">
+  <audio id="konga" loop>
+    <source src="https://files.catbox.moe/2i0tku.mp3" type="audio/mp3">
+    Tu navegador no soporta audio.
+  </audio>
+
+  <script>
+    const btn = document.getElementById('trust');
+    const audio = document.getElementById('konga');
+    const ditto = document.getElementById('ditto');
+
+    btn.addEventListener('click', () => {
+      audio.play();
+      ditto.style.display = 'block';
+      btn.style.display = 'none';
+    });
+  </script>
+</body>
+</html>
