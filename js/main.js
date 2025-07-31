@@ -29,17 +29,24 @@ function cambiarFraseFooter() {
 cambiarFraseFooter();
 setInterval(cambiarFraseFooter, 4000); // cada 4 segundos
 
-
 const audioBtn = document.getElementById("audioControl");
+const vinyl = document.querySelector(".vinyl");
 const audio = document.getElementById("audioAmbiente");
 
 audioBtn.addEventListener("click", () => {
-  audio.muted = false;
-  audio.play().then(() => {
-    console.log("Audio activado");
-  }).catch(() => {
-    console.log("El navegador bloqueó el autoplay");
-  });
+  if (audio.paused) {
+    audio.muted = false;
+    audio.play().then(() => {
+      vinyl.classList.remove("paused");
+      console.log("Audio reproducido");
+    }).catch((e) => {
+      console.log("Error al intentar reproducir audio:", e);
+    });
+  } else {
+    audio.pause();
+    vinyl.classList.add("paused");
+    console.log("Audio pausado");
+  }
 });
 
 // glitch canvas background effect

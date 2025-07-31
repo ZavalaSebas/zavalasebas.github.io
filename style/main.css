@@ -161,6 +161,13 @@ footer {
   box-shadow: 0 0 10px #4fc3f744;
 }
 
+.vinyl.paused {
+  animation-play-state: paused;
+  filter: grayscale(0.8) brightness(0.6);
+  box-shadow: none;
+}
+
+
 @keyframes spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
