@@ -2,31 +2,34 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>?</title>
-  <link rel="icon" href="/favicon.ico" />
   <style>
     html, body {
       margin: 0;
       padding: 0;
-      background: black;
       height: 100%;
-      width: 100%;
+    }
+
+    body {
+      background: black;
       overflow: hidden;
       display: flex;
       align-items: center;
       justify-content: center;
       flex-direction: column;
+      position: relative;
+      font-family: sans-serif;
       transition: background 2s ease;
     }
 
-    body.gradient {
-      background: linear-gradient(270deg, #ff0080, #7928ca, #2afadf);
-      background-size: 600% 600%;
-      animation: gradientMove 8s ease infinite;
+    body.gradient-active {
+      background: linear-gradient(-45deg, #ff69b4, #ff6b6b, #ffcc70, #ccf381);
+      background-size: 400% 400%;
+      animation: gradient 10s ease infinite;
     }
 
-    @keyframes gradientMove {
+    @keyframes gradient {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
@@ -74,7 +77,36 @@
 
     video.expanded {
       transform: translate(-50%, -50%) scale(10);
-      border-radius: 0;
+      filter: contrast(1.2) saturate(1.3) hue-rotate(30deg);
+    }
+
+    #intensifies {
+      position: absolute;
+      bottom: 40px;
+      width: 100%;
+      text-align: center;
+      color: white;
+      font-size: 36px;
+      font-weight: bold;
+      opacity: 0;
+      transition: opacity 1s ease;
+      text-shadow: 0 0 10px #000;
+      z-index: 3;
+    }
+
+    #intensifies.show {
+      opacity: 1;
+    }
+
+    body.mobile {
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    body.mobile #trust {
+      position: static;
+      margin-top: 30vh;
     }
 
     body.mobile video.expanded {
@@ -84,23 +116,57 @@
       transform: none;
       top: 0;
       left: 0;
+      border-radius: 0;
     }
 
-    body.mobile #trust {
-      position: static;
-      margin-top: 30vh;
+    body.mobile #intensifies {
+      bottom: 50px;
+      font-size: 20px;
+      padding: 0 10px;
+      text-align: center;
+    }
+
+    @media (max-width: 768px) {
+      #trust {
+        font-size: 20px;
+        padding: 15px 30px;
+      }
+
+      #intensifies {
+        font-size: 24px;
+        bottom: 20px;
+      }
+
+      video.expanded {
+        transform: translate(-50%, -50%) scale(5);
+      }
+    }
+
+    @media (max-width: 480px) {
+      #trust {
+        font-size: 18px;
+        padding: 12px 24px;
+      }
+
+      #intensifies {
+        font-size: 20px;
+      }
+
+      video.expanded {
+        transform: translate(-50%, -50%) scale(4);
+      }
     }
   </style>
 </head>
 <body>
   <button id="trust">Trust me</button>
-  <video id="ditto" loop playsinline webkit-playsinline preload="auto">
-    <source src="/assets/video/DittoKonga.mp4" type="video/mp4" />
+  <video id="ditto" loop playsinline webkit-playsinline preload="auto" muted>
+    <source src="./assets/video/DittoKonga.mp4" type="video/mp4" />
     Your browser does not support the video tag.
   </video>
+  <div id="intensifies">KONGA!</div>
 
   <script>
-    // Detectar móvil
     const isMobile = /Mobi|Android|iPhone/i.test(navigator.userAgent);
     if (isMobile) {
       document.body.classList.add("mobile");
@@ -108,57 +174,22 @@
 
     const video = document.getElementById("ditto");
     const button = document.getElementById("trust");
+    const intensifies = document.getElementById("intensifies");
 
     button.addEventListener("click", () => {
       document.title = "KONGA!";
+      document.body.classList.add("gradient-active");
       button.style.display = "none";
       video.classList.add("expanded");
-      document.body.classList.add("gradient");
-      video.play().catch(err => console.error("Video playback failed", err));
-      launchConfetti();
+      video.muted = false;
+      video.volume = 0.25;
+      video.play();
+
+      // Mostrar texto "KONGA!" luego de 30 segundos
+      setTimeout(() => {
+        intensifies.classList.add("show");
+      }, 30000);
     });
-
-    // Easter egg con teclas
-    window.addEventListener("keydown", (e) => {
-      const keys = ["ArrowUp", "ArrowDown", "KeyD", "KeyI", "KeyT", "KeyO"];
-      if (keys.includes(e.code)) {
-        document.body.classList.add("gradient");
-        video.classList.add("expanded");
-        document.title = "DITTO MODE";
-        video.play();
-        launchConfetti();
-      }
-    });
-
-    // Confeti (libre)
-    function launchConfetti() {
-      const duration = 1 * 1000;
-      const animationEnd = Date.now() + duration;
-      const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 9999 };
-
-      function randomInRange(min, max) {
-        return Math.random() * (max - min) + min;
-      }
-
-      const interval = setInterval(() => {
-        const timeLeft = animationEnd - Date.now();
-
-        if (timeLeft <= 0) {
-          return clearInterval(interval);
-        }
-
-        confetti(Object.assign({}, defaults, {
-          particleCount: 30,
-          origin: {
-            x: randomInRange(0.1, 0.9),
-            y: Math.random() - 0.2
-          }
-        }));
-      }, 250);
-    }
   </script>
-
-  <!-- Confetti lib -->
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </body>
 </html>
