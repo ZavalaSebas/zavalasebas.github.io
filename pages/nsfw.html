@@ -37,6 +37,7 @@
       transition: transform 1s ease-in-out;
       z-index: 1;
       border-radius: 16px;
+      display: block;
     }
 
     video.expanded {
@@ -46,7 +47,10 @@
 </head>
 <body>
   <button id="trust">Trust me</button>
-  <video id="ditto" src="assets/video/DittoKonga.mp4" loop muted autoplay></video>
+  <video id="ditto" loop preload="auto">
+    <source src="assets/video/DittoKonga.mp4" type="video/mp4" />
+    Tu navegador no soporta el video.
+  </video>
 
   <script>
     const button = document.getElementById('trust');
@@ -55,8 +59,13 @@
     button.addEventListener('click', () => {
       button.style.display = 'none';
       video.classList.add('expanded');
+
+      // Intenta reproducir el video (debe hacerse después de interacción del usuario)
       video.muted = false;
-      video.play();
+      video.play().catch(err => {
+        console.error('Error al reproducir el video:', err);
+        alert('Tu navegador bloqueó la reproducción automática con sonido. Intenta tocar el video directamente.');
+      });
     });
   </script>
 </body>
