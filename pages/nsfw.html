@@ -17,6 +17,19 @@
       align-items: center;
       justify-content: center;
       flex-direction: column;
+      transition: background 2s ease;
+    }
+
+    body.gradient {
+      background: linear-gradient(270deg, #ff0080, #7928ca, #2afadf);
+      background-size: 600% 600%;
+      animation: gradientMove 8s ease infinite;
+    }
+
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
     #trust {
@@ -64,7 +77,6 @@
       border-radius: 0;
     }
 
-    /* MOBILE FULLSCREEN MODE */
     body.mobile video.expanded {
       width: 100vw;
       height: 100vh;
@@ -88,6 +100,7 @@
   </video>
 
   <script>
+    // Detectar móvil
     const isMobile = /Mobi|Android|iPhone/i.test(navigator.userAgent);
     if (isMobile) {
       document.body.classList.add("mobile");
@@ -100,8 +113,52 @@
       document.title = "KONGA!";
       button.style.display = "none";
       video.classList.add("expanded");
+      document.body.classList.add("gradient");
       video.play().catch(err => console.error("Video playback failed", err));
+      launchConfetti();
     });
+
+    // Easter egg con teclas
+    window.addEventListener("keydown", (e) => {
+      const keys = ["ArrowUp", "ArrowDown", "KeyD", "KeyI", "KeyT", "KeyO"];
+      if (keys.includes(e.code)) {
+        document.body.classList.add("gradient");
+        video.classList.add("expanded");
+        document.title = "DITTO MODE";
+        video.play();
+        launchConfetti();
+      }
+    });
+
+    // Confeti (libre)
+    function launchConfetti() {
+      const duration = 1 * 1000;
+      const animationEnd = Date.now() + duration;
+      const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 9999 };
+
+      function randomInRange(min, max) {
+        return Math.random() * (max - min) + min;
+      }
+
+      const interval = setInterval(() => {
+        const timeLeft = animationEnd - Date.now();
+
+        if (timeLeft <= 0) {
+          return clearInterval(interval);
+        }
+
+        confetti(Object.assign({}, defaults, {
+          particleCount: 30,
+          origin: {
+            x: randomInRange(0.1, 0.9),
+            y: Math.random() - 0.2
+          }
+        }));
+      }, 250);
+    }
   </script>
+
+  <!-- Confetti lib -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </body>
 </html>
