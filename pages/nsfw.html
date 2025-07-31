@@ -2,18 +2,22 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>?</title>
   <style>
-    body {
-      background: black;
+    html, body {
       margin: 0;
       padding: 0;
+      height: 100%;
+    }
+
+    body {
+      background: black;
       overflow: hidden;
       display: flex;
       align-items: center;
       justify-content: center;
-      height: 100vh;
+      flex-direction: column;
       position: relative;
       font-family: sans-serif;
       transition: background 2s ease;
@@ -41,7 +45,6 @@
       z-index: 2;
       position: relative;
       animation: pulse 1.5s infinite ease-in-out;
-      box-shadow: 0 0 0 rgba(255, 255, 255, 0.7);
     }
 
     @keyframes pulse {
@@ -108,89 +111,118 @@
     #intensifies.show {
       opacity: 1;
     }
+
+    /* Mobile adjustments */
+    body.mobile {
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    body.mobile #trust {
+      position: static;
+      margin-top: 30vh;
+    }
+
+    body.mobile video.expanded {
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      transform: none;
+      top: 0;
+      left: 0;
+      border-radius: 0;
+    }
+
+    body.mobile #volume-toggle {
+      top: 15px;
+      right: 15px;
+    }
+
+    body.mobile #intensifies {
+      bottom: 50px;
+      font-size: 20px;
+      padding: 0 10px;
+      text-align: center;
+    }
+
+    @media (max-width: 768px) {
+      #trust {
+        font-size: 20px;
+        padding: 15px 30px;
+      }
+
+      #volume-toggle {
+        font-size: 18px;
+        padding: 8px 12px;
+      }
+
+      #intensifies {
+        font-size: 24px;
+        bottom: 20px;
+      }
+
+      video.expanded {
+        transform: translate(-50%, -50%) scale(5);
+      }
+    }
+
+    @media (max-width: 480px) {
+      #trust {
+        font-size: 18px;
+        padding: 12px 24px;
+      }
+
+      #volume-toggle {
+        font-size: 16px;
+        padding: 6px 10px;
+      }
+
+      #intensifies {
+        font-size: 20px;
+      }
+
+      video.expanded {
+        transform: translate(-50%, -50%) scale(4);
+      }
+    }
   </style>
 </head>
 <body>
   <button id="trust">Trust me</button>
-
-  <video
-    id="ditto"
-    loop
-    preload="auto"
-    playsinline
-    webkit-playsinline
-    muted
-  >
-    <source src="/assets/video/DittoKonga.mp4" type="video/mp4" />
-    Tu navegador no soporta el video.
+  <video id="ditto" loop playsinline webkit-playsinline preload="auto" muted>
+    <source src="./assets/video/DittoKonga.mp4" type="video/mp4" />
+    Your browser does not support the video tag.
   </video>
-
   <button id="volume-toggle">🔊</button>
-
-  <div id="intensifies">DITTO INTENSIFIES 🔥</div>
-
-  <!-- 🎉 Confetti lib -->
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <div id="intensifies">DITTO INTENSIFIES</div>
 
   <script>
-    const button = document.getElementById('trust');
-    const video = document.getElementById('ditto');
-    const volumeBtn = document.getElementById('volume-toggle');
-    const intensifies = document.getElementById('intensifies');
+    const isMobile = /Mobi|Android|iPhone/i.test(navigator.userAgent);
+    if (isMobile) {
+      document.body.classList.add("mobile");
+    }
 
-    let lowVolume = false;
-    let easterEggKeys = [];
+    const video = document.getElementById("ditto");
+    const button = document.getElementById("trust");
+    const muteBtn = document.getElementById("volume-toggle");
+    const intensifies = document.getElementById("intensifies");
 
-    button.addEventListener('click', () => {
+    button.addEventListener("click", () => {
       document.title = "KONGA!";
-      document.body.classList.add('gradient-active');
-      button.style.display = 'none';
-
-      video.classList.add('expanded');
+      document.body.classList.add("gradient-active");
+      button.style.display = "none";
+      video.classList.add("expanded");
       video.muted = false;
-      video.volume = 1;
+      video.volume = 0.25;
       video.play();
-
-      volumeBtn.style.display = 'block';
-
-      // Confeti normal
-      confetti({
-        particleCount: 150,
-        spread: 120,
-        origin: { y: 0.6 },
-      });
-
-      // Mostrar texto “DITTO INTENSIFIES”
-      setTimeout(() => {
-        intensifies.classList.add('show');
-      }, 1500);
+      muteBtn.style.display = "block";
+      intensifies.classList.add("show");
     });
 
-    volumeBtn.addEventListener('click', () => {
-      lowVolume = !lowVolume;
-      video.volume = lowVolume ? 0.2 : 1;
-      volumeBtn.textContent = lowVolume ? "🔉" : "🔊";
-    });
-
-    // Easter Egg: Presiona D + I + T para confeti extra y emojis 🎉💃🕺
-    document.addEventListener('keydown', (e) => {
-      easterEggKeys.push(e.key.toUpperCase());
-      if (easterEggKeys.join('').includes('DIT')) {
-        // Confeti loco
-        for (let i = 0; i < 3; i++) {
-          setTimeout(() => {
-            confetti({
-              particleCount: 100,
-              spread: 150,
-              scalar: 1.2,
-              origin: { x: Math.random(), y: Math.random() },
-              emojis: ["🎉", "🕺", "💃", "🎶", "✨"]
-            });
-          }, i * 400);
-        }
-        easterEggKeys = [];
-      }
-      if (easterEggKeys.length > 3) easterEggKeys.shift();
+    muteBtn.addEventListener("click", () => {
+      video.volume = video.volume > 0.1 ? 0.05 : 0.25;
+      muteBtn.textContent = video.volume > 0.1 ? "🔊" : "🔈";
     });
   </script>
 </body>
