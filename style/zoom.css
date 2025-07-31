@@ -100,6 +100,17 @@ header {
   transform: scale(1.07) rotateZ(2deg);
 }
 
+#confetti-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999; /* bien arriba */
+}
+
+
 footer {
   text-align: center;
   padding: 2rem;
