@@ -1,63 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>?</title>
   <style>
     body {
       background-color: black;
-      color: white;
-      text-align: center;
-      font-family: sans-serif;
       margin: 0;
       padding: 0;
-    }
-
-    #ditto {
-      display: none;
-      width: 300px;
-      margin-top: 20px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
     }
 
     button {
-      margin-top: 40vh;
       padding: 20px 40px;
       font-size: 24px;
       background-color: #ff69b4;
       border: none;
       border-radius: 12px;
       cursor: pointer;
-      transition: transform 0.2s;
+      z-index: 2;
+      position: relative;
     }
 
-    button:hover {
-      transform: scale(1.1);
+    video {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 100px;
+      height: auto;
+      transform: translate(-50%, -50%) scale(0);
+      transition: transform 1s ease-in-out;
+      z-index: 1;
+      border-radius: 16px;
     }
 
-    audio {
-      display: none;
+    video.expanded {
+      transform: translate(-50%, -50%) scale(10);
     }
   </style>
 </head>
 <body>
   <button id="trust">Trust me</button>
-  <br>
-  <img id="ditto" src="https://media.tenor.com/JT6Ewfn5MRcAAAAd/ditto-dance.gif" alt="Ditto dancing">
-  <audio id="konga" loop>
-    <source src="https://files.catbox.moe/2i0tku.mp3" type="audio/mp3">
-    Tu navegador no soporta audio.
-  </audio>
+  <video id="ditto" src="assets/video/DittoKonga.mp4" loop muted autoplay></video>
 
   <script>
-    const btn = document.getElementById('trust');
-    const audio = document.getElementById('konga');
-    const ditto = document.getElementById('ditto');
+    const button = document.getElementById('trust');
+    const video = document.getElementById('ditto');
 
-    btn.addEventListener('click', () => {
-      audio.play();
-      ditto.style.display = 'block';
-      btn.style.display = 'none';
+    button.addEventListener('click', () => {
+      button.style.display = 'none';
+      video.classList.add('expanded');
+      video.muted = false;
+      video.play();
     });
   </script>
 </body>
