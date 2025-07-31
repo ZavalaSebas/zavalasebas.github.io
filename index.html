@@ -8,30 +8,31 @@
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
-  <div class="background-stars"></div>
+  <div class="background-gradient"></div>
+  <canvas id="glitchCanvas"></canvas>
 
   <header>
-    <h2>ROCKSHOW</h2>
+    <h2 id="logo">ROCKSHOW</h2>
     <button id="audioBtn" title="Activar sonido">🎧</button>
   </header>
 
   <section class="hero">
-    <h1 class="typewriter">elegí tu escenario</h1>
+    <h1 class="typewriter">el show empieza cuando tocás algo</h1>
     <p>cada click, una canción distinta.</p>
   </section>
 
-<section class="menu-grid">
-  <a href="pages/mylove.html" class="card">🖤<span>mylove</span></a>
-  <a href="pages/zoom.html" class="card">🔍<span>zoom</span></a>
-  <a href="pages/journal.html" class="card">📓<span>journal</span></a>
-</section>
+  <section class="menu-grid">
+    <a href="pages/mylove/mylove.html" class="card">🖤<span>mylove</span></a>
+    <a href="pages/zoom.html" class="card">🔍<span>zoom</span></a>
+    <a href="pages/journal.html" class="card">📓<span>journal</span></a>
+  </section>
 
   <footer>
     <p id="frase-footer"></p>
   </footer>
 
   <audio id="audioAmbiente" loop>
-    <source src="assets/audio/ambient.mp3" type="audio/mpeg">
+    <source src="assets/audio/ambientrock.mp3" type="audio/mpeg">
   </audio>
 
   <script src="js/main.js"></script>
