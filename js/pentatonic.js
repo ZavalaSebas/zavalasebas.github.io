@@ -16,6 +16,12 @@ let artefactosOriginal = [
     banda: "Pink Floyd",
     descripcion: "Emblemática en su show 'The Wall', y en varias referencias cinematográficas.",
     video: "https://www.youtube.com/embed/_FrOQC-zEog"
+  },
+  {
+    titulo: "Mia & Sebastian's Theme (arr. for Piano)",
+    banda: "Justin Hurwitz",
+    descripcion: "Tema principal de la película 'La La Land' (2016), compuesto por Justin Hurwitz. Esta versión para piano captura la melancolía y el romance del film.",
+    video: "https://www.youtube.com/embed/lulmfoic__0"
   }
 ];
 
