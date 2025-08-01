@@ -17,6 +17,19 @@
 
   <section class="gallery">
     <h1 class="section-title">archivo sonoro</h1>
+
+<div class="search-container">
+  <input type="text" id="searchInput" placeholder="buscar canción, banda, película...">
+</div>
+
+<div id="contadorCanciones" class="contador">🎧 0 pistas encontradas</div>
+
+<div class="controls">
+  <button id="shuffleBtn" class="active">🔀 aleatorio</button>
+  <button id="bandaBtn">🎸 artista</button>
+  <button id="tituloBtn">🎵 título</button>
+</div>
+
     <div id="artefacto-grid" class="grid"></div>
   </section>
 
@@ -24,6 +37,18 @@
     <p>canciones que han resonado en películas, bandas y momentos icónicos.</p>
   </footer>
 
+<section class="recommendation-section">
+  <h2>📌 Recomendaciones o pendientes</h2>
+  <textarea id="recommendationInput" placeholder="Anotá algo que no querés olvidar..."></textarea>
+<div class="recommendation-buttons">
+  <button id="saveRecommendation">💾 guardar nota</button>
+  <button id="clearRecommendations">🗑 borrar todo</button>
+</div>
+
+  <div id="recommendationList"></div>
+</section>
+
   <script src="../js/pentatonic.js"></script>
+
 </body>
 </html>
