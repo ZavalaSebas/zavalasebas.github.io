@@ -1,47 +1,44 @@
 body {
   margin: 0;
-  padding: 0;
   font-family: 'Quicksand', sans-serif;
-  background: linear-gradient(135deg, #1a1a1a, #2d1d37);
-  color: #ffecc7;
-  overflow-x: hidden;
+  background-color: #0b0c10;
+  color: #ffffffcc;
 }
 
 .glow-background {
   position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: radial-gradient(circle at 50% 30%, #ffefba22, transparent 70%);
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(circle at 50% 30%, #1f2833 0%, #0b0c10 80%);
   z-index: -1;
-  animation: pulse 6s infinite ease-in-out;
-}
-
-@keyframes pulse {
-  0%, 100% { transform: scale(1); opacity: 0.5; }
-  50% { transform: scale(1.1); opacity: 1; }
 }
 
 header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.2rem 2rem;
-  color: #ffd166;
-  background-color: #1e1e1e;
-  border-bottom: 1px solid #ffffff10;
+  padding: 1rem 2rem;
+  background-color: #1f2833aa;
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid #45a29e33;
+}
+
+header h2 {
+  margin: 0;
+  color: #66fcf1;
+  font-size: 1.6rem;
 }
 
 .back-btn {
-  color: #ffd166;
+  color: #66fcf1;
   text-decoration: none;
   font-size: 1rem;
 }
 
 .section-title {
   text-align: center;
-  margin-top: 3rem;
+  margin-top: 2rem;
   font-size: 2rem;
-  color: #ffd166;
+  color: #66fcf1;
 }
 
 .gallery {
@@ -59,50 +56,44 @@ header {
 }
 
 .artefacto-card {
-  width: 260px;
-  min-height: 220px;
-  background-color: #ffffff0a;
-  border: 1px solid #ffd166;
+  width: 280px;
+  background-color: #1f2833;
+  border: 1px solid #66fcf1aa;
   border-radius: 10px;
   padding: 1rem;
-  color: #ffd166;
+  color: #ffffffdd;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  gap: 0.6rem;
   transition: transform 0.3s ease;
-  text-align: center;
-  box-shadow: 0 0 14px #00000040;
-  backdrop-filter: blur(4px);
-  cursor: pointer;
+  box-shadow: 0 0 10px #66fcf122;
 }
 
 .artefacto-card:hover {
-  transform: scale(1.05);
-  background-color: #ffd16611;
-  color: #fffbe6;
+  transform: scale(1.03);
 }
 
 .artefacto-card iframe {
   width: 100%;
-  height: 140px;
-  border: none;
-  margin-bottom: 0.5rem;
+  border-radius: 6px;
 }
 
 .artefacto-card h3 {
-  margin: 0.5rem 0 0.3rem;
+  margin: 0.4rem 0 0;
   font-size: 1.2rem;
+  color: #66fcf1;
 }
 
 .artefacto-card p {
   font-size: 0.9rem;
-  opacity: 0.8;
+  line-height: 1.3;
+  color: #c5c6c7;
 }
 
 footer {
   text-align: center;
   padding: 2rem;
   font-size: 0.9rem;
-  color: #ffffff80;
+  color: #45a29e;
+  opacity: 0.8;
 }
