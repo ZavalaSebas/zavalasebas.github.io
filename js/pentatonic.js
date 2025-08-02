@@ -22,7 +22,80 @@ let artefactosOriginal = [
     banda: "Justin Hurwitz",
     descripcion: "Tema principal de la película 'La La Land' (2016), compuesto por Justin Hurwitz. Esta versión para piano captura la melancolía y el romance del film.",
     video: "https://www.youtube.com/embed/lulmfoic__0"
+  },
+{
+  titulo: "Amor Completo",
+  banda: "Mon Laferte",
+  descripcion: "Interpretación en vivo desde el Teatro Fru Fru; una emotiva canción de amor muy representativa de su estilo.",
+  video: "https://www.youtube.com/embed/8JCa7GIu9ic"
+},
+{
+  titulo: "Why Are Sundays So Depressing",
+  banda: "The Strokes",
+  descripcion: "Del álbum ‘The New Abnormal’ (2020); explora la sensación de melancolía dominical, mencionada como “Sunday Scaries”.</>",
+  video: "https://www.youtube.com/embed/2KSpDNlsVF4"
+},
+{
+  titulo: "Baby I’m Yours (feat. Irfane)",
+  banda: "Breakbot",
+  descripcion: "Tema electro‐funk del EP homónimo, vídeo animado hecho con unas 2.000 acuarelas pintadas a mano. Muy usado en shows y anuncios. “Inspiración para ‘Treasure’ de Bruno Mars”.",
+  video: "https://www.youtube.com/embed/6okxuiiHx2w"
+},
+{
+  titulo: "Preso",
+  banda: "José José",
+  descripcion: "Lyric video revisitado de la emblemática balada 'Preso', uno de los clásicos más recordados del 'Príncipe de la Canción'.",
+  video: "https://www.youtube.com/embed/fDufg3Xlsko"
+},
+{
+  titulo: "My Love (from 'Rockshow')",
+  banda: "Paul McCartney and Wings",
+  descripcion: "Versión en vivo desde el concierto 'Rockshow'. Balada dedicada a Linda McCartney, incluida originalmente en el álbum 'Red Rose Speedway'. Un clásico romántico del ex Beatle.",
+  video: "https://www.youtube.com/embed/qGStwcniqyI"
+},
+ {
+    titulo: "Shallow",
+    banda: "Lady Gaga & Bradley Cooper",
+    descripcion: "Dueto interpretado en la película *A Star Is Born* (2018); ganó Óscar y Globos de Oro como Mejor Canción Original.",
+    video: "https://www.youtube.com/embed/bo_efYhYU2A"
+  },
+  {
+    titulo: "The Man Who Sold The World (MTV Unplugged)",
+    banda: "Nirvana",
+    descripcion: "Versión acústica del clásico de David Bowie interpretada en *MTV Unplugged in New York* (1994), remasterizada en HD.",
+    video: "https://www.youtube.com/embed/fregObNcHC8"
+  },
+  {
+    titulo: "Wonderful Tonight (Live)",
+    banda: "Eric Clapton",
+    descripcion: "Interpretación en vivo oficial de «Wonderful Tonight», extraída de *In Concert: A Benefit for the Crossroads Centre at Antigua*.",
+    video: "https://www.youtube.com/embed/UprwkbzUX6g"
+  },
+  {
+    titulo: "Golden Slumbers (Remastered 2009)",
+    banda: "The Beatles",
+    descripcion: "Parte del medley del álbum *Abbey Road* (1969), esta versión remasterizada se lanzó en 2009.",
+    video: "https://www.youtube.com/embed/AcQjM7gV6mI"
+  },
+  {
+    titulo: "Here, There and Everywhere",
+    banda: "The Beatles",
+    descripcion: "Tema romántico del álbum *Revolver* (1966), considerado uno de los clásicos de Paul McCartney.",
+    video: "https://www.youtube.com/embed/FusIKjztap8"
+  },
+  {
+    titulo: "Stand By Me (Ultimate Mix 2020)",
+    banda: "John Lennon",
+    descripcion: "Versión oficial UHD de *Stand By Me* publicada como “Ultimate Mix” en 2020, con millones de vistas.",
+    video: "https://www.youtube.com/embed/YqB8Dm65X18"
+  },
+  {
+    titulo: "Bell Bottom Blues (Live)",
+    banda: "Eric Clapton",
+    descripcion: "Versión en vivo de *Bell Bottom Blues*, parte del catálogo de Warner Vault; versión muy escuchada en conciertos.",
+    video: "https://www.youtube.com/embed/l4hv_8TXFWg"
   }
+
 ];
 
 let artefactos = [...artefactosOriginal];
