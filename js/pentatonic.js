@@ -94,7 +94,25 @@ let artefactosOriginal = [
     banda: "Eric Clapton",
     descripcion: "Versión en vivo de *Bell Bottom Blues*, parte del catálogo de Warner Vault; versión muy escuchada en conciertos.",
     video: "https://www.youtube.com/embed/l4hv_8TXFWg"
-  }
+  },
+  {
+    titulo: "In My Life (Remastered 2009)",
+    banda: "The Beatles",
+    descripcion: "Balada clásica del álbum recopilatorio *1962–1966*, lanzada originalmente en 1965. Versión remasterizada en 2009 que conserva su carácter nostálgico y emotivo.",
+    video: "https://www.youtube.com/embed/mBqqeqcJM_0"
+  },
+  {
+    titulo: "Starman",
+    banda: "David Bowie",
+    descripcion: "Video oficial de *Starman*, filmado durante la gira Ziggy Stardust (1972–1973). Uno de los himnos del glam rock que catapultó su carrera.",
+    video: "https://www.youtube.com/embed/t365MuktYQs"
+  },
+{
+  titulo: "I Will",
+  banda: "Paul McCartney",
+  descripcion: "Versión en vivo incluida en el DVD/concierto *Paul McCartney: The Space Within Us*. Balada suave originalmente publicada en el álbum *The Beatles* (1968), también conocido como el ‘Álbum Blanco’.",
+  video: "https://www.youtube.com/embed/JGnNQM_9q-w"
+}
 
 ];
 
