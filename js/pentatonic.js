@@ -260,6 +260,12 @@ let artefactosOriginal = [
   banda: "Dion",
   descripcion: "Video oficial del clásico rock and roll *The Wanderer*, lanzado en 1961. Un himno rebelde que definió el estilo vocal de Dion y se convirtió en ícono de la era.",
   video: "https://www.youtube.com/embed/SbYa7NBYyRc"
+},
+{
+titulo: "Time Adventure"
+banda: "Rebecca Sugar"
+descripcion: "Rebecca Sugar performs 'Time Adventure' from Adventure Time, presentado por Cartoon Network."
+video: "https://www.youtube.com/embed/Xr53S9vIbCE"
 }
 
 ];
