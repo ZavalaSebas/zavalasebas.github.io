@@ -132,9 +132,6 @@ let artefactosOriginal = [
 
 ];
 
-let artefactos = [...artefactosOriginal];
-let ordenActual = "shuffle"; // Puede ser "shuffle", "titulo", "banda"
-
 function mezclarArray(arr) {
   return arr.sort(() => Math.random() - 0.5);
 }
@@ -211,7 +208,6 @@ renderizarArtefactos(artefactos);
 actualizarContador(artefactos);
 actualizarBotonesActivos("shuffleBtn");
 
-
 function actualizarContador(lista) {
   const contador = document.getElementById("contadorCanciones");
   contador.textContent = `🎧 ${lista.length} pista${lista.length !== 1 ? "s" : ""} encontrada${lista.length !== 1 ? "s" : ""}`;
@@ -229,34 +225,52 @@ document.getElementById("saveRecommendation").addEventListener("click", async ()
       day: "2-digit",
       month: "short",
       year: "numeric"
-    })
+    }),
+    createdAt: Date.now() // timestamp para control de borrado
   });
 
   input.value = "";
   renderRecommendations();
 });
 
-
-// Mostrar recomendaciones con botón borrar
+// Mostrar recomendaciones con botón borrar y control de 30s
 async function renderRecommendations() {
   const list = document.getElementById("recommendationList");
   list.innerHTML = "";
 
   const snapshot = await db.collection("notas").orderBy("date", "desc").get();
+  const now = Date.now();
+
   snapshot.forEach(doc => {
     const note = doc.data();
 
-    // Crear contenedor para cada nota con botón borrar
     const p = document.createElement("p");
     p.innerHTML = `<strong>${note.date}</strong><br>${note.text}`;
 
+    // Crear botón borrar con estilo de "×"
     const btnBorrar = document.createElement("button");
-    btnBorrar.textContent = "🗑️";
+    btnBorrar.className = "btn-borrar-individual";
+    btnBorrar.textContent = "×";
+    btnBorrar.title = "Borrar nota";
     btnBorrar.style.marginLeft = "10px";
+
+    // Control de tiempo para habilitar borrado (30 segundos)
+    const puedeBorrar = note.createdAt && (now - note.createdAt) >= 30000;
+
+    if (!puedeBorrar) {
+      btnBorrar.disabled = true;
+      btnBorrar.title = "Borrar habilitado después de 30 segundos";
+      btnBorrar.style.opacity = "0.5";
+    }
+
     btnBorrar.onclick = async () => {
-      if (confirm("¿Querés borrar esta nota?")) {
+      if (!puedeBorrar) return;
+      const pass = prompt("Ingresá la contraseña para borrar esta nota:");
+      if (pass === "tuContraseñaSegura") {  // Cambia aquí la contraseña
         await db.collection("notas").doc(doc.id).delete();
         renderRecommendations();
+      } else {
+        alert("Contraseña incorrecta.");
       }
     };
 
@@ -265,8 +279,14 @@ async function renderRecommendations() {
   });
 }
 
-// Actualiza el botón borrar todo para borrar notas en Firestore
+// Borrar todas las notas con contraseña
 document.getElementById("clearRecommendations").addEventListener("click", async () => {
+  const pass = prompt("Ingresá la contraseña para borrar todas las notas:");
+  if (pass !== "tuContraseñaSegura") {  // Cambia aquí la contraseña
+    alert("Contraseña incorrecta.");
+    return;
+  }
+
   if (confirm("¿Seguro que querés borrar todas tus notas guardadas?")) {
     const snapshot = await db.collection("notas").get();
     const batch = db.batch();
@@ -276,6 +296,4 @@ document.getElementById("clearRecommendations").addEventListener("click", async 
   }
 });
 
-
 renderRecommendations();
-

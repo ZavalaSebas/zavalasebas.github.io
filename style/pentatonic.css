@@ -239,6 +239,7 @@ footer {
 }
 
 #recommendationList p {
+  position: relative;
   background-color: #ffffff08;
   border-left: 3px solid #f9c74f;
   padding: 0.6rem 1rem;
@@ -246,4 +247,23 @@ footer {
   font-size: 1rem;
   white-space: pre-wrap;
 }
+
+.delete-note-btn {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  background: transparent;
+  border: none;
+  color: #f9c74fcc;
+  font-weight: bold;
+  font-size: 1.3rem;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  line-height: 1;
+}
+
+.delete-note-btn:hover {
+  color: #f9c74f;
+}
+
 
