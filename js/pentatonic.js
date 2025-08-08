@@ -237,7 +237,7 @@ document.getElementById("saveRecommendation").addEventListener("click", async ()
 });
 
 
-// Mostrar recomendaciones
+// Mostrar recomendaciones con botón borrar
 async function renderRecommendations() {
   const list = document.getElementById("recommendationList");
   list.innerHTML = "";
@@ -245,19 +245,37 @@ async function renderRecommendations() {
   const snapshot = await db.collection("notas").orderBy("date", "desc").get();
   snapshot.forEach(doc => {
     const note = doc.data();
+
+    // Crear contenedor para cada nota con botón borrar
     const p = document.createElement("p");
     p.innerHTML = `<strong>${note.date}</strong><br>${note.text}`;
+
+    const btnBorrar = document.createElement("button");
+    btnBorrar.textContent = "🗑️";
+    btnBorrar.style.marginLeft = "10px";
+    btnBorrar.onclick = async () => {
+      if (confirm("¿Querés borrar esta nota?")) {
+        await db.collection("notas").doc(doc.id).delete();
+        renderRecommendations();
+      }
+    };
+
+    p.appendChild(btnBorrar);
     list.appendChild(p);
   });
 }
 
-// Borrar todo
-document.getElementById("clearRecommendations").addEventListener("click", () => {
+// Actualiza el botón borrar todo para borrar notas en Firestore
+document.getElementById("clearRecommendations").addEventListener("click", async () => {
   if (confirm("¿Seguro que querés borrar todas tus notas guardadas?")) {
-    localStorage.removeItem("song_recommendations");
+    const snapshot = await db.collection("notas").get();
+    const batch = db.batch();
+    snapshot.forEach(doc => batch.delete(doc.ref));
+    await batch.commit();
     renderRecommendations();
   }
 });
+
 
 renderRecommendations();
 
