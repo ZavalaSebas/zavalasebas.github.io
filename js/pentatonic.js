@@ -1,3 +1,19 @@
+// Configuración de Firebase
+const firebaseConfig = {
+  apiKey: "AIzaSyCEt6uttsBNcOTdmpLzz1eoOXc3Jk-IKfk",
+  authDomain: "rockshow-61a77.firebaseapp.com",
+  projectId: "rockshow-61a77",
+  storageBucket: "rockshow-61a77.firebasestorage.app",
+  messagingSenderId: "1052089619676",
+  appId: "1:1052089619676:web:eb9cc50b73363ae95d9019",
+  measurementId: "G-CTC0Y1KW8E"
+};
+
+// Inicializar Firebase
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+
 let artefactosOriginal = [
   {
     titulo: "Shine On You Crazy Diamond",
@@ -202,32 +218,33 @@ function actualizarContador(lista) {
 }
 
 // Guardar nota
-document.getElementById("saveRecommendation").addEventListener("click", () => {
+document.getElementById("saveRecommendation").addEventListener("click", async () => {
   const input = document.getElementById("recommendationInput");
   const text = input.value.trim();
   if (!text) return;
 
-  const saved = JSON.parse(localStorage.getItem("song_recommendations")) || [];
-  saved.push({
+  await db.collection("notas").add({
     text,
     date: new Date().toLocaleDateString("es-CR", {
       day: "2-digit",
       month: "short",
       year: "numeric"
-    }),
+    })
   });
-  localStorage.setItem("song_recommendations", JSON.stringify(saved));
+
   input.value = "";
   renderRecommendations();
 });
 
+
 // Mostrar recomendaciones
-function renderRecommendations() {
+async function renderRecommendations() {
   const list = document.getElementById("recommendationList");
   list.innerHTML = "";
 
-  const saved = JSON.parse(localStorage.getItem("song_recommendations")) || [];
-  saved.forEach((note) => {
+  const snapshot = await db.collection("notas").orderBy("date", "desc").get();
+  snapshot.forEach(doc => {
+    const note = doc.data();
     const p = document.createElement("p");
     p.innerHTML = `<strong>${note.date}</strong><br>${note.text}`;
     list.appendChild(p);
