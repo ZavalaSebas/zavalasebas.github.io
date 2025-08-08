@@ -316,6 +316,19 @@
   border-style: solid;
 }
 
+.btn-borrar-individual {
+  background: transparent;
+  border: none;
+  color: #f9c74f;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.btn-borrar-individual:hover {
+  color: #ff595e;
+}
+
 
 @keyframes float {
   from {

@@ -254,23 +254,25 @@ async function renderRecommendations() {
     btnBorrar.title = "Borrar nota";
     btnBorrar.style.marginLeft = "10px";
 
-    // Control de tiempo para habilitar borrado (30 segundos)
-    const puedeBorrar = note.createdAt && (now - note.createdAt) >= 30000;
-
-    if (!puedeBorrar) {
-      btnBorrar.disabled = true;
-      btnBorrar.title = "Borrar habilitado después de 30 segundos";
-      btnBorrar.style.opacity = "0.5";
-    }
+    // Chequear si la nota fue creada hace menos de 30s (para no pedir contraseña)
+    const puedeBorrarSinClave = note.createdAt && (now - note.createdAt) < 30000;
 
     btnBorrar.onclick = async () => {
-      if (!puedeBorrar) return;
-      const pass = prompt("Ingresá la contraseña para borrar esta nota:");
-      if (pass === "tuContraseñaSegura") {  // Cambia aquí la contraseña
-        await db.collection("notas").doc(doc.id).delete();
-        renderRecommendations();
+      if (puedeBorrarSinClave) {
+        // Borrar directamente sin pedir contraseña
+        if (confirm("¿Querés borrar esta nota?")) {
+          await db.collection("notas").doc(doc.id).delete();
+          renderRecommendations();
+        }
       } else {
-        alert("Contraseña incorrecta.");
+        // Pide contraseña para borrar
+        const pass = prompt("Ingresá la contraseña para borrar esta nota:");
+        if (pass === "rock") {  // Cambia aquí la contraseña
+          await db.collection("notas").doc(doc.id).delete();
+          renderRecommendations();
+        } else {
+          alert("Contraseña incorrecta.");
+        }
       }
     };
 
@@ -278,6 +280,7 @@ async function renderRecommendations() {
     list.appendChild(p);
   });
 }
+
 
 // Borrar todas las notas con contraseña
 document.getElementById("clearRecommendations").addEventListener("click", async () => {

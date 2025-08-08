@@ -1,3 +1,18 @@
+// Configuración de Firebase
+const firebaseConfig = {
+  apiKey: "AIzaSyCEt6uttsBNcOTdmpLzz1eoOXc3Jk-IKfk",
+  authDomain: "rockshow-61a77.firebaseapp.com",
+  projectId: "rockshow-61a77",
+  storageBucket: "rockshow-61a77.firebasestorage.app",
+  messagingSenderId: "1052089619676",
+  appId: "1:1052089619676:web:eb9cc50b73363ae95d9019",
+  measurementId: "G-CTC0Y1KW8E"
+};
+
+// Inicializar Firebase
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
 const pensamientos = [
   "hay cosas que solo se entienden en silencio.",
   "no todo lo que se va, se pierde.",
@@ -16,7 +31,7 @@ const frasesCartas = [
   "cada carta es una despedida que no se dio."
 ];
 
-// 📖 Diario base
+// 📖 Pensamientos base animados
 const container = document.getElementById("thoughts-container");
 pensamientos.forEach((text, i) => {
   const p = document.createElement("p");
@@ -25,58 +40,108 @@ pensamientos.forEach((text, i) => {
   container.appendChild(p);
 });
 
-// 💾 Cargar pensamientos guardados
-const saved = JSON.parse(localStorage.getItem("eco_thoughts")) || [];
-function renderSavedThoughts() {
-  saved.forEach((item, i) => {
+// 💾 Guardar pensamiento en Firebase
+document.getElementById("saveThought").addEventListener("click", async () => {
+  const input = document.getElementById("thoughtInput");
+  const text = input.value.trim();
+  if (!text) return;
+
+  const newThought = {
+    text,
+    date: new Date().toLocaleDateString("es-CR", { day: "2-digit", month: "short", year: "numeric" }),
+    createdAt: Date.now()
+  };
+
+  await db.collection("eco_thoughts").add(newThought);
+  input.value = "";
+  renderSavedThoughts();
+
+  const floating = document.createElement("span");
+  floating.className = "floating-phrase soft-fade";
+  floating.textContent = "pensamiento guardado";
+  floating.style.left = "50%";
+  floating.style.top = "60%";
+  floating.style.transform = "translateX(-50%)";
+  document.body.appendChild(floating);
+  setTimeout(() => floating.remove(), 4000);
+});
+
+// 🔁 Mostrar pensamientos desde Firebase
+async function renderSavedThoughts() {
+  const snapshot = await db.collection("eco_thoughts").orderBy("createdAt", "asc").get();
+  const now = Date.now();
+  container.innerHTML = "";
+
+  // Mostrar también los pensamientos base animados
+  pensamientos.forEach((text, i) => {
+    const p = document.createElement("p");
+    p.textContent = text;
+    p.style.animationDelay = `${i * 0.5}s`;
+    container.appendChild(p);
+  });
+
+  snapshot.forEach(doc => {
+    const thought = doc.data();
     const p = document.createElement("p");
     p.classList.add("personal-thought");
-    p.innerHTML = `<span>${item.text}</span><time>${item.date}</time>`;
-    p.style.animationDelay = `${(pensamientos.length + i) * 0.4}s`;
+    p.innerHTML = `<span>${thought.text}</span><time>${thought.date}</time>`;
+
+    const deleteBtn = document.createElement("button");
+    deleteBtn.textContent = "×";
+    deleteBtn.classList.add("btn-borrar-individual");
+    deleteBtn.title = "Borrar este pensamiento";
+    deleteBtn.style.marginLeft = "10px";
+
+    const tiempoTranscurrido = now - thought.createdAt;
+    const puedeBorrarSinClave = tiempoTranscurrido <= 30000;
+
+    deleteBtn.onclick = async () => {
+      if (puedeBorrarSinClave) {
+        await db.collection("eco_thoughts").doc(doc.id).delete();
+        renderSavedThoughts();
+      } else {
+        const pass = prompt("Ingresá la contraseña para borrar:");
+        if (pass === "rock") {
+          await db.collection("eco_thoughts").doc(doc.id).delete();
+          renderSavedThoughts();
+        } else {
+          alert("Contraseña incorrecta.");
+        }
+      }
+    };
+
+    p.appendChild(deleteBtn);
     container.appendChild(p);
   });
 }
+
 renderSavedThoughts();
 
-// 💭 Guardar nuevo pensamiento
-document.getElementById("saveThought").addEventListener("click", () => {
-  const input = document.getElementById("thoughtInput");
-  const text = input.value.trim();
-  if (text) {
-    const newThought = {
-      text,
-      date: new Date().toLocaleDateString("es-CR", { day: "2-digit", month: "short", year: "numeric" })
-    };
-
-    saved.push(newThought);
-    localStorage.setItem("eco_thoughts", JSON.stringify(saved));
-
-    const p = document.createElement("p");
-    p.classList.add("personal-thought");
-    p.innerHTML = `<span>${newThought.text}</span><time>${newThought.date}</time>`;
-    container.appendChild(p);
-    input.value = "";
-
-    // 🎉 Animación flotante de pensamiento enviado
-    const floating = document.createElement("span");
-    floating.className = "floating-phrase soft-fade";
-    floating.textContent = "pensamiento guardado";
-    floating.style.left = "50%";
-    floating.style.top = "60%";
-    floating.style.transform = "translateX(-50%)";
-    document.body.appendChild(floating);
-    setTimeout(() => floating.remove(), 4000);
+// 🗑 Borrar todos los pensamientos (con contraseña)
+document.getElementById("clearThoughts").addEventListener("click", async () => {
+  const pass = prompt("Para borrar todo, ingresá la contraseña:");
+  if (pass !== "tuContraseñaSegura") {
+    alert("Contraseña incorrecta.");
+    return;
   }
+
+  if (!confirm("¿Seguro que querés borrar todos los pensamientos guardados?")) return;
+
+  const snapshot = await db.collection("eco_thoughts").get();
+  const batch = db.batch();
+  snapshot.forEach(doc => batch.delete(doc.ref));
+  await batch.commit();
+  renderSavedThoughts();
 });
 
-// 📜 Mostrar cartas animadas
+// 📜 Cartas animadas
 document.getElementById("showCards").addEventListener("click", () => {
   const section = document.getElementById("card-section");
   section.classList.toggle("hidden");
 
   const grid = document.getElementById("card-grid");
   if (grid.childElementCount === 0) {
-    frasesCartas.forEach((frase) => {
+    frasesCartas.forEach(frase => {
       const box = document.createElement("div");
       box.className = "card-box";
 
@@ -95,16 +160,13 @@ document.getElementById("showCards").addEventListener("click", () => {
       inner.appendChild(back);
       box.appendChild(inner);
 
-      box.addEventListener("click", () => {
-        box.classList.toggle("open");
-      });
-
+      box.addEventListener("click", () => box.classList.toggle("open"));
       grid.appendChild(box);
     });
   }
 });
 
-// 🌠 Frase flotante mejorada
+// 🌠 Frase flotante
 document.getElementById("spawnFloating").addEventListener("click", () => {
   const span = document.createElement("span");
   span.className = "floating-phrase";
@@ -115,17 +177,8 @@ document.getElementById("spawnFloating").addEventListener("click", () => {
   setTimeout(() => span.remove(), 8000);
 });
 
-// 🗑 Botón para borrar todo
-document.getElementById("clearThoughts").addEventListener("click", () => {
-  if (confirm("¿Seguro que querés borrar todos tus pensamientos guardados?")) {
-    localStorage.removeItem("eco_thoughts");
-    location.reload();
-  }
-});
-
-// 🐚🌙🩵🐾 Notas secretas múltiples
+// 🔐 Notas secretas múltiples
 let currentKey = null;
-
 const triggers = document.querySelectorAll(".secret-trigger");
 const secretBox = document.getElementById("secret-note");
 const secretContent = document.getElementById("secret-content");
@@ -153,4 +206,3 @@ editSecret.addEventListener("click", () => {
     loadSecretByKey(currentKey);
   }
 });
-

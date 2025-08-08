@@ -265,5 +265,18 @@ footer {
 .delete-note-btn:hover {
   color: #f9c74f;
 }
+.btn-borrar-individual {
+  background: transparent;
+  border: none;
+  color: #f9c74f;
+  font-size: 1.3rem;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  padding: 0 6px;
+}
+
+.btn-borrar-individual:hover:not(:disabled) {
+  color: #fff;
+}
 
 
