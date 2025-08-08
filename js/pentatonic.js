@@ -39,7 +39,7 @@ let artefactosOriginal = [
     descripcion: "Tema principal de la película 'La La Land' (2016), compuesto por Justin Hurwitz. Esta versión para piano captura la melancolía y el romance del film.",
     video: "https://www.youtube.com/embed/lulmfoic__0"
   },
-{
+{ 
   titulo: "Amor Completo",
   banda: "Mon Laferte",
   descripcion: "Interpretación en vivo desde el Teatro Fru Fru; una emotiva canción de amor muy representativa de su estilo.",
@@ -260,18 +260,6 @@ let artefactosOriginal = [
   banda: "Dion",
   descripcion: "Video oficial del clásico rock and roll *The Wanderer*, lanzado en 1961. Un himno rebelde que definió el estilo vocal de Dion y se convirtió en ícono de la era.",
   video: "https://www.youtube.com/embed/SbYa7NBYyRc"
-},
-{
-titulo: "Time Adventure"
-banda: "Rebecca Sugar"
-descripcion: "Rebecca Sugar performs 'Time Adventure' from Adventure Time, presentado por Cartoon Network."
-video: "https://www.youtube.com/embed/Xr53S9vIbCE"
-},
-{
-titulo: "Hasta la Raíz (Austin City Limits)"
-banda: "Natalia Lafourcade"
-descripcion: "Presentación en Austin City Limits donde Natalia interpreta 'Hasta la Raíz', tema titular de su álbum ganador de un Grammy."
-video: "https://www.youtube.com/embed/zayX1YXiP6Y"
 }
 
 ];
