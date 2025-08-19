@@ -1,0 +1,127 @@
+body {
+  margin: 0;
+  font-family: 'Quicksand', sans-serif;
+  background: #0a0a23;
+  color: #f9c74f;
+  overflow-x: hidden;
+}
+
+/* 🌌 Fondo estrellado */
+.stars {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: radial-gradient(#ffffff20 1px, transparent 1px);
+  background-size: 60px 60px;
+  animation: twinkle 4s infinite alternate;
+  z-index: -2;
+}
+
+.nebula {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: radial-gradient(ellipse at bottom, #3a0ca355 0%, transparent 70%),
+              radial-gradient(ellipse at top, #f7258555 0%, transparent 60%);
+  mix-blend-mode: screen;
+  z-index: -1;
+}
+
+@keyframes twinkle {
+  from { opacity: 0.6; }
+  to { opacity: 1; }
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.2rem 2rem;
+}
+
+.title {
+  font-size: 1.5rem;
+  color: #f9c74f;
+}
+
+.back-btn {
+  color: #f9c74f;
+  text-decoration: none;
+  border: 1px solid #f9c74f;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.back-btn:hover {
+  background: #f9c74f;
+  color: #0a0a23;
+}
+
+.intro {
+  text-align: center;
+  margin: 2rem auto;
+}
+
+.intro h1 {
+  font-size: 2.2rem;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 0 8px #f9c74f66;
+}
+
+.intro p {
+  font-size: 1rem;
+  opacity: 0.8;
+}
+
+/* 📚 Journals grid */
+.journal-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+  padding: 2rem;
+}
+
+.journal-card {
+  background: #ffffff10;
+  border: 1px solid #f9c74f;
+  border-radius: 14px;
+  width: 150px;
+  height: 150px;
+  text-decoration: none;
+  color: #f9c74f;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.8rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 12px #00000066;
+  position: relative;
+  overflow: hidden;
+}
+
+.journal-card:hover {
+  background: #f9c74f;
+  color: #0a0a23;
+  transform: translateY(-6px) scale(1.05);
+  box-shadow: 0 0 20px #f9c74f66;
+}
+
+.journal-card .icon {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.journal-card span {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+footer {
+  text-align: center;
+  padding: 2rem;
+  font-size: 0.9rem;
+  opacity: 0.6;
+}
