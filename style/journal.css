@@ -57,26 +57,28 @@ header h2 {
 }
 
 .collage-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
-  justify-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  padding: 2rem;
 }
 
 .collage-tile {
-  background-color: #ffffff10;
-  border: 1px solid #f9c74f;
-  border-radius: 10px;
+  width: 280px; /* similar a .artefacto-card */
+  background-color: #ffffff08;
+  border: 1px solid #f9c74f30;
+  border-radius: 12px;
   padding: 1rem;
-  width: 100%;
-  max-width: 280px;
-  text-align: center;
   color: #f9c74f;
-  transition: transform 0.3s ease;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 0 8px #f9c74f15;
 }
 
 .collage-tile:hover {
-  transform: scale(1.04);
+  transform: scale(1.03);
+  box-shadow: 0 0 12px #f9c74f50;
 }
 
 .image-placeholder {
