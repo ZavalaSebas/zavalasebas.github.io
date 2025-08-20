@@ -34,5 +34,26 @@ fotosJime.forEach(foto => {
     <p class="collage-desc">${foto.fecha}</p>
   `;
 
+  // evento click para abrir lightbox
+  tile.addEventListener("click", () => {
+    document.getElementById("lightbox").style.display = "flex";
+    document.getElementById("lightbox-img").src = `../assets/image/jimejournal/${foto.archivo}`;
+    document.getElementById("lightbox-caption").textContent = `${foto.titulo} — ${foto.fecha}`;
+  });
+
   collageGrid.appendChild(tile);
+});
+
+// cerrar lightbox
+const lightbox = document.getElementById("lightbox");
+const lightboxClose = document.querySelector(".lightbox-close");
+
+lightboxClose.addEventListener("click", () => {
+  lightbox.style.display = "none";
+});
+
+lightbox.addEventListener("click", (e) => {
+  if (e.target === lightbox) {
+    lightbox.style.display = "none";
+  }
 });
