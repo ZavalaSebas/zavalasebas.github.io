@@ -1,17 +1,4 @@
-// Configuración de Firebase
-const firebaseConfig = {
-  apiKey: "AIzaSyCEt6uttsBNcOTdmpLzz1eoOXc3Jk-IKfk",
-  authDomain: "rockshow-61a77.firebaseapp.com",
-  projectId: "rockshow-61a77",
-  storageBucket: "rockshow-61a77.firebasestorage.app",
-  messagingSenderId: "1052089619676",
-  appId: "1:1052089619676:web:eb9cc50b73363ae95d9019",
-  measurementId: "G-CTC0Y1KW8E"
-};
 
-// Inicializar Firebase
-firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
 
 const fotosJime = [
   { archivo: "jime01.jpg", titulo: "Jime dormida con lentes", fecha: "3 de febrero 2023 18:48" },
