@@ -1,3 +1,18 @@
+// Configuración de Firebase
+const firebaseConfig = {
+  apiKey: "AIzaSyCEt6uttsBNcOTdmpLzz1eoOXc3Jk-IKfk",
+  authDomain: "rockshow-61a77.firebaseapp.com",
+  projectId: "rockshow-61a77",
+  storageBucket: "rockshow-61a77.firebasestorage.app",
+  messagingSenderId: "1052089619676",
+  appId: "1:1052089619676:web:eb9cc50b73363ae95d9019",
+  measurementId: "G-CTC0Y1KW8E"
+};
+
+// Inicializar Firebase
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
 const fotosJime = [
   { archivo: "jime01.jpg", titulo: "Jime dormida con lentes", fecha: "3 de febrero 2023 18:48" },
   { archivo: "jime02.jpg", titulo: "Jime morida sobre Andrea", fecha: "3 de febrero 2023 19:47" },
@@ -57,3 +72,27 @@ lightbox.addEventListener("click", (e) => {
     lightbox.style.display = "none";
   }
 });
+
+const timeline = document.querySelector('.timeline');
+timeline.innerHTML = ''; // limpiar
+
+fotosJime.forEach(foto => {
+  const point = document.createElement('div');
+  point.className = 'timeline-point';
+
+  point.innerHTML = `
+    <img src="../assets/image/jimejournal/${foto.archivo}" alt="${foto.titulo}" class="timeline-img">
+    <span>${foto.fecha}</span>
+  `;
+
+  // hacer que al click abra el lightbox
+  point.addEventListener('click', () => {
+    document.getElementById("lightbox").style.display = "flex";
+    document.getElementById("lightbox-img").src = `../assets/image/jimejournal/${foto.archivo}`;
+    document.getElementById("lightbox-caption").textContent = `${foto.titulo} — ${foto.fecha}`;
+  });
+
+  timeline.appendChild(point);
+});
+
+

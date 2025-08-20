@@ -140,3 +140,59 @@ header h2 {
 .lightbox-close:hover {
   transform: scale(1.2);
 }
+
+.timeline {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 2rem;              /* espacio entre puntos */
+  margin: 2rem 1rem;      /* margen superior e inferior */
+  overflow-x: auto;       /* para móviles, scroll horizontal */
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #f9c74f30; /* línea de la timeline */
+}
+
+.timeline-point {
+  position: relative;
+  flex: 0 0 auto;         /* que no se estire */
+  text-align: center;
+}
+
+.timeline-point::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 12px;
+  height: 12px;
+  background-color: #f9c74f;
+  border-radius: 50%;
+}
+
+.timeline-point span {
+  display: block;
+  margin-top: 1rem;
+  font-size: 0.8rem;
+  color: #f9c74f;
+  white-space: nowrap;
+}
+
+/* Miniaturas de la timeline */
+.timeline-img {
+  display: block;
+  width: 60px;        /* tamaño fijo */
+  height: 60px;       /* tamaño fijo */
+  object-fit: cover;  /* para que no se estiren */
+  border-radius: 6px;
+  border: 2px solid #f9c74f30;
+  margin: 0 auto 0.3rem;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.timeline-img:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 8px #f9c74f50;
+}
+
