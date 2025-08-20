@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jime Journal</title>
+  <link rel="stylesheet" href="jimejournal.css">
+</head>
+<body>
+  <header>
+    <h2>journal</h2>
+    <a href="journals.html" class="back-btn">← volver</a>
+  </header>
+
+  <main>
+    <section class="collage">
+      <!-- Ejemplo de imágenes (agregá las que quieras) -->
+      <div class="collage-tile">
+        <div class="image-placeholder" data-src="img/jime1.jpg"></div>
+        <h3>Jime 1</h3>
+      </div>
+      <div class="collage-tile">
+        <div class="image-placeholder" data-src="img/jime2.jpg"></div>
+        <h3>Jime 2</h3>
+      </div>
+      <div class="collage-tile">
+        <div class="image-placeholder" data-src="img/jime3.jpg"></div>
+        <h3>Jime 3</h3>
+      </div>
+    </section>
+  </main>
+
+  <!-- Lightbox -->
+  <div id="lightbox" class="lightbox">
+    <span class="lightbox-close">&times;</span>
+    <span class="lightbox-prev">&#10094;</span>
+    <img class="lightbox-img" />
+    <span class="lightbox-next">&#10095;</span>
+    <p class="lightbox-caption"></p>
+  </div>
+
+  <script src="jimejournal.js"></script>
+</body>
+</html>
