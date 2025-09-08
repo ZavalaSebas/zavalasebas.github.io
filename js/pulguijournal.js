@@ -1,5 +1,5 @@
 
-const fotos pulgui = [
+const fotospulgui = [
   { archivo: " pulgui01.jpg", titulo: "Petit", fecha: "23 de Octubre 2013 17:58" },
   { archivo: " pulgui02.jpg", titulo: "Disney Yipe", fecha: "8 de Diciembre 2017 08:07" },
   { archivo: " pulgui03.jpg", titulo: "Car Selfie", fecha: "5 de Septiembre 2021 14:48" },
