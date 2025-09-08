@@ -1,39 +1,29 @@
-// Configuración de Firebase
-const firebaseConfig = {
-  apiKey: "AIzaSyCEt6uttsBNcOTdmpLzz1eoOXc3Jk-IKfk",
-  authDomain: "rockshow-61a77.firebaseapp.com",
-  projectId: "rockshow-61a77",
-  storageBucket: "rockshow-61a77.firebasestorage.app",
-  messagingSenderId: "1052089619676",
-  appId: "1:1052089619676:web:eb9cc50b73363ae95d9019",
-  measurementId: "G-CTC0Y1KW8E"
-};
-
-// Inicializar Firebase
-firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
 
 const fotos pulgui = [
-  { archivo: " pulgui01.jpg", titulo: " pulgui dormida con lentes", fecha: "3 de febrero 2023 18:48" },
-  { archivo: " pulgui02.jpg", titulo: " pulgui morida sobre Andrea", fecha: "3 de febrero 2023 19:47" },
-  { archivo: " pulgui03.jpg", titulo: "Parada frente al BK", fecha: "16 de febrero 2023 12:46" },
-  { archivo: " pulgui04.jpg", titulo: "Faking Universidad", fecha: "17 de julio 2023 13:16" },
-  { archivo: " pulgui05.jpg", titulo: "AMPM", fecha: "26 de julio 2023 17:47" },
-  { archivo: " pulgui06.jpg", titulo: " pulgui’s House", fecha: "1 de febrero 2025 12:49" },
-  { archivo: " pulgui07.jpg", titulo: "Paseo Gym", fecha: "15 de marzo 2025 18:17" },
-  { archivo: " pulgui08.jpg", titulo: " pulgui’s House", fecha: "6 de abril 2025 20:06" },
-  { archivo: " pulgui09.jpg", titulo: " pulgui Anuario", fecha: "11 de abril 2025 10:46" },
-  { archivo: " pulgui10.jpg", titulo: "Antoniana", fecha: "14 de abril 2025 22:04" },
-  { archivo: " pulgui11.jpg", titulo: "Cooking, Baking", fecha: "27 de abril 2025 17:23" },
-  { archivo: " pulgui12.jpg", titulo: "Amasando", fecha: "27 de abril 2025 17:24" },
-  { archivo: " pulgui13.jpg", titulo: "DS Party", fecha: "27 de abril 2025 20:56" },
-  { archivo: " pulgui14.jpg", titulo: "DS Photo", fecha: "27 de abril 2025 20:58" },
-  { archivo: " pulgui15.jpg", titulo: "Gym 2.0", fecha: "17 de mayo 2025 10:33" },
-  { archivo: " pulgui16.jpg", titulo: "Lankester", fecha: "20 de julio 2025 15:58" },
-  { archivo: " pulgui17.jpg", titulo: "My House", fecha: "20 de julio 2025 17:27" },
-  { archivo: " pulgui18.jpg", titulo: "Birthdaaay", fecha: "9 de agosto 2025 17:47" },
-  { archivo: " pulgui19.jpg", titulo: "Birthdaaay", fecha: "9 de agosto 2025 17:48" },
-  { archivo: " pulgui20.jpg", titulo: "Birthdaaay", fecha: "9 de agosto 2025 17:49" }
+  { archivo: " pulgui01.jpg", titulo: "Petit", fecha: "23 de Octubre 2013 17:58" },
+  { archivo: " pulgui02.jpg", titulo: "Disney Yipe", fecha: "8 de Diciembre 2017 08:07" },
+  { archivo: " pulgui03.jpg", titulo: "Car Selfie", fecha: "5 de Septiembre 2021 14:48" },
+  { archivo: " pulgui04.jpg", titulo: "Mario&Luigi", fecha: "4 de julio 2022 13:16" },
+  { archivo: " pulgui05.jpg", titulo: "Cleo", fecha: "16 de Octubre 2022 09:19" },
+  { archivo: " pulgui06.jpg", titulo: "Tio’s House", fecha: "5 de Noviembre 2022 13:40" },
+  { archivo: " pulgui07.jpg", titulo: "House", fecha: "16 de Noviembre 2022 19:36" },
+  { archivo: " pulgui08.jpg", titulo: "Hospital", fecha: "17 de Noviembre 2025 20:06" },
+  { archivo: " pulgui09.jpg", titulo: "Playa Ballena", fecha: "27 de Diciembre 2022 14:33" },
+  { archivo: " pulgui10.jpg", titulo: "Lol", fecha: "17 de Junio 2023 16:04" },
+  { archivo: " pulgui11.jpg", titulo: "Bus, Baking", fecha: "15 de Julio 2023 10:41" },
+  { archivo: " pulgui12.jpg", titulo: "CarSelfie 2.0", fecha: "23 de Julio 2023 12:49" },
+  { archivo: " pulgui13.jpg", titulo: "Passenger Terminal", fecha: "2 de Octubre 2023 11:33" },
+  { archivo: " pulgui14.jpg", titulo: "Times Square", fecha: "4 de Octubre 2023 16:17" },
+  { archivo: " pulgui15.jpg", titulo: "HBD", fecha: "30 de septiembre 2023 16:29" },
+  { archivo: " pulgui16.jpg", titulo: "Okay", fecha: "15 de Agosto 2024 14:49" },
+  { archivo: " pulgui17.jpg", titulo: "Chicago", fecha: "20 de Diciembre 2024 17:38" },
+  { archivo: " pulgui18.jpg", titulo: "Airport", fecha: "23 de Diciembre 2024 16:20" },
+  { archivo: " pulgui19.jpg", titulo: "MX Food", fecha: "9 de Enero 2025 16:20" },
+  { archivo: " pulgui20.jpg", titulo: "Mirror", fecha: "19 de Abril 2025 11:11" },
+  { archivo: " pulgui21.jpg", titulo: "Mall", fecha: "20 de Abril 2025 13:17" },
+  { archivo: " pulgui22.jpg", titulo: "Mirror 2.0", fecha: "13 de Julio 2025 16:57" },
+  { archivo: " pulgui23.jpg", titulo: "Mini Miny", fecha: "22 de Julio 2025 12:14" },
+  { archivo: " pulgui24.jpg", titulo: "Baby Shower", fecha: "30 de Agosto 2025 15:33" }
 ];
 
 const collageGrid = document.querySelector(".collage-grid");
