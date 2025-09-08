@@ -1,0 +1,218 @@
+body {
+  margin: 0;
+  background: linear-gradient(180deg, #2b0a28, #0f0519);
+  color: #ffd6e0;
+  font-family: 'Quicksand', sans-serif;
+  overflow-x: hidden;
+}
+
+.background-hearts {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: radial-gradient(rgba(255,182,193,0.15) 1px, transparent 1px);
+  background-size: 60px 60px;
+  animation: floatHearts 20s linear infinite;
+  z-index: -1;
+}
+
+@keyframes floatHearts {
+  from { background-position: 0 0; }
+  to { background-position: 0 -200px; }
+}
+
+header {
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header h2 {
+  font-size: 1.7rem;
+  font-family: 'Dancing Script', cursive;
+  color: #ff99cc;
+}
+
+.back-btn {
+  color: #ffd6e0;
+  text-decoration: none;
+  border: 1px solid #ffd6e0;
+  padding: 0.4rem 0.8rem;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.back-btn:hover {
+  background-color: #ffd6e0;
+  color: #2b0a28;
+}
+
+.initials-title {
+  text-align: center;
+  font-size: 4rem;
+  font-family: 'Dancing Script', cursive;
+  color: #ff99cc;
+  margin: 3rem 0 2rem;
+  letter-spacing: 0.2rem;
+  text-shadow: 0 0 10px #ff6699aa;
+}
+
+.collage-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  padding: 2rem;
+}
+
+.collage-tile {
+  width: 280px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 153, 204, 0.3);
+  border-radius: 14px;
+  padding: 1rem;
+  color: #ffd6e0;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 0 12px rgba(255, 153, 204, 0.2);
+  cursor: pointer;
+  animation: fadeIn 0.6s ease forwards;
+  opacity: 0;
+}
+
+.collage-tile:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 18px rgba(255, 153, 204, 0.5);
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.collage-img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 0.8rem;
+}
+
+.collage-tile h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.3rem;
+  font-family: 'Dancing Script', cursive;
+  color: #ffb3d9;
+}
+
+.collage-desc {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+/* Lightbox */
+.lightbox {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0; top: 0;
+  width: 100%; height: 100%;
+  background: rgba(15, 5, 25, 0.95);
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 2rem;
+}
+
+.lightbox img {
+  width: auto;
+  max-width: 90%;
+  height: auto;
+  max-height: 85vh;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(255, 153, 204, 0.6);
+  object-fit: contain;
+}
+
+.lightbox-caption {
+  margin-top: 1rem;
+  color: #ffd6e0;
+  font-size: 1rem;
+  text-align: center;
+  font-style: italic;
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 20px;
+  right: 40px;
+  font-size: 2rem;
+  color: #ffd6e0;
+  cursor: pointer;
+  transition: transform 0.2s ease, color 0.3s ease;
+}
+
+.lightbox-close:hover {
+  transform: scale(1.2);
+  color: #ff99cc;
+}
+
+/* Timeline */
+.timeline {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 2rem;
+  margin: 2rem 1rem;
+  overflow-x: auto;
+  padding-bottom: 1rem;
+  border-bottom: 2px dashed rgba(255, 153, 204, 0.4);
+}
+
+.timeline-point {
+  position: relative;
+  flex: 0 0 auto;
+  text-align: center;
+}
+
+.timeline-point::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 12px;
+  height: 12px;
+  background: #ff99cc;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #ff6699;
+}
+
+.timeline-point span {
+  display: block;
+  margin-top: 1rem;
+  font-size: 0.8rem;
+  color: #ffd6e0;
+  white-space: nowrap;
+  font-style: italic;
+}
+
+.timeline-img {
+  display: block;
+  width: 65px;
+  height: 65px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 2px solid rgba(255, 153, 204, 0.5);
+  margin: 0 auto 0.3rem;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.timeline-img:hover {
+  transform: scale(1.15);
+  box-shadow: 0 0 10px #ff99ccaa;
+}
