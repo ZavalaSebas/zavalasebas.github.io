@@ -16,24 +16,6 @@ const db = firebase.firestore();
 
 let artefactosOriginal = [
   {
-    titulo: "Shine On You Crazy Diamond",
-    banda: "Pink Floyd",
-    descripcion: "Aparece en varias películas como 'The Counselor'. Un viaje espacial y emocional.",
-    video: "https://www.youtube.com/embed/cWGE9Gi0bB0"
-  },
-  {
-    titulo: "Where Is My Mind",
-    banda: "Pixies",
-    descripcion: "Clásica escena final en 'Fight Club'.",
-    video: "https://www.youtube.com/embed/INgXzChwipY"
-  },
-  {
-    titulo: "Comfortably Numb",
-    banda: "Pink Floyd",
-    descripcion: "Emblemática en su show 'The Wall', y en varias referencias cinematográficas.",
-    video: "https://www.youtube.com/embed/_FrOQC-zEog"
-  },
-  {
     titulo: "Mia & Sebastian's Theme (arr. for Piano)",
     banda: "Justin Hurwitz",
     descripcion: "Tema principal de la película 'La La Land' (2016), compuesto por Justin Hurwitz. Esta versión para piano captura la melancolía y el romance del film.",
@@ -182,12 +164,6 @@ let artefactosOriginal = [
     banda: "Lady Gaga & Bruno Mars",
     descripcion: "Colaboración entre Lady Gaga y Bruno Mars; una pieza emocionalmente intensa destacada por su fusión vocal y producción.",
     video: "https://www.youtube.com/embed/kPa7bsKwL-c"
-  },
-  {
-    titulo: "Freedom Music Festival Highlights",
-    banda: "Artistas varios",
-    descripcion: "Fragmento del video oficial del *Freedom Music Festival* difundido por redes sociales.",
-    video: "https://www.youtube.com/embed/b3kBDtjRtB0"
   },
   {
     titulo: "Now And Then",

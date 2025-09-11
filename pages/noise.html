@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ROCKSHOW — Noise</title>
+  <link rel="stylesheet" href="../style/noise.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <canvas id="particleCanvas"></canvas>
+  <div class="background-noise"></div>
+
+  <header>
+    <h2>ROCKSHOW — Noise</h2>
+    <button id="audioBtn" title="Activar sonido">🎧</button>
+  </header>
+
+  <section class="hero">
+    <h1 class="glitch">Noise</h1>
+    <p id="heroPhrase">Espacio para pensamientos, debates y reflexiones internas.</p>
+  </section>
+
+  <section class="menu-grid">
+    <a href="#" class="card">💡<span>Absolutismo Moral</span></a>
+    <a href="#" class="card">🔥<span>Libertad o Destino</span></a>
+  </section>
+
+  <footer>
+    <p id="frase-footer"></p>
+  </footer>
+
+  <audio id="audioAmbiente" loop>
+    <source src="../assets/audio/ambient-noise.mp3" type="audio/mpeg">
+  </audio>
+
+  <script src="../js/noise.js"></script>
+</body>
+</html>

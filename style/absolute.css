@@ -1,0 +1,111 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Merriweather', serif;
+  background-color: #f9f9f9;
+  color: #222;
+  line-height: 1.6;
+}
+
+/* HEADER */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: #fff;
+  border-bottom: 2px solid #ff5555;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+header h2 {
+  font-family: 'Quicksand', sans-serif;
+  color: #ff5555;
+}
+
+#audioBtn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+/* HERO */
+.hero {
+  text-align: center;
+  padding: 3rem 1rem 2rem;
+}
+
+.glitch-title {
+  font-size: 2.8rem;
+  font-family: 'Quicksand', sans-serif;
+  color: #111;
+  position: relative;
+  animation: glitch 2s infinite;
+}
+
+.subtitle {
+  font-size: 1.2rem;
+  color: #555;
+  font-style: italic;
+  margin-top: 0.5rem;
+}
+
+/* GLITCH EFFECT */
+@keyframes glitch {
+  0% { text-shadow: 2px 0 red, -2px 0 cyan; }
+  20% { text-shadow: -2px 0 red, 2px 0 cyan; }
+  40%, 100% { text-shadow: none; }
+}
+
+/* CONTENT */
+.content {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  gap: 2rem;
+  padding: 2rem 10%;
+}
+
+article h2 {
+  font-family: 'Quicksand', sans-serif;
+  margin-top: 2rem;
+  color: #ff5555;
+}
+
+article p {
+  margin: 1rem 0;
+  text-align: justify;
+}
+
+/* SIDEBAR */
+.sidebar {
+  border-left: 2px dashed #ff5555;
+  padding-left: 1rem;
+  font-size: 0.9rem;
+  color: #666;
+  font-style: italic;
+}
+
+/* FOOTER */
+footer {
+  text-align: center;
+  padding: 1.5rem;
+  font-size: 0.9rem;
+  color: #888;
+  border-top: 1px solid #ddd;
+  margin-top: 2rem;
+}
+
+/* RESPONSIVE */
+@media (max-width: 800px) {
+  .content {
+    grid-template-columns: 1fr;
+  }
+  .sidebar {
+    border: none;
+    padding: 1rem 0;
+    text-align: center;
+  }
+}
