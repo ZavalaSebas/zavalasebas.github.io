@@ -109,3 +109,62 @@ footer {
     text-align: center;
   }
 }
+
+/* MORAL DEBATE & THINKERS */
+.moral-debate, .thinkers {
+  margin: 2rem 0;
+  padding: 1rem 2rem;
+  background: #fff;
+  border-left: 4px solid #ff5555;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  border-radius: 8px;
+}
+
+.moral-debate h2, .thinkers h2 {
+  font-family: 'Quicksand', sans-serif;
+  color: #ff5555;
+  margin-bottom: 1rem;
+  font-size: 1.8rem;
+  text-align: left;
+}
+
+.point, .thinker {
+  margin: 1.5rem 0;
+  padding: 1rem 1.5rem;
+  border: 1px solid #eee;
+  border-radius: 6px;
+  background-color: #fafafa;
+}
+
+.point h3, .thinker h3 {
+  font-family: 'Quicksand', sans-serif;
+  color: #333;
+  margin-bottom: 0.8rem;
+  font-size: 1.3rem;
+}
+
+.point ul, .thinker ul {
+  margin: 0.5rem 0 0.5rem 1.5rem;
+}
+
+.point li, .thinker li {
+  margin: 0.4rem 0;
+}
+
+.conclusion {
+  border-left: 4px solid #ff5555;
+  padding: 1.5rem;
+  margin-top: 2rem;
+  background: #fff3f3;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.conclusion h3 {
+  color: #ff2222;
+}
+
+.conclusion ul li {
+  font-weight: 600;
+  color: #555;
+}
+
