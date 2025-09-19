@@ -20,7 +20,8 @@ const fotosJime = [
   { archivo: "jime17.jpg", titulo: "My House", fecha: "20 de julio 2025 17:27" },
   { archivo: "jime18.jpg", titulo: "Birthdaaay", fecha: "9 de agosto 2025 17:47" },
   { archivo: "jime19.jpg", titulo: "Birthdaaay", fecha: "9 de agosto 2025 17:48" },
-  { archivo: "jime20.jpg", titulo: "Birthdaaay", fecha: "9 de agosto 2025 17:49" }
+  { archivo: "jime20.jpg", titulo: "Birthdaaay", fecha: "9 de agosto 2025 17:49" },
+  { archivo: "jime21.jpg", titulo: "Facetime", fecha: "10 de septiembre 2025 20:13" }
 ];
 
 const collageGrid = document.querySelector(".collage-grid");
