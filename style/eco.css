@@ -1,231 +1,112 @@
-.section-title {
-  text-align: center;
-  margin-top: 3rem;
-  font-size: 1.8rem;
-  color: #f9c74f;
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow-x: hidden;
+  font-family: 'Quicksand', sans-serif;
 }
+
+.background-stars {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(#f9c74f 1px, transparent 1px);
+  background-size: 50px 50px;
+  z-index: -1;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: #00000088;
+  color: #f9c74f;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+header h2 { margin: 0; }
+.back-btn { color: #f9c74f; text-decoration: none; }
 
 .diary {
+  position: relative;
   padding: 2rem;
-  max-width: 800px;
-  margin: auto;
-}
-
-.thoughts p {
-  font-size: 1.1rem;
-  line-height: 1.6;
-  margin-bottom: 1.5rem;
-  opacity: 0;
-  animation: fadeInUp 1s forwards;
-}
-
-.eco-actions {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-  margin: 2rem 0;
-}
-
-.eco-actions button {
-  background-color: #ffffff10;
-  border: 1px solid #f9c74f;
-  padding: 0.5rem 1rem;
-  color: #f9c74f;
-  font-family: 'Quicksand', sans-serif;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.eco-actions button:hover {
-  background-color: #f9c74f;
-  color: #0a0a23;
-}
-
-.card-section {
-  padding: 2rem;
+  min-height: 80vh;
   max-width: 1000px;
   margin: auto;
 }
 
-.card-grid {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 1rem;
+.section-title {
+  text-align: center;
+  font-size: 1.8rem;
+  color: #f9c74f;
+  margin-bottom: 2rem;
 }
 
-.card-box {
-  width: 160px;
-  height: 120px;
+#thoughts-container {
+  position: relative;
+  width: 100%;
+  min-height: 400px;
+}
+
+.creative-note {
+  position: absolute;
+  max-width: 220px;
   background-color: #ffffff10;
   border: 1px solid #f9c74f;
   border-radius: 8px;
-  padding: 1rem;
+  padding: 0.75rem 1rem;
   color: #f9c74f;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
   cursor: pointer;
-  transition: transform 0.3s ease;
+  box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+  word-wrap: break-word;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.card-box:hover {
-  background-color: #f9c74f;
-  color: #0a0a23;
-  transform: scale(1.05) rotateZ(1deg);
-}
-
-.hidden {
-  display: none;
-}
-
-.floating-phrase {
-  position: absolute;
-  font-size: 1rem;
-  color: #f9c74f;
-  animation: float 8s linear forwards;
-  pointer-events: none;
-  opacity: 0.8;
-}
-
-.card-box {
-  width: 160px;
-  height: 120px;
-  background-color: #ffffff10;
-  border: 1px solid #f9c74f;
-  border-radius: 8px;
-  color: #f9c74f;
-  font-family: 'Quicksand', sans-serif;
-  cursor: pointer;
-  transition: transform 0.3s ease, background-color 0.3s ease;
-  perspective: 800px;
-  position: relative;
-  overflow: hidden;
-}
-
-.card-inner {
-  width: 100%;
-  height: 100%;
-  transform-style: preserve-3d;
-  transition: transform 0.6s ease;
-  position: relative;
-}
-
-.card-box.open .card-inner {
-  transform: rotateY(180deg);
-}
-
-.card-front, .card-back {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  backface-visibility: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 1rem;
-  box-sizing: border-box;
-}
-
-.card-front {
-  background-color: #ffffff10;
-  color: #f9c74f;
-}
-
-.card-back {
-  background-color: #f9c74f;
-  color: #0a0a23;
-  transform: rotateY(180deg);
-  text-align: center;
+.creative-note:hover {
+  transform: scale(1.05);
+  box-shadow: 4px 4px 15px rgba(0,0,0,0.4);
 }
 
 .eco-write {
+  margin-top: 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 3rem;
+  gap: 0.5rem;
 }
 
-.personal-thought {
+#thoughtInput {
+  width: 100%;
+  max-width: 600px;
+  height: 80px;
   background-color: #ffffff08;
-  border-left: 3px solid #f9c74f;
-  padding: 0.75rem 1rem;
-  margin-bottom: 1.5rem;
-  position: relative;
-  animation: fadeInUp 1s forwards;
+  border: 1px solid #f9c74f;
+  color: #f9c74f;
+  padding: 1rem;
+  border-radius: 8px;
+  resize: none;
 }
 
-.personal-thought time {
-  display: block;
-  font-size: 0.8rem;
-  color: #ffffff80;
-  margin-top: 0.3rem;
-  font-style: italic;
-}
-
-.soft-fade {
-  font-size: 0.9rem;
-  opacity: 0.6;
-  font-style: italic;
-}
-.secret-trigger {
-  position: fixed;
-  bottom: 10px;
-  font-size: 1.3rem;
-  opacity: 0.25;
+#saveThought, #clearThoughts {
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  border: 1px solid #f9c74f;
+  background-color: #ffffff10;
+  color: #f9c74f;
   cursor: pointer;
-  transition: all 0.4s ease;
-  z-index: 100;
-}
-.secret-trigger:hover {
-  opacity: 0.8;
-  transform: scale(1.1);
+  transition: 0.3s;
 }
 
-.secret-trigger:nth-of-type(1) { right: 10px; }
-.secret-trigger:nth-of-type(2) { right: 45px; }
-.secret-trigger:nth-of-type(3) { right: 80px; }
-.secret-trigger:nth-of-type(4) { right: 115px; }
-
-.secret-icons {
-  position: fixed;
-  bottom: 10px;
-  right: 10px;
-  display: flex;
-  gap: 0.6rem;
-  z-index: 100;
+#saveThought:hover, #clearThoughts:hover {
+  background-color: #f9c74f;
+  color: #0a0a23;
 }
 
-.secret-trigger {
-  font-size: 1.3rem;
-  opacity: 0.3;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.secret-trigger:hover {
-  opacity: 0.8;
-  transform: scale(1.1);
-}
-
-
-#secret-trigger {
-  position: fixed;
-  bottom: 10px;
-  right: 10px;
-  font-size: 1.2rem;
-  opacity: 0.3;
-  cursor: pointer;
-  transition: all 0.4s ease;
-  z-index: 100;
-}
-
-#secret-trigger:hover {
-  opacity: 0.8;
-  transform: scale(1.1);
-}
+/* Ocultar funciones antiguas */
+.eco-actions, .card-section, .floating-phrase { display: none !important; }
 
 #secret-note {
   position: fixed;
@@ -241,13 +122,10 @@
   font-family: 'Quicksand', sans-serif;
   animation: fadeInUp 0.5s ease forwards;
   backdrop-filter: blur(4px);
+  display: none;
 }
 
-#secret-note p {
-  margin-bottom: 0.5rem;
-  white-space: pre-wrap;
-}
-
+#secret-note p { margin-bottom: 0.5rem; white-space: pre-wrap; }
 #editSecret {
   background: none;
   border: 1px dashed #f9c74f;
@@ -258,85 +136,13 @@
   cursor: pointer;
 }
 
-#editSecret:hover {
-  background-color: #f9c74f;
-  color: #0a0a23;
+#editSecret:hover { background-color: #f9c74f; color: #0a0a23; }
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-.hidden {
-  display: none !important;
-}
-
-#thoughtInput {
-  width: 100%;
-  max-width: 600px;
-  height: 80px;
-  background-color: #ffffff08;
-  border: 1px solid #f9c74f;
-  color: #f9c74f;
-  padding: 1rem;
-  border-radius: 8px;
-  font-family: 'Quicksand', sans-serif;
-  resize: none;
-  margin-bottom: 1rem;
-}
-
-#saveThought {
-  background-color: #ffffff10;
-  border: 1px solid #f9c74f;
-  padding: 0.5rem 1rem;
-  color: #f9c74f;
-  font-family: 'Quicksand', sans-serif;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-#saveThought:hover {
-  background-color: #f9c74f;
-  color: #0a0a23;
-}
-
-#clearThoughts {
-  background-color: transparent;
-  border: 1px dashed #f9c74f;
-  color: #f9c74f;
-  font-family: 'Quicksand', sans-serif;
-  padding: 0.4rem 1rem;
-  border-radius: 6px;
-  margin-top: 0.5rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-size: 0.9rem;
-}
-
-#clearThoughts:hover {
-  background-color: #f9c74f;
-  color: #0a0a23;
-  border-style: solid;
-}
-
-.btn-borrar-individual {
-  background: transparent;
-  border: none;
-  color: #f9c74f;
-  font-size: 1.2rem;
-  cursor: pointer;
-  transition: color 0.3s ease;
-}
-
-.btn-borrar-individual:hover {
-  color: #ff595e;
-}
-
-
-@keyframes float {
-  from {
-    transform: translateY(0);
-    opacity: 0.8;
-  }
-  to {
-    transform: translateY(-200px);
-    opacity: 0;
-  }
+@media(max-width:600px){
+  .creative-note { max-width: 150px; font-size: 0.9rem; }
 }
