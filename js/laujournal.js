@@ -17,7 +17,10 @@ const fotosLau = [
   { archivo: "lau16.jpg", titulo: "ZZZ", fecha: "6 de septiembre 2025 18:18 - 22:19" },
   { archivo: "lau17.jpg", titulo: "San Pedro Raining", fecha: "15 de septiembre 2025 13:14" },
   { archivo: "lau18.jpg", titulo: "Music", fecha: "15 de septiembre 2025 16:52" },
-  { archivo: "lau19.jpg", titulo: "Chingon", fecha: "15 de septiembre 2025 18:41" }
+  { archivo: "lau19.jpg", titulo: "Chingon", fecha: "15 de septiembre 2025 18:41" },
+  { archivo: "lau20.jpg", titulo: "Mirror Hall", fecha: "19 de septiembre 2025 18:55" },
+  { archivo: "lau21.jpg", titulo: "Cinema Night", fecha: "19 de septiembre 2025 20:41" },
+  { archivo: "lau22.jpg", titulo: ":/ :)", fecha: "19 de septiembre 2025 23:16" }
 ];
 
 
