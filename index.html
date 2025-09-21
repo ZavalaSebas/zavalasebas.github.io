@@ -10,13 +10,34 @@
 <link rel="icon" type="image/x-icon" href="favicon.ico" />
 </head>
 <body>
+  <div id="terminalLoader">
+    <div id="terminalContent">
+      <div class="terminal-line">> Inicializando ROCKSHOW...</div>
+      <div class="terminal-line">> Cargando módulos de sonido... [OK]</div>
+      <div class="terminal-line">> Renderizando efectos visuales... [OK]</div>
+      <div class="terminal-line">> Calibrando frecuencias... [OK]</div>
+      <div class="terminal-line">> Activando modo rock... [OK]</div>
+      <div class="terminal-line terminal-cursor">> Sistema listo. Presiona cualquier tecla...</div>
+      <div class="skip-hint">Presiona cualquier tecla o haz click para continuar</div>
+    </div>
+  </div>
+  
   <div class="background-gradient"></div>
   <canvas id="glitchCanvas"></canvas>
+  <div id="particleContainer"></div>
+  <div id="customCursor"></div>
 
 <header>
   <h2 id="logo">ROCKSHOW</h2>
 <div id="audioControl">
   <div class="vinyl"></div>
+  <div class="audio-visualizer">
+    <div class="freq-bar"></div>
+    <div class="freq-bar"></div>
+    <div class="freq-bar"></div>
+    <div class="freq-bar"></div>
+    <div class="freq-bar"></div>
+  </div>
   <div class="audio-hint">
     <span>¡click aquí!</span>
     <div class="arrow">⬇️</div>
