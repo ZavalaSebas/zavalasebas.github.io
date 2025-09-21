@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ruleta de Decisiones</title>
+  <link rel="stylesheet" href="../style/roulette.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="background-stars"></div>
+
+  <header>
+    <h2>🎡 Ruleta de Decisiones</h2>
+    <a href="tools.html" class="back-btn">← volver</a>
+  </header>
+
+  <main class="roulette-container">
+    <canvas id="wheelCanvas" width="400" height="400"></canvas>
+    <div class="pointer">⬇️</div>
+    <button id="spinBtn">Girar</button>
+  </main>
+
+  <section class="options-panel">
+    <h3>Opciones</h3>
+    <div class="input-group">
+      <input type="text" id="optionInput" placeholder="Escribe una opción..." />
+      <button id="addOption">➕ Agregar</button>
+    </div>
+    <ul id="optionsList"></ul>
+    <button id="resetBtn" class="reset">🗑️ Borrar todo</button>
+  </section>
+
+  <footer>
+    <p id="frase-footer"></p>
+  </footer>
+
+  <!-- 🎉 Confetti -->
+  <canvas id="confetti-canvas"></canvas>
+
+  <!-- 🪧 Popup resultado -->
+  <div id="resultPopup" class="popup">
+    <div class="popup-content">
+      <h2>Resultado</h2>
+      <p id="popupResult"></p>
+      <button id="closePopup">Cerrar</button>
+    </div>
+  </div>
+
+  <audio id="tickSound" src="../assets/audio/tick.mp3" preload="auto"></audio>
+
+  <script src="../js/roulette.js"></script>
+</body>
+</html>

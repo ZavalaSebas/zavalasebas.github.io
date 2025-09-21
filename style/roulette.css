@@ -1,0 +1,210 @@
+body {
+  margin: 0;
+  font-family: 'Quicksand', sans-serif;
+  background: radial-gradient(circle at center, #0b0c10 40%, #000 100%);
+  color: #e0e0e0;
+  text-align: center;
+  overflow-x: hidden;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(0,0,0,0.8);
+  padding: 1rem 2rem;
+  border-bottom: 2px solid #00c8ff;
+  color: #00c8ff;
+}
+
+.back-btn {
+  color: #f9c74f;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.roulette-container {
+  position: relative;
+  margin: 2rem auto 4rem;
+  width: 400px;
+  height: 400px;
+}
+
+#wheelCanvas {
+  border-radius: 50%;
+  box-shadow: 0 0 25px rgba(0,200,255,0.4);
+}
+
+.pointer {
+  position: absolute;
+  top: -35px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 2rem;
+  color: #f9c74f;
+  text-shadow: 0 0 10px #f9c74f;
+}
+
+#spinBtn {
+  margin-top: 1.5rem;
+  padding: 0.8rem 2rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  background: #00c8ff;
+  color: #0b0c10;
+  cursor: pointer;
+  transition: 0.3s;
+  box-shadow: 0 0 10px rgba(0,200,255,0.5);
+}
+
+#spinBtn:hover {
+  background: #f9c74f;
+  color: #000;
+  box-shadow: 0 0 20px rgba(249,199,79,0.8);
+}
+
+.options-panel {
+  margin: 2rem auto;
+  max-width: 500px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 0 20px rgba(0,200,255,0.2);
+}
+
+.input-group {
+  display: flex;
+  margin-bottom: 1rem;
+}
+
+#optionInput {
+  flex: 1;
+  padding: 0.6rem;
+  border-radius: 6px 0 0 6px;
+  border: 1px solid #00c8ff;
+  outline: none;
+  background: #111;
+  color: #e0e0e0;
+}
+
+#addOption {
+  padding: 0.6rem 1rem;
+  border: none;
+  border-radius: 0 6px 6px 0;
+  background: #00c8ff;
+  color: #0b0c10;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+#optionsList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#optionsList li {
+  background: rgba(255,255,255,0.08);
+  margin: 0.4rem 0;
+  padding: 0.5rem;
+  border-radius: 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#optionsList button {
+  background: transparent;
+  border: none;
+  color: #f94144;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.reset {
+  margin-top: 1rem;
+  background: #f94144;
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+footer {
+  margin: 2rem 0;
+  font-size: 1rem;
+  color: #ccc;
+}
+
+#confetti-canvas {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 999;
+}
+
+/* 🪧 Popup resultado */
+.popup {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.8);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.popup-content {
+  background: #111;
+  border: 2px solid #00c8ff;
+  padding: 2rem;
+  border-radius: 12px;
+  text-align: center;
+  color: #fff;
+  box-shadow: 0 0 25px rgba(0,200,255,0.8);
+  animation: popIn 0.4s ease forwards;
+}
+
+.popup-content h2 {
+  margin: 0 0 1rem;
+  color: #f9c74f;
+}
+
+.popup-content p {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  color: #00c8ff;
+}
+
+.popup-content button {
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 6px;
+  background: #f94144;
+  color: #fff;
+  cursor: pointer;
+}
+
+@keyframes popIn {
+  from { transform: scale(0.7); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+@media (max-width: 600px) {
+  .roulette-container {
+    width: 300px;
+    height: 300px;
+  }
+  #wheelCanvas {
+    width: 300px;
+    height: 300px;
+  }
+}

@@ -1,0 +1,131 @@
+/* Fondo dinámico tipo plano técnico */
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Quicksand', sans-serif;
+  color: #e0e0e0;
+  background-color: #0b0c10;
+  overflow-x: hidden;
+}
+
+.background-grid {
+  position: fixed;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px),
+              linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px);
+  background-size: 60px 60px;
+  z-index: -1;
+  animation: moveGrid 20s linear infinite;
+}
+
+@keyframes moveGrid {
+  from { transform: translate(0, 0); }
+  to { transform: translate(-60px, -60px); }
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: rgba(0,0,0,0.85);
+  border-bottom: 2px solid #00c8ff;
+  color: #00c8ff;
+}
+
+header h2 { margin: 0; }
+.back-btn {
+  color: #f9c74f;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.hero {
+  text-align: center;
+  margin: 3rem 1rem;
+}
+
+.glitch-title {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #00c8ff;
+  position: relative;
+  display: inline-block;
+  text-transform: uppercase;
+  animation: flicker 3s infinite alternate;
+}
+
+.glitch-title::before,
+.glitch-title::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0.7;
+}
+
+.glitch-title::before {
+  color: #f9c74f;
+  transform: translate(-2px, -2px);
+}
+
+.glitch-title::after {
+  color: #00fff7;
+  transform: translate(2px, 2px);
+}
+
+@keyframes flicker {
+  0%, 19%, 21%, 23%, 100% { opacity: 1; }
+  20%, 22% { opacity: 0.5; }
+}
+
+.hero p {
+  color: #f9c74f;
+  margin-top: 0.5rem;
+  font-size: 1rem;
+}
+
+.menu-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.card {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1rem;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid #00c8ff;
+  border-radius: 12px;
+  padding: 1.2rem 1.5rem;
+  color: #e0e0e0;
+  font-size: 1.3rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 10px rgba(0,200,255,0.2);
+}
+
+.card:hover {
+  background: #00c8ff;
+  color: #0b0c10;
+  transform: translateX(8px);
+  box-shadow: 0 0 20px rgba(0,200,255,0.6);
+}
+
+.card span {
+  font-weight: 600;
+}
+
+footer {
+  text-align: center;
+  padding: 1rem;
+  color: #666;
+  font-size: 0.9rem;
+}
