@@ -9,18 +9,112 @@
 </head>
 <body>
   <div class="background-hearts"></div>
+  
+  <!-- Rose decorative elements -->
+  <div class="rose-decoration">
+    <div class="floating-rose">🌹</div>
+    <div class="floating-rose">💖</div>
+    <div class="floating-rose">🌸</div>
+    <div class="floating-rose">🌹</div>
+    <div class="floating-rose">💖</div>
+    <div class="floating-rose">🌸</div>
+  </div>
+  
+  <!-- Corner decorations -->
+  <div class="corner-decoration top-left">💝</div>
+  <div class="corner-decoration top-right">🌹</div>
+  <div class="corner-decoration bottom-left">💕</div>
+  <div class="corner-decoration bottom-right">🌸</div>
 
   <header>
     <h2>Lau Journal</h2>
-    <a href="journals.html" class="back-btn">← volver</a>
+    <div class="header-controls">
+      <button class="control-btn dashboard-btn" id="stats-btn" title="Dashboard de Estadísticas">📊</button>
+      <button class="control-btn mosaic-btn" id="mosaic-btn" title="Vista Mosaico">🎨</button>
+      <button class="control-btn today-btn" id="today-btn" title="En Este Día">📅</button>
+      <a href="journals.html" class="back-btn">← volver</a>
+    </div>
   </header>
 
   <section class="diary">
     <h1 class="initials-title">💖 LAU 💖</h1>
 
+    <!-- Statistics Dashboard -->
+    <div class="stats-dashboard" id="stats-dashboard" style="display: none;">
+      <div class="dashboard-header">
+        <h3>📊 Dashboard de Recuerdos</h3>
+        <button class="close-dashboard" id="close-stats">×</button>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-card total-memories">
+          <div class="stat-icon">📸</div>
+          <div class="stat-content">
+            <div class="stat-number" id="total-photos">22</div>
+            <div class="stat-label">Total de Recuerdos</div>
+          </div>
+        </div>
+        <div class="stat-card total-notes">
+          <div class="stat-icon">💭</div>
+          <div class="stat-content">
+            <div class="stat-number" id="total-notes">0</div>
+            <div class="stat-label">Notas Escritas</div>
+          </div>
+        </div>
+        <div class="stat-card years-active">
+          <div class="stat-icon">🗓️</div>
+          <div class="stat-content">
+            <div class="stat-number" id="years-span">2</div>
+            <div class="stat-label">Años de Recuerdos</div>
+          </div>
+        </div>
+        <div class="stat-card most-noted">
+          <div class="stat-icon">⭐</div>
+          <div class="stat-content">
+            <div class="stat-number" id="most-noted-photo">-</div>
+            <div class="stat-label">Recuerdo Más Especial</div>
+          </div>
+        </div>
+      </div>
+      <div class="charts-section">
+        <div class="chart-card">
+          <h4>📈 Recuerdos por Año</h4>
+          <div class="year-chart" id="year-chart"></div>
+        </div>
+        <div class="chart-card">
+          <h4>💕 Lugares Favoritos</h4>
+          <div class="places-chart" id="places-chart"></div>
+        </div>
+      </div>
+      <div class="recent-activity">
+        <h4>🕒 Actividad Reciente</h4>
+        <div class="activity-list" id="activity-list"></div>
+      </div>
+    </div>
+
+    <!-- On This Day Section -->
+    <div class="on-this-day" id="on-this-day" style="display: none;">
+      <div class="today-header">
+        <h3>📅 En Este Día</h3>
+        <button class="close-today" id="close-today">×</button>
+      </div>
+      <div class="today-content" id="today-content">
+        <!-- Will be populated by JavaScript -->
+      </div>
+    </div>
+
     <div class="timeline"></div> <!-- timeline -->
 
-    <div class="collage-grid">
+    <div class="view-controls">
+      <button class="view-toggle active" data-view="grid" id="grid-view">🔲 Cuadrícula</button>
+      <button class="view-toggle" data-view="mosaic" id="mosaic-view">🎨 Mosaico</button>
+    </div>
+
+    <div class="collage-grid" id="collage-grid">
+      <!-- Se llena dinámicamente con JS -->
+    </div>
+
+    <!-- Mosaic Container -->
+    <div class="mosaic-container" id="mosaic-container">
       <!-- Se llena dinámicamente con JS -->
     </div>
   </section>
@@ -28,9 +122,33 @@
   <!-- Lightbox -->
   <div class="lightbox" id="lightbox">
     <span class="lightbox-close">&times;</span>
-    <img class="lightbox-img" id="lightbox-img" src="" alt="">
-    <p class="lightbox-caption" id="lightbox-caption"></p>
+    <div class="lightbox-content">
+      <img class="lightbox-img" id="lightbox-img" src="" alt="">
+      <p class="lightbox-caption" id="lightbox-caption"></p>
+      
+      <!-- Memory Notes Section -->
+      <div class="memory-notes-section">
+        <div class="notes-header">
+          <h4>💭 Notas de este Recuerdo</h4>
+          <button class="add-note-btn" id="add-note-btn">+ Agregar Nota</button>
+        </div>
+        <div class="notes-container" id="notes-container">
+          <!-- Notes will be loaded here -->
+        </div>
+        <div class="add-note-form" id="add-note-form" style="display: none;">
+          <textarea id="note-input" placeholder="Escribe tu recuerdo, pensamiento o sentimiento sobre esta foto..."></textarea>
+          <div class="note-actions">
+            <button class="save-note-btn" id="save-note-btn">💾 Guardar</button>
+            <button class="cancel-note-btn" id="cancel-note-btn">❌ Cancelar</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
+
+  <!-- Firebase Scripts -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
 
   <script src="../js/laujournal.js"></script>
 </body>
