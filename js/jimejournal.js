@@ -37,13 +37,19 @@ const fotosJime = [
 ];
 
 let currentPhotoId = null;
+let isGridView = true;
 
 // Initialize the journal
 function initializeJournal() {
+  console.log('Initializing journal...');
   createTimeline();
   createCollageGrid();
   setupLightboxEvents();
   setupNotesEvents();
+  initializeDashboard();
+  initializeViewControls();
+  initializeOnThisDay();
+  console.log('Journal initialization complete');
 }
 
 // Create enhanced timeline with year separators
@@ -394,7 +400,352 @@ style.textContent = `
 document.head.appendChild(style);
 
 // Initialize when DOM is loaded
-document.addEventListener('DOMContentLoaded', initializeJournal);
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM loaded, starting initialization...');
+    
+    // Debug: Check if elements exist
+    console.log('Dashboard button:', document.querySelector('.dashboard-btn'));
+    console.log('Stats dashboard:', document.getElementById('stats-dashboard'));
+    console.log('Close stats:', document.getElementById('close-stats'));
+    console.log('Today button:', document.querySelector('.today-btn'));
+    console.log('Today section:', document.getElementById('on-this-day'));
+    
+    initializeJournal();
+});
+
+// Dashboard functionality
+function initializeDashboard() {
+    const dashboardBtn = document.querySelector('.dashboard-btn');
+    const dashboard = document.getElementById('stats-dashboard');
+    const closeDashboard = document.getElementById('close-stats');
+    
+    if (!dashboardBtn || !dashboard || !closeDashboard) {
+        console.log('Dashboard elements not found:', { dashboardBtn, dashboard, closeDashboard });
+        return;
+    }
+    
+    dashboardBtn.addEventListener('click', () => {
+        dashboard.style.display = 'block';
+        updateDashboardStats();
+    });
+    
+    closeDashboard.addEventListener('click', () => {
+        dashboard.style.display = 'none';
+    });
+    
+    // Close dashboard when clicking outside
+    dashboard.addEventListener('click', (e) => {
+        if (e.target === dashboard) {
+            dashboard.style.display = 'none';
+        }
+    });
+}
+
+function updateDashboardStats() {
+    // Update stat cards
+    const totalMemoriesEl = document.getElementById('total-photos');
+    if (totalMemoriesEl) totalMemoriesEl.textContent = fotosJime.length;
+    
+    // Get notes count from Firebase
+    if (db) {
+        db.collection('jime_notes').get().then((querySnapshot) => {
+            const totalNotesEl = document.getElementById('total-notes');
+            if (totalNotesEl) totalNotesEl.textContent = querySnapshot.size;
+        });
+    }
+    
+    // Calculate years span
+    const years = getYearsSpan();
+    const yearsSpanEl = document.getElementById('years-span');
+    if (yearsSpanEl) yearsSpanEl.textContent = years;
+    
+    // Special photos count (photos with notes)
+    if (db) {
+        db.collection('jime_notes').get().then((querySnapshot) => {
+            const photoIds = new Set();
+            querySnapshot.forEach(doc => {
+                photoIds.add(doc.data().photoId);
+            });
+            const specialPhotosEl = document.getElementById('special-photos');
+            if (specialPhotosEl) specialPhotosEl.textContent = photoIds.size;
+        });
+    }
+    
+    // Update charts
+    updateYearChart();
+    updateRecentActivity();
+}
+
+function getYearsSpan() {
+    const years = fotosJime.map(foto => foto.year);
+    const minYear = Math.min(...years);
+    const maxYear = Math.max(...years);
+    return maxYear - minYear + 1;
+}
+
+function updateYearChart() {
+    const yearChart = document.querySelector('.year-chart');
+    if (!yearChart) return;
+    
+    const yearCounts = {};
+    fotosJime.forEach(foto => {
+        yearCounts[foto.year] = (yearCounts[foto.year] || 0) + 1;
+    });
+    
+    const maxCount = Math.max(...Object.values(yearCounts));
+    yearChart.innerHTML = '';
+    
+    Object.entries(yearCounts).sort().forEach(([year, count]) => {
+        const percentage = (count / maxCount) * 100;
+        const barHtml = `
+            <div class="chart-bar">
+                <div class="chart-label">${year}</div>
+                <div class="chart-fill" style="width: ${percentage}%"></div>
+                <div class="chart-value">${count}</div>
+            </div>
+        `;
+        yearChart.innerHTML += barHtml;
+    });
+}
+
+function updateRecentActivity() {
+    const activityList = document.querySelector('.activity-list');
+    if (!activityList) return;
+    
+    const activities = [
+        { icon: '📝', text: 'Nota añadida a memoria de marzo', time: '2 horas' },
+        { icon: '🖼️', text: 'Nueva memoria visualizada', time: '1 día' },
+        { icon: '💭', text: 'Reflexión guardada', time: '3 días' },
+        { icon: '🎯', text: 'Memoria especial marcada', time: '1 semana' }
+    ];
+    
+    activityList.innerHTML = activities.map(activity => `
+        <div class="activity-item">
+            <div class="activity-icon">${activity.icon}</div>
+            <div class="activity-text">${activity.text}</div>
+            <div class="activity-time">hace ${activity.time}</div>
+        </div>
+    `).join('');
+}
+
+// View Controls functionality
+function initializeViewControls() {
+    // Header mosaic button
+    const headerMosaicBtn = document.querySelector('.mosaic-btn');
+    // View toggle buttons  
+    const gridBtn = document.getElementById('grid-view');
+    const mosaicBtn = document.getElementById('mosaic-view');
+    const collage = document.getElementById('collage-grid');
+    const mosaicContainer = document.querySelector('.mosaic-container');
+    
+    if (!gridBtn || !mosaicBtn || !collage) {
+        console.log('View control elements not found:', { gridBtn, mosaicBtn, collage });
+        return;
+    }
+    
+    // Create mosaic container if it doesn't exist
+    if (!mosaicContainer) {
+        const newMosaicContainer = document.createElement('div');
+        newMosaicContainer.className = 'mosaic-container';
+        collage.parentNode.insertBefore(newMosaicContainer, collage.nextSibling);
+    }
+    
+    function activateGridView() {
+        isGridView = true;
+        if (gridBtn) {
+            gridBtn.classList.add('active');
+            mosaicBtn.classList.remove('active');
+        }
+        // Restore original grid styling
+        collage.style.display = '';
+        collage.className = 'collage-grid';
+        const mosaic = document.querySelector('.mosaic-container');
+        if (mosaic) mosaic.classList.remove('active');
+    }
+    
+    function activateMosaicView() {
+        isGridView = false;
+        if (gridBtn && mosaicBtn) {
+            mosaicBtn.classList.add('active');
+            gridBtn.classList.remove('active');
+        }
+        collage.style.display = 'none';
+        const mosaic = document.querySelector('.mosaic-container');
+        if (mosaic) {
+            mosaic.classList.add('active');
+            generateMosaicView();
+        }
+    }
+    
+    // Header mosaic button
+    if (headerMosaicBtn) {
+        headerMosaicBtn.addEventListener('click', () => {
+            if (isGridView) {
+                activateMosaicView();
+            } else {
+                activateGridView();
+            }
+        });
+    }
+    
+    // View toggle buttons
+    gridBtn.addEventListener('click', activateGridView);
+    mosaicBtn.addEventListener('click', activateMosaicView);
+}
+
+function generateMosaicView() {
+    const mosaicContainer = document.querySelector('.mosaic-container');
+    if (!mosaicContainer) return;
+    
+    // Group photos by year
+    const groupedPhotos = {};
+    fotosJime.forEach(foto => {
+        if (!groupedPhotos[foto.year]) {
+            groupedPhotos[foto.year] = [];
+        }
+        groupedPhotos[foto.year].push(foto);
+    });
+    
+    mosaicContainer.innerHTML = '';
+    
+    Object.entries(groupedPhotos).sort(([a], [b]) => b - a).forEach(([year, photos]) => {
+        const groupDiv = document.createElement('div');
+        groupDiv.className = 'mosaic-date-group';
+        
+        const headerDiv = document.createElement('div');
+        headerDiv.className = 'mosaic-date-header';
+        headerDiv.textContent = `${year} (${photos.length} memorias)`;
+        
+        groupDiv.appendChild(headerDiv);
+        
+        photos.forEach(foto => {
+            const mosaicItem = document.createElement('div');
+            mosaicItem.className = 'mosaic-item';
+            
+            // Random height for Pinterest effect
+            const heights = ['200px', '250px', '300px', '350px', '280px'];
+            const randomHeight = heights[Math.floor(Math.random() * heights.length)];
+            
+            mosaicItem.innerHTML = `
+                <img src="../assets/image/jimejournal/${foto.archivo}" alt="${foto.titulo}" style="height: ${randomHeight}; object-fit: cover;">
+                <div class="mosaic-overlay">
+                    ${foto.titulo}<br>
+                    ${foto.fecha}
+                </div>
+            `;
+            
+            mosaicItem.addEventListener('click', () => {
+                openLightbox(foto);
+            });
+            
+            groupDiv.appendChild(mosaicItem);
+        });
+        
+        mosaicContainer.appendChild(groupDiv);
+    });
+}
+
+// On This Day functionality
+function initializeOnThisDay() {
+    const todayBtn = document.querySelector('.today-btn');
+    const onThisDay = document.getElementById('on-this-day');
+    const closeToday = document.getElementById('close-today');
+    
+    if (!todayBtn || !onThisDay) {
+        console.log('Today elements not found:', { todayBtn, onThisDay });
+        return;
+    }
+    
+    todayBtn.addEventListener('click', () => {
+        if (onThisDay.style.display === 'none' || !onThisDay.style.display) {
+            onThisDay.style.display = 'block';
+            updateOnThisDay();
+        } else {
+            onThisDay.style.display = 'none';
+        }
+    });
+    
+    if (closeToday) {
+        closeToday.addEventListener('click', () => {
+            onThisDay.style.display = 'none';
+        });
+    }
+}
+
+function updateOnThisDay() {
+    const today = new Date();
+    const todayContent = document.getElementById('today-content');
+    if (!todayContent) {
+        console.log('today-content element not found');
+        return;
+    }
+    
+    // For demo purposes, find photos from different years in the same month
+    const currentMonth = today.getMonth() + 1; // JavaScript months are 0-indexed
+    
+    // Group photos by year for similar time periods
+    const memoriesByYear = {};
+    
+    fotosJime.forEach(foto => {
+        // Parse month from fecha string (assuming format like "3 de febrero 2023")
+        const fechaParts = foto.fecha.split(' ');
+        const monthName = fechaParts[2];
+        const monthMap = {
+            'enero': 1, 'febrero': 2, 'marzo': 3, 'abril': 4, 'mayo': 5, 'junio': 6,
+            'julio': 7, 'agosto': 8, 'septiembre': 9, 'octubre': 10, 'noviembre': 11, 'diciembre': 12
+        };
+        
+        const photoMonth = monthMap[monthName.toLowerCase()];
+        
+        // Show memories from the same month or adjacent months
+        if (Math.abs(photoMonth - currentMonth) <= 1) {
+            if (!memoriesByYear[foto.year]) {
+                memoriesByYear[foto.year] = [];
+            }
+            memoriesByYear[foto.year].push(foto);
+        }
+    });
+    
+    if (Object.keys(memoriesByYear).length === 0) {
+        todayContent.innerHTML = '<div class="no-memories">No hay memorias cercanas a esta fecha</div>';
+        return;
+    }
+    
+    todayContent.innerHTML = '';
+    
+    Object.entries(memoriesByYear).sort(([a], [b]) => b - a).forEach(([year, yearPhotos]) => {
+        const currentYear = today.getFullYear();
+        const yearsAgo = currentYear - parseInt(year);
+        
+        const memoryYear = document.createElement('div');
+        memoryYear.className = 'memory-year';
+        
+        const yearHeader = document.createElement('div');
+        yearHeader.className = 'year-header';
+        yearHeader.innerHTML = `
+            <span>${year}</span>
+            <span class="years-ago">${yearsAgo > 0 ? `hace ${yearsAgo} año${yearsAgo > 1 ? 's' : ''}` : 'Este año'}</span>
+        `;
+        
+        const yearPhotosDiv = document.createElement('div');
+        yearPhotosDiv.className = 'year-photos';
+        
+        yearPhotosDiv.innerHTML = yearPhotos.map(foto => `
+            <div class="today-photo" onclick="openLightbox(fotosJime.find(f => f.id === '${foto.id}'))">
+                <img src="../assets/image/jimejournal/${foto.archivo}" alt="${foto.titulo}">
+                <div class="today-photo-overlay">
+                    ${foto.titulo}
+                </div>
+            </div>
+        `).join('');
+        
+        memoryYear.appendChild(yearHeader);
+        memoryYear.appendChild(yearPhotosDiv);
+        todayContent.appendChild(memoryYear);
+    });
+}
+
+// Make deleteNote function global
 
 // Make deleteNote function global
 window.deleteNote = deleteNote;
