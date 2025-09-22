@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ROCKSHOW — QR GENERATOR</title>
+  <link rel="stylesheet" href="../style/qr.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="background-grid"></div>
+
+  <header>
+    <h2>📷 QR GENERATOR</h2>
+    <a href="tools.html" class="back-btn">← volver</a>
+  </header>
+
+  <section class="hero">
+    <h1 class="glitch-title" data-text="QR GENERATOR">QR GENERATOR</h1>
+    <p>Convierte texto o URLs en códigos QR</p>
+  </section>
+
+  <main class="qr-container">
+    <div class="input-section">
+      <div class="input-group">
+        <label for="qr-input">Texto o URL:</label>
+        <textarea 
+          id="qr-input" 
+          placeholder="Ingresa el texto o URL que quieres convertir a QR..."
+          rows="4"
+        ></textarea>
+      </div>
+      
+      <div class="options-group">
+        <div class="option">
+          <label for="size-select">Tamaño:</label>
+          <select id="size-select">
+            <option value="200">Pequeño (200px)</option>
+            <option value="300" selected>Mediano (300px)</option>
+            <option value="400">Grande (400px)</option>
+            <option value="500">Extra Grande (500px)</option>
+          </select>
+        </div>
+        
+        <div class="option">
+          <label for="error-correction">Corrección de errores:</label>
+          <select id="error-correction">
+            <option value="L">Baja (7%)</option>
+            <option value="M" selected>Media (15%)</option>
+            <option value="Q">Alta (25%)</option>
+            <option value="H">Muy Alta (30%)</option>
+          </select>
+        </div>
+      </div>
+
+      <button id="generate-btn" class="generate-btn">
+        <span class="btn-text">Generar QR</span>
+        <span class="btn-icon">📷</span>
+      </button>
+    </div>
+
+    <div class="output-section">
+      <div id="qr-result" class="qr-result">
+        <div class="placeholder">
+          <div class="placeholder-icon">📷</div>
+          <p>El código QR aparecerá aquí</p>
+        </div>
+      </div>
+      
+      <div class="download-section" id="download-section" style="display: none;">
+        <button id="download-btn" class="download-btn">
+          <span>💾 Descargar QR</span>
+        </button>
+        <button id="copy-btn" class="copy-btn">
+          <span>📋 Copiar como imagen</span>
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p id="frase-footer">Genera códigos QR para compartir información fácilmente</p>
+  </footer>
+
+  <!-- QR.js Library with fallback -->
+  <script>
+    // Try to load QRCode library from primary CDN
+    function loadQRLibrary() {
+      return new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        script.src = 'https://unpkg.com/qrcode@1.5.3/build/qrcode.min.js';
+        script.onload = () => {
+          if (typeof QRCode !== 'undefined') {
+            resolve();
+          } else {
+            reject('QRCode not defined after load');
+          }
+        };
+        script.onerror = () => reject('Script failed to load');
+        document.head.appendChild(script);
+      });
+    }
+
+    // Fallback to alternative CDN
+    function loadQRLibraryFallback() {
+      return new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        script.src = 'https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js';
+        script.onload = () => {
+          // Create QRCode wrapper for qrcode-generator
+          if (typeof qrcode !== 'undefined') {
+            window.QRCode = {
+              toCanvas: function(canvas, text, options) {
+                return new Promise((resolve, reject) => {
+                  try {
+                    const qr = qrcode(0, options.errorCorrectionLevel || 'M');
+                    qr.addData(text);
+                    qr.make();
+                    
+                    const size = options.width || 256;
+                    const cellSize = Math.floor(size / qr.getModuleCount());
+                    const actualSize = cellSize * qr.getModuleCount();
+                    
+                    canvas.width = actualSize;
+                    canvas.height = actualSize;
+                    
+                    const ctx = canvas.getContext('2d');
+                    ctx.fillStyle = options.color?.light || '#FFFFFF';
+                    ctx.fillRect(0, 0, actualSize, actualSize);
+                    
+                    ctx.fillStyle = options.color?.dark || '#000000';
+                    
+                    for (let row = 0; row < qr.getModuleCount(); row++) {
+                      for (let col = 0; col < qr.getModuleCount(); col++) {
+                        if (qr.isDark(row, col)) {
+                          ctx.fillRect(col * cellSize, row * cellSize, cellSize, cellSize);
+                        }
+                      }
+                    }
+                    resolve();
+                  } catch (error) {
+                    reject(error);
+                  }
+                });
+              }
+            };
+            resolve();
+          } else {
+            reject('Fallback library not available');
+          }
+        };
+        script.onerror = () => reject('Fallback script failed to load');
+        document.head.appendChild(script);
+      });
+    }
+
+    // Try primary library, then fallback
+    loadQRLibrary()
+      .catch(() => {
+        console.log('Primary QR library failed, trying fallback...');
+        return loadQRLibraryFallback();
+      })
+      .then(() => {
+        console.log('QR library loaded successfully');
+        // Load our QR generator script and initialize immediately
+        const script = document.createElement('script');
+        script.src = '../js/qr.js';
+        script.onload = () => {
+          console.log('QR.js script loaded, initializing...');
+          // Initialize directly since DOMContentLoaded may have already fired
+          if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initializeQRApp);
+          } else {
+            // DOM is already ready
+            initializeQRApp();
+          }
+        };
+        document.head.appendChild(script);
+      })
+      .catch((error) => {
+        console.error('All QR libraries failed to load:', error);
+        // Show error message
+        const footerElement = document.getElementById('frase-footer');
+        if (footerElement) {
+          footerElement.textContent = 'Error: No se pudo cargar la librería QR. Verifica tu conexión a internet.';
+          footerElement.style.color = '#ff6464';
+        }
+      });
+
+    // Function to initialize the QR app
+    function initializeQRApp() {
+      console.log('Initializing QR App...');
+      console.log('DOM ready state:', document.readyState);
+      console.log('QRCode available:', typeof QRCode);
+      
+      if (typeof QRCode === 'undefined') {
+        console.error('QRCode still not available!');
+        return;
+      }
+
+      if (typeof QRGenerator === 'undefined') {
+        console.error('QRGenerator class not available!');
+        return;
+      }
+
+      console.log('Creating QRGenerator instance...');
+      window.qrGeneratorInstance = new QRGenerator();
+      console.log('QR Generator initialized successfully');
+      
+      // Update footer message
+      updateFooterMessage();
+      
+      // Update footer message every 10 seconds
+      setInterval(updateFooterMessage, 10000);
+    }
+  </script>
+</body>
+</html>
