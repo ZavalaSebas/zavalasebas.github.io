@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ROCKSHOW — COLOR PICKER</title>
+  <link rel="stylesheet" href="../style/colorpicker.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="background-ambient"></div>
+
+  <header>
+    <h2>🎨 COLOR PICKER</h2>
+    <a href="tools.html" class="back-btn">← volver</a>
+  </header>
+
+  <main class="color-container">
+    <!-- Color Picker Section -->
+    <section class="picker-section">
+      <div class="color-display">
+        <div class="color-preview" id="color-preview"></div>
+        <div class="color-info">
+          <h3 id="color-name">Azul Cielo</h3>
+          <div class="color-formats">
+            <div class="format-group">
+              <label>HEX:</label>
+              <input type="text" id="hex-input" value="#00C8FF" readonly>
+              <button class="copy-btn" data-format="hex">📋</button>
+            </div>
+            <div class="format-group">
+              <label>RGB:</label>
+              <input type="text" id="rgb-input" value="rgb(0, 200, 255)" readonly>
+              <button class="copy-btn" data-format="rgb">📋</button>
+            </div>
+            <div class="format-group">
+              <label>HSL:</label>
+              <input type="text" id="hsl-input" value="hsl(195, 100%, 50%)" readonly>
+              <button class="copy-btn" data-format="hsl">📋</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="picker-controls">
+        <div class="color-wheel-container">
+          <canvas id="color-wheel" width="250" height="250"></canvas>
+          <div class="wheel-pointer" id="wheel-pointer"></div>
+        </div>
+        
+        <div class="brightness-container">
+          <canvas id="brightness-bar" width="30" height="250"></canvas>
+          <div class="brightness-pointer" id="brightness-pointer"></div>
+        </div>
+      </div>
+
+      <div class="quick-colors">
+        <h4>Colores Rápidos</h4>
+        <div class="color-grid" id="quick-colors">
+          <!-- Generado por JavaScript -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Palette Generator Section -->
+    <section class="palette-section">
+      <div class="palette-header">
+        <h3>🎨 Generador de Paletas</h3>
+        <div class="palette-controls">
+          <select id="palette-type">
+            <option value="monochromatic">Monocromática</option>
+            <option value="analogous">Análoga</option>
+            <option value="complementary">Complementaria</option>
+            <option value="triadic">Triádica</option>
+            <option value="split-complementary">Split Complementaria</option>
+            <option value="tetradic">Tetrádica</option>
+          </select>
+          <button id="generate-palette" class="generate-btn">Generar</button>
+          <button id="random-palette" class="random-btn">🎲</button>
+        </div>
+      </div>
+
+      <div class="palette-display" id="palette-display">
+        <!-- Paleta generada aquí -->
+      </div>
+
+      <div class="palette-actions">
+        <button id="export-palette" class="export-btn">💾 Exportar CSS</button>
+        <button id="save-palette" class="save-btn">⭐ Guardar Paleta</button>
+      </div>
+    </section>
+
+    <!-- Saved Palettes -->
+    <section class="saved-section" id="saved-section" style="display: none;">
+      <h3>💾 Paletas Guardadas</h3>
+      <div class="saved-palettes" id="saved-palettes">
+        <!-- Paletas guardadas aquí -->
+      </div>
+    </section>
+
+    <!-- Color History -->
+    <section class="history-section">
+      <h3>🕒 Historial de Colores</h3>
+      <div class="color-history" id="color-history">
+        <!-- Historial de colores -->
+      </div>
+      <button id="clear-history" class="clear-btn">🗑️ Limpiar Historial</button>
+    </section>
+  </main>
+
+  <footer>
+    <p id="color-footer">Explora y crea paletas de colores increíbles</p>
+  </footer>
+
+  <script src="../js/colorpicker.js"></script>
+</body>
+</html>

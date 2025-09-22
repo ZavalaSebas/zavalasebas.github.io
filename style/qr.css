@@ -1,4 +1,10 @@
 /* QR Generator Styles - Consistent with tools.css */
+
+/* Global box-sizing fix */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
 body, html {
   margin: 0;
   padding: 0;
@@ -7,6 +13,20 @@ body, html {
   color: #e0e0e0;
   background-color: #0b0c10;
   overflow-x: hidden;
+  cursor: default;
+}
+
+/* Ensure proper cursor behavior */
+* {
+  cursor: inherit;
+}
+
+input, textarea, button, select {
+  cursor: pointer;
+}
+
+input:focus, textarea:focus {
+  cursor: text;
 }
 
 .background-grid {
@@ -139,14 +159,38 @@ header h2 {
   font-size: 1rem;
   resize: vertical;
   min-height: 100px;
+  max-height: 300px;
   transition: border-color 0.3s ease;
   box-sizing: border-box;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 200, 255, 0.5) rgba(255, 255, 255, 0.1);
 }
 
 #qr-input:focus {
   outline: none;
   border-color: #00c8ff;
   box-shadow: 0 0 10px rgba(0,200,255,0.3);
+}
+
+/* Custom scrollbar for QR input */
+#qr-input::-webkit-scrollbar {
+  width: 8px;
+}
+
+#qr-input::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+#qr-input::-webkit-scrollbar-thumb {
+  background: rgba(0, 200, 255, 0.5);
+  border-radius: 4px;
+  transition: background 0.3s ease;
+}
+
+#qr-input::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 200, 255, 0.7);
 }
 
 #qr-input::placeholder {
@@ -340,6 +384,8 @@ header h2 {
     grid-template-columns: 1fr;
     gap: 2rem;
     padding: 1rem;
+    margin: 0;
+    max-width: 100vw;
   }
   
   .glitch-title {
@@ -353,6 +399,19 @@ header h2 {
   .download-section {
     flex-direction: column;
     align-items: center;
+  }
+
+  #qr-input {
+    padding: 0.75rem;
+    font-size: 0.95rem;
+    width: calc(100% - 1.5rem);
+    margin: 0;
+  }
+
+  .input-section {
+    padding: 1rem;
+    margin: 0;
+    width: 100%;
   }
   
   .download-btn,
