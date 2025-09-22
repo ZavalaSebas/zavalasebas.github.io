@@ -20,7 +20,7 @@ const fotosPulgui = [
   { archivo: "pulgui05.jpg", titulo: "Cleo", fecha: "16 de Octubre 2022 09:19", id: "pulgui05", year: 2022 },
   { archivo: "pulgui06.jpg", titulo: "Tio's House", fecha: "5 de Noviembre 2022 13:40", id: "pulgui06", year: 2022 },
   { archivo: "pulgui07.jpg", titulo: "House", fecha: "16 de Noviembre 2022 19:36", id: "pulgui07", year: 2022 },
-  { archivo: "pulgui08.jpg", titulo: "Hospital", fecha: "17 de Noviembre 2025 20:06", id: "pulgui08", year: 2025 },
+  { archivo: "pulgui08.jpg", titulo: "Hospital", fecha: "17 de Noviembre 2022 20:06", id: "pulgui08", year: 2022 },
   { archivo: "pulgui09.jpg", titulo: "Playa Ballena", fecha: "27 de Diciembre 2022 14:33", id: "pulgui09", year: 2022 },
   { archivo: "pulgui10.jpg", titulo: "Lol", fecha: "17 de Junio 2023 16:04", id: "pulgui10", year: 2023 },
   { archivo: "pulgui11.jpg", titulo: "Bus, Baking", fecha: "15 de Julio 2023 10:41", id: "pulgui11", year: 2023 },
