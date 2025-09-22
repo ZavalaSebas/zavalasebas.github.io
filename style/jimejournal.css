@@ -10,6 +10,22 @@
   --autumn-text: #faf0e6;
 }
 
+/* Prevent horizontal scroll */
+html, body {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+/* Ensure all main containers don't cause horizontal scroll */
+.diary, header, .collage-grid, .timeline, .stats-dashboard {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   background: linear-gradient(135deg, var(--autumn-dark) 0%, #1a0f05 50%, var(--autumn-main) 100%);
@@ -41,10 +57,12 @@ body {
 }
 
 header {
-  padding: 1rem 2rem;
+  padding: 1rem min(2rem, 5vw);
   display: flex;
   justify-content: space-between;
   align-items: center;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .header-controls {
@@ -140,12 +158,14 @@ header h2 {
   letter-spacing: 0.15rem;
   text-shadow: 2px 2px 8px rgba(228, 111, 81, 0.3);
   position: relative;
+  overflow: visible;
+  padding: 0 50px;
 }
 
 .initials-title::before {
   content: "🍂";
   position: absolute;
-  left: -60px;
+  left: 10px;
   top: 50%;
   transform: translateY(-50%) rotate(-15deg);
   font-size: 2rem;
@@ -155,7 +175,7 @@ header h2 {
 .initials-title::after {
   content: "🍁";
   position: absolute;
-  right: -60px;
+  right: 10px;
   top: 50%;
   transform: translateY(-50%) rotate(15deg);
   font-size: 2rem;
@@ -172,7 +192,9 @@ header h2 {
   flex-wrap: wrap;
   justify-content: center;
   gap: 2rem;
-  padding: 2rem;
+  padding: 2rem min(2rem, 5vw);
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .collage-grid.grid-view {
@@ -199,14 +221,15 @@ header h2 {
 .collage-tile::before {
   content: "";
   position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
+  top: -10px;
+  left: -10px;
+  width: calc(100% + 20px);
+  height: calc(100% + 20px);
   background: linear-gradient(45deg, transparent, rgba(228, 111, 81, 0.1), transparent);
   transform: rotate(45deg);
   transition: all 0.5s ease;
   opacity: 0;
+  pointer-events: none;
 }
 
 .collage-tile:hover {
