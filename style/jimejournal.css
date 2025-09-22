@@ -99,38 +99,72 @@ header h2 {
   display: none; /* hidden por defecto */
   position: fixed;
   z-index: 1000;
-  left: 0; top: 0;
+  left: 0; 
+  top: 0;
   width: 100%;
   height: 100%;
   background: rgba(10, 10, 35, 0.95);
   align-items: center;
   justify-content: center;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+.lightbox-content {
+  width: 100%;
+  max-width: 800px;
+  max-height: 100%;
+  overflow-y: auto;
+  display: flex;
   flex-direction: column;
-  padding: 2rem;
+  align-items: center;
+  padding: 2rem 1rem;
+  box-sizing: border-box;
+  scrollbar-width: thin;
+  scrollbar-color: #f9c74f30 transparent;
+}
+
+.lightbox-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.lightbox-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.lightbox-content::-webkit-scrollbar-thumb {
+  background: #f9c74f40;
+  border-radius: 4px;
 }
 
 .lightbox img {
   width: auto;
-  max-width: 90%;
+  max-width: 100%;
   height: auto;
-  max-height: 90vh;
+  max-height: 60vh;
   border-radius: 10px;
   box-shadow: 0 0 15px #f9c74f60;
   object-fit: contain;
+  margin-bottom: 1rem;
+  flex-shrink: 0;
 }
 
 
 .lightbox-caption {
-  margin-top: 1rem;
+  margin: 0 auto 1rem auto;
   color: #f9c74f;
   font-size: 1rem;
   text-align: center;
+  max-width: 100%;
+  padding: 0 1rem;
+  box-sizing: border-box;
+  flex-shrink: 0;
 }
 
 .lightbox-close {
-  position: absolute;
-  top: 20px;
-  right: 40px;
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
   font-size: 2rem;
   color: #f9c74f;
   cursor: pointer;
@@ -142,57 +176,476 @@ header h2 {
 }
 
 .timeline {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  gap: 2rem;              /* espacio entre puntos */
-  margin: 2rem 1rem;      /* margen superior e inferior */
-  overflow-x: auto;       /* para móviles, scroll horizontal */
-  padding-bottom: 1rem;
-  border-bottom: 2px solid #f9c74f30; /* línea de la timeline */
+  gap: 1rem;
+  margin: 2rem 1rem;
+  overflow-x: auto;
+  padding: 1rem 0 2rem 0;
+  scrollbar-width: thin;
+  scrollbar-color: #f9c74f30 transparent;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  bottom: 1rem;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, 
+    #f9c74f20 0%, 
+    #f9c74f 20%, 
+    #f9c74f 80%, 
+    #f9c74f20 100%);
+  border-radius: 2px;
+  animation: timelineGlow 3s ease-in-out infinite alternate;
+}
+
+@keyframes timelineGlow {
+  0% { box-shadow: 0 0 5px #f9c74f30; }
+  100% { box-shadow: 0 0 15px #f9c74f60; }
+}
+
+.timeline::-webkit-scrollbar {
+  height: 6px;
+}
+
+.timeline::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.timeline::-webkit-scrollbar-thumb {
+  background: #f9c74f40;
+  border-radius: 3px;
 }
 
 .timeline-point {
   position: relative;
-  flex: 0 0 auto;         /* que no se estire */
+  flex: 0 0 auto;
   text-align: center;
+  transition: all 0.3s ease;
+  z-index: 2;
+}
+
+.timeline-point:hover {
+  transform: translateY(-5px);
 }
 
 .timeline-point::before {
   content: '';
   position: absolute;
-  top: -6px;
+  top: 75px;
   left: 50%;
   transform: translateX(-50%);
-  width: 12px;
-  height: 12px;
-  background-color: #f9c74f;
+  width: 16px;
+  height: 16px;
+  background: radial-gradient(circle, #f9c74f 0%, #f9c74f80 70%, transparent 100%);
   border-radius: 50%;
+  border: 3px solid #0a0a23;
+  box-shadow: 0 0 10px #f9c74f50;
+  transition: all 0.3s ease;
+  z-index: 3;
+}
+
+.timeline-point:hover::before {
+  width: 20px;
+  height: 20px;
+  box-shadow: 0 0 20px #f9c74f80;
 }
 
 .timeline-point span {
   display: block;
-  margin-top: 1rem;
-  font-size: 0.8rem;
+  margin-top: 1.5rem;
+  font-size: 0.7rem;
   color: #f9c74f;
   white-space: nowrap;
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
 }
 
-/* Miniaturas de la timeline */
+.timeline-point:hover span {
+  opacity: 1;
+  text-shadow: 0 0 5px #f9c74f50;
+}
+
+/* Miniaturas de la timeline mejoradas */
 .timeline-img {
   display: block;
-  width: 60px;        /* tamaño fijo */
-  height: 60px;       /* tamaño fijo */
-  object-fit: cover;  /* para que no se estiren */
-  border-radius: 6px;
-  border: 2px solid #f9c74f30;
-  margin: 0 auto 0.3rem;
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 3px solid #f9c74f30;
+  margin: 0 auto 0.5rem;
   cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.timeline-img::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, transparent 0%, #f9c74f20 50%, transparent 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
 .timeline-img:hover {
-  transform: scale(1.1);
-  box-shadow: 0 0 8px #f9c74f50;
+  transform: scale(1.15) rotate(2deg);
+  border-color: #f9c74f;
+  box-shadow: 0 0 20px #f9c74f60;
+}
+
+.timeline-img:hover::before {
+  opacity: 1;
+}
+
+/* Year separators in timeline */
+.timeline-year {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 1rem;
+  position: relative;
+}
+
+.timeline-year-label {
+  background: #0a0a23;
+  padding: 0.5rem 1rem;
+  border: 2px solid #f9c74f;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #f9c74f;
+  margin-bottom: 1rem;
+  box-shadow: 0 0 10px #f9c74f30;
+}
+
+/* Memory Notes Styles */
+.memory-notes-section {
+  margin: 0 auto 1rem auto;
+  padding: 1.5rem;
+  background: rgba(249, 199, 79, 0.05);
+  border-radius: 12px;
+  border: 1px solid #f9c74f20;
+  max-width: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+.notes-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.notes-header h4 {
+  margin: 0;
+  color: #f9c74f;
+  font-size: 1.1rem;
+}
+
+.add-note-btn {
+  background: #f9c74f20;
+  border: 1px solid #f9c74f;
+  color: #f9c74f;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: 'Quicksand', sans-serif;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.add-note-btn:hover {
+  background: #f9c74f30;
+  transform: scale(1.05);
+}
+
+.notes-container {
+  max-height: 200px;
+  overflow-y: auto;
+  margin-bottom: 1rem;
+}
+
+.memory-note {
+  background: rgba(249, 199, 79, 0.1);
+  border: 1px solid #f9c74f30;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 0.75rem;
+  position: relative;
+}
+
+.note-text {
+  color: #f9c74f;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  margin-bottom: 0.5rem;
+}
+
+.note-date {
+  font-size: 0.8rem;
+  color: #f9c74f80;
+  text-align: right;
+}
+
+.note-delete {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background: none;
+  border: none;
+  color: #f9c74f60;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: color 0.3s ease;
+}
+
+.note-delete:hover {
+  color: #ff6b6b;
+}
+
+.add-note-form {
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+#note-input {
+  width: 100%;
+  min-height: 80px;
+  background: rgba(249, 199, 79, 0.1);
+  border: 1px solid #f9c74f30;
+  border-radius: 8px;
+  padding: 1rem;
+  color: #f9c74f;
+  font-family: 'Quicksand', sans-serif;
+  font-size: 0.95rem;
+  resize: vertical;
+  box-sizing: border-box;
+}
+
+#note-input:focus {
+  outline: none;
+  border-color: #f9c74f;
+  box-shadow: 0 0 10px #f9c74f30;
+}
+
+.note-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+  justify-content: flex-end;
+}
+
+.save-note-btn,
+.cancel-note-btn {
+  padding: 0.5rem 1rem;
+  border: 1px solid;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: 'Quicksand', sans-serif;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.save-note-btn {
+  background: #f9c74f20;
+  border-color: #f9c74f;
+  color: #f9c74f;
+}
+
+.save-note-btn:hover {
+  background: #f9c74f;
+  color: #0a0a23;
+}
+
+.cancel-note-btn {
+  background: transparent;
+  border-color: #f9c74f60;
+  color: #f9c74f60;
+}
+
+.cancel-note-btn:hover {
+  border-color: #ff6b6b;
+  color: #ff6b6b;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .lightbox {
+    padding: 0.5rem;
+  }
+
+  .lightbox-content {
+    padding: 1rem 0.5rem;
+  }
+
+  .lightbox img {
+    max-height: 50vh;
+  }
+
+  .lightbox-close {
+    top: 0.5rem;
+    right: 0.5rem;
+    font-size: 1.5rem;
+    background: rgba(10, 10, 35, 0.8);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .timeline {
+    gap: 1rem;
+    margin: 1rem 0.5rem;
+    padding: 1rem 0 2rem 0;
+  }
+
+  .timeline-img {
+    width: 70px;
+    height: 70px;
+    border-width: 2px;
+  }
+
+  .timeline-point span {
+    font-size: 0.65rem;
+    margin-top: 1rem;
+  }
+
+  .timeline-point::before {
+    width: 14px;
+    height: 14px;
+    top: 85px;
+  }
+
+  .timeline-year-label {
+    font-size: 0.85rem;
+    padding: 0.4rem 0.8rem;
+  }
+
+  .collage-grid {
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  .collage-tile {
+    width: 100%;
+    max-width: 320px;
+  }
+
+  .memory-notes-section {
+    padding: 1rem;
+  }
+
+  .notes-header {
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: stretch;
+  }
+
+  .add-note-btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .note-actions {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .save-note-btn,
+  .cancel-note-btn {
+    width: 100%;
+    padding: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .initials-title {
+    font-size: 3rem;
+    margin: 2rem 0 1rem;
+  }
+
+  .lightbox {
+    padding: 0.25rem;
+  }
+
+  .lightbox-content {
+    padding: 0.5rem 0.25rem;
+  }
+
+  .lightbox img {
+    max-height: 45vh;
+  }
+
+  .lightbox-caption {
+    font-size: 0.9rem;
+    margin: 0.5rem auto;
+  }
+
+  .timeline {
+    gap: 0.75rem;
+    padding: 0.75rem 0 1.5rem 0;
+  }
+
+  .timeline-img {
+    width: 60px;
+    height: 60px;
+  }
+
+  .timeline-point::before {
+    width: 12px;
+    height: 12px;
+    top: 75px;
+  }
+
+  .timeline-point span {
+    font-size: 0.6rem;
+    margin-top: 0.75rem;
+  }
+
+  .timeline-year-label {
+    font-size: 0.8rem;
+    padding: 0.3rem 0.6rem;
+  }
+
+  .collage-tile {
+    padding: 0.75rem;
+  }
+
+  .collage-img {
+    height: 140px;
+  }
+
+  .memory-notes-section {
+    padding: 0.75rem;
+  }
+
+  .notes-header h4 {
+    font-size: 1rem;
+  }
+
+  #note-input {
+    min-height: 60px;
+    padding: 0.75rem;
+    font-size: 0.9rem;
+  }
 }
 

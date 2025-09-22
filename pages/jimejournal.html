@@ -29,9 +29,33 @@
   <!-- Lightbox -->
   <div class="lightbox" id="lightbox">
     <span class="lightbox-close">&times;</span>
-    <img class="lightbox-img" id="lightbox-img" src="" alt="">
-    <p class="lightbox-caption" id="lightbox-caption"></p>
+    <div class="lightbox-content">
+      <img class="lightbox-img" id="lightbox-img" src="" alt="">
+      <p class="lightbox-caption" id="lightbox-caption"></p>
+      
+      <!-- Memory Notes Section -->
+      <div class="memory-notes-section">
+        <div class="notes-header">
+          <h4>💭 Notas de este Recuerdo</h4>
+          <button class="add-note-btn" id="add-note-btn">+ Agregar Nota</button>
+        </div>
+        <div class="notes-container" id="notes-container">
+          <!-- Notes will be loaded here -->
+        </div>
+        <div class="add-note-form" id="add-note-form" style="display: none;">
+          <textarea id="note-input" placeholder="Escribe tu recuerdo, pensamiento o sentimiento sobre esta foto..."></textarea>
+          <div class="note-actions">
+            <button class="save-note-btn" id="save-note-btn">💾 Guardar</button>
+            <button class="cancel-note-btn" id="cancel-note-btn">❌ Cancelar</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
+
+  <!-- Firebase Scripts -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
 
   <script src="../js/jimejournal.js"></script>
 </body>
