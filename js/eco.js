@@ -47,28 +47,61 @@ async function renderSavedThoughts() {
   const snapshot = await db.collection("eco_thoughts").orderBy("createdAt", "asc").get();
   container.innerHTML = "";
 
-  const notes = [];
-  const minDistance = 100;
-  const isMobile = window.innerWidth < 600;
-
-  const safeTop = isMobile ? 100 : 120; // margen para header
-  const safeBottom = isMobile ? window.innerHeight - 180 : window.innerHeight - 150; // margen para textarea y botones
-  const safeLeft = 20;
-  const safeRight = window.innerWidth - 20;
-
+  const thoughts = [];
   snapshot.forEach(doc => {
-    const thought = doc.data();
+    thoughts.push({ id: doc.id, data: doc.data() });
+  });
+
+  if (thoughts.length === 0) {
+    container.style.height = "400px";
+    return;
+  }
+
+  const isMobile = window.innerWidth < 600;
+  const noteWidth = isMobile ? 150 : 220;
+  const noteHeight = isMobile ? 80 : 100;
+  const padding = 15;
+  
+  const containerWidth = container.offsetWidth || (isMobile ? window.innerWidth - 40 : 1000);
+  const headerHeight = document.querySelector('header').offsetHeight || 80;
+  const formHeight = document.querySelector('.eco-write').offsetHeight || 200;
+  
+  // Calcular área disponible
+  const availableWidth = containerWidth - (padding * 2);
+  const availableHeight = Math.max(500, window.innerHeight - headerHeight - formHeight - 150);
+  
+  // Sistema de grid flexible
+  const cols = Math.floor(availableWidth / (noteWidth + padding));
+  const rows = Math.ceil(thoughts.length / cols);
+  
+  // Si hay muchas notas, usar grid más denso
+  let actualNoteWidth = noteWidth;
+  let actualNoteHeight = noteHeight;
+  
+  if (thoughts.length > 20) {
+    actualNoteWidth = Math.max(120, availableWidth / Math.min(cols + 2, 6) - padding);
+    actualNoteHeight = Math.max(70, actualNoteWidth * 0.6);
+  }
+  
+  // Crear contenedor con altura dinámica
+  const totalHeight = Math.max(availableHeight, rows * (actualNoteHeight + padding) + padding);
+  container.style.height = `${totalHeight}px`;
+  container.style.position = "relative";
+
+  const placedNotes = [];
+  
+  thoughts.forEach((thought, index) => {
     const note = document.createElement("div");
     note.classList.add("creative-note");
 
     // Contenido de la nota
     const content = document.createElement("span");
-    content.textContent = thought.text;
+    content.textContent = thought.data.text;
     note.appendChild(content);
 
     // Fecha
     const dateEl = document.createElement("time");
-    dateEl.textContent = thought.date;
+    dateEl.textContent = thought.data.date;
     dateEl.style.display = "block";
     dateEl.style.fontSize = "0.7rem";
     dateEl.style.textAlign = "right";
@@ -76,37 +109,63 @@ async function renderSavedThoughts() {
     dateEl.style.opacity = "0.7";
     note.appendChild(dateEl);
 
-    // Intentos para encontrar posición segura
-    let attempts = 0, x, y;
-    do {
-      x = Math.random() * (safeRight - safeLeft) + safeLeft;
-      y = Math.random() * (safeBottom - safeTop) + safeTop;
-      attempts++;
-    } while (notes.some(n => Math.hypot(n.x - x, n.y - y) < minDistance) && attempts < 200);
+    // Posicionamiento mejorado
+    let x, y;
+    
+    if (thoughts.length <= 10) {
+      // Para pocas notas, usar posicionamiento más orgánico
+      x = Math.random() * (availableWidth - actualNoteWidth) + padding;
+      y = Math.random() * (availableHeight - actualNoteHeight) + padding;
+      
+      // Evitar solapamientos
+      let attempts = 0;
+      while (attempts < 50 && placedNotes.some(placed => 
+        Math.abs(placed.x - x) < actualNoteWidth + 20 && 
+        Math.abs(placed.y - y) < actualNoteHeight + 20
+      )) {
+        x = Math.random() * (availableWidth - actualNoteWidth) + padding;
+        y = Math.random() * (availableHeight - actualNoteHeight) + padding;
+        attempts++;
+      }
+    } else {
+      // Para muchas notas, usar grid con variación
+      const col = index % cols;
+      const row = Math.floor(index / cols);
+      
+      const baseX = col * (actualNoteWidth + padding) + padding;
+      const baseY = row * (actualNoteHeight + padding) + padding;
+      
+      // Añadir variación orgánica al grid
+      const jitterX = (Math.random() - 0.5) * Math.min(20, padding);
+      const jitterY = (Math.random() - 0.5) * Math.min(15, padding);
+      
+      x = Math.max(padding, Math.min(baseX + jitterX, availableWidth - actualNoteWidth));
+      y = Math.max(padding, Math.min(baseY + jitterY, totalHeight - actualNoteHeight));
+    }
 
-    // Si no encuentra un lugar perfecto, se ajusta a la zona segura
-    x = Math.min(Math.max(x, safeLeft), safeRight - note.offsetWidth);
-    y = Math.min(Math.max(y, safeTop), safeBottom - note.offsetHeight);
-
+    // Aplicar posición y estilo
+    const rotation = (Math.random() - 0.5) * 8;
     note.style.left = `${x}px`;
     note.style.top = `${y}px`;
-    note.style.transform = `rotate(${Math.random() * 10 - 5}deg)`;
+    note.style.width = `${actualNoteWidth}px`;
+    note.style.minHeight = `${actualNoteHeight}px`;
+    note.style.setProperty('--note-rotation', `${rotation}deg`);
+    note.style.transform = `rotate(${rotation}deg)`;
+    note.style.zIndex = Math.floor(Math.random() * 10) + 1;
+    note.style.animationDelay = `${index * 0.1}s`;
 
-    notes.push({x, y});
+    placedNotes.push({ x, y });
     container.appendChild(note);
 
-    // Borrar nota
+    // Evento de borrado
     note.addEventListener("click", async () => {
       const pass = prompt("Para borrar esta nota, ingresa contraseña:");
       if (pass === "rock") {
-        await db.collection("eco_thoughts").doc(doc.id).delete();
+        await db.collection("eco_thoughts").doc(thought.id).delete();
         renderSavedThoughts();
       }
     });
   });
-
-  // Ajustar altura contenedor si muchas notas
-  container.style.height = Math.max(window.innerHeight, notes.length * 120) + "px";
 }
 
 // Llamar al render inicial y también al redimensionar
