@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>musicarchive</title>
+  <link rel="stylesheet" href="../style/musicarchive.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="glow-background"></div>
+
+  <header>
+    <h2>musicarchive</h2>
+  <a href="pentatonic.html" class="back-btn">← volver</a>
+  </header>
+
+  <section class="gallery">
+    <h1 class="section-title">archivo sonoro</h1>
+
+    <div class="search-container">
+      <input type="text" id="searchInput" placeholder="buscar canción, banda, película...">
+    </div>
+
+    <div id="contadorCanciones" class="contador">🎧 0 pistas encontradas</div>
+
+    <div class="controls">
+      <button id="shuffleBtn" class="active">🔀 aleatorio</button>
+      <button id="bandaBtn">🎸 artista</button>
+      <button id="tituloBtn">🎵 título</button>
+    </div>
+
+    <div id="artefacto-grid" class="grid"></div>
+  </section>
+
+  <footer>
+    <p>canciones que han resonado en películas, bandas y momentos icónicos.</p>
+  </footer>
+
+  <section class="recommendation-section">
+    <h2>📌 Recomendaciones o pendientes</h2>
+    <textarea id="recommendationInput" placeholder="Anotá algo que no querés olvidar..."></textarea>
+    <div class="recommendation-buttons">
+      <button id="saveRecommendation">💾 guardar nota</button>
+      <button id="clearRecommendations">🗑 borrar todo</button>
+    </div>
+    <div id="recommendationList"></div>
+  </section>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/12.1.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore-compat.js"></script>
+
+  <!-- Tu script principal -->
+  <script src="../js/musicarchive.js"></script>
+</body>
+</html>
