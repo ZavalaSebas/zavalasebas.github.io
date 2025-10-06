@@ -14,17 +14,55 @@
     <a href="pentatonic.html" class="back-btn">← volver</a>
   </header>
   <section class="rockola-section">
-    <h1 class="section-title">Mi Rockola Creativa</h1>
-  <div id="rockola-selector" class="rockola-shelf"></div>
+    <h1 class="section-title">Love is True Rock</h1>
+    <button id="toggle-view-btn" class="toggle-view-btn">Ver como lista</button>
+    <div id="rockola-shelf-view">
+      <div class="rockola-shelf-group">
+        <h3 class="shelf-title">Todo</h3>
+        <div id="rockola-shelf-todo" class="rockola-shelf"></div>
+      </div>
+      <div class="rockola-shelf-group">
+        <h3 class="shelf-title">Singles</h3>
+        <div id="rockola-shelf-singles" class="rockola-shelf"></div>
+      </div>
+      <div class="rockola-shelf-group">
+        <h3 class="shelf-title">Studio / Sesiones</h3>
+        <div id="rockola-shelf-studio" class="rockola-shelf"></div>
+      </div>
+      <div class="rockola-shelf-group">
+        <h3 class="shelf-title">Álbumes</h3>
+        <div id="rockola-shelf-albums" class="rockola-shelf"></div>
+      </div>
+    </div>
+    <div id="rockola-list-view" class="rockola-list-view" style="display:none">
+      <table class="rockola-list-table">
+        <thead>
+          <tr><th>Portada</th><th>Título</th><th>Duración</th></tr>
+        </thead>
+        <tbody id="rockola-list-tbody"></tbody>
+      </table>
+    </div>
     <div id="rockola-player" class="rockola-player">
       <div class="player-bg"></div>
       <button id="close-player" class="close-player">✖</button>
-      <img id="player-portada" class="player-portada" src="" alt="portada" />
+      <div class="player-disc-container">
+        <button id="prev-track" class="player-nav left">⏮</button>
+        <img id="player-portada" class="player-portada" src="" alt="portada" />
+        <button id="next-track" class="player-nav right">⏭</button>
+      </div>
       <div class="player-info">
         <h2 id="player-nombre"></h2>
         <span id="player-duracion"></span>
       </div>
       <audio id="player-audio" controls></audio>
+      <div class="player-lyrics">
+        <h3>Lyrics</h3>
+        <div id="player-letra" class="player-letra-content">(Lyrics not available)</div>
+      </div>
+      <div class="player-history">
+        <h3>Backpage</h3>
+        <div id="player-historia" class="player-historia-content">(Backpage not available)</div>
+      </div>
     </div>
   </section>
   <footer>
