@@ -9,49 +9,45 @@
 </head>
 <body>
   <div class="glow-background"></div>
+  <div class="floating-notes">
+    <span class="note">🎵</span>
+    <span class="note">🎶</span>
+    <span class="note">🎷</span>
+    <span class="note">🎸</span>
+    <span class="note">🎺</span>
+    <span class="note">🥁</span>
+    <span class="note">🎤</span>
+  </div>
 
   <header>
-    <h2>pentatonic</h2>
+    <h2 class="music-title">pentatonic</h2>
     <a href="../index.html" class="back-btn">← volver</a>
   </header>
 
-  <section class="gallery">
-    <h1 class="section-title">archivo sonoro</h1>
 
-    <div class="search-container">
-      <input type="text" id="searchInput" placeholder="buscar canción, banda, película...">
+  <section class="music-menu">
+    <h1 class="section-title">escoge tu track</h1>
+    <div class="music-grid">
+      <a href="musicarchive.html" class="music-card">
+        <div class="icon">�</div>
+        <span>Archivo Sonoro</span>
+        <p>Descubre canciones, bandas y momentos icónicos.</p>
+      </a>
+      <a href="#" class="music-card disabled">
+        <div class="icon">🎹</div>
+        <span>Instrumentos</span>
+        <p>Próximamente: explora sonidos y samples.</p>
+      </a>
+      <a href="#" class="music-card disabled">
+        <div class="icon">🎤</div>
+        <span>Artistas</span>
+        <p>Próximamente: biografías y playlists.</p>
+      </a>
     </div>
-
-    <div id="contadorCanciones" class="contador">🎧 0 pistas encontradas</div>
-
-    <div class="controls">
-      <button id="shuffleBtn" class="active">🔀 aleatorio</button>
-      <button id="bandaBtn">🎸 artista</button>
-      <button id="tituloBtn">🎵 título</button>
-    </div>
-
-    <div id="artefacto-grid" class="grid"></div>
   </section>
 
   <footer>
-    <p>canciones que han resonado en películas, bandas y momentos icónicos.</p>
+    <p>pentatonic: tu portal musical</p>
   </footer>
-
-  <section class="recommendation-section">
-    <h2>📌 Recomendaciones o pendientes</h2>
-    <textarea id="recommendationInput" placeholder="Anotá algo que no querés olvidar..."></textarea>
-    <div class="recommendation-buttons">
-      <button id="saveRecommendation">💾 guardar nota</button>
-      <button id="clearRecommendations">🗑 borrar todo</button>
-    </div>
-    <div id="recommendationList"></div>
-  </section>
-
-  <!-- Firebase SDKs -->
-  <script src="https://www.gstatic.com/firebasejs/12.1.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore-compat.js"></script>
-
-  <!-- Tu script principal -->
-  <script src="../js/pentatonic.js"></script>
 </body>
 </html>
