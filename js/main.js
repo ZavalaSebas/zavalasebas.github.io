@@ -2,28 +2,30 @@
 const terminalLoader = document.getElementById('terminalLoader');
 let loaderActive = true;
 
-// Hacer el loader skipeable inmediatamente
-document.addEventListener('keydown', hideLoader, { once: true });
-document.addEventListener('click', hideLoader, { once: true });
-
-// Ocultar el loader automáticamente después de 6.5 segundos si no se hace skip
-setTimeout(() => {
-  hideLoader();
-}, 6500);
+// Mostrar loader solo la primera vez usando localStorage
+const loaderShown = localStorage.getItem('rockshow_loader_shown');
+if (!loaderShown) {
+  document.addEventListener('keydown', hideLoader, { once: true });
+  document.addEventListener('click', hideLoader, { once: true });
+  setTimeout(() => {
+    hideLoader();
+  }, 6500);
+} else {
+  terminalLoader.style.display = 'none';
+  loaderActive = false;
+}
 
 function hideLoader() {
   if (!loaderActive) return;
   loaderActive = false;
-  
   // Remover los event listeners para evitar conflictos
   document.removeEventListener('keydown', hideLoader);
   document.removeEventListener('click', hideLoader);
-  
   terminalLoader.style.opacity = '0';
   terminalLoader.style.transition = 'opacity 1s ease-out';
-  
   setTimeout(() => {
     terminalLoader.style.display = 'none';
+    localStorage.setItem('rockshow_loader_shown', '1');
   }, 1000);
 }
 

@@ -70,35 +70,55 @@ header {
   padding: 2rem 1rem 0 1rem;
   text-align: center;
 }
-.rockola-selector {
+.rockola-shelf {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: row;
   gap: 2.5rem;
-  justify-content: center;
   margin-top: 2.5rem;
+  overflow-x: auto;
+  padding-bottom: 2rem;
+  scrollbar-width: thin;
+  scrollbar-color: #f9c74f #222;
+}
+.rockola-shelf::-webkit-scrollbar {
+  height: 12px;
+}
+.rockola-shelf::-webkit-scrollbar-thumb {
+  background: #f9c74f;
+  border-radius: 6px;
+}
+.rockola-shelf::-webkit-scrollbar-track {
+  background: #222;
 }
 .rockola-card {
   background: linear-gradient(135deg, #1a1a2e 70%, #f9c74f22 100%);
   border: 2px solid #f9c74f80;
   border-radius: 20px;
-  width: 220px;
+  min-width: 220px;
+  max-width: 220px;
   color: #f9c74f;
   text-align: center;
   box-shadow: 0 0 24px #f9c74f22, 0 4px 32px #f7258522;
   padding: 1.2rem 1rem 1.5rem 1rem;
-  transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+  transition: transform 0.25s cubic-bezier(.77,0,.18,1), box-shadow 0.2s, background 0.2s;
   display: flex;
   flex-direction: column;
   align-items: center;
   cursor: pointer;
   position: relative;
   overflow: hidden;
+  margin-bottom: 0.5rem;
+  will-change: transform;
 }
 .rockola-card:hover {
   background: linear-gradient(135deg, #f9c74f 80%, #f72585 100%);
   color: #0e0b16;
-  transform: scale(1.07) rotate(-2deg);
-  box-shadow: 0 0 32px #f9c74f80, 0 8px 48px #f7258580;
+  transform: scale(1.12) translateY(-12px) rotate(-6deg);
+  box-shadow: 0 0 48px #f9c74f80, 0 12px 64px #f7258580;
+  z-index: 2;
+}
+.rockola-card:active {
+  transform: scale(0.98) translateY(2px);
 }
 .rockola-img {
   width: 120px;
