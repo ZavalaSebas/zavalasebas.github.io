@@ -1,9 +1,9 @@
 const frases = [
-  "hecho con calma y un poco de magia ✨",
-  "aquí flotan pensamientos que no pesan",
-  "caminando entre pixeles y suspiros",
-  "te doy la bienvenida a un rincón sin tiempo",
-  "donde las ideas duermen y sueñan despiertas"
+  ":)",
+  "Que carajos sigo haciendo aqui?",
+  "A veces la extraño",
+  "Cuanto tiempo nos queda?",
+  "Sueño despierto a tu lado"
 ];
 
 document.getElementById("frase-footer").textContent =
