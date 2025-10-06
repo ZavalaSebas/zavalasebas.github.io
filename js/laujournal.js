@@ -34,15 +34,75 @@ const fotosLau = [
   { archivo: "lau19.jpg", titulo: "Chingon", fecha: "15 de septiembre 2025 18:41", id: "lau19", year: 2025 },
   { archivo: "lau20.jpg", titulo: "Mirror Hall", fecha: "19 de septiembre 2025 18:55", id: "lau20", year: 2025 },
   { archivo: "lau21.jpg", titulo: "Cinema Night", fecha: "19 de septiembre 2025 20:41", id: "lau21", year: 2025 },
-  { archivo: "lau22.jpg", titulo: ":/ :)", fecha: "19 de septiembre 2025 23:16", id: "lau22", year: 2025 }
+  { archivo: "lau22.jpg", titulo: ":/ :)", fecha: "19 de septiembre 2025 23:16", id: "lau22", year: 2025 },
+  { archivo: "lau23.jpg", titulo: "Mini Lau :3", fecha: "28 de septiembre 2025 21:15", id: "lau23", year: 2025 },
+  { archivo: "lau24.jpg", titulo: "Memories", fecha: "3 de septiembre 2025 19:02", id: "lau24", year: 2025 },
+  { archivo: "lau25.jpg", titulo: "Hiii", fecha: "3 de septiembre 2025 19:03", id: "lau25", year: 2025 },
+  { archivo: "lau26.jpg", titulo: "Mirrors", fecha: "4 de Octubre 2025 17:36", id: "lau26", year: 2025 },
+  { archivo: "lau27.jpg", titulo: "Milano :)", fecha: "4 de Octubre 2025 17:36", id: "lau27", year: 2025 }
 ];
 
 let currentPhotoId = null;
 let isGridView = true;
+let newestPhotoIds = new Set();
+
+// Parse Spanish date strings like "6 de septiembre 2025 18:18 - 22:19" or "4 de Octubre 2025 17:36"
+function parseSpanishFechaToTimestamp(fechaStr) {
+  try {
+    if (!fechaStr) return 0;
+    const s = fechaStr.trim().toLowerCase();
+    // Map of Spanish months
+    const months = {
+      'enero': 0, 'febrero': 1, 'marzo': 2, 'abril': 3, 'mayo': 4, 'junio': 5,
+      'julio': 6, 'agosto': 7, 'septiembre': 8, 'setiembre': 8, 'octubre': 9, 'noviembre': 10, 'diciembre': 11
+    };
+    // Remove diacritics helper
+    const strip = (t) => t.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    // Use first time if there's a range like "18:18 - 22:19"
+    const match = s.match(/^(\d{1,2})\s+de\s+([a-záéíóú]+)\s+(\d{4})(?:\s+(\d{1,2}:\d{2}))/i);
+    if (match) {
+      const day = parseInt(match[1], 10);
+      const monthName = strip(match[2]);
+      const year = parseInt(match[3], 10);
+      const time = match[4] || '00:00';
+      const [hh, mm] = time.split(':').map(n => parseInt(n, 10));
+      const mi = months[monthName] ?? months[monthName.toLowerCase()] ?? 0;
+      return new Date(year, mi, day, hh || 0, mm || 0).getTime();
+    }
+    // Fallback: try to extract without time
+    const m2 = s.match(/^(\d{1,2})\s+de\s+([a-záéíóú]+)\s+(\d{4})/i);
+    if (m2) {
+      const day = parseInt(m2[1], 10);
+      const monthName = strip(m2[2]);
+      const year = parseInt(m2[3], 10);
+      const mi = months[monthName] ?? months[monthName.toLowerCase()] ?? 0;
+      return new Date(year, mi, day).getTime();
+    }
+    return 0;
+  } catch (e) {
+    console.warn('Failed to parse fecha:', fechaStr, e);
+    return 0;
+  }
+}
+
+function computeNewestPhotos() {
+  const now = Date.now();
+  const windowMs = 48 * 60 * 60 * 1000; // 48 hours
+  newestPhotoIds = new Set(
+    fotosLau
+      .filter(f => {
+        const ts = parseSpanishFechaToTimestamp(f.fecha);
+        return ts && (now - ts) >= 0 && (now - ts) <= windowMs;
+      })
+      .map(f => f.id)
+  );
+}
 
 // Initialize the journal
 function initializeJournal() {
   console.log('Initializing journal...');
+  // Determine which photos are the most recent to show the "New" badge
+  computeNewestPhotos();
   createTimeline();
   createCollageGrid();
   setupLightboxEvents();
@@ -84,6 +144,7 @@ function createTimeline() {
       point.setAttribute("data-photo-id", foto.id);
 
       point.innerHTML = `
+        ${newestPhotoIds.has(foto.id) ? '<span class="new-badge small">New</span>' : ''}
         <img src="../assets/image/laujournal/${foto.archivo}" 
              alt="${foto.titulo}" 
              class="timeline-img"
@@ -127,6 +188,7 @@ function createCollageGrid() {
 
     tile.innerHTML = `
       <img src="../assets/image/laujournal/${foto.archivo}" alt="${foto.titulo}" class="collage-img">
+      ${newestPhotoIds.has(foto.id) ? '<span class="new-badge" title="Nuevo">✨ New</span>' : ''}
       <h3>${foto.titulo}</h3>
       <p class="collage-desc">${foto.fecha}</p>
       <div class="photo-actions">
@@ -572,9 +634,10 @@ function generateMosaicView() {
             const heights = ['200px', '250px', '300px', '350px', '280px'];
             const randomHeight = heights[Math.floor(Math.random() * heights.length)];
             
-            mosaicItem.innerHTML = `
-                <img src="../assets/image/laujournal/${foto.archivo}" alt="${foto.titulo}" style="height: ${randomHeight}; object-fit: cover;">
-                <div class="mosaic-overlay">
+      mosaicItem.innerHTML = `
+        <img src="../assets/image/laujournal/${foto.archivo}" alt="${foto.titulo}" style="height: ${randomHeight}; object-fit: cover;">
+        ${newestPhotoIds.has(foto.id) ? '<span class="new-badge">✨ New</span>' : ''}
+        <div class="mosaic-overlay">
                     ${foto.titulo}<br>
                     ${foto.fecha}
                 </div>
