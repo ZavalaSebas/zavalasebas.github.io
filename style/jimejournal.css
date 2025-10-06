@@ -10,6 +10,9 @@
   --jime-text: #faf0e6;
 }
 
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Quicksand:wght@400;600&display=swap');
+}
+
 /* Prevent horizontal scroll */
 html, body {
   overflow-x: hidden;
@@ -33,6 +36,18 @@ body {
   font-family: 'Quicksand', sans-serif;
   overflow-x: hidden;
   min-height: 100vh;
+}
+
+/* Títulos principales con Dancing Script */
+h1, h2, h3, .initials-title, .tile-title, .collage-tile h3, .notes-header h4, .dashboard-header h3, .today-header h3, .mosaic-date-header {
+  font-family: 'Dancing Script', cursive !important;
+  letter-spacing: 0.04em;
+}
+
+/* Cuerpo y textos secundarios con Quicksand */
+p, li, .collage-desc, .tile-date, .tile-footer, .note-text, .note-date, .stat-label, .stat-number, .memory-note, .memory-notes-section, .timeline-year-label, .timeline-point span, .view-toggle, .mosaic-overlay, .activity-text, .activity-time, .no-memories {
+  font-family: 'Quicksand', sans-serif !important;
+}
 }
 
 .background-stars {
@@ -137,8 +152,8 @@ header {
   cursor: pointer;
   font-size: 1.2rem;
   transition: all 0.3s ease;
-  min-width: 40px;
-  height: 40px;
+  min-width: 44px;
+  height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -152,7 +167,7 @@ header {
 }
 
 .fullscreen-btn {
-  font-size: 1rem;
+  display: none !important;
 }
 
 header h2 {
@@ -760,9 +775,9 @@ header h2 {
   }
   
   .control-btn {
-    min-width: 35px;
-    height: 35px;
-    font-size: 1rem;
+  min-width: 44px;
+  height: 44px;
+  font-size: 1.15rem;
   }
   
   .stats-dashboard, .on-this-day {
