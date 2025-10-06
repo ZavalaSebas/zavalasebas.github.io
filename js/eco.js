@@ -58,48 +58,87 @@ async function renderSavedThoughts() {
   }
 
   const isMobile = window.innerWidth < 600;
-  const noteWidth = isMobile ? 150 : 220;
-  const noteHeight = isMobile ? 80 : 100;
+  if (isMobile) {
+    // MODO MÓVIL: mostrar notas en grid de 2-3 columnas, tipo "pared de notas"
+    container.style.height = "auto";
+    container.style.position = "static";
+    container.style.display = "grid";
+    container.style.gridTemplateColumns = window.innerWidth < 400 ? "1fr 1fr" : "1fr 1fr 1fr";
+    container.style.gap = "12px";
+    container.style.overflowY = "auto";
+    container.style.alignItems = "start";
+    // Ordenar más reciente arriba
+    thoughts.slice().reverse().forEach((thought, index) => {
+      const note = document.createElement("div");
+      note.classList.add("creative-note", "mobile-note");
+      note.style.position = "static";
+      note.style.transform = "none";
+      note.style.width = "100%";
+      note.style.minHeight = "70px";
+      note.style.margin = "0";
+      note.style.left = "unset";
+      note.style.top = "unset";
+      note.style.zIndex = 1;
+      note.style.animationDelay = "0s";
+
+      // Contenido de la nota
+      const content = document.createElement("span");
+      content.textContent = thought.data.text;
+      note.appendChild(content);
+
+      // Fecha
+      const dateEl = document.createElement("time");
+      dateEl.textContent = thought.data.date;
+      dateEl.style.display = "block";
+      dateEl.style.fontSize = "0.7rem";
+      dateEl.style.textAlign = "right";
+      dateEl.style.marginTop = "0.5rem";
+      dateEl.style.opacity = "0.7";
+      note.appendChild(dateEl);
+
+      note.addEventListener("click", async () => {
+        const pass = prompt("Para borrar esta nota, ingresa contraseña:");
+        if (pass === "rock") {
+          await db.collection("eco_thoughts").doc(thought.id).delete();
+          renderSavedThoughts();
+        }
+      });
+      container.appendChild(note);
+    });
+    return;
+  }
+
+  // DESKTOP: layout orgánico como antes
+  container.style.display = "block";
+  container.style.overflowY = "hidden";
+  container.style.position = "relative";
+
+  const noteWidth = 220;
+  const noteHeight = 100;
   const padding = 15;
-  
-  const containerWidth = container.offsetWidth || (isMobile ? window.innerWidth - 40 : 1000);
+  const containerWidth = container.offsetWidth || 1000;
   const headerHeight = document.querySelector('header').offsetHeight || 80;
   const formHeight = document.querySelector('.eco-write').offsetHeight || 200;
-  
-  // Calcular área disponible
   const availableWidth = containerWidth - (padding * 2);
   const availableHeight = Math.max(500, window.innerHeight - headerHeight - formHeight - 150);
-  
-  // Sistema de grid flexible
   const cols = Math.floor(availableWidth / (noteWidth + padding));
   const rows = Math.ceil(thoughts.length / cols);
-  
-  // Si hay muchas notas, usar grid más denso
   let actualNoteWidth = noteWidth;
   let actualNoteHeight = noteHeight;
-  
   if (thoughts.length > 20) {
     actualNoteWidth = Math.max(120, availableWidth / Math.min(cols + 2, 6) - padding);
     actualNoteHeight = Math.max(70, actualNoteWidth * 0.6);
   }
-  
-  // Crear contenedor con altura dinámica
   const totalHeight = Math.max(availableHeight, rows * (actualNoteHeight + padding) + padding);
   container.style.height = `${totalHeight}px`;
-  container.style.position = "relative";
-
   const placedNotes = [];
-  
   thoughts.forEach((thought, index) => {
     const note = document.createElement("div");
     note.classList.add("creative-note");
-
-    // Contenido de la nota
+    // ...contenido y fecha igual que antes...
     const content = document.createElement("span");
     content.textContent = thought.data.text;
     note.appendChild(content);
-
-    // Fecha
     const dateEl = document.createElement("time");
     dateEl.textContent = thought.data.date;
     dateEl.style.display = "block";
@@ -108,16 +147,11 @@ async function renderSavedThoughts() {
     dateEl.style.marginTop = "0.5rem";
     dateEl.style.opacity = "0.7";
     note.appendChild(dateEl);
-
-    // Posicionamiento mejorado
+    // Posicionamiento orgánico
     let x, y;
-    
     if (thoughts.length <= 10) {
-      // Para pocas notas, usar posicionamiento más orgánico
       x = Math.random() * (availableWidth - actualNoteWidth) + padding;
       y = Math.random() * (availableHeight - actualNoteHeight) + padding;
-      
-      // Evitar solapamientos
       let attempts = 0;
       while (attempts < 50 && placedNotes.some(placed => 
         Math.abs(placed.x - x) < actualNoteWidth + 20 && 
@@ -128,22 +162,15 @@ async function renderSavedThoughts() {
         attempts++;
       }
     } else {
-      // Para muchas notas, usar grid con variación
       const col = index % cols;
       const row = Math.floor(index / cols);
-      
       const baseX = col * (actualNoteWidth + padding) + padding;
       const baseY = row * (actualNoteHeight + padding) + padding;
-      
-      // Añadir variación orgánica al grid
       const jitterX = (Math.random() - 0.5) * Math.min(20, padding);
       const jitterY = (Math.random() - 0.5) * Math.min(15, padding);
-      
       x = Math.max(padding, Math.min(baseX + jitterX, availableWidth - actualNoteWidth));
       y = Math.max(padding, Math.min(baseY + jitterY, totalHeight - actualNoteHeight));
     }
-
-    // Aplicar posición y estilo
     const rotation = (Math.random() - 0.5) * 8;
     note.style.left = `${x}px`;
     note.style.top = `${y}px`;
@@ -153,11 +180,8 @@ async function renderSavedThoughts() {
     note.style.transform = `rotate(${rotation}deg)`;
     note.style.zIndex = Math.floor(Math.random() * 10) + 1;
     note.style.animationDelay = `${index * 0.1}s`;
-
     placedNotes.push({ x, y });
     container.appendChild(note);
-
-    // Evento de borrado
     note.addEventListener("click", async () => {
       const pass = prompt("Para borrar esta nota, ingresa contraseña:");
       if (pass === "rock") {

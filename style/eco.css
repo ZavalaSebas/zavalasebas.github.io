@@ -66,6 +66,20 @@ header h2 { margin: 0; }
   background-size: 30px 30px;
   border-radius: 12px;
   overflow: hidden;
+  max-height: 80vh;
+}
+
+.mobile-note {
+  position: static !important;
+  left: unset !important;
+  top: unset !important;
+  width: 100% !important;
+  min-height: 70px !important;
+  margin: 0 0 12px 0 !important;
+  transform: none !important;
+  z-index: 1 !important;
+  animation-delay: 0s !important;
+}
 }
 
 .creative-note {
@@ -208,35 +222,55 @@ header h2 { margin: 0; }
   .diary {
     padding: 1rem;
   }
-  
-  .creative-note { 
-    font-size: 0.85rem;
-    padding: 0.6rem 0.8rem;
-    border-radius: 10px;
-    line-height: 1.3;
+  #thoughts-container {
+    min-height: 300px;
+    background-size: 20px 20px;
+    max-height: 70vh;
+    overflow-y: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px 10px;
+    align-items: start;
+    padding: 8px 2vw 8px 2vw;
   }
-  
-  .creative-note time {
+  @media (min-width: 400px) and (max-width: 600px) {
+    #thoughts-container {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+  }
+  .creative-note, .mobile-note {
+    font-size: 0.95rem;
+    padding: 0.7rem 1rem;
+    border-radius: 10px;
+    line-height: 1.4;
+    margin: 0 auto;
+    width: 95% !important;
+    min-height: 70px !important;
+    position: static !important;
+    left: unset !important;
+    top: unset !important;
+    transform: none !important;
+    z-index: 1 !important;
+    animation-delay: 0s !important;
+    border: 2.5px solid #f9c74f !important;
+    box-shadow: 0 2px 8px rgba(249,199,79,0.10), 0 1px 3px #f9c74f33;
+    background: none !important;
+    color: #f9c74f;
+    box-sizing: border-box;
+  }
+  .creative-note time, .mobile-note time {
     font-size: 0.7rem;
     margin-top: 0.4rem;
     padding-top: 0.3rem;
   }
-  
-  #thoughts-container {
-    min-height: 300px;
-    background-size: 20px 20px;
-  }
-  
   .section-title {
     font-size: 1.5rem;
     margin-bottom: 1.5rem;
   }
-  
   .eco-write {
     margin-top: 1.5rem;
     gap: 0.8rem;
   }
-  
   #thoughtInput {
     height: 70px;
     padding: 0.8rem;
