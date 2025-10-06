@@ -1,40 +1,231 @@
 const tracks = [
+  // --- INICIO: Tracks generados automáticamente desde assets/audio/rockola ---
   {
-    nombre: "Cover: Let It Be",
-    portada: "https://placehold.co/200x200?text=Let+It+Be",
-    duracion: "3:45",
-    archivo: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
-    tipo: "todo,singles,studio",
-    letra: `When I find myself in times of trouble\nMother Mary comes to me\nSpeaking words of wisdom, let it be...`,
-    historia: `Grabado en casa, inspirado en la versión original de The Beatles. Una de mis primeras grabaciones de cover, con un toque personal en el piano.`
-  },
-  {
-    nombre: "Mi canción original",
-    portada: "https://placehold.co/200x200?text=Mi+Cancion",
-    duracion: "2:58",
-    archivo: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
+    nombre: "Amor Completo Solo Take0",
+    portada: "../assets/image/covers/amorcompletosolo.jpg",
+    duracion: "",
+    archivo: "../assets/audio/rockola/Amor Completo Solo Take0.mp3",
     tipo: "todo,studio",
-    letra: `Esta es mi canción\nHecha en mi habitación\nCon acordes sencillos y mucha emoción...`,
-    historia: `Compuesta y grabada en 2025, representa el inicio de mi proyecto musical personal. La letra habla de los sueños y la pasión por la música.`
+    letra: "",
+    historia: ""
   },
   {
-    nombre: "Cover: Wonderwall",
-    portada: "https://placehold.co/200x200?text=Wonderwall",
-    duracion: "4:12",
-    archivo: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
+    nombre: "Amor Completo Take7",
+    portada: "../assets/image/covers/amorcompleto.jpg",
+    duracion: "",
+    archivo: "../assets/audio/rockola/Amor Completo Take7.mp3",
+    tipo: "todo,studio",
+    letra: "",
+    historia: ""
+  },
+  {
+    nombre: "Burning Quietly",
+    portada: "../assets/image/covers/burning.jpg",
+    duracion: "",
+    archivo: "../assets/audio/rockola/Burning Quietly.mp3",
     tipo: "todo,singles",
-    letra: `Today is gonna be the day\nThat they're gonna throw it back to you\nBy now you should've somehow\nRealized what you gotta do...`,
-    historia: `Versión acústica grabada en una sola toma. Elegí Wonderwall porque siempre ha sido una canción especial en mis reuniones con amigos.`
+    letra: "",
+    historia: ""
   },
   {
-    nombre: "Álbum: Demo 2025",
-    portada: "https://placehold.co/200x200?text=Album+Demo",
-    duracion: "12:34",
-    archivo: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3",
-    tipo: "todo,albums",
-    letra: `Instrumental - No lyrics available`,
-    historia: `Mi primer demo de estudio, incluye varias ideas y experimentos musicales grabados durante el año.`
+    nombre: "Eclipsed Heart",
+    portada: "../assets/image/covers/eclipse.jpg",
+    duracion: "",
+    archivo: "../assets/audio/rockola/Eclipsed Heart.mp3",
+    tipo: "todo,singles",
+    letra: "",
+    historia: ""
+  },
+  {
+    nombre: "EscapateConmigo",
+    portada: "../assets/image/covers/escapism.jpg",
+    duracion: "",
+    archivo: "../assets/audio/rockola/EscapateConmigo.mp3",
+    tipo: "todo,singles",
+    letra: "",
+    historia: ""
+  },
+  {
+    nombre: "EscapateConmigoV2",
+    portada: "../assets/image/covers/escapism.jpg",
+    duracion: "",
+    archivo: "../assets/audio/rockola/EscapateConmigoV2.mp3",
+    tipo: "todo,singles",
+    letra: "",
+    historia: ""
+  },
+  {
+    nombre: "Flaco Take 2",
+    portada: "../assets/image/covers/flaco.jpg",
+    duracion: "",
+    archivo: "../assets/audio/rockola/Flaco Take 2.mp3",
+    tipo: "todo,studio",
+    letra: "",
+    historia: ""
+  },
+  {
+    nombre: "I need You Take0",
+    portada: "../assets/image/covers/ineedyou.jpg",
+    duracion: "",
+    archivo: "../assets/audio/rockola/I need You Take0.mp3",
+    tipo: "todo,studio",
+    letra: "",
+    historia: ""
+  },
+  {
+    nombre: "I Want to Be Free",
+    portada: "../assets/image/covers/free.jpg",
+    duracion: "",
+    archivo: "../assets/audio/rockola/I Want to Be Free.mp3",
+    tipo: "todo,singles",
+    letra: "",
+    historia: ""
+  },
+  {
+    nombre: "I Want to Be FreeV2",
+    portada: "../assets/image/covers/free.jpg",
+    duracion: "",
+    archivo: "../assets/audio/rockola/I Want to Be FreeV2.mp3",
+    tipo: "todo,singles",
+    letra: "",
+    historia: ""
+  },
+  {
+    nombre: "I-need-You-Take-0 (Cover) (v2)",
+    portada: "../assets/image/covers/ineedyou2.jpg",
+    duracion: "",
+    archivo: "../assets/audio/rockola/I-need-You-Take-0 (Cover) (v2).mp3",
+    tipo: "todo,studio",
+    letra: "",
+    historia: ""
+  },
+  {
+    nombre: "I-need-You-Take-0 (Cover)",
+    portada: "../assets/image/covers/ineedyou.jpg",
+    duracion: "",
+    archivo: "../assets/audio/rockola/I-need-You-Take-0 (Cover).mp3",
+    tipo: "todo,studio",
+    letra: "",
+    historia: ""
+  },
+  {
+    nombre: "John Lennon - Imagine (Piano Cover)",
+    portada: "../assets/image/covers/imagine.jpg",
+    duracion: "",
+    archivo: "../assets/audio/rockola/John Lennon - Imagine (Piano Cover).mp3",
+    tipo: "todo,singles",
+    letra: "",
+    historia: ""
+  },
+  {
+    nombre: "Littleroot Town(FreeStyle)",
+    portada: "../assets/image/covers/littleroottown.jpg",
+    duracion: "",
+    archivo: "../assets/audio/rockola/Littleroot Town(FreeStyle).mp3",
+    tipo: "todo,singles",
+    letra: "",
+    historia: ""
+  },
+  {
+    nombre: "Littleroot Town(Tecno)",
+    portada: "../assets/image/covers/littleroottown2.jpg",
+    duracion: "",
+    archivo: "../assets/audio/rockola/Littleroot Town(Tecno).mp3",
+    tipo: "todo,singles",
+    letra: "",
+    historia: ""
+  },
+  {
+    nombre: "Littleroot town",
+    portada: "../assets/image/covers/littleroottown.jpg",
+    duracion: "",
+    archivo: "../assets/audio/rockola/Littleroot town.mp3",
+    tipo: "todo,singles",
+    letra: "",
+    historia: ""
+  },
+  {
+    nombre: "Lonely Little Town",
+    portada: "../assets/image/covers/lonely.jpg",
+    duracion: "",
+    archivo: "../assets/audio/rockola/Lonely Little Town.mp3",
+    tipo: "todo,singles",
+    letra: "",
+    historia: ""
+  },
+  {
+    nombre: "Lonely Little TownV2",
+    portada: "../assets/image/covers/lonely.jpg",
+    duracion: "",
+    archivo: "../assets/audio/rockola/Lonely Little TownV2.mp3",
+    tipo: "todo,singles",
+    letra: "",
+    historia: ""
+  },
+  {
+    nombre: "Mia and Sebs Instrumental Cover",
+    portada: "../assets/image/covers/laland.jpg",
+    duracion: "",
+    archivo: "../assets/audio/rockola/Mia and Sebs Instrumental Cover.mp3",
+    tipo: "todo,singles",
+    letra: "",
+    historia: ""
+  },
+  {
+    nombre: "More Surprises",
+    portada: "../assets/image/covers/surprise.jpg",
+    duracion: "",
+    archivo: "../assets/audio/rockola/More Surprises.mp3",
+    tipo: "todo,singles",
+    letra: "",
+    historia: ""
+  },
+  {
+    nombre: "NoSurprises (Cover)",
+    portada: "../assets/image/covers/nosurprise.jpg",
+    duracion: "",
+    archivo: "../assets/audio/rockola/NoSurprises (Cover).mp3",
+    tipo: "todo,singles",
+    letra: "",
+    historia: ""
+  },
+  {
+    nombre: "One More Kiss Take 1",
+    portada: "../assets/image/covers/onemorekiss.jpg",
+    duracion: "",
+    archivo: "../assets/audio/rockola/One More Kiss Take 1.mp3",
+    tipo: "todo,studio",
+    letra: "",
+    historia: ""
+  },
+  {
+    nombre: "SelfLOve(Instrumental)",
+    portada: "../assets/image/covers/selflove.jpg",
+    duracion: "",
+    archivo: "../assets/audio/rockola/SelfLOve(Instrumental).mp3",
+    tipo: "todo,singles",
+    letra: "",
+    historia: ""
+  },
+  {
+    nombre: "Stereo Take 1",
+    portada: "../assets/image/covers/stereo.jpg",
+    duracion: "",
+    archivo: "../assets/audio/rockola/Stereo Take 1.mp3",
+    tipo: "todo,studio",
+    letra: "",
+    historia: ""
+  },
+  {
+    nombre: "The Voidz - Lazy Boy (Guitar Cover)",
+    portada: "../assets/image/covers/lazy.jpg",
+    duracion: "",
+    archivo: "../assets/audio/rockola/The Voidz - Lazy Boy (Guitar Cover).mp3",
+    tipo: "todo,singles",
+    letra: "",
+    historia: ""
   }
+  // --- FIN: Tracks generados automáticamente ---
 ];
 
 const shelfMap = {
