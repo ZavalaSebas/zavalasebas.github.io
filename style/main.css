@@ -436,8 +436,10 @@ footer {
 #audioControl {
   position: relative;
   display: flex;
-  flex-direction: column;
+  flex-direction: row-reverse;
   align-items: center;
+  justify-content: center;
+  gap: 0.7rem;
   cursor: pointer;
 }
 
@@ -499,11 +501,29 @@ footer {
 }
 
 .audio-hint {
-  margin-top: 0.3rem;
+  margin-top: 0;
   font-size: 0.7rem;
   color: #4fc3f7aa;
-  text-align: center;
+  text-align: left;
   animation: hintPulse 2s ease-in-out infinite;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  min-width: 60px;
+  margin-right: 0.2rem;
+  gap: 0.4em;
+}
+
+.audio-hint span {
+  display: inline-block;
+}
+.audio-hint .arrow {
+  display: inline-block;
+  margin-left: 0.4em;
+  font-size: 1.1em;
+  vertical-align: middle;
+}
 }
 
 #frase-footer {
@@ -551,11 +571,27 @@ footer {
     font-size: 1rem;
   }
   #audioControl {
-    align-items: flex-end;
+    align-items: center;
     margin-left: auto;
     margin-right: 0;
     display: flex;
-    flex-direction: column;
+    flex-direction: row-reverse;
+    gap: 0.5rem;
+  }
+  .audio-hint {
+    margin-top: 0;
+    margin-right: 0.2rem;
+    min-width: 50px;
+    font-size: 0.7rem;
+    align-items: center;
+    text-align: left;
+    flex-direction: row;
+    gap: 0.4em;
+  }
+  .audio-hint .arrow {
+    margin-left: 0.4em;
+    font-size: 1.1em;
+    vertical-align: middle;
   }
   .hero {
     padding: 3vh 0.5rem 1rem;
