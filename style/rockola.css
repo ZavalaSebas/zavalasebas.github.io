@@ -1,0 +1,106 @@
+body {
+  margin: 0;
+  font-family: 'Quicksand', sans-serif;
+  background: linear-gradient(120deg, #0e0b16 60%, #1a1a2e 100%);
+  color: #f9c74f;
+  overflow-x: hidden;
+}
+.glow-background {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: radial-gradient(circle at 60% 40%, #f9c74f22 0%, #1a1a2e 80%, #0e0b16 100%);
+  z-index: -1;
+  animation: bgPulse 8s infinite alternate;
+}
+@keyframes bgPulse {
+  0% { filter: brightness(1) blur(0px); }
+  100% { filter: brightness(1.2) blur(2px); }
+}
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.2rem 2rem;
+  background: linear-gradient(90deg, #1a1a2e 60%, #f9c74f22 100%);
+  box-shadow: 0 2px 16px #f9c74f10;
+}
+.music-title {
+  font-size: 2.1rem;
+  color: #f9c74f;
+  letter-spacing: 2px;
+  font-family: 'Quicksand', sans-serif;
+  text-shadow: 0 2px 12px #f9c74f60;
+  font-weight: 900;
+}
+.back-btn {
+  color: #f9c74f;
+  text-decoration: none;
+  border: 1px solid #f9c74f;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  font-weight: bold;
+  background: #1a1a2e;
+  box-shadow: 0 2px 8px #f9c74f22;
+}
+.back-btn:hover {
+  background: #f9c74f;
+  color: #0e0b16;
+  box-shadow: 0 2px 16px #f9c74f80;
+}
+.section-title {
+  text-align: center;
+  margin-top: 2.5rem;
+  font-size: 2.3rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #43aa8b;
+  text-shadow: 0 2px 24px #f9c74f80, 0 4px 32px #f72585;
+  font-family: 'Quicksand', sans-serif;
+  animation: titlePulse 2.5s infinite alternate;
+}
+@keyframes titlePulse {
+  to { color: #f72585; text-shadow: 0 2px 32px #43aa8b80, 0 4px 32px #f9c74f; }
+}
+.rockola-section {
+  margin: 0 auto;
+  max-width: 700px;
+  padding: 2rem 1rem 0 1rem;
+  text-align: center;
+}
+.rockola-content {
+  margin-top: 2.5rem;
+}
+.rockola-btn {
+  font-size: 1.5rem;
+  background: linear-gradient(90deg, #f9c74f 60%, #f72585 100%);
+  color: #0e0b16;
+  border: none;
+  border-radius: 12px;
+  padding: 1rem 2.5rem;
+  font-weight: bold;
+  box-shadow: 0 2px 16px #f9c74f60;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+.rockola-btn:hover {
+  background: linear-gradient(90deg, #f72585 60%, #f9c74f 100%);
+  transform: scale(1.07) rotate(-2deg);
+}
+.rockola-result {
+  margin-top: 2.5rem;
+  font-size: 1.3rem;
+  color: #f9c74f;
+  min-height: 40px;
+  font-weight: bold;
+  text-shadow: 0 2px 12px #f72585;
+}
+footer {
+  text-align: center;
+  padding: 2rem;
+  font-size: 1.1rem;
+  opacity: 0.8;
+  color: #f72585;
+  text-shadow: 0 2px 12px #f9c74f60;
+}
