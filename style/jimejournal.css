@@ -264,6 +264,46 @@ header h2 {
   border-color: var(--autumn-bright);
 }
 
+/* Cute NEW badge */
+.new-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: linear-gradient(135deg, var(--autumn-bright), var(--autumn-warm));
+  color: var(--autumn-dark);
+  font-weight: 800;
+  font-size: 0.8rem;
+  padding: 4px 10px;
+  border-radius: 999px;
+  box-shadow: 0 6px 18px rgba(228, 111, 81, 0.35), inset 0 1px 2px rgba(255,255,255,0.4);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  z-index: 2;
+  animation: popIn 500ms ease-out, glowPulse 2.5s ease-in-out infinite;
+}
+
+.new-badge.small {
+  font-size: 0.65rem;
+  padding: 2px 8px;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+@keyframes popIn {
+  0% { transform: translateY(-6px) scale(0.8); opacity: 0; }
+  100% { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+@keyframes glowPulse {
+  0% { box-shadow: 0 0 0 0 rgba(228, 111, 81, 0.5); }
+  50% { box-shadow: 0 0 0 6px rgba(228, 111, 81, 0.0); }
+  100% { box-shadow: 0 0 0 0 rgba(228, 111, 81, 0.5); }
+}
+
 .collage-tile h3 {
   font-size: 1.1rem;
   margin-bottom: 0.3rem;

@@ -41,10 +41,60 @@ const fotosPulgui = [
 
 let currentPhotoId = null;
 let isGridView = true;
+let newestPhotoIds = new Set();
+
+// Parse Spanish date strings like "6 de septiembre 2025 18:18 - 22:19" or "4 de Octubre 2025 17:36"
+function parseSpanishFechaToTimestamp(fechaStr) {
+  try {
+    if (!fechaStr) return 0;
+    const s = fechaStr.trim().toLowerCase();
+    const months = {
+      'enero': 0, 'febrero': 1, 'marzo': 2, 'abril': 3, 'mayo': 4, 'junio': 5,
+      'julio': 6, 'agosto': 7, 'septiembre': 8, 'setiembre': 8, 'octubre': 9, 'noviembre': 10, 'diciembre': 11
+    };
+    const strip = (t) => t.normalize('NFD').replace(/[^\w\s]/g, '').replace(/[\u0300-\u036f]/g, '');
+    const match = s.match(/^(\d{1,2})\s+de\s+([a-záéíóú]+)\s+(\d{4})(?:\s+(\d{1,2}:\d{2}))/i);
+    if (match) {
+      const day = parseInt(match[1], 10);
+      const monthName = strip(match[2]);
+      const year = parseInt(match[3], 10);
+      const time = match[4] || '00:00';
+      const [hh, mm] = time.split(':').map(n => parseInt(n, 10));
+      const mi = months[monthName] ?? months[monthName.toLowerCase()] ?? 0;
+      return new Date(year, mi, day, hh || 0, mm || 0).getTime();
+    }
+    const m2 = s.match(/^(\d{1,2})\s+de\s+([a-záéíóú]+)\s+(\d{4})/i);
+    if (m2) {
+      const day = parseInt(m2[1], 10);
+      const monthName = strip(m2[2]);
+      const year = parseInt(m2[3], 10);
+      const mi = months[monthName] ?? months[monthName.toLowerCase()] ?? 0;
+      return new Date(year, mi, day).getTime();
+    }
+    return 0;
+  } catch (e) {
+    console.warn('Failed to parse fecha:', fechaStr, e);
+    return 0;
+  }
+}
+
+function computeNewestPhotos() {
+  const now = Date.now();
+  const windowMs = 48 * 60 * 60 * 1000; // 48 hours
+  newestPhotoIds = new Set(
+    fotosPulgui
+      .filter(f => {
+        const ts = parseSpanishFechaToTimestamp(f.fecha);
+        return ts && (now - ts) >= 0 && (now - ts) <= windowMs;
+      })
+      .map(f => f.id)
+  );
+}
 
 // Initialize the journal
 function initializeJournal() {
   console.log('Initializing journal...');
+  computeNewestPhotos();
   createTimeline();
   createCollageGrid();
   setupLightboxEvents();
@@ -86,6 +136,7 @@ function createTimeline() {
       point.setAttribute("data-photo-id", foto.id);
 
       point.innerHTML = `
+        ${newestPhotoIds.has(foto.id) ? '<span class="new-badge small">New</span>' : ''}
         <img src="../assets/image/pulguijournal/${foto.archivo}" 
              alt="${foto.titulo}" 
              class="timeline-img"
@@ -129,6 +180,7 @@ function createCollageGrid() {
 
     tile.innerHTML = `
       <img src="../assets/image/pulguijournal/${foto.archivo}" alt="${foto.titulo}" class="collage-img">
+      ${newestPhotoIds.has(foto.id) ? '<span class="new-badge" title="Nuevo">✨ New</span>' : ''}
       <h3>${foto.titulo}</h3>
       <p class="collage-desc">${foto.fecha}</p>
       <div class="photo-actions">
@@ -629,9 +681,10 @@ function generateMosaicView() {
             const heights = ['200px', '250px', '300px', '350px', '280px'];
             const randomHeight = heights[Math.floor(Math.random() * heights.length)];
             
-            mosaicItem.innerHTML = `
-                <img src="../assets/image/pulguijournal/${foto.archivo}" alt="${foto.titulo}" style="height: ${randomHeight}; object-fit: cover;">
-                <div class="mosaic-overlay">
+      mosaicItem.innerHTML = `
+        <img src="../assets/image/pulguijournal/${foto.archivo}" alt="${foto.titulo}" style="height: ${randomHeight}; object-fit: cover;">
+        ${newestPhotoIds.has(foto.id) ? '<span class="new-badge">✨ New</span>' : ''}
+        <div class="mosaic-overlay">
                     ${foto.titulo}<br>
                     ${foto.fecha}
                 </div>
