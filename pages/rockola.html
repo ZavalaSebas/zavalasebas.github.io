@@ -14,10 +14,17 @@
     <a href="pentatonic.html" class="back-btn">← volver</a>
   </header>
   <section class="rockola-section">
-    <h1 class="section-title">¡Deja que el azar elija tu próxima canción!</h1>
-    <div class="rockola-content">
-      <button id="spinBtn" class="rockola-btn">🎰 Girar Rockola</button>
-      <div id="result" class="rockola-result"></div>
+    <h1 class="section-title">Mi Rockola Creativa</h1>
+    <div id="rockola-selector" class="rockola-selector"></div>
+    <div id="rockola-player" class="rockola-player">
+      <div class="player-bg"></div>
+      <button id="close-player" class="close-player">✖</button>
+      <img id="player-portada" class="player-portada" src="" alt="portada" />
+      <div class="player-info">
+        <h2 id="player-nombre"></h2>
+        <span id="player-duracion"></span>
+      </div>
+      <audio id="player-audio" controls></audio>
     </div>
   </section>
   <footer>

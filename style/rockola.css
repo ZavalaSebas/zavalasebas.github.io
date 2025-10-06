@@ -63,38 +63,144 @@ header {
 @keyframes titlePulse {
   to { color: #f72585; text-shadow: 0 2px 32px #43aa8b80, 0 4px 32px #f9c74f; }
 }
+/* Selector de grabaciones */
 .rockola-section {
   margin: 0 auto;
-  max-width: 700px;
+  max-width: 900px;
   padding: 2rem 1rem 0 1rem;
   text-align: center;
 }
-.rockola-content {
+.rockola-selector {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2.5rem;
+  justify-content: center;
   margin-top: 2.5rem;
 }
-.rockola-btn {
-  font-size: 1.5rem;
-  background: linear-gradient(90deg, #f9c74f 60%, #f72585 100%);
-  color: #0e0b16;
-  border: none;
-  border-radius: 12px;
-  padding: 1rem 2.5rem;
-  font-weight: bold;
-  box-shadow: 0 2px 16px #f9c74f60;
-  cursor: pointer;
-  transition: background 0.2s, transform 0.2s;
-}
-.rockola-btn:hover {
-  background: linear-gradient(90deg, #f72585 60%, #f9c74f 100%);
-  transform: scale(1.07) rotate(-2deg);
-}
-.rockola-result {
-  margin-top: 2.5rem;
-  font-size: 1.3rem;
+.rockola-card {
+  background: linear-gradient(135deg, #1a1a2e 70%, #f9c74f22 100%);
+  border: 2px solid #f9c74f80;
+  border-radius: 20px;
+  width: 220px;
   color: #f9c74f;
-  min-height: 40px;
+  text-align: center;
+  box-shadow: 0 0 24px #f9c74f22, 0 4px 32px #f7258522;
+  padding: 1.2rem 1rem 1.5rem 1rem;
+  transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.rockola-card:hover {
+  background: linear-gradient(135deg, #f9c74f 80%, #f72585 100%);
+  color: #0e0b16;
+  transform: scale(1.07) rotate(-2deg);
+  box-shadow: 0 0 32px #f9c74f80, 0 8px 48px #f7258580;
+}
+.rockola-img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  box-shadow: 0 2px 16px #f9c74f60;
+  margin-bottom: 1rem;
+  object-fit: cover;
+  background: #222;
+}
+.rockola-info h3 {
+  font-size: 1.1rem;
   font-weight: bold;
-  text-shadow: 0 2px 12px #f72585;
+  margin: 0.5rem 0 0.2rem 0;
+}
+.rockola-info span {
+  font-size: 0.95rem;
+  color: #fff;
+  opacity: 0.8;
+}
+
+/* Reproductor animado */
+.rockola-player {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.rockola-player.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+.rockola-player.active .player-portada {
+  animation: discoIn 0.5s cubic-bezier(.77,0,.18,1) forwards;
+}
+@keyframes discoIn {
+  0% { transform: scale(0.5) rotate(-180deg); opacity: 0; }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+.player-bg {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background: radial-gradient(circle, #f9c74f22 0%, #1a1a2e 80%, #0e0b16 100%);
+  z-index: -1;
+  filter: blur(8px);
+}
+.close-player {
+  position: absolute;
+  top: 40px; right: 60px;
+  font-size: 2rem;
+  background: transparent;
+  border: none;
+  color: #f72585;
+  cursor: pointer;
+  z-index: 2;
+  transition: color 0.2s;
+}
+.close-player:hover {
+  color: #f9c74f;
+}
+.player-portada {
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  box-shadow: 0 2px 32px #f9c74f80, 0 8px 48px #f7258580;
+  margin-bottom: 2rem;
+  object-fit: cover;
+  background: #222;
+  animation: discoIdle 2s infinite alternate;
+}
+@keyframes discoIdle {
+  to { transform: rotate(8deg) scale(1.04); }
+}
+.player-info {
+  text-align: center;
+  margin-bottom: 1.2rem;
+}
+.player-info h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 0.5rem 0 0.2rem 0;
+  color: #f72585;
+}
+.player-info span {
+  font-size: 1.1rem;
+  color: #fff;
+  opacity: 0.8;
+}
+#player-audio {
+  width: 320px;
+  max-width: 90vw;
+  margin-top: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 16px #f9c74f40;
 }
 footer {
   text-align: center;
