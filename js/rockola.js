@@ -1,4 +1,58 @@
 const tracks = [
+  {
+    nombre: "blackbird-take-5",
+    portada: "../assets/image/covers/blackbird.jpg",
+    duracion: "",
+    archivo: "../assets/audio/rockola/blackbird-take-5.mp3",
+    tipo: "todo,studio",
+    letra: "",
+    historia: ""
+  },
+  {
+    nombre: "blackbird-take-7",
+    portada: "../assets/image/covers/blackbird2.jpg",
+    duracion: "",
+    archivo: "../assets/audio/rockola/blackbird-take-7.mp3",
+    tipo: "todo,studio",
+    letra: "",
+    historia: ""
+  },
+  {
+    nombre: "island-in-the-sun-take-3",
+    portada: "../assets/image/covers/islandinthesun.jpg",
+    duracion: "",
+    archivo: "../assets/audio/rockola/island-in-the-sun-take-3.mp3",
+    tipo: "todo,studio",
+    letra: "",
+    historia: ""
+  },
+  {
+    nombre: "shallow-take-8",
+    portada: "../assets/image/covers/shallow.jpg",
+    duracion: "",
+    archivo: "../assets/audio/rockola/shallow-take-8.mp3",
+    tipo: "todo,studio",
+    letra: "",
+    historia: ""
+  },
+  {
+    nombre: "te-para-3-take-5",
+    portada: "../assets/image/covers/tepara3.jpg",
+    duracion: "",
+    archivo: "../assets/audio/rockola/te-para-3-take-5.mp3",
+    tipo: "todo,studio",
+    letra: "",
+    historia: ""
+  },
+  {
+    nombre: "tears-in-heaven-take-12",
+    portada: "../assets/image/covers/tears.jpg",
+    duracion: "",
+    archivo: "../assets/audio/rockola/tears-in-heaven-take-12.mp3",
+    tipo: "todo,studio",
+    letra: "",
+    historia: ""
+  },
   // --- INICIO: Tracks generados automáticamente desde assets/audio/rockola ---
   {
     nombre: "Amor Completo Solo Take0",
@@ -281,6 +335,29 @@ const historiaDiv = document.getElementById('player-historia');
 
 let currentTrack = 0;
 
+// Automatizar duración de cada track si está vacía
+function setTrackDurations() {
+  tracks.forEach((track, i) => {
+    if (!track.duracion && track.archivo) {
+      const audioTmp = document.createElement('audio');
+      audioTmp.src = track.archivo;
+      audioTmp.preload = 'metadata';
+      audioTmp.addEventListener('loadedmetadata', function loaded() {
+        if (audioTmp.duration && !isNaN(audioTmp.duration)) {
+          const min = Math.floor(audioTmp.duration / 60);
+          const sec = Math.round(audioTmp.duration % 60).toString().padStart(2, '0');
+          track.duracion = `${min}:${sec}`;
+          // Si está en el reproductor, actualizar
+          if (nombre.textContent === track.nombre) {
+            duracion.textContent = track.duracion;
+          }
+        }
+        audioTmp.removeEventListener('loadedmetadata', loaded);
+      });
+    }
+  });
+}
+
 function renderShelves() {
   Object.keys(shelfMap).forEach(key => {
     shelfMap[key].innerHTML = '';
@@ -351,3 +428,4 @@ if (shelfView.style.display === 'none') {
   toggleViewBtn.textContent = 'List';
 }
 renderShelves();
+setTrackDurations();
