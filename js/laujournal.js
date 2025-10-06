@@ -110,6 +110,7 @@ function initializeJournal() {
   initializeDashboard();
   initializeViewControls();
   initializeOnThisDay();
+  initializeFullscreenToggle();
   console.log('Journal initialization complete');
 }
 
@@ -187,11 +188,15 @@ function createCollageGrid() {
     tile.setAttribute("data-photo-id", foto.id);
 
     tile.innerHTML = `
-      <img src="../assets/image/laujournal/${foto.archivo}" alt="${foto.titulo}" class="collage-img">
-      ${newestPhotoIds.has(foto.id) ? '<span class="new-badge" title="Nuevo">✨ New</span>' : ''}
-      <h3>${foto.titulo}</h3>
-      <p class="collage-desc">${foto.fecha}</p>
-      <div class="photo-actions">
+      <div class="tile-media">
+        <img src="../assets/image/laujournal/${foto.archivo}" alt="${foto.titulo}" class="collage-img">
+        ${newestPhotoIds.has(foto.id) ? '<span class="new-badge" title="Nuevo">✨ New</span>' : ''}
+        <div class="tile-overlay">
+          <div class="tile-title">${foto.titulo}</div>
+          <div class="tile-date">${foto.fecha}</div>
+        </div>
+      </div>
+      <div class="tile-footer">
         <button class="notes-preview-btn" data-photo-id="${foto.id}">
           💭 <span class="notes-count">0</span>
         </button>
@@ -804,3 +809,27 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Make deleteNote function global
 window.deleteNote = deleteNote;
+
+// Fullscreen toggle
+function initializeFullscreenToggle() {
+  const btn = document.getElementById('fullscreen-btn');
+  if (!btn) return;
+  const isFs = () => document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement;
+  const enter = (el) => {
+    if (el.requestFullscreen) return el.requestFullscreen();
+    if (el.webkitRequestFullscreen) return el.webkitRequestFullscreen();
+    if (el.msRequestFullscreen) return el.msRequestFullscreen();
+  };
+  const exit = () => {
+    if (document.exitFullscreen) return document.exitFullscreen();
+    if (document.webkitExitFullscreen) return document.webkitExitFullscreen();
+    if (document.msExitFullscreen) return document.msExitFullscreen();
+  };
+  btn.addEventListener('click', () => {
+    if (isFs()) {
+      exit();
+    } else {
+      enter(document.documentElement);
+    }
+  });
+}

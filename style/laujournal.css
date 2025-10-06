@@ -135,6 +135,10 @@ header {
   box-shadow: 0 0 20px var(--lau-main);
 }
 
+.fullscreen-btn {
+  font-size: 1rem;
+}
+
 header h2 {
   font-size: 1.7rem;
   font-family: 'Dancing Script', cursive;
@@ -166,32 +170,33 @@ header h2 {
 }
 
 .collage-grid {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 2rem;
-  padding: 2rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1.25rem;
+  padding: 2rem clamp(1rem, 4vw, 3rem);
+  align-items: stretch;
 }
 
 .collage-tile {
-  width: 280px;
   background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 153, 204, 0.3);
-  border-radius: 14px;
-  padding: 1rem;
+  border: 1px solid rgba(255, 153, 204, 0.25);
+  border-radius: 16px;
+  padding: 0;
   color: #ffd6e0;
-  text-align: center;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  box-shadow: 0 0 12px rgba(255, 153, 204, 0.2);
+  text-align: left;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  box-shadow: 0 6px 18px rgba(255, 153, 204, 0.18);
   cursor: pointer;
-  animation: fadeIn 0.6s ease forwards;
+  animation: fadeIn 0.5s ease forwards;
   opacity: 0;
   position: relative;
+  overflow: hidden;
 }
 
 .collage-tile:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 18px rgba(255, 153, 204, 0.5);
+  transform: translateY(-4px);
+  box-shadow: 0 14px 32px rgba(255, 153, 204, 0.35);
+  border-color: rgba(255, 153, 204, 0.5);
 }
 
 @keyframes fadeIn {
@@ -201,12 +206,57 @@ header h2 {
   }
 }
 
+.tile-media {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+}
+
 .collage-img {
   width: 100%;
-  height: 180px;
+  height: 100%;
   object-fit: cover;
-  border-radius: 10px;
-  margin-bottom: 0.8rem;
+  display: block;
+  transition: transform 0.6s ease;
+}
+
+.collage-tile:hover .collage-img {
+  transform: scale(1.05);
+}
+
+.tile-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(43,10,40,0) 50%, rgba(43,10,40,0.85) 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 0.75rem 0.9rem;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.collage-tile:hover .tile-overlay {
+  opacity: 1;
+}
+
+.tile-title {
+  font-family: 'Dancing Script', cursive;
+  font-size: 1.2rem;
+  color: #ffb3d9;
+}
+
+.tile-date {
+  font-size: 0.8rem;
+  opacity: 0.85;
+}
+
+.tile-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  padding: 0.6rem 0.75rem 0.75rem;
 }
 
 /* Cute NEW badge */
@@ -563,6 +613,16 @@ header h2 {
 
 /* Responsive Design */
 @media (max-width: 768px) {
+  /* Keep overlay visible on touch devices for readability */
+  .tile-overlay { opacity: 1; }
+  .collage-grid {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 0.9rem;
+    padding: 1rem;
+  }
+  .tile-media { aspect-ratio: 3 / 4; }
+  .tile-title { font-size: 1.05rem; }
+  .tile-date { font-size: 0.75rem; }
   .header-controls {
     gap: 0.5rem;
   }
@@ -640,15 +700,7 @@ header h2 {
     margin: 2rem 0 1.5rem;
   }
   
-  .collage-grid {
-    gap: 1rem;
-    padding: 1rem;
-  }
-  
-  .collage-tile {
-    width: 100%;
-    max-width: 300px;
-  }
+  .collage-grid { padding: 0.75rem 1rem 1.25rem; }
   
   .timeline-point span {
     font-size: 0.7rem;
