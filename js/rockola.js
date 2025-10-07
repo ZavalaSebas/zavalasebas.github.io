@@ -278,6 +278,15 @@ const tracks = [
     tipo: "todo,singles",
     letra: "Ver letra original de The Voidz",
     historia: "Mi versión de Lazy Boy por The Voidz - Cover de guitarra"
+  },
+  {
+    nombre: "Untitled",
+    portada: "../assets/image/covers/untitled.jpg",
+    duracion: "",
+    archivo: "../assets/audio/rockola/Untitled.mp3",
+    tipo: "todo,singles",
+    letra: "Instrumental",
+    historia: "Proyecto sin terminar - Backpage experimental"
   }
   // --- FIN: Tracks generados automáticamente ---
 ];
