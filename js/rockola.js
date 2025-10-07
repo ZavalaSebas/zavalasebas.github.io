@@ -5,8 +5,8 @@ const tracks = [
     duracion: "",
     archivo: "../assets/audio/rockola/blackbird-take-5.mp3",
     tipo: "todo,studio",
-    letra: "",
-    historia: ""
+    letra: "Ver letra original de The Beatles",
+    historia: "Take número 5 de Blackbird - Mi versión de Blackbird por The Beatles"
   },
   {
     nombre: "blackbird-take-7",
@@ -14,8 +14,8 @@ const tracks = [
     duracion: "",
     archivo: "../assets/audio/rockola/blackbird-take-7.mp3",
     tipo: "todo,studio",
-    letra: "",
-    historia: ""
+    letra: "Ver letra original de The Beatles",
+    historia: "Take número 7 de Blackbird - Mi versión de Blackbird por The Beatles"
   },
   {
     nombre: "island-in-the-sun-take-3",
@@ -23,8 +23,8 @@ const tracks = [
     duracion: "",
     archivo: "../assets/audio/rockola/island-in-the-sun-take-3.mp3",
     tipo: "todo,studio",
-    letra: "",
-    historia: ""
+    letra: "Ver letra original de Weezer",
+    historia: "Take número 3 de Island in the Sun - Mi versión de Island in the Sun por Weezer"
   },
   {
     nombre: "shallow-take-8",
@@ -32,8 +32,8 @@ const tracks = [
     duracion: "",
     archivo: "../assets/audio/rockola/shallow-take-8.mp3",
     tipo: "todo,studio",
-    letra: "",
-    historia: ""
+    letra: "Ver letra original de Lady Gaga & Bradley Cooper",
+    historia: "Take número 8 de Shallow - Mi versión de Shallow por Lady Gaga & Bradley Cooper"
   },
   {
     nombre: "te-para-3-take-5",
@@ -41,8 +41,8 @@ const tracks = [
     duracion: "",
     archivo: "../assets/audio/rockola/te-para-3-take-5.mp3",
     tipo: "todo,studio",
-    letra: "",
-    historia: ""
+    letra: "Ver letra original de Soda Stereo",
+    historia: "Take número 5 de Te Para 3"
   },
   {
     nombre: "tears-in-heaven-take-12",
@@ -50,8 +50,8 @@ const tracks = [
     duracion: "",
     archivo: "../assets/audio/rockola/tears-in-heaven-take-12.mp3",
     tipo: "todo,studio",
-    letra: "",
-    historia: ""
+    letra: "Ver letra original de Eric Clapton",
+    historia: "Take número 12 de Tears in Heaven - Mi versión de Tears in Heaven por Eric Clapton"
   },
   // --- INICIO: Tracks generados automáticamente desde assets/audio/rockola ---
   {
@@ -60,8 +60,8 @@ const tracks = [
     duracion: "",
     archivo: "../assets/audio/rockola/Amor Completo Solo Take0.mp3",
     tipo: "todo,studio",
-    letra: "",
-    historia: ""
+    letra: "Ver letra original de Mon Laferte",
+    historia: "Take número 0 de Amor Completo en solitario"
   },
   {
     nombre: "Amor Completo Take7",
@@ -69,8 +69,8 @@ const tracks = [
     duracion: "",
     archivo: "../assets/audio/rockola/Amor Completo Take7.mp3",
     tipo: "todo,studio",
-    letra: "",
-    historia: ""
+    letra: "Ver letra original de Mon Laferte",
+    historia: "Take número 7 de Amor Completo"
   },
   {
     nombre: "Burning Quietly",
@@ -114,8 +114,8 @@ const tracks = [
     duracion: "",
     archivo: "../assets/audio/rockola/Flaco Take 2.mp3",
     tipo: "todo,studio",
-    letra: "",
-    historia: ""
+    letra: "Ver letra original de Mon Laferte",
+    historia: "Take número 2 de Flaco"
   },
   {
     nombre: "I need You Take0",
@@ -123,8 +123,8 @@ const tracks = [
     duracion: "",
     archivo: "../assets/audio/rockola/I need You Take0.mp3",
     tipo: "todo,studio",
-    letra: "",
-    historia: ""
+    letra: "I need you — more than I can say",
+    historia: "Take número 0 de I need You - Canción original para el EP Comfort"
   },
   {
     nombre: "I Want to Be Free",
@@ -132,8 +132,8 @@ const tracks = [
     duracion: "",
     archivo: "../assets/audio/rockola/I Want to Be Free.mp3",
     tipo: "todo,singles",
-    letra: "",
-    historia: ""
+    letra: "I’m stuck in a cage with no lock no key",
+    historia: "Cancion Original por Dani para EP Comfort"
   },
   {
     nombre: "I Want to Be FreeV2",
@@ -141,8 +141,8 @@ const tracks = [
     duracion: "",
     archivo: "../assets/audio/rockola/I Want to Be FreeV2.mp3",
     tipo: "todo,singles",
-    letra: "",
-    historia: ""
+    letra: "I’m stuck in a cage with no lock no key",
+    historia: "Cancion Original por Dani para EP Comfort en una segunda versión"
   },
   {
     nombre: "I-need-You-Take-0 (Cover) (v2)",
@@ -150,8 +150,8 @@ const tracks = [
     duracion: "",
     archivo: "../assets/audio/rockola/I-need-You-Take-0 (Cover) (v2).mp3",
     tipo: "todo,studio",
-    letra: "",
-    historia: ""
+    letra: "I need you — more than I can say",
+    historia: "Version numero 2 de I need You cancion original para el EP Comfort"
   },
   {
     nombre: "I-need-You-Take-0 (Cover)",
@@ -159,8 +159,8 @@ const tracks = [
     duracion: "",
     archivo: "../assets/audio/rockola/I-need-You-Take-0 (Cover).mp3",
     tipo: "todo,studio",
-    letra: "",
-    historia: ""
+    letra: "I need you — more than I can say",
+    historia: "Take número 0 de I need You "
   },
   {
     nombre: "John Lennon - Imagine (Piano Cover)",
@@ -168,8 +168,8 @@ const tracks = [
     duracion: "",
     archivo: "../assets/audio/rockola/John Lennon - Imagine (Piano Cover).mp3",
     tipo: "todo,singles",
-    letra: "",
-    historia: ""
+    letra: "Ver letra original de John Lennon",
+    historia: "Mi versión de Imagine por John Lennon - Cover en piano"
   },
   {
     nombre: "Littleroot Town(FreeStyle)",
@@ -177,8 +177,8 @@ const tracks = [
     duracion: "",
     archivo: "../assets/audio/rockola/Littleroot Town(FreeStyle).mp3",
     tipo: "todo,singles",
-    letra: "",
-    historia: ""
+    letra: "Instrumental",
+    historia: "Reversionado de Littleroot Town en freestyle"
   },
   {
     nombre: "Littleroot Town(Tecno)",
@@ -186,8 +186,8 @@ const tracks = [
     duracion: "",
     archivo: "../assets/audio/rockola/Littleroot Town(Tecno).mp3",
     tipo: "todo,singles",
-    letra: "",
-    historia: ""
+    letra: "Instrumental",
+    historia: "Reversionado de Littleroot Town en estilo Tecno"
   },
   {
     nombre: "Littleroot town",
@@ -195,8 +195,8 @@ const tracks = [
     duracion: "",
     archivo: "../assets/audio/rockola/Littleroot town.mp3",
     tipo: "todo,singles",
-    letra: "",
-    historia: ""
+    letra: "Instrumental",
+    historia: "Version de Littleroot Town"
   },
   {
     nombre: "Lonely Little Town",
@@ -205,7 +205,7 @@ const tracks = [
     archivo: "../assets/audio/rockola/Lonely Little Town.mp3",
     tipo: "todo,singles",
     letra: "",
-    historia: ""
+    historia: "Cancion Original por Moni para el EP Comfort"
   },
   {
     nombre: "Lonely Little TownV2",
@@ -222,8 +222,8 @@ const tracks = [
     duracion: "",
     archivo: "../assets/audio/rockola/Mia and Sebs Instrumental Cover.mp3",
     tipo: "todo,singles",
-    letra: "",
-    historia: ""
+    letra: "Instrumental",
+    historia: "Mi versión instrumental de La La Land - Cover instrumental"
   },
   {
     nombre: "More Surprises",
@@ -240,8 +240,8 @@ const tracks = [
     duracion: "",
     archivo: "../assets/audio/rockola/NoSurprises (Cover).mp3",
     tipo: "todo,singles",
-    letra: "",
-    historia: ""
+    letra: "Ver letra original de Radiohead",
+    historia: "Mi versión de No Surprises por Radiohead"
   },
   {
     nombre: "One More Kiss Take 1",
@@ -250,7 +250,7 @@ const tracks = [
     archivo: "../assets/audio/rockola/One More Kiss Take 1.mp3",
     tipo: "todo,studio",
     letra: "",
-    historia: ""
+    historia: "Take número 1 de One More Kiss - Canción original"
   },
   {
     nombre: "SelfLOve(Instrumental)",
@@ -258,8 +258,8 @@ const tracks = [
     duracion: "",
     archivo: "../assets/audio/rockola/SelfLOve(Instrumental).mp3",
     tipo: "todo,singles",
-    letra: "",
-    historia: ""
+    letra: "Instrumental",
+    historia: "Canción original instrumental - SelfLove"
   },
   {
     nombre: "Stereo Take 1",
@@ -268,7 +268,7 @@ const tracks = [
     archivo: "../assets/audio/rockola/Stereo Take 1.mp3",
     tipo: "todo,studio",
     letra: "",
-    historia: ""
+    historia: "Take número 1 de Stereo - Canción original"
   },
   {
     nombre: "The Voidz - Lazy Boy (Guitar Cover)",
@@ -276,8 +276,8 @@ const tracks = [
     duracion: "",
     archivo: "../assets/audio/rockola/The Voidz - Lazy Boy (Guitar Cover).mp3",
     tipo: "todo,singles",
-    letra: "",
-    historia: ""
+    letra: "Ver letra original de The Voidz",
+    historia: "Mi versión de Lazy Boy por The Voidz - Cover de guitarra"
   }
   // --- FIN: Tracks generados automáticamente ---
 ];
