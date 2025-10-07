@@ -78,8 +78,8 @@ const tracks = [
     duracion: "",
     archivo: "../assets/audio/rockola/Burning Quietly.mp3",
     tipo: "todo,singles",
-    letra: "",
-    historia: ""
+    letra: "Fingers trace the edge of the sky",
+    historia: "Cover reversionado de I need you - Canción original para el EP Comfort"
   },
   {
     nombre: "Eclipsed Heart",
@@ -87,8 +87,8 @@ const tracks = [
     duracion: "",
     archivo: "../assets/audio/rockola/Eclipsed Heart.mp3",
     tipo: "todo,singles",
-    letra: "",
-    historia: ""
+    letra: "Shadows stretch where the moonlight dies",
+    historia: "Cover reversionado de I need you - Canción original para el EP Comfort"
   },
   {
     nombre: "EscapateConmigo",
@@ -96,8 +96,8 @@ const tracks = [
     duracion: "",
     archivo: "../assets/audio/rockola/EscapateConmigo.mp3",
     tipo: "todo,singles",
-    letra: "",
-    historia: ""
+    letra: "Quiero ser libre de ti",
+    historia: "Cover reversionado de escapismo - Canción original por Moni para el EP Comfort"
   },
   {
     nombre: "EscapateConmigoV2",
@@ -105,8 +105,8 @@ const tracks = [
     duracion: "",
     archivo: "../assets/audio/rockola/EscapateConmigoV2.mp3",
     tipo: "todo,singles",
-    letra: "",
-    historia: ""
+    letra: "Quiero ser libre de ti",
+    historia: "Cover reversionado de escapismo - Canción original por Moni para el EP Comfort en su segund version"
   },
   {
     nombre: "Flaco Take 2",
@@ -204,7 +204,7 @@ const tracks = [
     duracion: "",
     archivo: "../assets/audio/rockola/Lonely Little Town.mp3",
     tipo: "todo,singles",
-    letra: "",
+    letra: "In this lonely little town",
     historia: "Cancion Original por Moni para el EP Comfort"
   },
   {
@@ -213,8 +213,8 @@ const tracks = [
     duracion: "",
     archivo: "../assets/audio/rockola/Lonely Little TownV2.mp3",
     tipo: "todo,singles",
-    letra: "",
-    historia: ""
+    letra: "In this lonely little town",
+    historia: "Cancion Original por Moni para el EP Comfort en su segunda versión"
   },
   {
     nombre: "Mia and Sebs Instrumental Cover",
@@ -231,8 +231,8 @@ const tracks = [
     duracion: "",
     archivo: "../assets/audio/rockola/More Surprises.mp3",
     tipo: "todo,singles",
-    letra: "",
-    historia: ""
+    letra: "In a world full of surprises",
+    historia: "Canción Original reversionada de No Surprises por Saul para el EP Comfort"
   },
   {
     nombre: "NoSurprises (Cover)",
@@ -249,8 +249,8 @@ const tracks = [
     duracion: "",
     archivo: "../assets/audio/rockola/One More Kiss Take 1.mp3",
     tipo: "todo,studio",
-    letra: "",
-    historia: "Take número 1 de One More Kiss - Canción original"
+    letra: "OOnly one more kiss",
+    historia: "Take número 1 de One More Kiss"
   },
   {
     nombre: "SelfLOve(Instrumental)",
@@ -268,7 +268,7 @@ const tracks = [
     archivo: "../assets/audio/rockola/Stereo Take 1.mp3",
     tipo: "todo,studio",
     letra: "",
-    historia: "Take número 1 de Stereo - Canción original"
+    historia: "Take número 1 de Stereo"
   },
   {
     nombre: "The Voidz - Lazy Boy (Guitar Cover)",
