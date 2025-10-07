@@ -1,10 +1,46 @@
 const tracks = [
   {
+    nombre: "Curly Hair Girl",
+    portada: "../assets/image/covers/curlyhair.jpg",
+    duracion: "",
+    archivo: "../assets/audio/rockola/Curly Hair Girl.mp3",
+    tipo: "todo,singles",
+    letra: "Curly hair girl Oh you rock my world",
+    historia: "Canción original - del EP Good Little Girl"
+  },
+  {
+    nombre: "Curly Hair Girl V2",
+    portada: "../assets/image/covers/curlyhair.jpg",
+    duracion: "",
+    archivo: "../assets/audio/rockola/Curly Hair Girl V2.mp3",
+    tipo: "todo,singles",
+    letra: "Curly hair girl Oh you rock my world",
+    historia: "Canción original - del EP Good Little Girl"
+  },
+  {
+    nombre: "Joy - Zeta",
+    portada: "../assets/image/covers/surprise2.jpg",
+    duracion: "",
+    archivo: "../assets/audio/rockola/Joy - Zeta.mp3",
+    tipo: "todo,singles",
+    letra: "Like a melody",
+    historia: "Single Original - Joy Zeta"
+  },
+  {
+    nombre: "Joy - Zeta v2",
+    portada: "../assets/image/covers/surprise2.jpg",
+    duracion: "",
+    archivo: "../assets/audio/rockola/Joy - Zeta v2.mp3",
+    tipo: "todo,singles",
+    letra: "Like a melody",
+    historia: "Single Original - Joy Zeta versión 2"
+  },
+  {
     nombre: "blackbird-take-5",
     portada: "../assets/image/covers/blackbird.jpg",
     duracion: "",
     archivo: "../assets/audio/rockola/blackbird-take-5.mp3",
-    tipo: "todo,studio",
+    tipo: "todo,instrumental",
     letra: "Ver letra original de The Beatles",
     historia: "Take número 5 de Blackbird - Mi versión de Blackbird por The Beatles"
   },
@@ -13,7 +49,7 @@ const tracks = [
     portada: "../assets/image/covers/blackbird2.jpg",
     duracion: "",
     archivo: "../assets/audio/rockola/blackbird-take-7.mp3",
-    tipo: "todo,studio",
+    tipo: "todo,instrumental",
     letra: "Ver letra original de The Beatles",
     historia: "Take número 7 de Blackbird - Mi versión de Blackbird por The Beatles"
   },
@@ -31,7 +67,7 @@ const tracks = [
     portada: "../assets/image/covers/shallow.jpg",
     duracion: "",
     archivo: "../assets/audio/rockola/shallow-take-8.mp3",
-    tipo: "todo,studio",
+    tipo: "todo,instrumental",
     letra: "Ver letra original de Lady Gaga & Bradley Cooper",
     historia: "Take número 8 de Shallow - Mi versión de Shallow por Lady Gaga & Bradley Cooper"
   },
@@ -40,7 +76,7 @@ const tracks = [
     portada: "../assets/image/covers/tepara3.jpg",
     duracion: "",
     archivo: "../assets/audio/rockola/te-para-3-take-5.mp3",
-    tipo: "todo,studio",
+    tipo: "todo,instrumental",
     letra: "Ver letra original de Soda Stereo",
     historia: "Take número 5 de Te Para 3"
   },
@@ -49,7 +85,7 @@ const tracks = [
     portada: "../assets/image/covers/tears.jpg",
     duracion: "",
     archivo: "../assets/audio/rockola/tears-in-heaven-take-12.mp3",
-    tipo: "todo,studio",
+    tipo: "todo,instrumental",
     letra: "Ver letra original de Eric Clapton",
     historia: "Take número 12 de Tears in Heaven - Mi versión de Tears in Heaven por Eric Clapton"
   },
@@ -95,7 +131,7 @@ const tracks = [
     portada: "../assets/image/covers/escapism.jpg",
     duracion: "",
     archivo: "../assets/audio/rockola/EscapateConmigo.mp3",
-    tipo: "todo,singles",
+    tipo: "todo,albums",
     letra: "Quiero ser libre de ti",
     historia: "Cover reversionado de escapismo - Canción original por Moni para el EP Comfort"
   },
@@ -104,7 +140,7 @@ const tracks = [
     portada: "../assets/image/covers/escapism.jpg",
     duracion: "",
     archivo: "../assets/audio/rockola/EscapateConmigoV2.mp3",
-    tipo: "todo,singles",
+    tipo: "todo,albums",
     letra: "Quiero ser libre de ti",
     historia: "Cover reversionado de escapismo - Canción original por Moni para el EP Comfort en su segund version"
   },
@@ -149,7 +185,7 @@ const tracks = [
     portada: "../assets/image/covers/ineedyou2.jpg",
     duracion: "",
     archivo: "../assets/audio/rockola/I-need-You-Take-0 (Cover) (v2).mp3",
-    tipo: "todo,studio",
+    tipo: "todo,instrumental",
     letra: "I need you — more than I can say",
     historia: "Version numero 2 de I need You cancion original para el EP Comfort"
   },
@@ -158,7 +194,7 @@ const tracks = [
     portada: "../assets/image/covers/ineedyou.jpg",
     duracion: "",
     archivo: "../assets/audio/rockola/I-need-You-Take-0 (Cover).mp3",
-    tipo: "todo,studio",
+    tipo: "todo,instrumental",
     letra: "I need you — more than I can say",
     historia: "Take número 0 de I need You "
   },
@@ -167,7 +203,7 @@ const tracks = [
     portada: "../assets/image/covers/imagine.jpg",
     duracion: "",
     archivo: "../assets/audio/rockola/John Lennon - Imagine (Piano Cover).mp3",
-    tipo: "todo,singles",
+    tipo: "todo,instrumental",
     letra: "Ver letra original de John Lennon",
     historia: "Mi versión de Imagine por John Lennon - Cover en piano"
   },
@@ -176,7 +212,7 @@ const tracks = [
     portada: "../assets/image/covers/littleroottown.jpg",
     duracion: "",
     archivo: "../assets/audio/rockola/Littleroot Town(FreeStyle).mp3",
-    tipo: "todo,singles",
+    tipo: "todo,instrumental",
     letra: "Instrumental",
     historia: "Reversionado de Littleroot Town en freestyle"
   },
@@ -185,7 +221,7 @@ const tracks = [
     portada: "../assets/image/covers/littleroottown2.jpg",
     duracion: "",
     archivo: "../assets/audio/rockola/Littleroot Town(Tecno).mp3",
-    tipo: "todo,singles",
+    tipo: "todo,instrumental",
     letra: "Instrumental",
     historia: "Reversionado de Littleroot Town en estilo Tecno"
   },
@@ -194,7 +230,7 @@ const tracks = [
     portada: "../assets/image/covers/littleroottown.jpg",
     duracion: "",
     archivo: "../assets/audio/rockola/Littleroot town.mp3",
-    tipo: "todo,singles",
+    tipo: "todo,instrumental",
     letra: "Instrumental",
     historia: "Version de Littleroot Town"
   },
@@ -203,7 +239,7 @@ const tracks = [
     portada: "../assets/image/covers/lonely.jpg",
     duracion: "",
     archivo: "../assets/audio/rockola/Lonely Little Town.mp3",
-    tipo: "todo,singles",
+    tipo: "todo,albums",
     letra: "In this lonely little town",
     historia: "Cancion Original por Moni para el EP Comfort"
   },
@@ -212,7 +248,7 @@ const tracks = [
     portada: "../assets/image/covers/lonely.jpg",
     duracion: "",
     archivo: "../assets/audio/rockola/Lonely Little TownV2.mp3",
-    tipo: "todo,singles",
+    tipo: "todo,albums",
     letra: "In this lonely little town",
     historia: "Cancion Original por Moni para el EP Comfort en su segunda versión"
   },
@@ -221,7 +257,7 @@ const tracks = [
     portada: "../assets/image/covers/laland.jpg",
     duracion: "",
     archivo: "../assets/audio/rockola/Mia and Sebs Instrumental Cover.mp3",
-    tipo: "todo,singles",
+    tipo: "todo,instrumental",
     letra: "Instrumental",
     historia: "Mi versión instrumental de La La Land - Cover instrumental"
   },
@@ -230,7 +266,7 @@ const tracks = [
     portada: "../assets/image/covers/surprise.jpg",
     duracion: "",
     archivo: "../assets/audio/rockola/More Surprises.mp3",
-    tipo: "todo,singles",
+    tipo: "todo,albums",
     letra: "In a world full of surprises",
     historia: "Canción Original reversionada de No Surprises por Saul para el EP Comfort"
   },
@@ -239,7 +275,7 @@ const tracks = [
     portada: "../assets/image/covers/nosurprise.jpg",
     duracion: "",
     archivo: "../assets/audio/rockola/NoSurprises (Cover).mp3",
-    tipo: "todo,singles",
+    tipo: "todo,instrumental",
     letra: "Ver letra original de Radiohead",
     historia: "Mi versión de No Surprises por Radiohead"
   },
@@ -257,7 +293,7 @@ const tracks = [
     portada: "../assets/image/covers/selflove.jpg",
     duracion: "",
     archivo: "../assets/audio/rockola/SelfLOve(Instrumental).mp3",
-    tipo: "todo,singles",
+    tipo: "todo,albums",
     letra: "Instrumental",
     historia: "Canción original instrumental - SelfLove"
   },
@@ -272,19 +308,64 @@ const tracks = [
   },
   {
     nombre: "The Voidz - Lazy Boy (Guitar Cover)",
-    portada: "../assets/image/covers/lazy.jpg",
+    portada: "../assets/image/covers/lazy2.jpg",
     duracion: "",
     archivo: "../assets/audio/rockola/The Voidz - Lazy Boy (Guitar Cover).mp3",
-    tipo: "todo,singles",
+    tipo: "todo,instrumental",
     letra: "Ver letra original de The Voidz",
     historia: "Mi versión de Lazy Boy por The Voidz - Cover de guitarra"
   },
   {
+    nombre: "Enamorado",
+    portada: "../assets/image/covers/nosurprise2.jpg",
+    duracion: "",
+    archivo: "../assets/audio/rockola/Enamorado.mp3",
+    tipo: "todo,singles",
+    letra: "¿Por qué me miras así?",
+    historia: "Enamorado - Feat Daymond de su single debut"
+  },
+  {
+    nombre: "EnamoradoV2",
+    portada: "../assets/image/covers/nosurprise2.jpg",
+    duracion: "",
+    archivo: "../assets/audio/rockola/EnamoradoV2.mp3",
+    tipo: "todo,singles",
+    letra: "¿Por qué me miras así?",
+    historia: "Enamorado versión 2 - Feat Daymond de su single debut"
+  },
+  {
+    nombre: "Navidad Contigo",
+    portada: "../assets/image/covers/amorcompletofeatpulgui.jpg",
+    duracion: "",
+    archivo: "../assets/audio/rockola/Navidad Contigo.mp3",
+    tipo: "todo,albums",
+    letra: "Navidad contigo es especial",
+    historia: "Instrumental Navideño para el especial December Vibes"
+  },
+  {
+    nombre: "Ojitos Bonitos",
+    portada: "../assets/image/covers/flaco2.jpg",
+    duracion: "",
+    archivo: "../assets/audio/rockola/Ojitos Bonitos.mp3",
+    tipo: "todo,albums",
+    letra: "Ojitos bonitos quédate aquí",
+    historia: "Single Original - Ojitos Bonitos"
+  },
+  {
+    nombre: "Ojitos Bonitos V2",
+    portada: "../assets/image/covers/flaco2.jpg",
+    duracion: "",
+    archivo: "../assets/audio/rockola/Ojitos Bonitos V2.mp3",
+    tipo: "todo,albums",
+    letra: "Ojitos bonitos quédate aquí",
+    historia: "Single Original - Ojitos Bonitos versión 2"
+  },
+  {
     nombre: "Untitled",
-    portada: "../assets/image/covers/untitled.jpg",
+    portada: "../assets/image/covers/eclipse2.jpg",
     duracion: "",
     archivo: "../assets/audio/rockola/Untitled.mp3",
-    tipo: "todo,singles",
+    tipo: "todo,instrumental",
     letra: "Instrumental",
     historia: "Proyecto sin terminar - Backpage experimental"
   }
@@ -292,10 +373,11 @@ const tracks = [
 ];
 
 const shelfMap = {
-  todo: document.getElementById('rockola-shelf-todo'),
+  instrumental: document.getElementById('rockola-shelf-instrumental'),
   singles: document.getElementById('rockola-shelf-singles'),
   studio: document.getElementById('rockola-shelf-studio'),
-  albums: document.getElementById('rockola-shelf-albums')
+  albums: document.getElementById('rockola-shelf-albums'),
+  todo: document.getElementById('rockola-shelf-todo')
 };
 
 const shelfView = document.getElementById('rockola-shelf-view');
