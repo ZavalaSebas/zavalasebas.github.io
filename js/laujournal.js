@@ -39,7 +39,11 @@ const fotosLau = [
   { archivo: "lau24.jpg", titulo: "Memories", fecha: "3 de septiembre 2025 19:02", id: "lau24", year: 2025 },
   { archivo: "lau25.jpg", titulo: "Hiii", fecha: "3 de septiembre 2025 19:03", id: "lau25", year: 2025 },
   { archivo: "lau26.jpg", titulo: "Mirrors", fecha: "4 de Octubre 2025 17:36", id: "lau26", year: 2025 },
-  { archivo: "lau27.jpg", titulo: "Milano :)", fecha: "4 de Octubre 2025 17:36", id: "lau27", year: 2025 }
+  { archivo: "lau27.jpg", titulo: "Milano :)", fecha: "4 de Octubre 2025 17:36", id: "lau27", year: 2025 },
+  { archivo: "lau28.jpg", titulo: "EYES", fecha: "10 de Octubre 2025 20:50", id: "lau28", year: 2025 },
+  { archivo: "lau29.jpg", titulo: "Salmooon", fecha: "10 de Octubre 2025 19:48", id: "lau29", year: 2025 },
+  { archivo: "lau30.jpg", titulo: "5 Minutes More pls", fecha: "11 de Octubre 2025 16:47", id: "lau30", year: 2025 },
+  { archivo: "lau31.jpg", titulo: "Best Meal Ever", fecha: "11 de Octubre 2025 15:02", id: "lau31", year: 2025 }
 ];
 
 let currentPhotoId = null;
