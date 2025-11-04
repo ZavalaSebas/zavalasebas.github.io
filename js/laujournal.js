@@ -47,7 +47,9 @@ const fotosLau = [
   { archivo: "lau32.jpg", titulo: "MILAAAAN", fecha: "15 de Octubre 2025 11:14", id: "lau32", year: 2025 },
   { archivo: "lau33.jpg", titulo: "Best Night", fecha: "20 de Octubre 2025 21:33", id: "lau33", year: 2025 },
   { archivo: "lau34.jpg", titulo: "FEET", fecha: "25 de Octubre 2025 14:40", id: "lau34", year: 2025 },
-  { archivo: "lau35.jpg", titulo: "Museo Date", fecha: "25 de Octubre 2025 14:40", id: "lau35", year: 2025 }
+  { archivo: "lau35.jpg", titulo: "Museo Date", fecha: "25 de Octubre 2025 14:40", id: "lau35", year: 2025 },
+  { archivo: "lau36.jpg", titulo: "Lau House", fecha: "31 de octubre 2025 20:18", id: "lau36", year: 2025 },
+  { archivo: "lau37.jpg", titulo: "Pinche Milano", fecha: "31 de octubre 2025 22:34", id: "lau37", year: 2025 }
 ];
 
 let currentPhotoId = null;
