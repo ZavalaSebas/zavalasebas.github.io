@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="../style/pentatonic.css"/>
   <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
 </head>
-<body>
+<body class="pentatonic-page">
   <div class="glow-background"></div>
   <div class="floating-notes">
     <span class="note">🎵</span>
@@ -19,7 +19,7 @@
     <span class="note">🎤</span>
   </div>
 
-  <header>
+  <header class="pentatonic-topbar">
     <h2 class="music-title">pentatonic</h2>
     <a href="../index.html" class="back-btn">← volver</a>
   </header>
@@ -44,5 +44,46 @@
   <footer>
     <p>pentatonica como la escala</p>
   </footer>
+
+  <!-- Barra de navegación inferior (móvil) -->
+  <nav class="pentatonic-tabbar" aria-label="Navegación principal">
+    <span class="tabbar-indicator" aria-hidden="true"></span>
+    <a class="tabbar-item" href="../index.html" aria-label="Inicio" data-tab="home">
+      <span class="tab-ico">🏠</span>
+      <span class="tab-label">Inicio</span>
+    </a>
+    <a class="tabbar-item" href="journals.html" aria-label="Journal" data-tab="journal">
+      <span class="tab-ico">📓</span>
+      <span class="tab-label">Journal</span>
+    </a>
+    <a class="tabbar-item" href="tools.html" aria-label="Herramientas" data-tab="tools">
+      <span class="tab-ico">🛠</span>
+      <span class="tab-label">Tools</span>
+    </a>
+    <a class="tabbar-item" href="rockola.html" aria-label="Rockola" data-tab="rockola">
+      <span class="tab-ico">🎵</span>
+      <span class="tab-label">Rockola</span>
+    </a>
+  </nav>
+
+  <script>
+    (function(){
+      const tabs=document.querySelectorAll('.pentatonic-tabbar .tabbar-item');
+      const indicator=document.querySelector('.pentatonic-tabbar .tabbar-indicator');
+      const currentFile=location.pathname.split('/').pop().toLowerCase();
+      tabs.forEach(tab=>{
+        const href=tab.getAttribute('href'); if(!href) return; const file=href.split('/').pop().toLowerCase();
+        if(file===currentFile) tab.classList.add('active');
+      });
+      function moveIndicator(target){
+        const active=target||document.querySelector('.pentatonic-tabbar .tabbar-item.active')||tabs[0]; if(!active||!indicator) return;
+        const width=active.offsetWidth*0.55; const x=active.offsetLeft+(active.offsetWidth-width)/2;
+        indicator.style.width=width+'px'; indicator.style.transform='translateX('+x+'px)';
+      }
+      requestAnimationFrame(()=>moveIndicator());
+      tabs.forEach(t=>t.addEventListener('click', e=>moveIndicator(e.currentTarget)));
+      window.addEventListener('resize', ()=>moveIndicator());
+    })();
+  </script>
 </body>
 </html>

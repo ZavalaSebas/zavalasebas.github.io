@@ -55,6 +55,7 @@ header {
   background: linear-gradient(90deg, #1a1a2e 60%, #f9c74f22 100%);
   box-shadow: 0 2px 16px #f9c74f10;
 }
+.pentatonic-topbar { position:sticky; top:0; z-index:100; }
 
 .music-title {
   font-size: 2.3rem;
@@ -198,11 +199,19 @@ footer {
   color: #f72585;
   text-shadow: 0 2px 12px #f9c74f60;
 }
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 2rem;
-  padding: 2rem;
-}
+
+/* Bottom tabbar (isolated) */
+.pentatonic-tabbar { position:fixed; bottom:0; left:0; width:100%; display:flex; justify-content:space-around; align-items:stretch; background:rgba(10,10,25,0.85); backdrop-filter:blur(12px) saturate(140%); border-top:1px solid #f9c74f33; z-index:1000; padding:.35rem 0 .3rem; }
+.pentatonic-tabbar .tabbar-item { flex:1; text-align:center; text-decoration:none; color:#f9c74f; font-size:.65rem; font-weight:600; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:.2rem; padding:.55rem 0 .45rem; border-radius:8px; position:relative; transition:background .35s,color .35s; user-select:none; }
+.pentatonic-tabbar .tabbar-item .tab-ico { font-size:1.25rem; }
+.pentatonic-tabbar .tabbar-item:hover { background:#f9c74f10; }
+.pentatonic-tabbar .tabbar-item:active { transform:translateY(1px); }
+.pentatonic-tabbar .tabbar-item.active { color:#0e0b16; background:#f9c74f; box-shadow:0 0 0 1px #f9c74f88, 0 4px 12px -2px #f9c74f66; }
+.pentatonic-tabbar .tabbar-item.active::after { content:''; position:absolute; top:0; left:50%; transform:translate(-50%,-50%); width:42%; height:4px; border-radius:10px; background:linear-gradient(90deg,#f9c74f,#ffd66b 70%); box-shadow:0 0 8px -2px #f9c74f, 0 0 14px -4px #f9c74f; }
+.pentatonic-tabbar .tabbar-indicator { position:absolute; bottom:0; left:0; height:4px; width:40px; background:linear-gradient(90deg,#f9c74f,#ffd66b); border-radius:4px 4px 0 0; box-shadow:0 0 8px #f9c74f80; transition: transform .45s cubic-bezier(.22,.8,.25,1), width .35s ease; pointer-events:none; }
+@media (max-width:600px){ body.pentatonic-page { padding-bottom:72px; } }
+@media (prefers-reduced-motion: reduce){ .pentatonic-tabbar { backdrop-filter:none; } }
+
 
 .artefacto-card {
   width: 320px;
