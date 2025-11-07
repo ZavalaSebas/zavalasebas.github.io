@@ -323,6 +323,7 @@ function createSpecialParticle() {
 document.addEventListener('DOMContentLoaded', () => {
   const currentFile = location.pathname.split('/').pop().toLowerCase();
   const tabs = document.querySelectorAll('.mobile-tabbar .tabbar-item');
+  const indicator = document.querySelector('.tabbar-indicator');
   tabs.forEach(tab => {
     const href = tab.getAttribute('href');
     if (!href) return;
@@ -336,6 +337,20 @@ document.addEventListener('DOMContentLoaded', () => {
     tab.addEventListener('touchend', () => tab.classList.remove('touching'));
     tab.addEventListener('touchcancel', () => tab.classList.remove('touching'));
   });
+  // Posicionar indicador inicial
+  requestAnimationFrame(() => moveTabbarIndicator());
+
+  function moveTabbarIndicator(target) {
+    const active = target || document.querySelector('.mobile-tabbar .tabbar-item.active') || tabs[0];
+    if (!active || !indicator) return;
+    const rect = active.getBoundingClientRect();
+    const parentRect = active.parentElement.getBoundingClientRect();
+    const width = rect.width * 0.55;
+    const x = rect.left - parentRect.left + (rect.width - width)/2;
+    indicator.style.width = width + 'px';
+    indicator.style.transform = `translateX(${x}px)`;
+  }
+  tabs.forEach(t => t.addEventListener('click', e => { moveTabbarIndicator(e.currentTarget); }));
   // Ripple + Haptics (vibración) en tarjetas y tabs
   const tappables = document.querySelectorAll('.card, .tabbar-item, #audioControl');
   tappables.forEach(el => {
@@ -401,3 +416,32 @@ function haptic(ms = 10) {
     /* silencioso */
   }
 }
+
+// Subtext: usar animación CSS existente de .hero p (sin rotación ni clases extra)
+
+// Añadir glow respirante al título
+const mainTitleEl = document.getElementById('mainTitle');
+if (mainTitleEl) mainTitleEl.classList.add('breathing-glow');
+
+// --- Tilt 3D en cards ---
+const cards = document.querySelectorAll('.card');
+cards.forEach(card => {
+  card.classList.add('neon');
+  const damp = 22;
+  let rafId;
+  function reset() { card.style.transform=''; card.style.setProperty('--rx','0'); card.style.setProperty('--ry','0'); }
+  card.addEventListener('pointermove', e => {
+    const r = card.getBoundingClientRect();
+    const x = e.clientX - r.left;
+    const y = e.clientY - r.top;
+    const rx = ((y / r.height) - 0.5) * -damp;
+    const ry = ((x / r.width) - 0.5) * damp;
+    if (rafId) cancelAnimationFrame(rafId);
+    rafId = requestAnimationFrame(() => {
+      card.style.transform = `perspective(600px) rotateX(${rx}deg) rotateY(${ry}deg) scale(1.04)`;
+    });
+  });
+  ['pointerleave','pointercancel','blur'].forEach(evt => card.addEventListener(evt, () => { reset(); }));
+  card.addEventListener('pointerdown', () => card.style.transform += ' scale(0.98)');
+  card.addEventListener('pointerup', () => card.style.transform = card.style.transform.replace(' scale(0.98)',''));
+});
