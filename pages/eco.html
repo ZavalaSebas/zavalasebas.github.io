@@ -4,6 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>eco</title>
+  <meta name="theme-color" content="#0a0a23" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <link rel="stylesheet" href="../style/main.css" />
   <link rel="stylesheet" href="../style/mylove.css" />
   <link rel="stylesheet" href="../style/eco.css" />
   <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
@@ -11,9 +15,9 @@
 <body>
   <div class="background-stars"></div>
 
-  <header>
+  <header class="topbar glass">
+    <a href="mylove.html" class="back-btn" aria-label="Volver a mylove">←</a>
     <h2>eco</h2>
-    <a href="mylove.html" class="back-btn">← volver</a>
   </header>
 
   <section class="diary">
@@ -32,6 +36,27 @@
     <p id="secret-content"></p>
     <button id="editSecret">🌫 susurrar algo…</button>
   </div>
+
+  <!-- Barra de navegación inferior (móvil) -->
+  <nav class="mobile-tabbar" aria-label="Navegación principal">
+    <span class="tabbar-indicator" aria-hidden="true"></span>
+    <a class="tabbar-item" href="../index.html" aria-label="Inicio" data-tab="home">
+      <span class="tab-ico">🏠</span>
+      <span class="tab-label">Inicio</span>
+    </a>
+    <a class="tabbar-item" href="journals.html" aria-label="Journal" data-tab="journal">
+      <span class="tab-ico">📓</span>
+      <span class="tab-label">Journal</span>
+    </a>
+    <a class="tabbar-item" href="tools.html" aria-label="Herramientas" data-tab="tools">
+      <span class="tab-ico">🛠</span>
+      <span class="tab-label">Tools</span>
+    </a>
+    <a class="tabbar-item" href="rockola.html" aria-label="Rockola" data-tab="rockola">
+      <span class="tab-ico">🎵</span>
+      <span class="tab-label">Rockola</span>
+    </a>
+  </nav>
 
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>

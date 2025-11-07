@@ -17,7 +17,24 @@ const input = document.getElementById("thoughtInput");
 const saveBtn = document.getElementById("saveThought");
 const clearBtn = document.getElementById("clearThoughts");
 
+// Haptic helper seguro
+function haptic(ms=10){
+  try { const ua=navigator.userActivation; if('vibrate' in navigator && ua && (ua.isActive||ua.hasBeenActive)) navigator.vibrate(ms);} catch(_){}}
+
+function ripple(e, el){
+  const rect=el.getBoundingClientRect();
+  const span=document.createElement('span');
+  span.className='ripple';
+  const size=Math.max(rect.width, rect.height);
+  span.style.width=span.style.height=size+'px';
+  span.style.left=(e.clientX-rect.left-size/2)+'px';
+  span.style.top=(e.clientY-rect.top-size/2)+'px';
+  el.appendChild(span);
+  setTimeout(()=>span.remove(),650);
+}
+
 saveBtn.addEventListener("click", async () => {
+  haptic(12);
   const text = input.value.trim();
   if (!text) return;
 
@@ -32,6 +49,7 @@ saveBtn.addEventListener("click", async () => {
 });
 
 clearBtn.addEventListener("click", async () => {
+  haptic(12);
   const pass = prompt("Para borrar todo, ingresá la contraseña:");
   if (pass !== "rock") { alert("Contraseña incorrecta."); return; }
   if (!confirm("¿Seguro que querés borrar todos los mensajes?")) return;
@@ -97,12 +115,14 @@ async function renderSavedThoughts() {
       note.appendChild(dateEl);
 
       note.addEventListener("click", async () => {
+        haptic(8);
         const pass = prompt("Para borrar esta nota, ingresa contraseña:");
         if (pass === "rock") {
           await db.collection("eco_thoughts").doc(thought.id).delete();
           renderSavedThoughts();
         }
       });
+      note.addEventListener('pointerdown', e=>ripple(e,note));
       container.appendChild(note);
     });
     return;
@@ -183,16 +203,53 @@ async function renderSavedThoughts() {
     placedNotes.push({ x, y });
     container.appendChild(note);
     note.addEventListener("click", async () => {
+      haptic(8);
       const pass = prompt("Para borrar esta nota, ingresa contraseña:");
       if (pass === "rock") {
         await db.collection("eco_thoughts").doc(thought.id).delete();
         renderSavedThoughts();
       }
     });
+    note.addEventListener('pointerdown', e=>ripple(e,note));
   });
 }
 
 // Llamar al render inicial y también al redimensionar
 window.addEventListener("resize", renderSavedThoughts);
 renderSavedThoughts();
+
+// Tabbar activo + indicador
+document.addEventListener('DOMContentLoaded', ()=>{
+  const tabs=document.querySelectorAll('.mobile-tabbar .tabbar-item');
+  const indicator=document.querySelector('.tabbar-indicator');
+  const currentFile=location.pathname.split('/').pop().toLowerCase();
+  tabs.forEach(tab=>{
+    const href=tab.getAttribute('href');
+    if(!href) return; const file=href.split('/').pop().toLowerCase();
+    if(file===currentFile) tab.classList.add('active');
+    tab.addEventListener('pointerdown', e=>ripple(e,tab));
+    tab.addEventListener('click', ()=>haptic(12));
+    tab.addEventListener('touchend', ()=>haptic(12), {passive:true});
+  });
+  requestAnimationFrame(()=>moveIndicator());
+  function moveIndicator(target){
+    const active=target||document.querySelector('.mobile-tabbar .tabbar-item.active')||tabs[0];
+    if(!active||!indicator) return;
+    const rect=active.getBoundingClientRect();
+    const parentRect=active.parentElement.getBoundingClientRect();
+    const width=rect.width*0.55;
+    const x=rect.left-parentRect.left+(rect.width-width)/2;
+    indicator.style.width=width+'px';
+    indicator.style.transform=`translateX(${x}px)`;
+  }
+  tabs.forEach(t=>t.addEventListener('click', e=>moveIndicator(e.currentTarget)));
+});
+
+// Evitar zoom doble tap
+let lastTouchTime=0;
+document.addEventListener('touchend', e=>{
+  const now=Date.now();
+  if(now-lastTouchTime<=350){ e.preventDefault(); }
+  lastTouchTime=now;
+},{passive:false});
 

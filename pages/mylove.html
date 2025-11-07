@@ -4,13 +4,17 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ROCKSHOW — mylove</title>
+  <meta name="theme-color" content="#0a0a23" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <link rel="stylesheet" href="../style/main.css" />
   <link rel="stylesheet" href="../style/mylove.css" />
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
   <div class="background-stars"></div>
 
-  <header>
+  <header class="topbar glass">
   <a href="../index.html" class="back-btn" title="Volver a la principal" aria-label="Volver a la principal">←</a>
     <h2>ROCKSHOW — mylove</h2>
     <button id="audioBtn" title="Activar sonido">🎧</button>
@@ -29,6 +33,27 @@
   <footer>
     <p id="frase-footer"></p>
   </footer>
+
+  <!-- Barra de navegación inferior (móvil) -->
+  <nav class="mobile-tabbar" aria-label="Navegación principal">
+    <span class="tabbar-indicator" aria-hidden="true"></span>
+    <a class="tabbar-item" href="../index.html" aria-label="Inicio" data-tab="home">
+      <span class="tab-ico">🏠</span>
+      <span class="tab-label">Inicio</span>
+    </a>
+    <a class="tabbar-item" href="journals.html" aria-label="Journal" data-tab="journal">
+      <span class="tab-ico">📓</span>
+      <span class="tab-label">Journal</span>
+    </a>
+    <a class="tabbar-item" href="tools.html" aria-label="Herramientas" data-tab="tools">
+      <span class="tab-ico">🛠</span>
+      <span class="tab-label">Tools</span>
+    </a>
+    <a class="tabbar-item" href="rockola.html" aria-label="Rockola" data-tab="rockola">
+      <span class="tab-ico">🎵</span>
+      <span class="tab-label">Rockola</span>
+    </a>
+  </nav>
 
   <audio id="audioAmbiente" loop>
     <source src="../assets/audio/ambient.mp3" type="audio/mpeg">
