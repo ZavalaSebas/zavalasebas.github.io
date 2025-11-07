@@ -4,15 +4,19 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ROCKSHOW — TOOLBOX</title>
+  <meta name="theme-color" content="#0a0a23" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <link rel="stylesheet" href="../style/tools.css" />
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
 </head>
-<body>
+<body class="tools-page">
   <div class="background-grid"></div>
 
-  <header>
-    <h2>🛠 TOOLBOX</h2>
-    <a href="../index.html" class="back-btn">← volver</a>
+  <header class="tools-topbar" role="banner">
+    <a href="../index.html" class="tools-back" aria-label="Volver a inicio">← volver</a>
+    <h2 class="tools-title">🛠 TOOLBOX</h2>
+    <div class="tools-spacer" aria-hidden="true"></div>
   </header>
 
   <section class="hero">
@@ -32,6 +36,26 @@
     <p id="frase-footer"></p>
   </footer>
 
+  <!-- Barra de navegación inferior (móvil). No altera estilos existentes -->
+  <nav class="tools-tabbar" aria-label="Navegación principal">
+    <span class="tabbar-indicator" aria-hidden="true"></span>
+    <a class="tabbar-item" href="../index.html" aria-label="Inicio" data-tab="home">
+      <span class="tab-ico">🏠</span>
+      <span class="tab-label">Inicio</span>
+    </a>
+    <a class="tabbar-item" href="journals.html" aria-label="Journal" data-tab="journal">
+      <span class="tab-ico">📓</span>
+      <span class="tab-label">Journal</span>
+    </a>
+    <a class="tabbar-item" href="tools.html" aria-label="Herramientas" data-tab="tools">
+      <span class="tab-ico">🛠</span>
+      <span class="tab-label">Tools</span>
+    </a>
+    <a class="tabbar-item" href="rockola.html" aria-label="Rockola" data-tab="rockola">
+      <span class="tab-ico">🎵</span>
+      <span class="tab-label">Rockola</span>
+    </a>
+  </nav>
   <script src="../js/tools.js"></script>
 </body>
 </html>

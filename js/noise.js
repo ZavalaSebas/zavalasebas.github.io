@@ -9,10 +9,26 @@ const frases = [
 document.getElementById("frase-footer").textContent =
   frases[Math.floor(Math.random() * frases.length)];
 
-// --- Audio ---
+// --- Audio + haptic/ripple ---
 const audio = document.getElementById("audioAmbiente");
 const btn = document.getElementById("audioBtn");
 
+function haptic(ms=12){
+  try { const ua=navigator.userActivation; if('vibrate' in navigator && ua && (ua.isActive||ua.hasBeenActive)) navigator.vibrate(ms);} catch(_){}
+}
+function ripple(e, el){
+  const r=el.getBoundingClientRect();
+  const s=document.createElement('span');
+  s.className='ripple';
+  const size=Math.max(r.width,r.height);
+  s.style.width=s.style.height=size+'px';
+  s.style.left=(e.clientX-r.left-size/2)+'px';
+  s.style.top=(e.clientY-r.top-size/2)+'px';
+  el.appendChild(s);
+  setTimeout(()=>s.remove(),650);
+}
+
+btn.addEventListener('pointerdown', e=>ripple(e,btn));
 btn.addEventListener("click", () => {
   if (audio.paused) {
     audio.play();
@@ -21,6 +37,7 @@ btn.addEventListener("click", () => {
     audio.pause();
     btn.textContent = "🎧";
   }
+  haptic(10);
 });
 
 // --- PARTICULAS ---
@@ -35,9 +52,10 @@ function resizeCanvas() {
 resizeCanvas();
 window.addEventListener("resize", resizeCanvas);
 
-// Crear partículas
+// Crear partículas (respeta reduced motion)
 const particles = [];
-const particleCount = 120;
+const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const particleCount = prefersReduced ? 50 : 120;
 
 for (let i = 0; i < particleCount; i++) {
   particles.push({
@@ -66,7 +84,7 @@ function drawParticles() {
     if (p.y < 0) p.y = canvas.height;
   });
 
-  requestAnimationFrame(drawParticles);
+  if(!prefersReduced) requestAnimationFrame(drawParticles);
 }
 
 drawParticles();
@@ -98,4 +116,37 @@ cards.forEach(card => {
       });
     }
   });
+  card.addEventListener('pointerdown', e=>ripple(e,card));
+  card.addEventListener('click', ()=>haptic(8));
 });
+
+// Tabbar indicador y toques
+document.addEventListener('DOMContentLoaded', ()=>{
+  const tabs=document.querySelectorAll('.mobile-tabbar .tabbar-item');
+  const indicator=document.querySelector('.tabbar-indicator');
+  const currentFile=location.pathname.split('/').pop().toLowerCase();
+  tabs.forEach(tab=>{
+    const href=tab.getAttribute('href');
+    if(!href) return; const file=href.split('/').pop().toLowerCase();
+    if(file===currentFile) tab.classList.add('active');
+    tab.addEventListener('pointerdown', e=>ripple(e,tab));
+    tab.addEventListener('click', ()=>haptic(12));
+    tab.addEventListener('touchend', ()=>haptic(12), {passive:true});
+  });
+  requestAnimationFrame(()=>moveIndicator());
+  function moveIndicator(target){
+    const active=target||document.querySelector('.mobile-tabbar .tabbar-item.active')||tabs[0];
+    if(!active||!indicator) return;
+    const rect=active.getBoundingClientRect();
+    const parentRect=active.parentElement.getBoundingClientRect();
+    const width=rect.width*0.55;
+    const x=rect.left-parentRect.left+(rect.width-width)/2;
+    indicator.style.width=width+'px';
+    indicator.style.transform=`translateX(${x}px)`;
+  }
+  tabs.forEach(t=>t.addEventListener('click', e=>moveIndicator(e.currentTarget)));
+});
+
+// Evitar zoom doble tap
+let lastTouchTime=0;
+document.addEventListener('touchend', e=>{ const now=Date.now(); if(now-lastTouchTime<=350){ e.preventDefault(); } lastTouchTime=now; }, {passive:false});

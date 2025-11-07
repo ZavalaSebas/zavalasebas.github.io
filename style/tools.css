@@ -25,7 +25,8 @@ body, html {
   to { transform: translate(-60px, -60px); }
 }
 
-header {
+/* Original header replaced by tools-topbar but we preserve look */
+.tools-topbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -33,7 +34,14 @@ header {
   background-color: rgba(0,0,0,0.85);
   border-bottom: 2px solid #00c8ff;
   color: #00c8ff;
+  position: sticky;
+  top:0;
+  z-index: 100;
 }
+.tools-title { margin:0; }
+.tools-back { color: #f9c74f; text-decoration:none; font-weight:600; }
+.tools-back:active { transform: translateY(1px); }
+.tools-spacer { width:40px; }
 
 header h2 { margin: 0; }
 .back-btn {
@@ -129,3 +137,53 @@ footer {
   color: #666;
   font-size: 0.9rem;
 }
+
+/* Independent bottom tabbar (no dependency on main.css) */
+.tools-tabbar {
+  position: fixed;
+  bottom:0; left:0;
+  width:100%;
+  display:flex;
+  justify-content:space-around;
+  align-items:stretch;
+  background: rgba(0,0,0,0.85);
+  border-top:1px solid #00c8ff40;
+  z-index:1000;
+  padding:0.35rem 0 0.3rem;
+  backdrop-filter: blur(12px) saturate(140%);
+}
+.tools-tabbar .tabbar-item {
+  flex:1;
+  text-align:center;
+  text-decoration:none;
+  color:#00c8ff;
+  font-size:0.65rem;
+  font-weight:600;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:0.2rem;
+  padding:0.55rem 0 0.45rem;
+  border-radius:8px;
+  position:relative;
+  transition:background .35s,color .35s;
+  user-select:none;
+}
+.tools-tabbar .tabbar-item .tab-ico { font-size:1.25rem; }
+.tools-tabbar .tabbar-item:hover { background:#00c8ff10; }
+.tools-tabbar .tabbar-item:active { transform:translateY(1px); }
+.tools-tabbar .tabbar-item.active { color:#0b0c10; background:#00c8ff; box-shadow:0 0 0 1px #00c8ff88, 0 4px 12px -2px #00c8ff66; }
+.tools-tabbar .tabbar-item.active::after {
+  content:''; position:absolute; top:0; left:50%; transform:translate(-50%,-55%);
+  width:42%; height:4px; border-radius:10px;
+  background:linear-gradient(90deg,#00c8ff,#00fff7 70%);
+  box-shadow:0 0 8px -2px #00c8ff, 0 0 14px -4px #00c8ff;
+}
+.tools-tabbar .tabbar-indicator {
+  position:absolute; bottom:0; left:0; height:4px; width:40px;
+  background:linear-gradient(90deg,#00c8ff,#00fff7);
+  border-radius:4px 4px 0 0;
+  box-shadow:0 0 8px #00c8ff80;
+  transition: transform .45s cubic-bezier(.22,.8,.25,1), width .35s ease;
+  pointer-events:none;
+}
+@media (max-width:600px){ body.tools-page { padding-bottom:72px; } }
+@media (prefers-reduced-motion: reduce){ .tools-tabbar { backdrop-filter:none; } }
