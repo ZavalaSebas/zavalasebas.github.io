@@ -357,6 +357,14 @@ document.addEventListener('DOMContentLoaded', () => {
     el.addEventListener('click', vibrateHandler);
     el.addEventListener('touchend', vibrateHandler, { passive: true });
   });
+  // Desactivar scroll global en home (índice) móvil
+  try {
+    const isHome = document.body.classList.contains('home');
+    const isMobile = window.matchMedia('(max-width: 600px)').matches;
+    if (isHome && isMobile) {
+      document.documentElement.style.overflow = 'hidden';
+    }
+  } catch (_) {}
 });
 
 // Evitar zoom doble toque (gesto accidental)
