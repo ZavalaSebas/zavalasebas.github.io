@@ -9,6 +9,26 @@ body {
   cursor: none;
   -webkit-overflow-scrolling: touch;
   min-height: 100vh;
+  touch-action: manipulation;
+}
+/* Variables y helpers */
+:root {
+  --bg: #0a0a23;
+  --bg-alt: #111133;
+  --accent: #4fc3f7;
+  --accent-soft: #4fc3f799;
+  --text: #e0e0e0;
+  --text-dim: #b3e5fc;
+  --radius-sm: 8px;
+  --radius: 14px;
+  --blur: 18px;
+}
+
+.glass {
+  backdrop-filter: blur(var(--blur)) saturate(140%);
+  background: linear-gradient(140deg, rgba(20,25,55,0.55), rgba(40,50,85,0.35));
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 4px 18px -4px #0008, 0 0 0 1px rgba(255,255,255,0.05) inset;
 }
 
 html {
@@ -264,6 +284,14 @@ header {
   border-bottom: 1px solid #ffffff10;
 }
 
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(10,10,35,0.6);
+  backdrop-filter: blur(14px) saturate(140%);
+}
+
 #audioBtn {
   background: none;
   border: none;
@@ -333,6 +361,9 @@ header {
   overflow: visible;
   z-index: 0;
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  overflow: hidden;
 }
 
 .card::before {
@@ -408,6 +439,91 @@ footer {
   font-size: 0.9rem;
   color: #ffffff80;
   border-top: 1px solid #ffffff10;
+}
+
+/* Tabbar móvil tipo app */
+.mobile-tabbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: stretch;
+  background: rgba(10,10,35,0.82);
+  backdrop-filter: blur(14px) saturate(160%);
+  border-top: 1px solid #4fc3f733;
+  z-index: 1000;
+  padding: 0.25rem 0.4rem env(safe-area-inset-bottom);
+  transform: translateY(110%);
+  opacity: 0;
+  animation: tabbarSlideIn 0.8s 0.3s ease forwards;
+}
+
+@keyframes tabbarSlideIn {
+  0% { transform: translateY(110%); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+.tabbar-item {
+  flex: 1;
+  text-align: center;
+  text-decoration: none;
+  color: var(--accent);
+  font-size: 0.65rem;
+  font-weight: 600;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
+  padding: 0.55rem 0 0.45rem;
+  border-radius: var(--radius-sm);
+  position: relative;
+  transition: background 0.35s, color 0.35s;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+.tabbar-item .tab-ico { font-size: 1.25rem; display: block; }
+.tabbar-item .tab-label { letter-spacing: 0.5px; }
+
+.tabbar-item:active { transform: translateY(1px); }
+
+.tabbar-item:hover { background: #4fc3f710; }
+
+.tabbar-item.active {
+  color: #0a0a23;
+  background: var(--accent);
+  box-shadow: 0 0 0 1px #4fc3f7aa, 0 4px 12px -2px #4fc3f755;
+}
+
+.tabbar-item.active::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -55%);
+  width: 42%;
+  height: 4px;
+  border-radius: 10px;
+  background: linear-gradient(90deg, var(--accent), #b3e5fc 70%);
+  box-shadow: 0 0 8px -2px #4fc3f7, 0 0 14px -4px #4fc3f7;
+}
+.tabbar-item.touching { background: #4fc3f720; }
+
+/* Ripple effect */
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  transform: scale(0);
+  background: rgba(79, 195, 247, 0.35);
+  animation: ripple 600ms ease-out;
+  pointer-events: none;
+}
+
+@keyframes ripple {
+  to { transform: scale(4); opacity: 0; }
 }
 
 #mainTitle {
@@ -524,7 +640,7 @@ footer {
   font-size: 1.1em;
   vertical-align: middle;
 }
-}
+
 
 #frase-footer {
   font-family: 'Quicksand', monospace;
@@ -570,6 +686,7 @@ footer {
     padding: 1rem 0.5rem;
     font-size: 1rem;
   }
+  body { padding-bottom: 72px; } /* espacio para tabbar */
   #audioControl {
     align-items: center;
     margin-left: auto;
@@ -597,12 +714,14 @@ footer {
     padding: 3vh 0.5rem 1rem;
   }
   .menu-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 0.7rem;
     padding: 2vh 0.5rem;
   }
   .card {
-    width: 90px;
-    height: 90px;
+    width: 100%;
+    height: 96px;
     font-size: 1.1rem;
     min-width: 80px;
     min-height: 80px;
@@ -639,4 +758,9 @@ footer {
     padding: 1rem 0.2rem;
     font-size: 0.8rem;
   }
+  .mobile-tabbar { display: flex; }
+}
+
+@media (min-width: 601px) {
+  .mobile-tabbar { display: none; }
 }

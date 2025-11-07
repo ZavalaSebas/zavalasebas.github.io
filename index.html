@@ -6,6 +6,9 @@
   <title>ROCKSHOW</title>
   <link rel="stylesheet" href="style/main.css" />
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+  <meta name="theme-color" content="#0a0a23" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <!-- Favicon -->
 <link rel="icon" type="image/x-icon" href="favicon.ico" />
 <meta name="google-site-verification" content="ozmeVk-pXk9G0clVn3MJPAX5xn1plmvLhtApl4m3iAM" />
@@ -28,7 +31,7 @@
   <div id="particleContainer"></div>
   <div id="customCursor"></div>
 
-<header>
+<header class="topbar glass">
   <h2 id="logo">ROCKSHOW</h2>
 <div id="audioControl">
   <div class="vinyl"></div>
@@ -63,6 +66,26 @@
   <footer>
     <p id="frase-footer"></p>
   </footer>
+
+  <!-- Barra de navegación inferior (solo móvil) -->
+  <nav class="mobile-tabbar" aria-label="Navegación principal">
+    <a class="tabbar-item" href="index.html" aria-label="Inicio" data-tab="home">
+      <span class="tab-ico">🏠</span>
+      <span class="tab-label">Inicio</span>
+    </a>
+    <a class="tabbar-item" href="pages/journals.html" aria-label="Journal" data-tab="journal">
+      <span class="tab-ico">📓</span>
+      <span class="tab-label">Journal</span>
+    </a>
+    <a class="tabbar-item" href="pages/tools.html" aria-label="Herramientas" data-tab="tools">
+      <span class="tab-ico">🛠</span>
+      <span class="tab-label">Tools</span>
+    </a>
+    <a class="tabbar-item" href="pages/rockola.html" aria-label="Rockola" data-tab="rockola">
+      <span class="tab-ico">🎵</span>
+      <span class="tab-label">Rockola</span>
+    </a>
+  </nav>
 
 <audio id="audioAmbiente" autoplay muted loop>
   <source src="assets/audio/ambientrock.mp3" type="audio/mpeg">

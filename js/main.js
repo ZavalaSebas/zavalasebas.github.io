@@ -318,3 +318,61 @@ function createSpecialParticle() {
     }
   }, 3000);
 }
+
+// Activar estado activo de la barra inferior según página actual
+document.addEventListener('DOMContentLoaded', () => {
+  const currentFile = location.pathname.split('/').pop().toLowerCase();
+  const tabs = document.querySelectorAll('.mobile-tabbar .tabbar-item');
+  tabs.forEach(tab => {
+    const href = tab.getAttribute('href');
+    if (!href) return;
+    const file = href.split('/').pop().toLowerCase();
+    if (file === currentFile) {
+      tab.classList.add('active');
+    }
+
+    // Feedback táctil
+    tab.addEventListener('touchstart', () => tab.classList.add('touching'), { passive: true });
+    tab.addEventListener('touchend', () => tab.classList.remove('touching'));
+    tab.addEventListener('touchcancel', () => tab.classList.remove('touching'));
+  });
+  // Ripple + Vibración en tarjetas y tabs
+  const tappables = document.querySelectorAll('.card, .tabbar-item, #audioControl');
+  tappables.forEach(el => {
+    el.addEventListener('pointerdown', (e) => {
+      // Vibración ligera
+      if (navigator.vibrate) navigator.vibrate(10);
+      // Ripple
+      const rect = el.getBoundingClientRect();
+      const ripple = document.createElement('span');
+      ripple.className = 'ripple';
+      const size = Math.max(rect.width, rect.height);
+      ripple.style.width = ripple.style.height = size + 'px';
+      ripple.style.left = (e.clientX - rect.left - size / 2) + 'px';
+      ripple.style.top = (e.clientY - rect.top - size / 2) + 'px';
+      el.appendChild(ripple);
+      setTimeout(() => ripple.remove(), 650);
+    });
+  });
+});
+
+// Evitar zoom doble toque (gesto accidental)
+let lastTouchTime = 0;
+document.addEventListener('touchend', (e) => {
+  const now = Date.now();
+  if (now - lastTouchTime <= 350) {
+    e.preventDefault();
+  }
+  lastTouchTime = now;
+}, { passive: false });
+
+// Scroll suave estilo app
+document.documentElement.style.scrollBehavior = 'smooth';
+
+// Desactivar cursor personalizado en dispositivos táctiles
+try {
+  const prefersCoarse = window.matchMedia('(pointer: coarse)');
+  if (prefersCoarse && prefersCoarse.matches) {
+    customCursor.style.display = 'none';
+  }
+} catch (_) {}
