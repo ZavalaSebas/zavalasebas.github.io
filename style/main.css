@@ -754,6 +754,10 @@ footer {
     overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
   }
+  body.home {
+    overflow: hidden; /* desactiva scroll solo en home móvil */
+    height: 100vh;
+  }
   footer {
     padding: 1rem 0.2rem;
     font-size: 0.8rem;

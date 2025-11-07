@@ -336,13 +336,11 @@ document.addEventListener('DOMContentLoaded', () => {
     tab.addEventListener('touchend', () => tab.classList.remove('touching'));
     tab.addEventListener('touchcancel', () => tab.classList.remove('touching'));
   });
-  // Ripple + Vibración en tarjetas y tabs
+  // Ripple + Haptics (vibración) en tarjetas y tabs
   const tappables = document.querySelectorAll('.card, .tabbar-item, #audioControl');
   tappables.forEach(el => {
     el.addEventListener('pointerdown', (e) => {
-      // Vibración ligera
-      if (navigator.vibrate) navigator.vibrate(10);
-      // Ripple
+      // Ripple inmediato visual
       const rect = el.getBoundingClientRect();
       const ripple = document.createElement('span');
       ripple.className = 'ripple';
@@ -353,6 +351,11 @@ document.addEventListener('DOMContentLoaded', () => {
       el.appendChild(ripple);
       setTimeout(() => ripple.remove(), 650);
     });
+
+    // Vibración solo en eventos con activación de usuario garantizada
+    const vibrateHandler = () => haptic(12);
+    el.addEventListener('click', vibrateHandler);
+    el.addEventListener('touchend', vibrateHandler, { passive: true });
   });
 });
 
@@ -376,3 +379,17 @@ try {
     customCursor.style.display = 'none';
   }
 } catch (_) {}
+
+// Helper seguro para vibración bajo políticas de activación de usuario
+function haptic(ms = 10) {
+  try {
+    const canVibrate = 'vibrate' in navigator;
+    const ua = navigator.userActivation;
+    const isActive = ua && (ua.isActive || ua.hasBeenActive);
+    if (canVibrate && isActive) {
+      navigator.vibrate(ms);
+    }
+  } catch (_) {
+    /* silencioso */
+  }
+}
