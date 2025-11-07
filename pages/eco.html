@@ -23,18 +23,26 @@
   <section class="diary">
     <h1 class="section-title">Deja una nota!! :)</h1>
     <div id="thoughts-container"></div>
-
-    <div class="eco-write">
-      <textarea id="thoughtInput" placeholder="Escribe algo..."></textarea>
-      <button id="saveThought">💭 Dejar nota</button>
-      <button id="clearThoughts">🗑 borrar todo</button>
-    </div>
   </section>
 
 
   <div id="secret-note">
     <p id="secret-content"></p>
     <button id="editSecret">🌫 susurrar algo…</button>
+  </div>
+
+  <!-- Composer flotante -->
+  <div class="eco-composer" aria-label="Crear nota">
+    <div class="composer-inner">
+      <textarea id="thoughtInput" placeholder="Escribe algo..." rows="1" maxlength="280" aria-label="Tu nota"></textarea>
+      <div class="composer-actions">
+        <span id="charCount" aria-live="polite">0/280</span>
+        <div class="btn-group">
+          <button id="clearThoughts" class="btn btn-danger" aria-label="Borrar todas las notas">🗑 Borrar</button>
+          <button id="saveThought" class="btn btn-primary" aria-label="Guardar nota">💭 Publicar</button>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- Barra de navegación inferior (móvil) -->

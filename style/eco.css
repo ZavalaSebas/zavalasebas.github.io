@@ -6,6 +6,71 @@ body, html {
   font-family: 'Quicksand', sans-serif;
 }
 
+/* Botones base */
+.btn {
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  border-radius: 10px;
+  border: 1px solid #f9c74f66;
+  padding: 0.55rem 0.9rem;
+  background: #ffffff10;
+  color: #f9c74f;
+  font-weight: 600;
+  letter-spacing: .2px;
+  transition: transform .15s ease, background .2s ease, color .2s ease, box-shadow .2s ease;
+}
+.btn:active { transform: translateY(1px) scale(0.99); }
+.btn-primary { background: #f9c74f; color: #0a0a23; border-color: #f9c74f; }
+.btn-secondary { background: #ffffff12; color: #f9c74f; }
+.btn-danger { background: #ee4444; color: #fff; border-color: #ee4444; }
+.btn-group { display:flex; gap:.5rem; align-items:center; }
+
+/* Composer flotante */
+.eco-composer {
+  position: fixed;
+  bottom: calc(72px + env(safe-area-inset-bottom)); /* encima de tabbar y notch */
+  left: 0; right: 0;
+  padding: .75rem .9rem;
+  z-index: 120;
+  width: 100%;
+  box-sizing: border-box;
+  pointer-events: none; /* deja pasar gestos fuera del panel interior */
+  transform: translateZ(0); /* aísla de posibles transforms padres */
+}
+.composer-inner {
+  margin: 0 auto;
+  width: min(900px, 100% - 1.2rem);
+  border-radius: 14px;
+  padding: .75rem;
+  background: rgba(10,10,35,0.7);
+  backdrop-filter: blur(18px) saturate(160%);
+  border: 1px solid rgba(249, 199, 79, 0.35);
+  box-shadow: 0 8px 24px rgba(0,0,0,.35);
+  pointer-events: auto; /* recuperar interacción dentro */
+}
+.composer-inner textarea {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  border: 1px solid rgba(249, 199, 79, 0.6);
+  background: #ffffff08;
+  color: #f9c74f;
+  border-radius: 10px;
+  padding: .7rem .85rem;
+  font-size: 1rem;
+  line-height: 1.35;
+  resize: none;
+  max-height: 38vh;
+}
+.eco-composer.is-floating {
+  position: fixed;
+}
+.composer-actions { display:flex; justify-content: space-between; align-items:center; padding-top: .5rem; }
+#charCount { font-size:.85rem; color:#f9c74fbf; }
+
+#loadMoreWrap { text-align:center; padding: 1rem 0; }
+
+
 .background-stars {
   position: fixed;
   width: 100%;
@@ -32,10 +97,12 @@ header h2 { margin: 0; }
 
 .diary {
   position: relative;
-  padding: 2rem;
+  padding: 2rem 2rem 30vh; /* más espacio para composer flotante */
   min-height: 80vh;
   max-width: 1000px;
   margin: auto;
+  box-sizing: border-box;
+  overflow: hidden; /* evita que el contenedor empuje ancho extra */
 }
 
 .diary::before {
@@ -66,7 +133,7 @@ header h2 { margin: 0; }
   background-size: 30px 30px;
   border-radius: 12px;
   overflow: hidden;
-  max-height: 80vh;
+  max-height: unset;
 }
 
 .mobile-note {
@@ -219,20 +286,26 @@ header h2 { margin: 0; }
 
 @media(max-width:600px){
   .diary {
-    padding: 1rem;
+    padding: 1rem 1rem 34vh; /* extra para teclados y safe area */
   }
   body { padding-bottom: 72px; }
+  .eco-composer { bottom: calc(72px + env(safe-area-inset-bottom)); padding: .5rem .6rem; }
+  .composer-inner { padding: .6rem; width: min(900px, 100% - .8rem); }
+  .composer-inner textarea { font-size: .95rem; }
   #thoughts-container {
     min-height: 300px;
     background-size: 20px 20px;
-    max-height: 70vh;
-    overflow-y: auto;
+    overflow-x: auto;
+    overflow-y: hidden;
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px 10px;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(86vw, 1fr);
+    gap: 10px;
     align-items: start;
-    padding: 8px 2vw 8px 2vw;
+    padding: 10px 4vw 10px 4vw;
+    scroll-snap-type: x mandatory;
   }
+  #thoughts-container > * { scroll-snap-align: start; }
   #secret-note {
     left: 10px;
     right: 10px;
@@ -240,17 +313,15 @@ header h2 { margin: 0; }
     max-width: none;
   }
   @media (min-width: 400px) and (max-width: 600px) {
-    #thoughts-container {
-      grid-template-columns: 1fr 1fr 1fr;
-    }
+    #thoughts-container { grid-auto-columns: minmax(60vw, 1fr); }
   }
   .creative-note, .mobile-note {
     font-size: 0.95rem;
     padding: 0.7rem 1rem;
     border-radius: 10px;
     line-height: 1.4;
-    margin: 0 auto;
-    width: 95% !important;
+    margin: 0.25rem auto;
+    width: 94% !important;
     min-height: 70px !important;
     position: static !important;
     left: unset !important;
@@ -263,6 +334,7 @@ header h2 { margin: 0; }
     background: none !important;
     color: #f9c74f;
     box-sizing: border-box;
+    scroll-snap-align: start;
   }
   .creative-note time, .mobile-note time {
     font-size: 0.7rem;
