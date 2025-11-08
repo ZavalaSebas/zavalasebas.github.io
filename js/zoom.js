@@ -83,9 +83,10 @@ document.addEventListener('DOMContentLoaded', ()=>{
   function moveIndicator(target){
     const active=target||document.querySelector('.mobile-tabbar .tabbar-item.active')||tabs[0];
     if(!active||!indicator) return;
-    const parent=indicator.parentElement; // nav
-    const width=active.offsetWidth*0.6;
-    const x=active.offsetLeft + (active.offsetWidth - width)/2 - (parent.scrollLeft||0);
+    const rect=active.getBoundingClientRect();
+    const parentRect=active.parentElement.getBoundingClientRect();
+    const width=rect.width*0.55;
+    const x=rect.left-parentRect.left+(rect.width-width)/2;
     indicator.style.width=width+'px';
     indicator.style.transform=`translateX(${x}px)`;
   }

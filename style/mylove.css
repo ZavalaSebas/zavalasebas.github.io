@@ -167,7 +167,7 @@ footer {
   body { padding-bottom: 72px; }
   .menu-grid {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 0.7rem;
     padding: 2vh 0.5rem 12vh;
   }
@@ -185,3 +185,6 @@ footer {
     font-size: 2rem;
   }
 }
+
+/* Remover la barra azul animada debajo de las tarjetas solo en esta página */
+.card::after { content: none !important; }
