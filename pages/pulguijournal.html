@@ -26,7 +26,7 @@
   <div class="corner-decoration bottom-left">�</div>
   <div class="corner-decoration bottom-right">�</div>
 
-  <header>
+  <header class="pulguijournal-topbar">
     <h2>journal</h2>
     <div class="header-controls">
   <button class="control-btn dashboard-btn" id="stats-btn" title="Dashboard de Estadísticas">📊</button>
@@ -152,5 +152,40 @@
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
 
   <script src="../js/pulguijournal.js"></script>
+  <nav class="pulguijournal-tabbar" aria-label="Navegación principal">
+    <span class="tabbar-indicator" aria-hidden="true"></span>
+    <a class="tabbar-item" href="../index.html" aria-label="Inicio" data-tab="home">
+      <span class="tab-ico">🏠</span>
+      <span class="tab-label">Inicio</span>
+    </a>
+    <a class="tabbar-item" href="journals.html" aria-label="Journals" data-tab="journal">
+      <span class="tab-ico">📓</span>
+      <span class="tab-label">Journals</span>
+    </a>
+    <a class="tabbar-item" href="tools.html" aria-label="Herramientas" data-tab="tools">
+      <span class="tab-ico">🛠</span>
+      <span class="tab-label">Tools</span>
+    </a>
+    <a class="tabbar-item" href="rockola.html" aria-label="Rockola" data-tab="rockola">
+      <span class="tab-ico">🎵</span>
+      <span class="tab-label">Rockola</span>
+    </a>
+  </nav>
+  <script>
+    (function(){
+      const tabs=document.querySelectorAll('.pulguijournal-tabbar .tabbar-item');
+      const indicator=document.querySelector('.pulguijournal-tabbar .tabbar-indicator');
+      const currentFile=location.pathname.split('/').pop().toLowerCase();
+      tabs.forEach(tab=>{ const href=tab.getAttribute('href'); if(!href) return; const file=href.split('/').pop().toLowerCase(); if(file===currentFile) tab.classList.add('active'); });
+      function moveIndicator(target){
+        const active=target||document.querySelector('.pulguijournal-tabbar .tabbar-item.active')||tabs[0]; if(!active||!indicator) return;
+        const width=active.offsetWidth*0.55; const x=active.offsetLeft+(active.offsetWidth-width)/2;
+        indicator.style.width=width+'px'; indicator.style.transform='translateX('+x+'px)';
+      }
+      requestAnimationFrame(()=>moveIndicator());
+      tabs.forEach(t=>t.addEventListener('click', e=>moveIndicator(e.currentTarget)));
+      window.addEventListener('resize', ()=>moveIndicator());
+    })();
+  </script>
 </body>
 </html>

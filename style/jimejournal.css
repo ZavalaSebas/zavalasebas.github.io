@@ -11,7 +11,6 @@
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Quicksand:wght@400;600&display=swap');
-}
 
 /* Prevent horizontal scroll */
 html, body {
@@ -37,6 +36,8 @@ body {
   overflow-x: hidden;
   min-height: 100vh;
 }
+@media (max-width:600px){ body{ padding-bottom:72px; } }
+@media (prefers-reduced-motion: reduce){ .jimejournal-topbar{ backdrop-filter:none; } }
 
 /* Títulos principales con Dancing Script */
 h1, h2, h3, .initials-title, .tile-title, .collage-tile h3, .notes-header h4, .dashboard-header h3, .today-header h3, .mosaic-date-header {
@@ -47,7 +48,6 @@ h1, h2, h3, .initials-title, .tile-title, .collage-tile h3, .notes-header h4, .d
 /* Cuerpo y textos secundarios con Quicksand */
 p, li, .collage-desc, .tile-date, .tile-footer, .note-text, .note-date, .stat-label, .stat-number, .memory-note, .memory-notes-section, .timeline-year-label, .timeline-point span, .view-toggle, .mosaic-overlay, .activity-text, .activity-time, .no-memories {
   font-family: 'Quicksand', sans-serif !important;
-}
 }
 
 .background-stars {
@@ -136,6 +136,7 @@ header {
   max-width: 100%;
   box-sizing: border-box;
 }
+.jimejournal-topbar{ position:sticky; top:0; z-index:120; background:rgba(45,27,10,0.6); backdrop-filter:blur(10px) saturate(140%); border-bottom:1px solid rgba(250,240,230,0.25); }
 
 .header-controls {
   display: flex;
@@ -205,6 +206,16 @@ header h2 {
   overflow: visible;
   padding: 0 50px;
 }
+/* Bottom tabbar (isolated) */
+.jimejournal-tabbar { position:fixed; bottom:0; left:0; width:100%; display:flex; justify-content:space-around; align-items:stretch; background:rgba(30,19,8,0.85); backdrop-filter:blur(12px) saturate(140%); border-top:1px solid rgba(250,240,230,0.25); z-index:900; padding:.35rem 0 .3rem; }
+.jimejournal-tabbar .tabbar-item { flex:1; text-align:center; text-decoration:none; color:#faf0e6; font-size:.65rem; font-weight:600; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:.2rem; padding:.55rem 0 .45rem; border-radius:8px; position:relative; transition:background .35s,color .35s; user-select:none; }
+.jimejournal-tabbar .tabbar-item .tab-ico { font-size:1.25rem; }
+.jimejournal-tabbar .tabbar-item:hover { background:rgba(250,240,230,0.08); }
+.jimejournal-tabbar .tabbar-item:active { transform:translateY(1px); }
+.jimejournal-tabbar .tabbar-item.active { color:#2d1b0a; background:#faf0e6; box-shadow:0 0 0 1px rgba(250,240,230,0.6), 0 4px 12px -2px rgba(250,240,230,0.6); }
+.jimejournal-tabbar .tabbar-item.active::after { content:''; position:absolute; top:0; left:50%; transform:translate(-50%,-50%); width:42%; height:4px; border-radius:10px; background:linear-gradient(90deg,#faf0e6,#f4a261 70%); box-shadow:0 0 8px -2px #faf0e6, 0 0 14px -4px #faf0e6; }
+.jimejournal-tabbar .tabbar-indicator { position:absolute; bottom:0; left:0; height:4px; width:40px; background:linear-gradient(90deg,#faf0e6,#f4a261); border-radius:4px 4px 0 0; box-shadow:0 0 8px rgba(250,240,230,0.6); transition: transform .45s cubic-bezier(.22,.8,.25,1), width .35s ease; pointer-events:none; }
+@media (prefers-reduced-motion: reduce){ .jimejournal-tabbar{ backdrop-filter:none; } }
 
 .initials-title::before {
   content: "🍂";
