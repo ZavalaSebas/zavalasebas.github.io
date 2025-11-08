@@ -192,8 +192,12 @@ function createTimeline() {
 function createCollageGrid() {
   const collageGrid = document.querySelector(".collage-grid");
   collageGrid.innerHTML = "";
+  // Ordenar de más nuevo a más viejo por fecha parseada
+  const sorted = [...fotosLau].sort((a, b) =>
+    (parseSpanishFechaToTimestamp(b.fecha) || 0) - (parseSpanishFechaToTimestamp(a.fecha) || 0)
+  );
 
-  fotosLau.forEach(foto => {
+  sorted.forEach(foto => {
     const tile = document.createElement("div");
     tile.className = "collage-tile";
     tile.setAttribute("data-photo-id", foto.id);
