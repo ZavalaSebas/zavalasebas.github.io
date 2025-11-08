@@ -174,7 +174,7 @@ function createCollageGrid() {
   const collageGrid = document.querySelector(".collage-grid");
   collageGrid.innerHTML = "";
 
-  fotosPulgui.forEach(foto => {
+  fotosPulgui.slice().reverse().forEach(foto => {
     const tile = document.createElement("div");
     tile.className = "collage-tile";
     tile.setAttribute("data-photo-id", foto.id);
