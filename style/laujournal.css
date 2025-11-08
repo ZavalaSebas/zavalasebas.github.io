@@ -34,6 +34,8 @@ body {
   overflow-x: hidden;
   min-height: 100vh;
 }
+@media (max-width:600px){ body{ padding-bottom:72px; } }
+@media (prefers-reduced-motion: reduce){ .laujournal-topbar{ backdrop-filter:none; } }
 
 .background-hearts {
   position: fixed;
@@ -105,6 +107,7 @@ header {
   max-width: 100%;
   box-sizing: border-box;
 }
+.laujournal-topbar{ position:sticky; top:0; z-index:120; background:rgba(43,10,40,0.6); backdrop-filter:blur(10px) saturate(140%); border-bottom:1px solid rgba(255,214,224,0.25); }
 
 .header-controls {
   display: flex;
@@ -168,6 +171,16 @@ header h2 {
   letter-spacing: 0.2rem;
   text-shadow: 0 0 10px #ff6699aa;
 }
+/* Bottom tabbar (isolated) */
+.laujournal-tabbar { position:fixed; bottom:0; left:0; width:100%; display:flex; justify-content:space-around; align-items:stretch; background:rgba(20,8,24,0.85); backdrop-filter:blur(12px) saturate(140%); border-top:1px solid rgba(255,214,224,0.25); z-index:900; padding:.35rem 0 .3rem; }
+.laujournal-tabbar .tabbar-item { flex:1; text-align:center; text-decoration:none; color:#ffd6e0; font-size:.65rem; font-weight:600; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:.2rem; padding:.55rem 0 .45rem; border-radius:8px; position:relative; transition:background .35s,color .35s; user-select:none; }
+.laujournal-tabbar .tabbar-item .tab-ico { font-size:1.25rem; }
+.laujournal-tabbar .tabbar-item:hover { background:rgba(255,214,224,0.08); }
+.laujournal-tabbar .tabbar-item:active { transform:translateY(1px); }
+.laujournal-tabbar .tabbar-item.active { color:#2b0a28; background:#ffd6e0; box-shadow:0 0 0 1px rgba(255,214,224,0.6), 0 4px 12px -2px rgba(255,214,224,0.6); }
+.laujournal-tabbar .tabbar-item.active::after { content:''; position:absolute; top:0; left:50%; transform:translate(-50%,-50%); width:42%; height:4px; border-radius:10px; background:linear-gradient(90deg,#ffd6e0,#ffb3d9 70%); box-shadow:0 0 8px -2px #ffd6e0, 0 0 14px -4px #ffd6e0; }
+.laujournal-tabbar .tabbar-indicator { position:absolute; bottom:0; left:0; height:4px; width:40px; background:linear-gradient(90deg,#ffd6e0,#ffb3d9); border-radius:4px 4px 0 0; box-shadow:0 0 8px rgba(255,214,224,0.6); transition: transform .45s cubic-bezier(.22,.8,.25,1), width .35s ease; pointer-events:none; }
+@media (prefers-reduced-motion: reduce){ .laujournal-tabbar{ backdrop-filter:none; } }
 
 .collage-grid {
   display: grid;
