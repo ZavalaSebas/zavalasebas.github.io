@@ -1134,7 +1134,7 @@ function updateOnThisDay() {
 // Make functions global for HTML onclick handlers
 window.deleteNote = deleteNote;
 window.toggleFavorite = toggleFavorite;
-window.downloadPhoto = downloadPhoto;
+// window.downloadPhoto removed (no explicit download UI)
 
 // ============================================
 // FAVORITES SYSTEM (LocalStorage)
@@ -1181,14 +1181,7 @@ function updateGridFavoriteStars() {
 // DOWNLOAD SYSTEM
 // ============================================
 
-function downloadPhoto(foto) {
-  const link = document.createElement('a');
-  link.href = `../assets/image/jimejournal/${foto.archivo}`;
-  link.download = foto.archivo;
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-}
+// Removed explicit download function. Use native long-press on image for saving.
 
 // ============================================
 // TOUCH GESTURES
@@ -1329,14 +1322,9 @@ function showQuickOptions() {
   if (navigator.vibrate) {
     navigator.vibrate(50);
   }
-  
-  const options = [
-    { text: '⭐ ' + (isFavorite(foto.id) ? 'Quitar favorito' : 'Marcar favorito'), action: () => toggleFavorite(foto.id) },
-    { text: '💾 Descargar', action: () => downloadPhoto(foto) }
-  ];
-  
-  // Simple alert menu (could be replaced with custom modal)
-  const choice = confirm('Opciones rápidas:\n\n' + options.map((o, i) => `${i + 1}. ${o.text}`).join('\n') + '\n\n¿Desea continuar?');
+  // Removed download option & blocking confirm dialog. Long press now only gives haptic feedback.
+  // Optionally could auto-toggle favorite here; uncomment if desired:
+  // toggleFavorite(foto.id);
 }
 
 // ============================================

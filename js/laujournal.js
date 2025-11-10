@@ -52,6 +52,7 @@ const fotosLau = [
   { archivo: "lau37.jpg", titulo: "Pinche Milano", fecha: "31 de octubre 2025 22:34", id: "lau37", year: 2025 },
   { archivo: "lau38.jpg", titulo: "I finally found you", fecha: "6 de noviembre 2025 22:51", id: "lau38", year: 2025 },
   { archivo: "lau39.jpg", titulo: "Late night visit", fecha: "8 de noviembre 2025 23:00", id: "lau39", year: 2025 }
+    ,{ archivo: "lau40.jpg", titulo: "I love U", fecha: "8 de noviembre 2025 23:00", id: "lau40", year: 2025 }
 ];
 
 let currentPhotoId = null;
@@ -949,7 +950,7 @@ document.addEventListener('DOMContentLoaded', function() {
 window.deleteNote = deleteNote;
 window.toggleFavorite = toggleFavorite;
 window.sharePhoto = sharePhoto;
-window.downloadPhoto = downloadPhoto;
+// window.downloadPhoto removed (no explicit download UI)
 
 // Fullscreen toggle
 function initializeFullscreenToggle() {
@@ -1238,14 +1239,7 @@ function sharePhoto(foto) {
   }
 }
 
-function downloadPhoto(foto) {
-  const link = document.createElement('a');
-  link.href = `../assets/image/laujournal/${foto.archivo}`;
-  link.download = foto.archivo;
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-}
+// Removed explicit download function. Rationale: use native long-press on image to save.
 
 // ============================================
 // TOUCH GESTURES
@@ -1386,16 +1380,9 @@ function showQuickOptions() {
   if (navigator.vibrate) {
     navigator.vibrate(50);
   }
-  
-  const options = [
-    { text: '⭐ ' + (isFavorite(foto.id) ? 'Quitar favorito' : 'Marcar favorito'), action: () => toggleFavorite(foto.id) },
-    { text: '📤 Compartir', action: () => sharePhoto(foto) },
-    { text: '💾 Descargar', action: () => downloadPhoto(foto) }
-  ];
-  
-  // Simple alert menu (could be replaced with custom modal)
-  const choice = confirm('Opciones rápidas:\n\n' + options.map((o, i) => `${i + 1}. ${o.text}`).join('\n') + '\n\n¿Desea continuar?');
-  // Note: In production, use a custom bottom sheet UI
+  // Remove the download option and avoid showing any blocking UI.
+  // For ahora, no mostramos ningún menú; se dejó la vibración como feedback sutil.
+  // Si quieres, podemos activar una acción directa (p. ej. alternar favorito) aquí.
 }
 
 // ============================================
