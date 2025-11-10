@@ -715,9 +715,24 @@ header h2 {
   }
   
   /* Keep notes title and controls on a single row */
-  .notes-header { flex-direction: row !important; align-items: center !important; gap: .5rem; }
-  .notes-header h4 { font-size: 1.1rem; white-space: nowrap; }
-  .lightbox-control-group { flex-shrink: 0; gap: .4rem; }
+  .notes-header { 
+    flex-direction: row !important; 
+    align-items: center !important; 
+    gap: .5rem;
+    flex-wrap: nowrap !important;
+    justify-content: space-between !important;
+  }
+  .notes-header h4 { 
+    font-size: 1rem; 
+    white-space: nowrap;
+    margin: 0 !important;
+  }
+  .lightbox-control-group { 
+    flex-shrink: 0; 
+    gap: .35rem;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
   .lightbox-nav-btn { width: 38px; height: 38px; }
   .add-note-btn { align-self: auto; padding: 0.5rem 0.8rem; }
 }
@@ -1511,9 +1526,23 @@ body.presentation-active { overflow: hidden; }
 
 @media (max-width: 480px) {
   .action-btn {
-    width: 38px;
-    height: 38px;
-    font-size: 1rem;
+    width: 36px;
+    height: 36px;
+    font-size: 0.95rem;
+  }
+  
+  .favorite-tile-btn {
+    font-size: 0.85rem;
+    padding: 0.2rem 0.4rem;
+  }
+  
+  .controls-divider {
+    font-size: 0.9rem;
+    margin: 0 0.1rem;
+  }
+  
+  .lightbox-control-group {
+    gap: 0.4rem;
   }
 }
 
