@@ -126,7 +126,7 @@
     <div class="lightbox-content">
       <img class="lightbox-img" id="lightbox-img" src="" alt="">
       <p class="lightbox-caption" id="lightbox-caption"></p>
-      
+
       <!-- Memory Notes Section -->
       <div class="memory-notes-section">
         <div class="notes-header">
@@ -135,6 +135,10 @@
             <button class="lightbox-nav-btn" id="lightbox-prev" aria-label="Anterior" title="Anterior">⟨</button>
             <button class="lightbox-nav-btn" id="lightbox-next" aria-label="Siguiente" title="Siguiente">⟩</button>
             <button class="add-note-btn" id="add-note-btn" aria-label="Agregar Nota" title="Agregar Nota">+</button>
+            <span class="controls-divider">|</span>
+            <button class="action-btn favorite-star-btn" onclick="toggleFavorite(currentPhotoId)" title="Favorito" aria-label="Favorito">☆</button>
+            <button class="action-btn share-btn" onclick="sharePhoto(fotosLau.find(f => f.id === currentPhotoId))" title="Compartir" aria-label="Compartir">📤</button>
+            <button class="action-btn download-btn" onclick="downloadPhoto(fotosLau.find(f => f.id === currentPhotoId))" title="Descargar" aria-label="Descargar">💾</button>
           </div>
         </div>
         <div class="notes-container" id="notes-container">

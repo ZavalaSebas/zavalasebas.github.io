@@ -57,6 +57,20 @@ const fotosLau = [
 let currentPhotoId = null;
 let isGridView = true;
 let newestPhotoIds = new Set();
+
+// Favorites system (localStorage)
+let favorites = new Set(JSON.parse(localStorage.getItem('lau_favorites') || '[]'));
+
+// Touch gestures state
+let touchStartX = 0;
+let touchStartY = 0;
+let touchEndX = 0;
+let touchEndY = 0;
+let isPinching = false;
+let initialPinchDistance = 0;
+let currentScale = 1;
+let isLongPress = false;
+let longPressTimer = null;
 let lightboxSequence = [];
 let lightboxIndex = -1;
 
@@ -218,21 +232,38 @@ function createCollageGrid() {
         <button class="notes-preview-btn" data-photo-id="${foto.id}">
           💭 <span class="notes-count">0</span>
         </button>
+        <button class="favorite-tile-btn" data-photo-id="${foto.id}" title="Favorito">
+          ${isFavorite(foto.id) ? '⭐' : '☆'}
+        </button>
       </div>
     `;
 
     // Main click event for lightbox
     tile.addEventListener("click", (e) => {
-      if (!e.target.classList.contains('notes-preview-btn')) {
+      if (!e.target.classList.contains('notes-preview-btn') && 
+          !e.target.classList.contains('favorite-tile-btn') &&
+          !e.target.closest('.favorite-tile-btn')) {
         openLightbox(foto);
       }
     });
+    
+    // Favorite button click
+    const favoriteBtn = tile.querySelector('.favorite-tile-btn');
+    if (favoriteBtn) {
+      favoriteBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleFavorite(foto.id);
+      });
+    }
 
     collageGrid.appendChild(tile);
   });
 
   // Update notes counts
   updateNotesCounters();
+  
+  // Update favorite stars
+  updateGridFavoriteStars();
 }
 
 // Setup lightbox events
@@ -292,15 +323,29 @@ function openLightbox(foto) {
   const lightboxImg = document.getElementById("lightbox-img");
   const lightboxCaption = document.getElementById("lightbox-caption");
 
+  // Add entrance animation
+  lightbox.style.display = "flex";
+  lightbox.classList.add('lightbox-enter');
+  setTimeout(() => lightbox.classList.remove('lightbox-enter'), 300);
+
   lightboxImg.src = `../assets/image/laujournal/${foto.archivo}`;
   lightboxCaption.textContent = `${foto.titulo} — ${foto.fecha}`;
-  lightbox.style.display = "flex";
+  
+  // Update favorite star
+  updateFavoriteUI(foto.id);
   
   // Prevent body scroll
   document.body.style.overflow = "hidden";
 
+  // Show skeleton while loading notes
+  showSkeletonNotes();
+  
   // Load notes for this photo
   loadNotes(foto.id);
+  
+  // Reset zoom
+  currentScale = 1;
+  lightboxImg.style.transform = 'scale(1)';
 }
 
 // Close lightbox
@@ -831,13 +876,27 @@ document.head.appendChild(style);
 // Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
     console.log('DOM loaded, starting initialization...');
+    
+    // Core initialization
     initializeJournal();
-  setupPresentationControls();
-  setupLightboxNavControls();
+    setupPresentationControls();
+    setupLightboxNavControls();
+    
+    // New features initialization
+    initTouchGestures();
+    initPullToRefresh();
+    addLightboxAnimations();
+    addPresentationTransitions();
+    updateGridFavoriteStars();
+    
+    console.log('All features initialized! ✨');
 });
 
-// Make deleteNote function global
+// Make functions global for HTML onclick handlers
 window.deleteNote = deleteNote;
+window.toggleFavorite = toggleFavorite;
+window.sharePhoto = sharePhoto;
+window.downloadPhoto = downloadPhoto;
 
 // Fullscreen toggle
 function initializeFullscreenToggle() {
@@ -1059,3 +1118,343 @@ function shuffleArray(arr) {
   }
   return arr;
 }
+
+// ============================================
+// FAVORITES SYSTEM (LocalStorage)
+// ============================================
+
+function toggleFavorite(photoId) {
+  if (favorites.has(photoId)) {
+    favorites.delete(photoId);
+  } else {
+    favorites.add(photoId);
+  }
+  saveFavorites();
+  updateFavoriteUI(photoId);
+  updateGridFavoriteStars();
+}
+
+function saveFavorites() {
+  localStorage.setItem('lau_favorites', JSON.stringify([...favorites]));
+}
+
+function isFavorite(photoId) {
+  return favorites.has(photoId);
+}
+
+function updateFavoriteUI(photoId) {
+  const starBtn = document.querySelector('.favorite-star-btn');
+  if (starBtn && currentPhotoId === photoId) {
+    starBtn.classList.toggle('active', isFavorite(photoId));
+    starBtn.innerHTML = isFavorite(photoId) ? '⭐' : '☆';
+  }
+}
+
+function updateGridFavoriteStars() {
+  fotosLau.forEach(foto => {
+    const favoriteBtn = document.querySelector(`.tile-footer .favorite-tile-btn[data-photo-id="${foto.id}"]`);
+    if (favoriteBtn) {
+      favoriteBtn.innerHTML = isFavorite(foto.id) ? '⭐' : '☆';
+      favoriteBtn.classList.toggle('active', isFavorite(foto.id));
+    }
+  });
+}
+
+// ============================================
+// SHARE & DOWNLOAD SYSTEM
+// ============================================
+
+function sharePhoto(foto) {
+  const imageUrl = `${window.location.origin}/assets/image/laujournal/${foto.archivo}`;
+  const text = `${foto.titulo} - ${foto.fecha}`;
+  
+  if (navigator.share) {
+    // Use native share if available
+    navigator.share({
+      title: foto.titulo,
+      text: text,
+      url: imageUrl
+    }).catch(err => console.log('Share cancelled', err));
+  } else {
+    // Fallback: copy link
+    navigator.clipboard.writeText(imageUrl).then(() => {
+      alert('¡Enlace copiado al portapapeles! 📋');
+    }).catch(() => {
+      alert('Enlace: ' + imageUrl);
+    });
+  }
+}
+
+function downloadPhoto(foto) {
+  const link = document.createElement('a');
+  link.href = `../assets/image/laujournal/${foto.archivo}`;
+  link.download = foto.archivo;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+
+// ============================================
+// TOUCH GESTURES
+// ============================================
+
+function initTouchGestures() {
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightbox-img');
+  
+  if (!lightbox || !lightboxImg) return;
+  
+  // Swipe to navigate
+  lightbox.addEventListener('touchstart', handleTouchStart, { passive: true });
+  lightbox.addEventListener('touchmove', handleTouchMove, { passive: false });
+  lightbox.addEventListener('touchend', handleTouchEnd, { passive: true });
+  
+  // Pinch to zoom
+  lightboxImg.addEventListener('touchstart', handlePinchStart, { passive: false });
+  lightboxImg.addEventListener('touchmove', handlePinchMove, { passive: false });
+  lightboxImg.addEventListener('touchend', handlePinchEnd, { passive: true });
+  
+  // Long press for options
+  lightbox.addEventListener('touchstart', handleLongPressStart, { passive: true });
+  lightbox.addEventListener('touchend', handleLongPressEnd, { passive: true });
+  lightbox.addEventListener('touchmove', handleLongPressCancel, { passive: true });
+}
+
+function handleTouchStart(e) {
+  touchStartX = e.changedTouches[0].screenX;
+  touchStartY = e.changedTouches[0].screenY;
+}
+
+function handleTouchMove(e) {
+  touchEndX = e.changedTouches[0].screenX;
+  touchEndY = e.changedTouches[0].screenY;
+}
+
+function handleTouchEnd(e) {
+  const lightbox = document.getElementById('lightbox');
+  if (lightbox.style.display !== 'flex') return;
+  
+  const deltaX = touchEndX - touchStartX;
+  const deltaY = touchEndY - touchStartY;
+  
+  // Swipe down to close (>100px down)
+  if (deltaY > 100 && Math.abs(deltaX) < 50) {
+    closeLightbox();
+    return;
+  }
+  
+  // Swipe left/right to navigate (>50px)
+  if (Math.abs(deltaX) > 50 && Math.abs(deltaY) < 50) {
+    if (deltaX > 0) {
+      navigateLightbox(-1); // Swipe right = previous
+    } else {
+      navigateLightbox(1); // Swipe left = next
+    }
+  }
+}
+
+// Pinch to Zoom
+function handlePinchStart(e) {
+  if (e.touches.length === 2) {
+    e.preventDefault();
+    isPinching = true;
+    initialPinchDistance = getPinchDistance(e.touches);
+  }
+}
+
+function handlePinchMove(e) {
+  if (isPinching && e.touches.length === 2) {
+    e.preventDefault();
+    const currentDistance = getPinchDistance(e.touches);
+    const scale = currentDistance / initialPinchDistance;
+    currentScale = Math.max(1, Math.min(scale * currentScale, 4));
+    
+    const img = e.target;
+    img.style.transform = `scale(${currentScale})`;
+    img.style.transition = 'none';
+  }
+}
+
+function handlePinchEnd(e) {
+  if (isPinching) {
+    isPinching = false;
+    const img = e.target;
+    
+    // Reset if scale is close to 1
+    if (currentScale < 1.2) {
+      currentScale = 1;
+      img.style.transform = 'scale(1)';
+      img.style.transition = 'transform 0.3s ease';
+    }
+  }
+}
+
+function getPinchDistance(touches) {
+  const dx = touches[0].clientX - touches[1].clientX;
+  const dy = touches[0].clientY - touches[1].clientY;
+  return Math.sqrt(dx * dx + dy * dy);
+}
+
+// Long Press for Options
+function handleLongPressStart(e) {
+  isLongPress = false;
+  longPressTimer = setTimeout(() => {
+    isLongPress = true;
+    showQuickOptions();
+  }, 500); // 500ms for long press
+}
+
+function handleLongPressEnd(e) {
+  clearTimeout(longPressTimer);
+}
+
+function handleLongPressCancel(e) {
+  clearTimeout(longPressTimer);
+}
+
+function showQuickOptions() {
+  const foto = fotosLau.find(f => f.id === currentPhotoId);
+  if (!foto) return;
+  
+  // Haptic feedback if available
+  if (navigator.vibrate) {
+    navigator.vibrate(50);
+  }
+  
+  const options = [
+    { text: '⭐ ' + (isFavorite(foto.id) ? 'Quitar favorito' : 'Marcar favorito'), action: () => toggleFavorite(foto.id) },
+    { text: '📤 Compartir', action: () => sharePhoto(foto) },
+    { text: '💾 Descargar', action: () => downloadPhoto(foto) }
+  ];
+  
+  // Simple alert menu (could be replaced with custom modal)
+  const choice = confirm('Opciones rápidas:\n\n' + options.map((o, i) => `${i + 1}. ${o.text}`).join('\n') + '\n\n¿Desea continuar?');
+  // Note: In production, use a custom bottom sheet UI
+}
+
+// ============================================
+// PULL TO REFRESH
+// ============================================
+
+let pullStartY = 0;
+let pullEndY = 0;
+let isPulling = false;
+
+function initPullToRefresh() {
+  const diary = document.querySelector('.diary');
+  if (!diary) return;
+  
+  let refreshIndicator = document.createElement('div');
+  refreshIndicator.className = 'pull-refresh-indicator';
+  refreshIndicator.innerHTML = '↓ Suelta para actualizar';
+  refreshIndicator.style.display = 'none';
+  diary.prepend(refreshIndicator);
+  
+  document.addEventListener('touchstart', (e) => {
+    if (window.scrollY === 0) {
+      pullStartY = e.touches[0].clientY;
+      isPulling = true;
+    }
+  }, { passive: true });
+  
+  document.addEventListener('touchmove', (e) => {
+    if (isPulling && window.scrollY === 0) {
+      pullEndY = e.touches[0].clientY;
+      const pullDistance = pullEndY - pullStartY;
+      
+      if (pullDistance > 80) {
+        refreshIndicator.style.display = 'block';
+        refreshIndicator.innerHTML = '✨ Actualizar';
+      } else if (pullDistance > 0) {
+        refreshIndicator.style.display = 'block';
+        refreshIndicator.innerHTML = '↓ Suelta para actualizar';
+      }
+    }
+  }, { passive: true });
+  
+  document.addEventListener('touchend', (e) => {
+    if (isPulling) {
+      const pullDistance = pullEndY - pullStartY;
+      
+      if (pullDistance > 80) {
+        refreshIndicator.innerHTML = '⏳ Actualizando...';
+        setTimeout(() => {
+          location.reload();
+        }, 500);
+      } else {
+        refreshIndicator.style.display = 'none';
+      }
+      
+      isPulling = false;
+    }
+  }, { passive: true });
+}
+
+// ============================================
+// SKELETON SCREENS
+// ============================================
+
+function showSkeletonNotes() {
+  const container = document.getElementById('notes-container');
+  if (!container) return;
+  
+  container.innerHTML = `
+    <div class="skeleton-note">
+      <div class="skeleton-line" style="width: 80%;"></div>
+      <div class="skeleton-line" style="width: 60%;"></div>
+      <div class="skeleton-line" style="width: 40%;"></div>
+    </div>
+  `;
+}
+
+function showSkeletonGrid() {
+  const grid = document.querySelector('.collage-grid');
+  if (!grid) return;
+  
+  grid.innerHTML = '';
+  for (let i = 0; i < 6; i++) {
+    const skeleton = document.createElement('div');
+    skeleton.className = 'skeleton-tile';
+    skeleton.innerHTML = `
+      <div class="skeleton-image"></div>
+      <div class="skeleton-text"></div>
+    `;
+    grid.appendChild(skeleton);
+  }
+}
+
+// ============================================
+// ENHANCED ANIMATIONS
+// ============================================
+
+function addLightboxAnimations() {
+  const lightbox = document.getElementById('lightbox');
+  const lightboxContent = document.querySelector('.lightbox-content');
+  
+  if (!lightbox || !lightboxContent) return;
+  
+  // Add entrance animation class
+  const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      if (mutation.attributeName === 'style') {
+        if (lightbox.style.display === 'flex') {
+          lightboxContent.classList.add('lightbox-enter');
+          setTimeout(() => {
+            lightboxContent.classList.remove('lightbox-enter');
+          }, 300);
+        }
+      }
+    });
+  });
+  
+  observer.observe(lightbox, { attributes: true });
+}
+
+function addPresentationTransitions() {
+  const img = document.getElementById('presentation-image');
+  if (!img) return;
+  
+  // Smooth fade transitions are already handled via CSS opacity transitions
+  // Additional effects can be added here
+}
+

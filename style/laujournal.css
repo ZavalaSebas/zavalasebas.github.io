@@ -1276,3 +1276,263 @@ body.presentation-active { overflow: hidden; }
     column-gap: 2rem;
   }
 }
+
+/* ============================================
+   PHOTO ACTIONS (Favorite, Share, Download)
+   ============================================ */
+
+/* Action buttons in lightbox control group */
+.action-btn {
+  background: rgba(255, 153, 204, 0.15);
+  border: 1px solid var(--lau-main);
+  color: var(--lau-text);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.action-btn:hover {
+  background: var(--lau-main);
+  color: var(--lau-dark);
+  transform: scale(1.1);
+}
+
+.favorite-star-btn.active {
+  background: var(--lau-bright);
+  color: #fff;
+  animation: starPulse 0.5s ease;
+}
+
+@keyframes starPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.3); }
+}
+
+/* Divider in control group */
+.controls-divider {
+  color: var(--lau-main);
+  opacity: 0.3;
+  font-size: 1.2rem;
+  user-select: none;
+}
+
+/* Favorite button in grid tiles */
+.favorite-tile-btn {
+  background: rgba(255, 153, 204, 0.1);
+  border: 1px solid rgba(255, 153, 204, 0.3);
+  color: var(--lau-text);
+  padding: 0.3rem 0.6rem;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  opacity: 0.7;
+}
+
+.favorite-tile-btn:hover,
+.favorite-tile-btn.active {
+  background: rgba(255, 153, 204, 0.2);
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+.favorite-tile-btn.active {
+  border-color: var(--lau-bright);
+}
+
+/* ============================================
+   SKELETON SCREENS
+   ============================================ */
+
+.skeleton-note {
+  padding: 1rem;
+  background: rgba(255, 153, 204, 0.05);
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
+}
+
+.skeleton-line {
+  height: 12px;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 153, 204, 0.1) 25%,
+    rgba(255, 153, 204, 0.2) 50%,
+    rgba(255, 153, 204, 0.1) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+}
+
+.skeleton-tile {
+  background: rgba(255, 153, 204, 0.05);
+  border: 1px solid rgba(255, 153, 204, 0.15);
+  border-radius: 16px;
+  padding: 0;
+  overflow: hidden;
+}
+
+.skeleton-image {
+  width: 100%;
+  height: 250px;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 153, 204, 0.1) 25%,
+    rgba(255, 153, 204, 0.2) 50%,
+    rgba(255, 153, 204, 0.1) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+.skeleton-text {
+  height: 60px;
+  padding: 1rem;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 153, 204, 0.08) 25%,
+    rgba(255, 153, 204, 0.15) 50%,
+    rgba(255, 153, 204, 0.08) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* ============================================
+   LIGHTBOX ANIMATIONS
+   ============================================ */
+
+.lightbox-enter {
+  animation: lightboxFadeIn 0.3s ease;
+}
+
+@keyframes lightboxFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.lightbox-img {
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* Pinch to zoom support */
+.lightbox-img.zoomed {
+  cursor: move;
+}
+
+/* ============================================
+   PULL TO REFRESH
+   ============================================ */
+
+.pull-refresh-indicator {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--lau-main);
+  color: var(--lau-dark);
+  padding: 0.5rem 1.5rem;
+  border-radius: 0 0 12px 12px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  z-index: 999;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateX(-50%) translateY(-100%);
+  }
+  to {
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+/* ============================================
+   PRESENTATION MODE TRANSITIONS
+   ============================================ */
+
+#presentation-image {
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.presentation-caption {
+  animation: captionSlideUp 0.5s ease;
+}
+
+@keyframes captionSlideUp {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+/* ============================================
+   MOBILE OPTIMIZATIONS
+   ============================================ */
+
+@media (max-width: 768px) {
+  .action-btn {
+    width: 38px;
+    height: 38px;
+    font-size: 1rem;
+  }
+  
+  .favorite-tile-btn {
+    font-size: 0.9rem;
+    padding: 0.25rem 0.5rem;
+  }
+  
+  .controls-divider {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .action-btn {
+    width: 38px;
+    height: 38px;
+    font-size: 1rem;
+  }
+}
+
+/* ============================================
+   REDUCED MOTION
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .lightbox-enter,
+  .skeleton-line,
+  .skeleton-image,
+  .skeleton-text,
+  .pull-refresh-indicator,
+  #presentation-image,
+  .presentation-caption,
+  .action-btn,
+  .favorite-star-btn {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
