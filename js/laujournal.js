@@ -284,6 +284,25 @@ function setupLightboxEvents() {
       closeLightbox();
     }
   });
+  
+  // Prevent scroll on background when lightbox is open
+  lightbox.addEventListener("wheel", (e) => {
+    // Allow scroll only inside notes container
+    const notesContainer = document.querySelector(".notes-container");
+    const notesSection = document.querySelector(".memory-notes-section");
+    if (!notesContainer.contains(e.target) && !notesSection.contains(e.target)) {
+      e.preventDefault();
+    }
+  }, { passive: false });
+  
+  lightbox.addEventListener("touchmove", (e) => {
+    // Allow scroll only inside notes container
+    const notesContainer = document.querySelector(".notes-container");
+    const notesSection = document.querySelector(".memory-notes-section");
+    if (!notesContainer.contains(e.target) && !notesSection.contains(e.target)) {
+      e.preventDefault();
+    }
+  }, { passive: false });
 }
 
 // Setup notes events
@@ -334,8 +353,11 @@ function openLightbox(foto) {
   // Update favorite star
   updateFavoriteUI(foto.id);
   
-  // Prevent body scroll
+  // Prevent body scroll completely
   document.body.style.overflow = "hidden";
+  document.body.style.position = "fixed";
+  document.body.style.width = "100%";
+  document.body.style.top = `-${window.scrollY}px`;
 
   // Show skeleton while loading notes
   showSkeletonNotes();
@@ -358,8 +380,13 @@ function closeLightbox() {
   document.getElementById("note-input").value = "";
   currentPhotoId = null;
   
-  // Restore body scroll
-  document.body.style.overflow = "auto";
+  // Restore body scroll and position
+  const scrollY = document.body.style.top;
+  document.body.style.overflow = "";
+  document.body.style.position = "";
+  document.body.style.width = "";
+  document.body.style.top = "";
+  window.scrollTo(0, parseInt(scrollY || '0') * -1);
 }
 
 // Save note to Firebase
