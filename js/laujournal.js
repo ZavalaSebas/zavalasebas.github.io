@@ -942,18 +942,23 @@ function startPresentationTimer() {
   clearInterval(presentationTimer);
   if (!presentationPlaying) return;
   presentationTimer = setInterval(() => {
-    advancePresentation(1);
+    advancePresentation(1, true); // true = auto advance
   }, PRESENTATION_INTERVAL_MS);
 }
 
-function advancePresentation(step) {
+function advancePresentation(step, isAuto = false) {
   const seq = presentationSequence.length ? presentationSequence : [...fotosLau].sort((a,b) => (parseSpanishFechaToTimestamp(a.fecha)||0)-(parseSpanishFechaToTimestamp(b.fecha)||0));
   presentationIndex = (presentationIndex + step + seq.length) % seq.length;
   // Optional: when we wrap to first photo after auto-forward, reshuffle for continuous randomness
-  if (presentationIndex === 0 && step === 1 && presentationPlaying) {
+  if (presentationIndex === 0 && step === 1 && isAuto) {
     presentationSequence = shuffleArray([...fotosLau]);
   }
   showPresentationPhoto(seq[presentationIndex]);
+  
+  // Reset timer on manual navigation (not auto)
+  if (!isAuto) {
+    startPresentationTimer();
+  }
 }
 
 function showPresentationPhoto(foto) {

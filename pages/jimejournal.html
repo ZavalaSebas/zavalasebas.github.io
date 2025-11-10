@@ -105,8 +105,9 @@
   <div class="timeline"></div> <!-- timeline -->
 
   <div class="view-controls">
-    <button class="view-toggle active" data-view="grid" id="grid-view">🔲 Cuadrícula</button>
-    <button class="view-toggle" data-view="mosaic" id="mosaic-view">🎨 Mosaico</button>
+    <button class="view-toggle active" data-view="grid" id="grid-view" title="Vista Cuadrícula" aria-label="Vista Cuadrícula">🔲</button>
+    <button class="view-toggle" data-view="mosaic" id="mosaic-view" title="Vista Mosaico" aria-label="Vista Mosaico">🎨</button>
+    <button class="view-toggle" data-view="presentation" id="presentation-view" title="Modo Presentación" aria-label="Modo Presentación">🎬</button>
   </div>
 
   <div class="collage-grid" id="collage-grid">
@@ -116,6 +117,26 @@
   <!-- Mosaic Container -->
   <div class="mosaic-container" id="mosaic-container">
     <!-- Se llena dinámicamente con JS -->
+  </div>
+
+  <!-- Presentation Mode Overlay -->
+  <div class="presentation-overlay" id="presentation-overlay">
+    <div class="presentation-content">
+      <img class="presentation-img" id="presentation-img" src="" alt="">
+      <div class="presentation-caption" id="presentation-caption">
+        <span class="presentation-title"></span>
+        <span class="presentation-date"></span>
+      </div>
+    </div>
+    <div class="presentation-controls">
+      <button class="presentation-btn" id="presentation-prev" title="Anterior">←</button>
+      <button class="presentation-btn" id="presentation-play-pause" title="Pausar">⏸</button>
+      <button class="presentation-btn" id="presentation-next" title="Siguiente">→</button>
+      <button class="presentation-btn" id="presentation-close" title="Cerrar">✕</button>
+    </div>
+    <audio id="presentation-audio" loop>
+      <source src="../assets/audio/rockola/EscapateConmigo.mp3" type="audio/mpeg">
+    </audio>
   </div>
 </section>
 
@@ -130,8 +151,12 @@
       <!-- Memory Notes Section -->
       <div class="memory-notes-section">
         <div class="notes-header">
-          <h4>💭 Notas de este Recuerdo</h4>
-          <button class="add-note-btn" id="add-note-btn">+ Agregar Nota</button>
+          <h4>💭 Notas</h4>
+          <div class="lightbox-control-group">
+            <button class="lightbox-nav-btn" id="lightbox-prev" title="Foto Anterior" aria-label="Foto Anterior">←</button>
+            <button class="add-note-btn" id="add-note-btn" title="Agregar Nota" aria-label="Agregar Nota">+</button>
+            <button class="lightbox-nav-btn" id="lightbox-next" title="Foto Siguiente" aria-label="Foto Siguiente">→</button>
+          </div>
         </div>
         <div class="notes-container" id="notes-container">
           <!-- Notes will be loaded here -->

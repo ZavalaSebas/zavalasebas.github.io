@@ -269,6 +269,12 @@ function openLightbox(foto) {
   lightboxCaption.textContent = `${foto.titulo} — ${foto.fecha}`;
   lightbox.style.display = "flex";
   
+  // Update lightbox index for navigation
+  if (lightboxSequence.length === 0) {
+    lightboxSequence = fotosJime.slice().reverse();
+  }
+  lightboxIndex = lightboxSequence.findIndex(f => f.id === foto.id);
+  
   // Prevent body scroll
   document.body.style.overflow = "hidden";
 
@@ -461,6 +467,195 @@ style.textContent = `
 `;
 document.head.appendChild(style);
 
+// Presentation Mode Variables
+let presentationTimer = null;
+let presentationIndex = 0;
+let presentationSequence = [];
+let isPresentationPlaying = true;
+
+// Lightbox Navigation Variables
+let lightboxSequence = [];
+let lightboxIndex = 0;
+
+// Fisher-Yates shuffle
+function shuffleArray(array) {
+  const shuffled = [...array];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+}
+
+// Start Presentation Mode
+function startPresentationMode() {
+  const overlay = document.getElementById('presentation-overlay');
+  const audio = document.getElementById('presentation-audio');
+  
+  // Randomize presentation sequence
+  presentationSequence = shuffleArray(fotosJime);
+  presentationIndex = 0;
+  isPresentationPlaying = true;
+  
+  overlay.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+  
+  // Start audio
+  audio.play().catch(err => console.log('Audio autoplay prevented:', err));
+  
+  // Show first photo
+  showPresentationPhoto(presentationIndex);
+  
+  // Start auto-advance timer
+  startPresentationTimer();
+  
+  // Setup keyboard controls
+  document.addEventListener('keydown', handlePresentationKeyboard);
+}
+
+// Stop Presentation Mode
+function stopPresentationMode() {
+  const overlay = document.getElementById('presentation-overlay');
+  const audio = document.getElementById('presentation-audio');
+  
+  if (presentationTimer) {
+    clearInterval(presentationTimer);
+    presentationTimer = null;
+  }
+  
+  audio.pause();
+  audio.currentTime = 0;
+  overlay.style.display = 'none';
+  document.body.style.overflow = 'auto';
+  
+  document.removeEventListener('keydown', handlePresentationKeyboard);
+}
+
+// Show photo in presentation
+function showPresentationPhoto(index) {
+  const foto = presentationSequence[index];
+  const img = document.getElementById('presentation-img');
+  const titleEl = document.querySelector('.presentation-title');
+  const dateEl = document.querySelector('.presentation-date');
+  
+  img.src = `../assets/image/jimejournal/${foto.archivo}`;
+  titleEl.textContent = foto.titulo;
+  dateEl.textContent = foto.fecha;
+}
+
+// Start presentation timer
+function startPresentationTimer() {
+  if (presentationTimer) {
+    clearInterval(presentationTimer);
+  }
+  presentationTimer = setInterval(() => {
+    if (isPresentationPlaying) {
+      advancePresentation(1, true); // true = auto advance
+    }
+  }, 6000); // 6 seconds per photo
+}
+
+// Advance presentation
+function advancePresentation(direction, isAuto = false) {
+  presentationIndex += direction;
+  
+  // Wrap around and reshuffle
+  if (presentationIndex >= presentationSequence.length) {
+    presentationSequence = shuffleArray(fotosJime);
+    presentationIndex = 0;
+  } else if (presentationIndex < 0) {
+    presentationIndex = presentationSequence.length - 1;
+  }
+  
+  showPresentationPhoto(presentationIndex);
+  
+  // Reset timer on manual navigation (not auto)
+  if (!isAuto) {
+    startPresentationTimer();
+  }
+}
+
+// Toggle play/pause
+function togglePresentationPlay() {
+  isPresentationPlaying = !isPresentationPlaying;
+  const btn = document.getElementById('presentation-play-pause');
+  const audio = document.getElementById('presentation-audio');
+  
+  btn.textContent = isPresentationPlaying ? '⏸' : '▶';
+  btn.title = isPresentationPlaying ? 'Pausar' : 'Reproducir';
+  
+  if (isPresentationPlaying) {
+    audio.play();
+    startPresentationTimer();
+  } else {
+    audio.pause();
+  }
+}
+
+// Handle presentation keyboard
+function handlePresentationKeyboard(e) {
+  if (e.key === 'Escape') {
+    stopPresentationMode();
+  } else if (e.key === 'ArrowRight') {
+    advancePresentation(1);
+  } else if (e.key === 'ArrowLeft') {
+    advancePresentation(-1);
+  } else if (e.key === ' ') {
+    e.preventDefault();
+    togglePresentationPlay();
+  }
+}
+
+// Setup Lightbox Navigation Controls
+function setupLightboxNavControls() {
+  const prevBtn = document.getElementById('lightbox-prev');
+  const nextBtn = document.getElementById('lightbox-next');
+  
+  if (prevBtn && nextBtn) {
+    prevBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      navigateLightbox(-1);
+    });
+    
+    nextBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      navigateLightbox(1);
+    });
+  }
+  
+  // Add keyboard navigation
+  document.addEventListener('keydown', (e) => {
+    const lightbox = document.getElementById('lightbox');
+    if (lightbox.style.display === 'flex') {
+      if (e.key === 'ArrowLeft') {
+        navigateLightbox(-1);
+      } else if (e.key === 'ArrowRight') {
+        navigateLightbox(1);
+      }
+    }
+  });
+}
+
+// Navigate lightbox
+function navigateLightbox(direction) {
+  if (lightboxSequence.length === 0) {
+    // Initialize sequence (newest first, matching grid order)
+    lightboxSequence = fotosJime.slice().reverse();
+  }
+  
+  lightboxIndex += direction;
+  
+  // Wrap around
+  if (lightboxIndex >= lightboxSequence.length) {
+    lightboxIndex = 0;
+  } else if (lightboxIndex < 0) {
+    lightboxIndex = lightboxSequence.length - 1;
+  }
+  
+  const foto = lightboxSequence[lightboxIndex];
+  openLightbox(foto);
+}
+
 // Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
     console.log('DOM loaded, starting initialization...');
@@ -474,6 +669,24 @@ document.addEventListener('DOMContentLoaded', function() {
     
   initializeJournal();
   initializeFullscreenToggleJime();
+  setupLightboxNavControls();
+  
+  // Setup presentation mode button
+  const presentationBtn = document.getElementById('presentation-view');
+  if (presentationBtn) {
+    presentationBtn.addEventListener('click', startPresentationMode);
+  }
+  
+  // Setup presentation controls
+  const presentationClose = document.getElementById('presentation-close');
+  const presentationPrev = document.getElementById('presentation-prev');
+  const presentationNext = document.getElementById('presentation-next');
+  const presentationPlayPause = document.getElementById('presentation-play-pause');
+  
+  if (presentationClose) presentationClose.addEventListener('click', stopPresentationMode);
+  if (presentationPrev) presentationPrev.addEventListener('click', () => advancePresentation(-1));
+  if (presentationNext) presentationNext.addEventListener('click', () => advancePresentation(1));
+  if (presentationPlayPause) presentationPlayPause.addEventListener('click', togglePresentationPlay);
 });
 
 // Dashboard functionality

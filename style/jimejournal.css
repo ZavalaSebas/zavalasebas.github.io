@@ -457,7 +457,7 @@ header h2 {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1rem;
-  padding-bottom: 0.5rem;
+  padding-bottom: 1.5rem;
   border-bottom: 1px solid rgba(139, 69, 19, 0.3);
 }
 
@@ -468,22 +468,53 @@ header h2 {
   font-size: 1.3rem;
 }
 
+.lightbox-control-group {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.lightbox-nav-btn {
+  background: rgba(139, 69, 19, 0.2);
+  border: 1px solid var(--jime-main);
+  color: var(--jime-text);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lightbox-nav-btn:hover {
+  background: var(--jime-main);
+  color: var(--jime-dark);
+  transform: scale(1.1);
+}
+
 .add-note-btn {
   background: var(--jime-main);
   color: var(--jime-dark);
   border: none;
   padding: 0.5rem 1rem;
-  border-radius: 20px;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
   cursor: pointer;
-  font-family: 'Quicksand', sans-serif;
-  font-size: 0.85rem;
+  font-size: 1.4rem;
   font-weight: bold;
   transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .add-note-btn:hover {
   background: var(--jime-bright);
-  transform: scale(1.05);
+  transform: scale(1.1);
 }
 
 .notes-container {
@@ -1188,20 +1219,21 @@ header h2 {
   background: rgba(139, 69, 19, 0.1);
   border: 1px solid var(--jime-main);
   color: var(--jime-text);
-  padding: 0.8rem 1.5rem;
-  border-radius: 20px;
+  padding: 0.8rem;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
   cursor: pointer;
-  font-family: 'Quicksand', sans-serif;
-  font-size: 0.9rem;
+  font-size: 1.2rem;
   transition: all 0.3s ease;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  justify-content: center;
 }
 
 .view-toggle:hover {
   background: rgba(139, 69, 19, 0.2);
-  transform: translateY(-2px);
+  transform: translateY(-2px) scale(1.05);
 }
 
 .view-toggle.active {
@@ -1292,6 +1324,157 @@ header h2 {
   .mosaic-date-group {
     columns: 4;
     column-gap: 2rem;
+  }
+}
+
+/* Presentation Mode */
+.presentation-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  z-index: 2000;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.presentation-content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.presentation-img {
+  max-width: 90%;
+  max-height: 85vh;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 0 30px rgba(139, 69, 19, 0.5);
+}
+
+.presentation-caption {
+  position: absolute;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.7);
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  text-align: center;
+  color: #faf0e6;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  max-width: 80%;
+}
+
+.presentation-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  font-family: 'Dancing Script', cursive;
+}
+
+.presentation-date {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+.presentation-controls {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 1rem;
+  z-index: 2001;
+}
+
+.presentation-btn {
+  background: rgba(139, 69, 19, 0.8);
+  border: 2px solid var(--jime-main);
+  color: #faf0e6;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.presentation-btn:hover {
+  background: var(--jime-main);
+  transform: scale(1.1);
+}
+
+/* Mobile adjustments for notes header */
+@media (max-width: 768px) {
+  .notes-header {
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 0.5rem;
+  }
+  
+  .notes-header h4 {
+    font-size: 1.1rem !important;
+    white-space: nowrap;
+  }
+  
+  .lightbox-control-group {
+    flex-shrink: 0;
+  }
+  
+  .lightbox-nav-btn {
+    width: 38px;
+    height: 38px;
+    font-size: 1.1rem;
+  }
+  
+  .add-note-btn {
+    width: 38px;
+    height: 38px;
+    font-size: 1.3rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .lightbox-nav-btn {
+    width: 36px;
+    height: 36px;
+    font-size: 1rem;
+  }
+  
+  .add-note-btn {
+    width: 36px;
+    height: 36px;
+    font-size: 1.2rem;
+  }
+  
+  .presentation-caption {
+    bottom: 100px;
+    padding: 0.75rem 1.5rem;
+  }
+  
+  .presentation-controls {
+    bottom: 30px;
+    gap: 0.75rem;
+  }
+  
+  .presentation-btn {
+    width: 45px;
+    height: 45px;
   }
 }
 
