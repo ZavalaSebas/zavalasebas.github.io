@@ -184,7 +184,8 @@ header h2 {
 
 .collage-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  /* Always show photos two-by-two (two columns) */
+  grid-template-columns: repeat(2, 1fr);
   gap: 1.25rem;
   padding: 2rem clamp(1rem, 4vw, 3rem);
   align-items: stretch;
@@ -629,7 +630,8 @@ header h2 {
   /* Keep overlay visible on touch devices for readability */
   .tile-overlay { opacity: 1; }
   .collage-grid {
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    /* Keep exactly two columns on small screens as well */
+    grid-template-columns: repeat(2, 1fr);
     gap: 0.9rem;
     padding: 1rem;
   }
