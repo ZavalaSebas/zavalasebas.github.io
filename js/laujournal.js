@@ -57,6 +57,8 @@ const fotosLau = [
 let currentPhotoId = null;
 let isGridView = true;
 let newestPhotoIds = new Set();
+let lightboxSequence = [];
+let lightboxIndex = -1;
 
 // Parse Spanish date strings like "6 de septiembre 2025 18:18 - 22:19" or "4 de Octubre 2025 17:36"
 function parseSpanishFechaToTimestamp(fechaStr) {
@@ -282,6 +284,9 @@ function setupNotesEvents() {
 // Open lightbox with photo and notes
 function openLightbox(foto) {
   currentPhotoId = foto.id;
+  // Build ordered sequence (match grid ordering used in createCollageGrid: newest first)
+  lightboxSequence = [...fotosLau].sort((a, b) => (parseSpanishFechaToTimestamp(b.fecha) || 0) - (parseSpanishFechaToTimestamp(a.fecha) || 0));
+  lightboxIndex = lightboxSequence.findIndex(f => f.id === foto.id);
   
   const lightbox = document.getElementById("lightbox");
   const lightboxImg = document.getElementById("lightbox-img");
@@ -563,6 +568,7 @@ function initializeViewControls() {
     // View toggle buttons  
     const gridBtn = document.getElementById('grid-view');
     const mosaicBtn = document.getElementById('mosaic-view');
+  const presentationBtn = document.getElementById('presentation-view');
     const collage = document.getElementById('collage-grid');
     const mosaicContainer = document.querySelector('.mosaic-container');
     
@@ -620,6 +626,11 @@ function initializeViewControls() {
     // View toggle buttons
     gridBtn.addEventListener('click', activateGridView);
     mosaicBtn.addEventListener('click', activateMosaicView);
+    if (presentationBtn) {
+      presentationBtn.addEventListener('click', () => {
+        startPresentationMode();
+      });
+    }
 }
 
 function generateMosaicView() {
@@ -821,6 +832,8 @@ document.head.appendChild(style);
 document.addEventListener('DOMContentLoaded', function() {
     console.log('DOM loaded, starting initialization...');
     initializeJournal();
+  setupPresentationControls();
+  setupLightboxNavControls();
 });
 
 // Make deleteNote function global
@@ -848,4 +861,196 @@ function initializeFullscreenToggle() {
       enter(document.documentElement);
     }
   });
+}
+
+// Lightbox navigation controls (prev/next buttons and arrow keys)
+function setupLightboxNavControls() {
+  const prevBtn = document.getElementById('lightbox-prev');
+  const nextBtn = document.getElementById('lightbox-next');
+  if (prevBtn) prevBtn.addEventListener('click', () => navigateLightbox(-1));
+  if (nextBtn) nextBtn.addEventListener('click', () => navigateLightbox(1));
+
+  document.addEventListener('keydown', (e) => {
+    const lightbox = document.getElementById('lightbox');
+    if (!lightbox || lightbox.style.display !== 'flex') return;
+    if (e.key === 'ArrowLeft') navigateLightbox(-1);
+    if (e.key === 'ArrowRight') navigateLightbox(1);
+  });
+}
+
+function navigateLightbox(step) {
+  if (!lightboxSequence.length || lightboxIndex < 0) return;
+  lightboxIndex = (lightboxIndex + step + lightboxSequence.length) % lightboxSequence.length;
+  const foto = lightboxSequence[lightboxIndex];
+  if (!foto) return;
+  currentPhotoId = foto.id;
+
+  const lightboxImg = document.getElementById('lightbox-img');
+  const lightboxCaption = document.getElementById('lightbox-caption');
+  if (lightboxImg) {
+    lightboxImg.style.opacity = 0;
+    setTimeout(() => {
+      lightboxImg.src = `../assets/image/laujournal/${foto.archivo}`;
+      lightboxImg.alt = foto.titulo;
+      lightboxImg.style.opacity = 1;
+    }, 150);
+  }
+  if (lightboxCaption) {
+    lightboxCaption.textContent = `${foto.titulo} — ${foto.fecha}`;
+  }
+  // Reload notes for new photo
+  loadNotes(foto.id);
+}
+
+// Presentation Mode Implementation
+let presentationIndex = 0;
+let presentationTimer = null;
+let presentationPlaying = true;
+let presentationSequence = [];
+const PRESENTATION_INTERVAL_MS = 6000; // 6 seconds per photo
+
+function startPresentationMode() {
+  if (document.body.classList.contains('presentation-active')) return; // already active
+  document.body.classList.add('presentation-active');
+  const overlay = document.getElementById('presentation-overlay');
+  if (!overlay) return;
+  overlay.style.display = 'flex';
+
+  // Enter fullscreen if possible
+  try {
+    if (!document.fullscreenElement && overlay.requestFullscreen) {
+      overlay.requestFullscreen().catch(()=>{});
+    }
+  } catch(e) { console.warn('Fullscreen not available', e); }
+
+  // Prepare sequence (chronological)
+  // Build a fresh randomized sequence each time presentation starts
+  presentationSequence = shuffleArray([...fotosLau]);
+  overlay.dataset.count = presentationSequence.length;
+  presentationIndex = 0;
+  presentationPlaying = true;
+  showPresentationPhoto(presentationSequence[presentationIndex]);
+  const audioEl = document.getElementById('presentation-audio');
+  if (audioEl) {
+    audioEl.currentTime = 0;
+    audioEl.play().catch(()=>{});
+  }
+  startPresentationTimer();
+}
+
+function startPresentationTimer() {
+  clearInterval(presentationTimer);
+  if (!presentationPlaying) return;
+  presentationTimer = setInterval(() => {
+    advancePresentation(1);
+  }, PRESENTATION_INTERVAL_MS);
+}
+
+function advancePresentation(step) {
+  const seq = presentationSequence.length ? presentationSequence : [...fotosLau].sort((a,b) => (parseSpanishFechaToTimestamp(a.fecha)||0)-(parseSpanishFechaToTimestamp(b.fecha)||0));
+  presentationIndex = (presentationIndex + step + seq.length) % seq.length;
+  // Optional: when we wrap to first photo after auto-forward, reshuffle for continuous randomness
+  if (presentationIndex === 0 && step === 1 && presentationPlaying) {
+    presentationSequence = shuffleArray([...fotosLau]);
+  }
+  showPresentationPhoto(seq[presentationIndex]);
+}
+
+function showPresentationPhoto(foto) {
+  if (!foto) return;
+  const img = document.getElementById('presentation-image');
+  const caption = document.getElementById('presentation-caption');
+  if (img) {
+    img.style.opacity = 0;
+    setTimeout(()=>{
+      img.src = `../assets/image/laujournal/${foto.archivo}`;
+      img.alt = foto.titulo;
+      img.style.opacity = 1;
+    }, 150);
+  }
+  if (caption) {
+    caption.innerHTML = `<span class="presentation-title">${foto.titulo}</span><br><span class="presentation-date">${foto.fecha}</span>`;
+  }
+}
+
+function stopPresentationMode() {
+  clearInterval(presentationTimer);
+  presentationPlaying = false;
+  const overlay = document.getElementById('presentation-overlay');
+  if (overlay) overlay.style.display = 'none';
+  document.body.classList.remove('presentation-active');
+  const audioEl = document.getElementById('presentation-audio');
+  if (audioEl) audioEl.pause();
+  // Exit fullscreen if we entered
+  try {
+    if (document.fullscreenElement) {
+      document.exitFullscreen();
+    }
+  } catch(e) { /* ignore */ }
+}
+
+function togglePresentationPlay() {
+  presentationPlaying = !presentationPlaying;
+  const btn = document.getElementById('presentation-playpause');
+  if (btn) btn.textContent = presentationPlaying ? '⏸' : '▶';
+  const audioEl = document.getElementById('presentation-audio');
+  if (audioEl) {
+    if (presentationPlaying) audioEl.play().catch(()=>{}); else audioEl.pause();
+  }
+  if (presentationPlaying) {
+    // restart timer
+    startPresentationTimer();
+  } else {
+    clearInterval(presentationTimer);
+  }
+}
+
+function setupPresentationControls() {
+  const prevBtn = document.getElementById('presentation-prev');
+  const nextBtn = document.getElementById('presentation-next');
+  const exitBtn = document.getElementById('presentation-exit');
+  const playPauseBtn = document.getElementById('presentation-playpause');
+  if (prevBtn) prevBtn.addEventListener('click', () => { 
+    advancePresentation(-1);
+    // reset timer after manual navigation
+    if (presentationPlaying) startPresentationTimer();
+  });
+  if (nextBtn) nextBtn.addEventListener('click', () => { 
+    advancePresentation(1);
+    // reset timer after manual navigation
+    if (presentationPlaying) startPresentationTimer();
+  });
+  if (exitBtn) exitBtn.addEventListener('click', stopPresentationMode);
+  if (playPauseBtn) playPauseBtn.addEventListener('click', togglePresentationPlay);
+
+  // Allow ESC to exit
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && document.body.classList.contains('presentation-active')) {
+      stopPresentationMode();
+    }
+    if (e.key === 'ArrowRight' && document.body.classList.contains('presentation-active')) {
+      advancePresentation(1);
+      if (presentationPlaying) startPresentationTimer();
+    }
+    if (e.key === 'ArrowLeft' && document.body.classList.contains('presentation-active')) {
+      advancePresentation(-1);
+      if (presentationPlaying) startPresentationTimer();
+    }
+    if (e.key.toLowerCase() === 'p' && document.body.classList.contains('presentation-active')) {
+      togglePresentationPlay();
+    }
+  });
+}
+
+// Expose for console debugging
+window.startPresentationMode = startPresentationMode;
+window.stopPresentationMode = stopPresentationMode;
+
+// Utility: Fisher-Yates shuffle
+function shuffleArray(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
 }

@@ -105,8 +105,9 @@
     <div class="timeline"></div> <!-- timeline -->
 
     <div class="view-controls">
-      <button class="view-toggle active" data-view="grid" id="grid-view">🔲 Cuadrícula</button>
-      <button class="view-toggle" data-view="mosaic" id="mosaic-view">🎨 Mosaico</button>
+      <button class="view-toggle active" data-view="grid" id="grid-view" aria-label="Cuadrícula" title="Cuadrícula">🔲</button>
+      <button class="view-toggle" data-view="mosaic" id="mosaic-view" aria-label="Mosaico" title="Mosaico">🎨</button>
+      <button class="view-toggle" data-view="presentation" id="presentation-view" aria-label="Presentación" title="Presentación">🎞️</button>
     </div>
 
     <div class="collage-grid" id="collage-grid">
@@ -129,8 +130,12 @@
       <!-- Memory Notes Section -->
       <div class="memory-notes-section">
         <div class="notes-header">
-          <h4>💭 Notas de este Recuerdo</h4>
-          <button class="add-note-btn" id="add-note-btn">+ Agregar Nota</button>
+          <h4>💭 Notas</h4>
+          <div class="lightbox-control-group">
+            <button class="lightbox-nav-btn" id="lightbox-prev" aria-label="Anterior" title="Anterior">⟨</button>
+            <button class="lightbox-nav-btn" id="lightbox-next" aria-label="Siguiente" title="Siguiente">⟩</button>
+            <button class="add-note-btn" id="add-note-btn" aria-label="Agregar Nota" title="Agregar Nota">+</button>
+          </div>
         </div>
         <div class="notes-container" id="notes-container">
           <!-- Notes will be loaded here -->
@@ -144,6 +149,21 @@
         </div>
       </div>
     </div>
+  </div>
+
+  <!-- Presentation Overlay -->
+  <div class="presentation-overlay" id="presentation-overlay" style="display: none;">
+    <div class="presentation-content">
+      <img class="presentation-image" id="presentation-image" alt="">
+      <div class="presentation-caption" id="presentation-caption"></div>
+      <div class="presentation-controls">
+        <button id="presentation-prev" class="presentation-btn" title="Anterior">⟨</button>
+        <button id="presentation-playpause" class="presentation-btn" title="Pausar/Reanudar">⏸</button>
+        <button id="presentation-next" class="presentation-btn" title="Siguiente">⟩</button>
+        <button id="presentation-exit" class="presentation-btn" title="Salir">✕</button>
+      </div>
+    </div>
+    <audio id="presentation-audio" preload="auto" loop src="../assets/audio/rockola/EscapateConmigo.mp3"></audio>
   </div>
 
   <!-- Firebase Scripts -->
