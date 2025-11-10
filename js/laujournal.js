@@ -57,6 +57,7 @@ const fotosLau = [
 let currentPhotoId = null;
 let isGridView = true;
 let newestPhotoIds = new Set();
+let savedScrollPosition = 0;
 
 // Favorites system (localStorage)
 let favorites = new Set(JSON.parse(localStorage.getItem('lau_favorites') || '[]'));
@@ -353,11 +354,12 @@ function openLightbox(foto) {
   // Update favorite star
   updateFavoriteUI(foto.id);
   
-  // Prevent body scroll completely
+  // Save scroll position and prevent body scroll completely
+  savedScrollPosition = window.scrollY;
   document.body.style.overflow = "hidden";
   document.body.style.position = "fixed";
   document.body.style.width = "100%";
-  document.body.style.top = `-${window.scrollY}px`;
+  document.body.style.top = `-${savedScrollPosition}px`;
 
   // Show skeleton while loading notes
   showSkeletonNotes();
@@ -381,12 +383,11 @@ function closeLightbox() {
   currentPhotoId = null;
   
   // Restore body scroll and position
-  const scrollY = document.body.style.top;
   document.body.style.overflow = "";
   document.body.style.position = "";
   document.body.style.width = "";
   document.body.style.top = "";
-  window.scrollTo(0, parseInt(scrollY || '0') * -1);
+  window.scrollTo(0, savedScrollPosition);
 }
 
 // Save note to Firebase
@@ -1234,7 +1235,7 @@ function initTouchGestures() {
   // Swipe to navigate
   lightbox.addEventListener('touchstart', handleTouchStart, { passive: true });
   lightbox.addEventListener('touchmove', handleTouchMove, { passive: false });
-  lightbox.addEventListener('touchend', handleTouchEnd, { passive: true });
+  lightbox.addEventListener('touchend', handleTouchEnd, { passive: false });
   
   // Pinch to zoom
   lightboxImg.addEventListener('touchstart', handlePinchStart, { passive: false });
@@ -1255,6 +1256,16 @@ function handleTouchStart(e) {
 function handleTouchMove(e) {
   touchEndX = e.changedTouches[0].screenX;
   touchEndY = e.changedTouches[0].screenY;
+  
+  // Prevent pull-to-refresh when swiping in lightbox
+  const lightbox = document.getElementById('lightbox');
+  if (lightbox.style.display === 'flex') {
+    const deltaY = touchEndY - touchStartY;
+    // If swiping down, prevent default browser pull-to-refresh
+    if (deltaY > 0) {
+      e.preventDefault();
+    }
+  }
 }
 
 function handleTouchEnd(e) {
@@ -1266,6 +1277,7 @@ function handleTouchEnd(e) {
   
   // Swipe down to close (>100px down)
   if (deltaY > 100 && Math.abs(deltaX) < 50) {
+    e.preventDefault(); // Prevent pull-to-refresh
     closeLightbox();
     return;
   }
