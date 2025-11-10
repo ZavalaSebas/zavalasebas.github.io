@@ -695,19 +695,39 @@ function navigateLightbox(direction) {
   if (lightboxSequence.length === 0) {
     // Initialize sequence (newest first, matching grid order)
     lightboxSequence = fotosJime.slice().reverse();
+    lightboxIndex = lightboxSequence.findIndex(f => f.id === currentPhotoId);
+    if (lightboxIndex < 0) lightboxIndex = 0;
   }
-  
+
   lightboxIndex += direction;
-  
+
   // Wrap around
   if (lightboxIndex >= lightboxSequence.length) {
     lightboxIndex = 0;
   } else if (lightboxIndex < 0) {
     lightboxIndex = lightboxSequence.length - 1;
   }
-  
+
   const foto = lightboxSequence[lightboxIndex];
-  openLightbox(foto);
+  if (!foto) return;
+  currentPhotoId = foto.id;
+
+  const lightboxImg = document.getElementById('lightbox-img');
+  const lightboxCaption = document.getElementById('lightbox-caption');
+  if (lightboxImg) {
+    lightboxImg.style.opacity = 0;
+    setTimeout(() => {
+      lightboxImg.src = `../assets/image/jimejournal/${foto.archivo}`;
+      lightboxImg.alt = foto.titulo;
+      lightboxImg.style.opacity = 1;
+    }, 150);
+  }
+  if (lightboxCaption) {
+    lightboxCaption.textContent = `${foto.titulo} — ${foto.fecha}`;
+  }
+  // Update favorite state and notes for the new photo
+  updateFavoriteUI(foto.id);
+  loadNotes(foto.id);
 }
 
 // Initialize when DOM is loaded
