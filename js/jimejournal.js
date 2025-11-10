@@ -733,6 +733,31 @@ document.addEventListener('DOMContentLoaded', function() {
   addPresentationTransitions();
   updateGridFavoriteStars();
   
+  // Disable pull-to-refresh completely
+  let lastTouchY = 0;
+  
+  document.addEventListener('touchstart', (e) => {
+    lastTouchY = e.touches[0].clientY;
+  }, { passive: false });
+  
+  document.addEventListener('touchmove', (e) => {
+    const touchY = e.touches[0].clientY;
+    const touchDelta = touchY - lastTouchY;
+    
+    // Always prevent pull-to-refresh when at top of page
+    if (window.scrollY <= 0 && touchDelta > 0) {
+      e.preventDefault();
+      return false;
+    }
+  }, { passive: false });
+  
+  document.addEventListener('touchend', (e) => {
+    // Ensure no bounce effect after touch ends at top
+    if (window.scrollY < 0) {
+      window.scrollTo(0, 0);
+    }
+  }, { passive: false });
+  
   // Setup presentation mode button
   const presentationBtn = document.getElementById('presentation-view');
   if (presentationBtn) {
@@ -1158,7 +1183,7 @@ function initTouchGestures() {
   // Swipe to navigate
   lightbox.addEventListener('touchstart', handleTouchStart, { passive: true });
   lightbox.addEventListener('touchmove', handleTouchMove, { passive: false });
-  lightbox.addEventListener('touchend', handleTouchEnd, { passive: false });
+  lightbox.addEventListener('touchend', handleTouchEnd, { passive: true });
   
   // Pinch to zoom
   lightboxImg.addEventListener('touchstart', handlePinchStart, { passive: false });
@@ -1174,20 +1199,23 @@ function initTouchGestures() {
 function handleTouchStart(e) {
   touchStartX = e.changedTouches[0].screenX;
   touchStartY = e.changedTouches[0].screenY;
+  touchEndX = touchStartX;
+  touchEndY = touchStartY;
 }
 
 function handleTouchMove(e) {
+  const lightbox = document.getElementById('lightbox');
+  if (lightbox.style.display !== 'flex') return;
+  
   touchEndX = e.changedTouches[0].screenX;
   touchEndY = e.changedTouches[0].screenY;
   
-  // Prevent pull-to-refresh when swiping in lightbox
-  const lightbox = document.getElementById('lightbox');
-  if (lightbox.style.display === 'flex') {
-    const deltaY = touchEndY - touchStartY;
-    // If swiping down, prevent default browser pull-to-refresh
-    if (deltaY > 0) {
-      e.preventDefault();
-    }
+  const deltaY = touchEndY - touchStartY;
+  const deltaX = touchEndX - touchStartX;
+  
+  // Only prevent if swiping down and mostly vertical (potential close gesture or pull-to-refresh)
+  if (deltaY > 10 && Math.abs(deltaY) > Math.abs(deltaX)) {
+    e.preventDefault();
   }
 }
 
@@ -1200,7 +1228,6 @@ function handleTouchEnd(e) {
   
   // Swipe down to close (>100px down)
   if (deltaY > 100 && Math.abs(deltaX) < 50) {
-    e.preventDefault(); // Prevent pull-to-refresh
     closeLightbox();
     return;
   }
@@ -1303,6 +1330,11 @@ let isPulling = false;
 function initPullToRefresh() {
   const diary = document.querySelector('.diary');
   if (!diary) return;
+  // Helper to know if lightbox is currently open
+  const isLightboxOpen = () => {
+    const lb = document.getElementById('lightbox');
+    return lb && lb.style.display === 'flex';
+  };
   
   let refreshIndicator = document.createElement('div');
   refreshIndicator.className = 'pull-refresh-indicator';
@@ -1311,6 +1343,11 @@ function initPullToRefresh() {
   diary.prepend(refreshIndicator);
   
   document.addEventListener('touchstart', (e) => {
+    // Do not start pull-to-refresh when the lightbox is open
+    if (isLightboxOpen()) {
+      isPulling = false;
+      return;
+    }
     if (window.scrollY === 0) {
       pullStartY = e.touches[0].clientY;
       isPulling = true;
@@ -1318,6 +1355,12 @@ function initPullToRefresh() {
   }, { passive: true });
   
   document.addEventListener('touchmove', (e) => {
+    // Ignore while lightbox is open
+    if (isLightboxOpen()) {
+      isPulling = false;
+      refreshIndicator.style.display = 'none';
+      return;
+    }
     if (isPulling && window.scrollY === 0) {
       pullEndY = e.touches[0].clientY;
       const pullDistance = pullEndY - pullStartY;
@@ -1333,6 +1376,12 @@ function initPullToRefresh() {
   }, { passive: true });
   
   document.addEventListener('touchend', (e) => {
+    // Do not trigger refresh if the lightbox is/was open
+    if (isLightboxOpen()) {
+      isPulling = false;
+      refreshIndicator.style.display = 'none';
+      return;
+    }
     if (isPulling) {
       const pullDistance = pullEndY - pullStartY;
       

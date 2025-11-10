@@ -13,9 +13,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Quicksand:wght@400;600&display=swap');
 
 /* Prevent horizontal scroll */
+html {
+  overscroll-behavior: none;
+  -webkit-overflow-scrolling: touch;
+}
+
 html, body {
   overflow-x: hidden;
   max-width: 100%;
+  overscroll-behavior-y: none;
 }
 
 /* Ensure all main containers don't cause horizontal scroll */
@@ -35,6 +41,8 @@ body {
   font-family: 'Quicksand', sans-serif;
   overflow-x: hidden;
   min-height: 100vh;
+  overscroll-behavior: none;
+  overscroll-behavior-y: none;
 }
 @media (max-width:600px){ body{ padding-bottom:72px; } }
 @media (prefers-reduced-motion: reduce){ .jimejournal-topbar{ backdrop-filter:none; } }
@@ -398,6 +406,7 @@ header h2 {
   flex-direction: column;
   padding: 2rem;
   overflow-y: auto;
+  overscroll-behavior: contain;
 }
 
 .lightbox-content {
