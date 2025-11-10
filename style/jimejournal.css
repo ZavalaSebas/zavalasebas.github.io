@@ -1510,3 +1510,137 @@ header h2 {
     transform: translateY(0);
   }
 }
+/* ============================================
+   PHOTO ACTIONS (Favorite, Download)
+   ============================================ */
+
+.action-btn {
+  background: rgba(139, 69, 19, 0.15);
+  border: 1px solid var(--jime-main);
+  color: var(--jime-text);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.action-btn:hover {
+  background: var(--jime-main);
+  color: var(--jime-dark);
+  transform: scale(1.1);
+}
+
+.favorite-star-btn.active {
+  background: var(--jime-bright);
+  color: #fff;
+  animation: starPulse 0.5s ease;
+}
+
+@keyframes starPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.3); }
+}
+
+.controls-divider {
+  color: var(--jime-main);
+  opacity: 0.3;
+  font-size: 1.2rem;
+  user-select: none;
+}
+
+.favorite-tile-btn {
+  background: rgba(139, 69, 19, 0.1);
+  border: 1px solid rgba(139, 69, 19, 0.3);
+  color: var(--jime-text);
+  padding: 0.3rem 0.6rem;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  opacity: 0.7;
+}
+
+.favorite-tile-btn:hover,
+.favorite-tile-btn.active {
+  background: rgba(139, 69, 19, 0.2);
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+.favorite-tile-btn.active {
+  border-color: var(--jime-bright);
+}
+
+/* SKELETON SCREENS */
+
+.skeleton-note {
+  padding: 1rem;
+  background: rgba(139, 69, 19, 0.05);
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
+}
+
+.skeleton-line {
+  height: 12px;
+  background: linear-gradient(90deg, rgba(139, 69, 19, 0.1) 25%, rgba(139, 69, 19, 0.2) 50%, rgba(139, 69, 19, 0.1) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* ANIMATIONS */
+
+.lightbox-enter {
+  animation: lightboxFadeIn 0.3s ease;
+}
+
+@keyframes lightboxFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.pull-refresh-indicator {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--jime-main);
+  color: var(--jime-dark);
+  padding: 0.5rem 1.5rem;
+  border-radius: 0 0 12px 12px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  z-index: 999;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+@media (max-width: 768px) {
+  .action-btn { width: 38px; height: 38px; font-size: 1rem; }
+  .favorite-tile-btn { font-size: 0.9rem; padding: 0.25rem 0.5rem; }
+  .controls-divider { font-size: 1rem; }
+  .notes-header { flex-direction: row !important; align-items: center !important; gap: .5rem; flex-wrap: nowrap !important; justify-content: space-between !important; }
+  .notes-header h4 { font-size: 1rem; white-space: nowrap; margin: 0 !important; }
+  .lightbox-control-group { flex-shrink: 0; gap: .35rem; flex-wrap: wrap; justify-content: flex-end; }
+}
+
+@media (max-width: 480px) {
+  .action-btn { width: 36px; height: 36px; font-size: 0.95rem; }
+  .favorite-tile-btn { font-size: 0.85rem; padding: 0.2rem 0.4rem; }
+  .controls-divider { font-size: 0.9rem; margin: 0 0.1rem; }
+  .lightbox-control-group { gap: 0.4rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lightbox-enter, .skeleton-line, .action-btn, .favorite-star-btn { animation: none !important; transition: none !important; }
+}
