@@ -50,7 +50,8 @@ const fotosLau = [
   { archivo: "lau35.jpg", titulo: "Museo Date", fecha: "25 de Octubre 2025 14:40", id: "lau35", year: 2025 },
   { archivo: "lau36.jpg", titulo: "Lau House", fecha: "31 de octubre 2025 20:18", id: "lau36", year: 2025 },
   { archivo: "lau37.jpg", titulo: "Pinche Milano", fecha: "31 de octubre 2025 22:34", id: "lau37", year: 2025 },
-  { archivo: "lau38.jpg", titulo: "I finally found you", fecha: "6 de noviembre 2025 22:51", id: "lau38", year: 2025 }
+  { archivo: "lau38.jpg", titulo: "I finally found you", fecha: "6 de noviembre 2025 22:51", id: "lau38", year: 2025 },
+  { archivo: "lau39.jpg", titulo: "Late night visit", fecha: "8 de noviembre 2025 23:00", id: "lau39", year: 2025 }
 ];
 
 let currentPhotoId = null;
