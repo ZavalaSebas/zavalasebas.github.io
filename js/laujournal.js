@@ -53,7 +53,13 @@ const fotosLau = [
   { archivo: "lau38.jpg", titulo: "I finally found you", fecha: "6 de noviembre 2025 22:51", id: "lau38", year: 2025 },
   { archivo: "lau39.jpg", titulo: "Late night visit", fecha: "8 de noviembre 2025 23:00", id: "lau39", year: 2025 },
   { archivo: "lau40.jpg", titulo: "I love U", fecha: "8 de noviembre 2025 23:00", id: "lau40", year: 2025 },
-  { archivo: "lau41.jpg", titulo: "I see U", fecha: "16 de noviembre 2025 19:49", id: "lau41", year: 2025 }
+  { archivo: "lau41.jpg", titulo: "I see U", fecha: "16 de noviembre 2025 19:49", id: "lau41", year: 2025 },
+  { archivo: "lau42.jpg", titulo: "Mocho", fecha: "17 de noviembre 2025 13:23", id: "lau42", year: 2025 },
+  { archivo: "lau43.jpg", titulo: "she didnt like my jeans", fecha: "21 de noviembre 2025", id: "lau43", year: 2025 },
+  { archivo: "lau44.jpg", titulo: "Go Go Lau!", fecha: "30 de noviembre 2025 6:44", id: "lau44", year: 2025 },
+  { archivo: "lau45.jpg", titulo: "Go Go Lau!", fecha: "30 de noviembre 2025 7:28", id: "lau45", year: 2025 },
+  { archivo: "lau46.jpg", titulo: "Running girl", fecha: "30 de noviembre 2025 7:28", id: "lau46", year: 2025 },
+  { archivo: "lau47.jpg", titulo: "Sleeping Partners", fecha: "30 de noviembre 2025 14:44", id: "lau47", year: 2025 }
 ];
 
 let currentPhotoId = null;
