@@ -59,7 +59,18 @@ const fotosLau = [
   { archivo: "lau44.jpg", titulo: "Go Go Lau!", fecha: "30 de noviembre 2025 6:44", id: "lau44", year: 2025 },
   { archivo: "lau45.jpg", titulo: "Go Go Lau!", fecha: "30 de noviembre 2025 7:28", id: "lau45", year: 2025 },
   { archivo: "lau46.jpg", titulo: "Running girl", fecha: "30 de noviembre 2025 7:28", id: "lau46", year: 2025 },
-  { archivo: "lau47.jpg", titulo: "Sleeping Partners", fecha: "30 de noviembre 2025 14:44", id: "lau47", year: 2025 }
+  { archivo: "lau47.jpg", titulo: "Sleeping Partners", fecha: "30 de noviembre 2025 14:44", id: "lau47", year: 2025 },
+  { archivo: "lau48.jpg", titulo: "Time to sleep", fecha: "4 de diciembre 2025 23:26", id: "lau48", year: 2025 },
+  { archivo: "lau49.jpg", titulo: "Time to wake", fecha: "5 de diciembre 2025 05:41", id: "lau49", year: 2025 },
+  { archivo: "lau50.jpg", titulo: "Ternera Street", fecha: "6 de diciembre 2025 11:09", id: "lau50", year: 2025 },
+  { archivo: "lau51.jpg", titulo: "Ho Ho Ho", fecha: "6 de diciembre 2025 11:30", id: "lau51", year: 2025 },
+  { archivo: "lau52.jpg", titulo: "Chamacos", fecha: "6 de diciembre 2025 11:50", id: "lau52", year: 2025 },
+  { archivo: "lau53.jpg", titulo: "Finca", fecha: "6 de diciembre 2025 12:42", id: "lau53", year: 2025 },
+  { archivo: "lau54.jpg", titulo: "zzz", fecha: "6 de diciembre 2025 16:15", id: "lau54", year: 2025 },
+  { archivo: "lau55.jpg", titulo: "Flowers for my love", fecha: "12 de diciembre 2025 17:52", id: "lau55", year: 2025 },
+  { archivo: "lau56.jpg", titulo: "Yeah", fecha: "19 de diciembre 2025 17:49", id: "lau56", year: 2025 },
+  { archivo: "lau57.jpg", titulo: "Ruuuun", fecha: "23 de diciembre 2025 19:50", id: "lau57", year: 2025 },
+  { archivo: "lau58.jpg", titulo: "Stop", fecha: "23 de diciembre 2025 21:36", id: "lau58", year: 2025 }
 ];
 
 let currentPhotoId = null;
