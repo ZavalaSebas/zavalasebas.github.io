@@ -42,7 +42,10 @@ const fotosJime = [
   { archivo: "jime27.jpg", titulo: "Pata", fecha: "8 de noviembre 2025 23:00", id: "jime27", year: 2025 },
   { archivo: "jime28.jpg", titulo: "Rawr", fecha: "15 de noviembre 2025 18:47", id: "jime28", year: 2025 },
   { archivo: "jime29.jpg", titulo: "TOTTO", fecha: "15 de noviembre 2025 18:06", id: "jime29", year: 2025 },
-  { archivo: "jime30.jpg", titulo: "Men arent what they use to be", fecha: "27 de noviembre 2025 23:30", id: "jime30", year: 2025 }
+  { archivo: "jime30.jpg", titulo: "Men arent what they use to be", fecha: "27 de noviembre 2025 23:30", id: "jime30", year: 2025 },
+  { archivo: "jime31.jpg", titulo: "is the end of the world", fecha: "3 de diciembre 2025 19:48", id: "jime31", year: 2025 },
+  { archivo: "jime32.jpg", titulo: "The original BFF", fecha: "20 de diciembre 2025 20:33", id: "jime32", year: 2025 },
+  { archivo: "jime33.jpg", titulo: "Uñas", fecha: "21 de diciembre 2025 15:35", id: "jime33", year: 2025 }
 ];
 
 let currentPhotoId = null;
