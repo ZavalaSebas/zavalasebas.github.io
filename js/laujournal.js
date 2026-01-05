@@ -70,7 +70,15 @@ const fotosLau = [
   { archivo: "lau55.jpg", titulo: "Flowers for my love", fecha: "12 de diciembre 2025 17:52", id: "lau55", year: 2025 },
   { archivo: "lau56.jpg", titulo: "Yeah", fecha: "19 de diciembre 2025 17:49", id: "lau56", year: 2025 },
   { archivo: "lau57.jpg", titulo: "Ruuuun", fecha: "23 de diciembre 2025 19:50", id: "lau57", year: 2025 },
-  { archivo: "lau58.jpg", titulo: "Stop", fecha: "23 de diciembre 2025 21:36", id: "lau58", year: 2025 }
+  { archivo: "lau58.jpg", titulo: "Stop", fecha: "23 de diciembre 2025 21:36", id: "lau58", year: 2025 },
+  { archivo: "lau59.jpg", titulo: "Merry Merry", fecha: "24 de diciembre 2025 21:58", id: "lau59", year: 2025 },
+  { archivo: "lau60.jpg", titulo: "Mhmmm", fecha: "27 de diciembre 2025 01:26", id: "lau60", year: 2025 },
+  { archivo: "lau61.jpg", titulo: "New Years Love", fecha: "31 de diciembre 2025 21:58", id: "lau61", year: 2025 },
+  { archivo: "lau62.jpg", titulo: "Sweet as Love", fecha: "1 de enero 2026 00:12", id: "lau62", year: 2026 },
+  { archivo: "lau63.jpg", titulo: "Could You Be Loved?", fecha: "1 de enero 2026 15:01", id: "lau63", year: 2026 },
+  { archivo: "lau64.jpg", titulo: "Mis suegros", fecha: "1 de enero 2026 16:59", id: "lau64", year: 2026 },
+  { archivo: "lau65.jpg", titulo: "From she to me", fecha: "1 de enero 2026 17:09", id: "lau65", year: 2026 },
+  { archivo: "lau66.jpg", titulo: "At the end", fecha: "1 de enero 2026 18:57", id: "lau66", year: 2026 }
 ];
 
 let currentPhotoId = null;
