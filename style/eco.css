@@ -149,7 +149,7 @@ header h2 { margin: 0; }
 }
 
 .creative-note {
-  position: absolute;
+  position: relative;
   background: linear-gradient(135deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.08) 100%);
   border: 1px solid rgba(249, 199, 79, 0.6);
   border-radius: 12px;
@@ -169,10 +169,11 @@ header h2 { margin: 0; }
   animation: noteAppear 0.6s ease-out forwards;
   opacity: 0;
   transform-origin: center center;
-  width: 140px;
-  min-height: 100px;
-  max-height: 160px;
+  width: 100%;
+  min-height: 110px;
+  max-height: none;
   overflow: hidden;
+  box-sizing: border-box;
 }
 
 @keyframes noteAppear {
