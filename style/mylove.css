@@ -188,3 +188,10 @@ footer {
 
 /* Remover la barra azul animada debajo de las tarjetas solo en esta página */
 .card::after { content: none !important; }
+
+/* Mostrar el puntero en desktop y ocultar el cursor personalizado en esta página */
+#customCursor { display: none; }
+
+@media (pointer: fine) {
+  body { cursor: auto; }
+}
