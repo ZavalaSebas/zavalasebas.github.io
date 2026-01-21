@@ -88,8 +88,8 @@ const fotosLau = [
   { archivo: "lau73.jpg", titulo: "Chef", fecha: "17 de enero 2026", id: "lau73", year: 2026 },
   { archivo: "lau74.jpg", titulo: "Pan", fecha: "17 de enero 2026", id: "lau74", year: 2026 },
   { archivo: "lau75.jpg", titulo: "She is so cute", fecha: "19 de enero 2026", id: "lau75", year: 2026 },
-  { archivo: "lau76.jpg", titulo: "Blue Sky", fecha: "9 de enero 2026", id: "lau76", year: 2026 },
-  { archivo: "lau77.jpg", titulo: "No abrieron Cosevi", fecha: "9 de enero 2026", id: "lau77", year: 2026 }
+  { archivo: "lau76.jpg", titulo: "Blue Sky", fecha: "19 de enero 2026", id: "lau76", year: 2026 },
+  { archivo: "lau77.jpg", titulo: "No abrieron Cosevi", fecha: "19 de enero 2026", id: "lau77", year: 2026 }
 ];
 
 let currentPhotoId = null;

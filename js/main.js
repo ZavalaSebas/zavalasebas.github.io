@@ -141,7 +141,7 @@ const glitchMap = {
   W: ['W', 'Ш', 'w'],
 };
 
-const originalText = "ROCKSHOW";
+const originalText = "ROCKSHOW V2";
 
 function glitchText(text) {
   return text.split('').map(char => {
@@ -159,10 +159,16 @@ setInterval(() => {
   logo.textContent = glitchText(originalText);
 }, 1500); // cada 1.5s
 
-// Glitch para TITULO PRINCIPAL (más rápido)
-setInterval(() => {
-  mainTitle.textContent = glitchText(originalText);
-}, 120); // como el glitch anterior
+// Glitch óptico en título principal sin cambiar el layout
+if (mainTitle) {
+  mainTitle.textContent = originalText;
+  mainTitle.setAttribute('data-text', originalText);
+  mainTitle.classList.add('glitch-safe');
+  setInterval(() => {
+    mainTitle.classList.add('glitch-anim');
+    setTimeout(() => mainTitle.classList.remove('glitch-anim'), 180);
+  }, 4200);
+}
 
 // Intentar reproducir sonido al entrar
 window.addEventListener("load", () => {
