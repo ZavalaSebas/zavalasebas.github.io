@@ -54,7 +54,7 @@ function enableWheelHorizontalScroll(el) {
 function updateCharCount() {
   const len = input.value.length;
   charCount.textContent = `${len}/280`;
-  charCount.style.color = len > 260 ? '#ee4444' : '#f9c74fbf';
+  charCount.style.color = len > 260 ? '#ee4444' : 'var(--text-secondary)';
 }
 function autoGrow() {
   input.style.height = 'auto';
