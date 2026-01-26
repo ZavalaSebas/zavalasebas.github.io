@@ -82,14 +82,14 @@ const fotosLau = [
   ,{ archivo: "lau67.jpg", titulo: "Blue Coffee", fecha: "9 de enero 2026 19:10", id: "lau67", year: 2026 },
   { archivo: "lau68.jpg", titulo: "Baby Swift", fecha: "10 de enero 2026 17:31", id: "lau68", year: 2026 },
   { archivo: "lau69.jpg", titulo: "Helooo", fecha: "12 de enero 2026 17:23", id: "lau69", year: 2026 },
-  { archivo: "lau70.jpg", titulo: "Picnic", fecha: "17 de enero 2026", id: "lau70", year: 2026 },
-  { archivo: "lau71.jpg", titulo: "Picnic", fecha: "17 de enero 2026", id: "lau71", year: 2026 },
-  { archivo: "lau72.jpg", titulo: "Chef", fecha: "17 de enero 2026", id: "lau72", year: 2026 },
-  { archivo: "lau73.jpg", titulo: "Chef", fecha: "17 de enero 2026", id: "lau73", year: 2026 },
-  { archivo: "lau74.jpg", titulo: "Pan", fecha: "17 de enero 2026", id: "lau74", year: 2026 },
-  { archivo: "lau75.jpg", titulo: "She is so cute", fecha: "19 de enero 2026", id: "lau75", year: 2026 },
-  { archivo: "lau76.jpg", titulo: "Blue Sky", fecha: "19 de enero 2026", id: "lau76", year: 2026 },
-  { archivo: "lau77.jpg", titulo: "No abrieron Cosevi", fecha: "19 de enero 2026", id: "lau77", year: 2026 }
+  { archivo: "lau70.jpg", titulo: "Picnic", fecha: "17 de enero 2026 15:00", id: "lau70", year: 2026 },
+  { archivo: "lau71.jpg", titulo: "Picnic", fecha: "17 de enero 2026 15:00", id: "lau71", year: 2026 },
+  { archivo: "lau72.jpg", titulo: "Chef", fecha: "17 de enero 2026 17:00", id: "lau72", year: 2026 },
+  { archivo: "lau73.jpg", titulo: "Chef", fecha: "17 de enero 2026 17:00", id: "lau73", year: 2026 },
+  { archivo: "lau74.jpg", titulo: "Pan", fecha: "17 de enero 2026 17:00", id: "lau74", year: 2026 },
+  { archivo: "lau75.jpg", titulo: "She is so cute", fecha: "19 de enero 2026 14:00", id: "lau75", year: 2026 },
+  { archivo: "lau76.jpg", titulo: "Blue Sky", fecha: "19 de enero 2026 14:00", id: "lau76", year: 2026 },
+  { archivo: "lau77.jpg", titulo: "No abrieron Cosevi", fecha: "19 de enero 2026 14:00", id: "lau77", year: 2026 }
 ];
 
 let currentPhotoId = null;

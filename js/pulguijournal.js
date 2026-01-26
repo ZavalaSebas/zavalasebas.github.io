@@ -37,6 +37,12 @@ const fotosPulgui = [
   { archivo: "pulgui22.jpg", titulo: "Mirror 2.0", fecha: "13 de Julio 2025 16:57", id: "pulgui22", year: 2025 },
   { archivo: "pulgui23.jpg", titulo: "Mini Miny", fecha: "22 de Julio 2025 12:14", id: "pulgui23", year: 2025 },
   { archivo: "pulgui24.jpg", titulo: "Baby Shower", fecha: "30 de Agosto 2025 15:33", id: "pulgui24", year: 2025 }
+  ,{ archivo: "pulgui25.jpg", titulo: "Nuevo 25", fecha: "31 de Agosto 2025 10:00", id: "pulgui25", year: 2025 },
+  { archivo: "pulgui26.jpg", titulo: "Nuevo 26", fecha: "1 de Septiembre 2026 10:00", id: "pulgui26", year: 2026 },
+  { archivo: "pulgui27.jpg", titulo: "Nuevo 27", fecha: "2 de Septiembre 2026 10:00", id: "pulgui27", year: 2026 },
+  { archivo: "pulgui28.jpg", titulo: "Nuevo 28", fecha: "3 de Septiembre 2026 10:00", id: "pulgui28", year: 2026 },
+  { archivo: "pulgui29.jpg", titulo: "Nuevo 29", fecha: "4 de Septiembre 2026 10:00", id: "pulgui29", year: 2026 },
+  { archivo: "pulgui30.jpg", titulo: "Nuevo 30", fecha: "5 de Septiembre 2026 10:00", id: "pulgui30", year: 2026 }
 ];
 
 let currentPhotoId = null;
