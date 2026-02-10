@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>noise — Amor</title>
+  <meta name="theme-color" content="#f6c1d0" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <link rel="stylesheet" href="../style/amor.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body class="amor-page">
+  <div class="bg-blur bg-1" aria-hidden="true"></div>
+  <div class="bg-blur bg-2" aria-hidden="true"></div>
+  <div class="bg-blur bg-3" aria-hidden="true"></div>
+
+  <header class="amor-header glass">
+    <a class="back" href="noise.html" aria-label="Volver a noise">← volver</a>
+    <div class="headline">
+      <p class="eyebrow">ruido íntimo</p>
+      <h1>Amor Incondicional</h1>
+      <p class="lede">Reír, llorar, elegir y seguir: el amor como decisión diaria, no solo como cosquillas en el estómago.</p>
+    </div>
+    <button id="audioBtn" class="audio-btn" title="Activar sonido" aria-label="Activar sonido">🎧</button>
+  </header>
+
+  <main class="layout">
+    <section class="panel hero-text">
+      <p>
+        El amor es difícil de definir y a la vez tan fácil de sentir: es risa y también lágrimas, sostén y a veces vértigo.
+        Aparece en muchas formas —el amor por tus padres, por tus hijos, por tus amigos— pero el que todos parecen buscar
+        es el amor romántico, ese que hunde un poco el estómago.
+      </p>
+      <p>
+        Para mí, lo más importante no es si compartimos gustos o si eres la persona más atractiva de la sala. Lo que pesa
+        es que me ames sin condiciones, que tu decisión de amar se renueve cuando lo fácil se termina.
+      </p>
+    </section>
+
+    <section class="panel grid two-col">
+      <article class="card soft">
+        <p class="eyebrow">rostros del amor</p>
+        <h2>Familia, amistades, raíces</h2>
+        <ul>
+          <li>El amor a la familia sostiene la versión más antigua de ti: quien te vio crecer.</li>
+          <li>El amor a los hijos es cuidado radical y paciencia, incluso cuando el mundo se cae afuera.</li>
+          <li>La amistad es un pacto suave: elegirse sin obligación, acompañar sin exigir coincidencias perfectas.</li>
+        </ul>
+      </article>
+      <article class="card contrast">
+        <p class="eyebrow">el que buscamos</p>
+        <h2>Amor de pareja</h2>
+        <p>Ese que acelera y calma a la vez. No es solo química: es elegirte cuando no es sencillo.</p>
+        <div class="chips">
+          <span class="chip">ser visto y aceptado</span>
+          <span class="chip">reír y llorar juntos</span>
+          <span class="chip">cuidar la vulnerabilidad</span>
+          <span class="chip">crecer sin cambiar al otro</span>
+        </div>
+      </article>
+    </section>
+
+    <section class="panel decision">
+      <div>
+        <p class="eyebrow">más que un sentimiento</p>
+        <h2>Amar es decidir</h2>
+      </div>
+      <div class="pillars">
+        <div class="pillar">
+          <h3>Elección diaria</h3>
+          <p>Amar es volver a decir “sí” cuando el brillo pasa y llegan las facturas, el cansancio o las dudas.</p>
+        </div>
+        <div class="pillar">
+          <h3>Conocer de verdad</h3>
+          <p>Para amar sin querer moldear, primero hay que ver al otro completo: su historia, sus miedos, sus límites.</p>
+        </div>
+        <div class="pillar">
+          <h3>Aceptar imperfecciones</h3>
+          <p>No es renunciar a crecer, es crecer sin anular la esencia de quien eliges.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel list-panel">
+      <div class="list-head">
+        <p class="eyebrow">pequeño mapa</p>
+        <h2>Lo que vale más que los gustos</h2>
+      </div>
+      <ol class="love-list">
+        <li><span>Complicidad lenta:</span> poder quedarte en silencio y sentirte a salvo.</li>
+        <li><span>Respeto a la individualidad:</span> amar sin aplastar hobbies, amistades ni tiempos propios.</li>
+        <li><span>Cuidar la honestidad:</span> decir lo que duele sin jugar a ganar la discusión.</li>
+        <li><span>Humor que sana:</span> reír juntos incluso en días torpes, porque aligera el peso.</li>
+        <li><span>Presencia en lo feo:</span> sostener cuando el otro no está en su versión más bonita.</li>
+      </ol>
+    </section>
+
+    <section class="panel anchor">
+      <div>
+        <p class="eyebrow">recordatorio</p>
+        <h2>Antes de elegir a quién amar</h2>
+        <p>Piensa si puedes habitar sus sombras tanto como sus luces. Si la respuesta es sí, entonces el amor no es accidente: es un acuerdo que eliges cuidar.</p>
+      </div>
+      <aside class="micro">
+        <p class="eyebrow">mantra</p>
+        <p id="microMantra">Elijo amar sin intentar rehacerte.</p>
+      </aside>
+    </section>
+  </main>
+
+  <footer>
+    <p id="frase-footer"></p>
+  </footer>
+
+  <audio id="audioAmbiente" loop>
+    <source src="../assets/audio/ambient-noise.mp3" type="audio/mpeg">
+  </audio>
+
+  <script src="../js/amor.js"></script>
+</body>
+</html>

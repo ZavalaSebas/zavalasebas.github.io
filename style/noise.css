@@ -204,6 +204,20 @@ footer {
   100% { box-shadow: 0 0 5px #ff5555; transform: translateY(0px); }
 }
 
+/* Tema 3: bruma suave y flotante */
+.card:nth-child(3):hover {
+  animation: floaty 1.1s ease-in-out infinite;
+  background: linear-gradient(135deg, #ffb3b3, #ff6f9f);
+  color: #0f0f1a;
+  box-shadow: 0 10px 28px -12px #ff6f9f, 0 0 10px #ff9fbf55;
+}
+
+@keyframes floaty {
+  0% { transform: translateY(0px) scale(1); }
+  50% { transform: translateY(-6px) scale(1.02); }
+  100% { transform: translateY(0px) scale(1); }
+}
+
 @media (max-width: 600px) {
   body { padding-bottom: 72px; }
   .menu-grid {
