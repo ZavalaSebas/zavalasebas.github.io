@@ -464,13 +464,13 @@ footer {
   display: flex;
   justify-content: space-around;
   align-items: stretch;
-  gap: 0.6rem;
-  background: rgba(8,12,30,0.9);
+  gap: 0.35rem;
+  background: rgba(8,12,30,0.92);
   backdrop-filter: blur(14px) saturate(160%);
   border-top: 1px solid rgba(93,240,255,0.3);
-  box-shadow: 0 -12px 30px -24px #000, 0 -2px 18px -12px rgba(93,240,255,0.45);
+  box-shadow: 0 -8px 22px -18px #000, 0 -1px 12px -8px rgba(93,240,255,0.45);
   z-index: 1000;
-  padding: 0.45rem 0.7rem calc(0.45rem + env(safe-area-inset-bottom));
+  padding: 0.35rem 0.45rem calc(0.35rem + env(safe-area-inset-bottom));
   transform: translateY(110%);
   opacity: 0;
   animation: tabbarSlideIn 0.8s 0.3s ease forwards;
@@ -486,14 +486,14 @@ footer {
   text-align: center;
   text-decoration: none;
   color: var(--accent);
-  font-size: 0.72rem;
+  font-size: 0.70rem;
   font-weight: 700;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0.2rem;
-  padding: 0.65rem 0.35rem 0.55rem;
+  gap: 0.15rem;
+  padding: 0.55rem 0.3rem 0.45rem;
   border-radius: var(--radius-sm);
   position: relative;
   transition: background 0.35s, color 0.35s, transform 0.2s ease;
@@ -796,7 +796,7 @@ footer {
     padding: 1rem 0.5rem;
     font-size: 1rem;
   }
-  body { padding-bottom: 88px; } /* espacio para tabbar */
+  body { padding-bottom: 72px; } /* espacio para tabbar */
   #audioControl {
     align-items: center;
     margin-left: auto;
