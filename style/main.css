@@ -290,7 +290,7 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.35rem 1.5rem;
+  padding: 0.85rem 1.25rem;
   color: var(--accent);
   border-bottom: 1px solid #ffffff10;
 }
@@ -313,7 +313,7 @@ header {
 
 .hero {
   text-align: center;
-  padding: 4vh 1.25rem 1.25rem;
+  padding: 2.4vh 1.25rem 1.25rem;
   display: flex;
   flex-direction: column;
   align-items: center;
