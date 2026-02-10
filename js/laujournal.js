@@ -85,11 +85,19 @@ const fotosLau = [
   { archivo: "lau70.jpg", titulo: "Picnic", fecha: "17 de enero 2026 15:00", id: "lau70", year: 2026 },
   { archivo: "lau71.jpg", titulo: "Picnic", fecha: "17 de enero 2026 15:00", id: "lau71", year: 2026 },
   { archivo: "lau72.jpg", titulo: "Chef", fecha: "17 de enero 2026 17:00", id: "lau72", year: 2026 },
-  { archivo: "lau73.jpg", titulo: "Chef", fecha: "17 de enero 2026 17:00", id: "lau73", year: 2026 },
-  { archivo: "lau74.jpg", titulo: "Pan", fecha: "17 de enero 2026 17:00", id: "lau74", year: 2026 },
+  { archivo: "lau73.jpg", titulo: "Chef", fecha: "17 de enero 2026 17:30", id: "lau73", year: 2026 },
+  { archivo: "lau74.jpg", titulo: "Pan", fecha: "17 de enero 2026 17:30", id: "lau74", year: 2026 },
   { archivo: "lau75.jpg", titulo: "She is so cute", fecha: "19 de enero 2026 14:00", id: "lau75", year: 2026 },
-  { archivo: "lau76.jpg", titulo: "Blue Sky", fecha: "19 de enero 2026 14:00", id: "lau76", year: 2026 },
-  { archivo: "lau77.jpg", titulo: "No abrieron Cosevi", fecha: "19 de enero 2026 14:00", id: "lau77", year: 2026 }
+  { archivo: "lau76.jpg", titulo: "Blue Sky", fecha: "19 de enero 2026 14:30", id: "lau76", year: 2026 },
+  { archivo: "lau77.jpg", titulo: "No abrieron Cosevi", fecha: "19 de enero 2026 14:30", id: "lau77", year: 2026 },
+  { archivo: "lau78.jpg", titulo: "Family Lunch", fecha: "26 de enero 2026 13:56", id: "lau78", year: 2026 },
+  { archivo: "lau79.jpg", titulo: "Barre Girls", fecha: "28 de enero 2026 20:29", id: "lau79", year: 2026 },
+  { archivo: "lau80.jpg", titulo: "Hiii", fecha: "31 de enero 2026 16:23", id: "lau80", year: 2026 },
+  { archivo: "lau81.jpg", titulo: "El carro del suegro", fecha: "31 de enero 2026 18:11", id: "lau81", year: 2026 },
+  { archivo: "lau82.jpg", titulo: "Milanchi", fecha: "5 de febrero 2026 13:28", id: "lau82", year: 2026 },
+  { archivo: "lau83.jpg", titulo: "Comiendo con mi tia", fecha: "6 de febrero 2026 19:12", id: "lau83", year: 2026 },
+  { archivo: "lau84.jpg", titulo: "She is thinking", fecha: "7 de febrero 2026 19:45", id: "lau84", year: 2026 },
+  { archivo: "lau85.jpg", titulo: "Super Bowl", fecha: "8 de febrero 2026 18:44", id: "lau85", year: 2026 }
 ];
 
 let currentPhotoId = null;
