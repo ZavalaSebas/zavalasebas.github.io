@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>noise — Autoridad y Cuidado</title>
+  <meta name="theme-color" content="#f0d7b1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <link rel="stylesheet" href="../style/padres.css" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body class="padres-page">
+  <div class="grain" aria-hidden="true"></div>
+  <div class="orb orb-1" aria-hidden="true"></div>
+  <div class="orb orb-2" aria-hidden="true"></div>
+  <div class="orb orb-3" aria-hidden="true"></div>
+
+  <header class="top">
+    <a class="back" href="noise.html" aria-label="Volver a noise">← volver</a>
+    <div class="title-block">
+      <p class="eyebrow">ruido doméstico</p>
+      <h1>Autoridad y Cuidado</h1>
+      <p class="lede">Nacimos por decisión ajena, aprendimos a querer por propia elección. Entre reglas, gratitud y libertad, busco mi espacio adulto.</p>
+    </div>
+    <button id="audioBtn" class="audio-btn" title="Activar sonido" aria-label="Activar sonido">🎧</button>
+  </header>
+
+  <main class="layout">
+    <section class="panel intro">
+      <p>Los padres ejercen autoridad porque asumieron el capricho de traerme al mundo. No pedí nacer, pero vivir es hermoso incluso cuando duele, y aprendí a quererlos con el tiempo.</p>
+      <p>En la niñez y la adolescencia su deber fue marcar caminos: qué está bien, qué está mal, cómo amar y odiar, valorar las cosas, equilibrar responsabilidad y juego. Ese marco fue brújula, aunque a veces pesara.</p>
+    </section>
+
+    <section class="panel split">
+      <article>
+        <p class="eyebrow">lo que agradezco</p>
+        <h2>Lecciones que sí me formaron</h2>
+        <ul>
+          <li>Entender el valor del trabajo y de aportar en casa.</li>
+          <li>Reconocer la amistad y el amor como decisiones que se cuidan.</li>
+          <li>Respetar límites básicos que protegen, no que ahogan.</li>
+          <li>Asumir que las consecuencias son parte de elegir.</li>
+        </ul>
+      </article>
+      <article class="contrast">
+        <p class="eyebrow">lo que pesa</p>
+        <h2>Cuando la regla se vuelve amenaza</h2>
+        <p>Una sola norma rota se convierte en pretexto para sembrar inseguridad: “quizá sobras aquí, quizá sería mejor que te fueras”. Esa presión no educa, solo fractura.</p>
+        <p>El control rígido no honra la crianza que dicen confiar. Si soy adulto y actúo con bien —trabajo, aporto, no huyo a fiestas ni excesos—, ¿por qué quitarme el derecho a decidir y a cargar mis propias consecuencias?</p>
+      </article>
+    </section>
+
+    <section class="panel pillars">
+      <div class="pillar">
+        <p class="eyebrow">autoridad madura</p>
+        <h3>Consejeros, no carceleros</h3>
+        <p>Guiar sin amenazar. Estar disponibles para opinar, no para dictar cada movimiento.</p>
+      </div>
+      <div class="pillar">
+        <p class="eyebrow">confianza</p>
+        <h3>Si criaron bien, suelten</h3>
+        <p>Confiar en lo sembrado implica aceptar mis decisiones, incluso si no coinciden con su guion.</p>
+      </div>
+      <div class="pillar">
+        <p class="eyebrow">responsabilidad propia</p>
+        <h3>Mis riesgos, mis consecuencias</h3>
+        <p>Quitarme la oportunidad de fallar también me quita la de crecer.</p>
+      </div>
+      <div class="pillar">
+        <p class="eyebrow">gratitud recíproca</p>
+        <h3>Valorar al buen hijo</h3>
+        <p>Agradecer que no abuso, no miento, no desaparezco. Esa calma merece flexibilidad.</p>
+      </div>
+    </section>
+
+    <section class="panel three-col">
+      <article>
+        <p class="eyebrow">tensión</p>
+        <h2>Ellos piensan</h2>
+        <p>“Te damos todo, obedece”. Desde su mirada, una regla sostiene la casa completa.</p>
+      </article>
+      <article class="middle">
+        <p class="eyebrow">yo siento</p>
+        <h2>Libertad o nada</h2>
+        <p>No busco romper por rebeldía: busco espacio para decidir. Prefiero menos cosas y más aire propio.</p>
+      </article>
+      <article>
+        <p class="eyebrow">punto ciego</p>
+        <h2>Control que cansa</h2>
+        <p>Se atan las manos vigilando lo que no les pido que carguen. Confundir cuidado con vigilancia erosiona la gratitud.</p>
+      </article>
+    </section>
+
+    <section class="panel plan">
+      <div>
+        <p class="eyebrow">salida honesta</p>
+        <h2>Si no hay flexibilidad</h2>
+        <p>Trabajar mejor, ahorrar, irme. No por huir de ellos, sino por cuidar lo que queda de nuestra relación. Si la autoridad solo sabe atacar cuando se siente amenazada, mi distancia será mi manera de proteger mi paz.</p>
+      </div>
+      <aside class="note">
+        <p class="eyebrow">mantra</p>
+        <p id="note-dynamic">Quiero decidir sin rompernos.</p>
+      </aside>
+    </section>
+  </main>
+
+  <footer>
+    <p id="frase-footer"></p>
+  </footer>
+
+  <audio id="audioAmbiente" loop>
+    <source src="../assets/audio/ambient-noise.mp3" type="audio/mpeg">
+  </audio>
+
+  <script src="../js/padres.js"></script>
+</body>
+</html>

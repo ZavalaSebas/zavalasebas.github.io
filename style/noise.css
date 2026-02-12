@@ -218,6 +218,20 @@ footer {
   100% { transform: translateY(0px) scale(1); }
 }
 
+/* Tema 4: calma tierra y foco */
+.card:nth-child(4):hover {
+  animation: settle 0.7s ease-in-out;
+  background: linear-gradient(160deg, #f2d7b5, #c5a575);
+  color: #201508;
+  box-shadow: 0 12px 24px -14px #c5a575, 0 0 14px -6px #f2d7b5;
+}
+
+@keyframes settle {
+  0% { transform: translateY(-4px); }
+  50% { transform: translateY(2px); }
+  100% { transform: translateY(0); }
+}
+
 @media (max-width: 600px) {
   body { padding-bottom: 72px; }
   .menu-grid {
