@@ -35,15 +35,35 @@ function buildPages() {
   pages = [];
   pages.push({ photos: latestTwo, layout: "first" });
   pages.push({ photos: nextTwo, layout: "second" });
-  for (let i = 0; i < rest.length; i += PAGE_SIZE_OTHER) {
-    pages.push({ photos: rest.slice(i, i + PAGE_SIZE_OTHER), layout: "regular" });
+
+  // Page 3: first regular batch of photos (up to 6)
+  if (rest.length > 0) {
+    pages.push({ photos: rest.slice(0, PAGE_SIZE_OTHER), layout: "regular" });
+  }
+
+  // Page 4: scrap notes / doodles page
+  const scrapNotes = [
+    { title: "4Ever", text: "No olvides: te amo todos los días." },
+    { title: "Be With Me", text: "Walk with me." },
+    { title: "Recordatorio", text: "Tu risa es mi sonido favorito." },
+    { title: "Always with U", text: "★ ✿ ♡ → siempre contigo." },
+    { title: "Love U", text: "I love u Moar." },
+    { title: "Guardado", text: "Esta página es tuya para siempre." }
+  ];
+  pages.push({ layout: "scrap", scraps: scrapNotes });
+
+  // Remaining photos after the first regular page
+  const remaining = rest.slice(PAGE_SIZE_OTHER);
+  for (let i = 0; i < remaining.length; i += PAGE_SIZE_OTHER) {
+    pages.push({ photos: remaining.slice(i, i + PAGE_SIZE_OTHER), layout: "regular" });
   }
 }
 
 function renderPolaroidsPage() {
   const board = document.getElementById("polaroidBoard");
   const pageLabel = document.getElementById("polaroidPage");
-  const note = document.getElementById("polaroidNote");
+  const noteTop = document.getElementById("polaroidNoteTop");
+  const noteBottom = document.getElementById("polaroidNoteBottom");
   if (!board || pages.length === 0) return;
 
   const totalPages = pages.length;
@@ -54,27 +74,72 @@ function renderPolaroidsPage() {
   board.innerHTML = "";
   board.classList.toggle("first-page", current.layout === "first");
   board.classList.toggle("second-page", current.layout === "second");
+  board.classList.toggle("scrap-page", current.layout === "scrap");
 
-  subset.forEach((p, idx) => {
-    const tilt = (Math.random() * 10 - 5).toFixed(1);
-    const offset = (Math.random() * 12 - 6).toFixed(1);
-    const card = document.createElement("div");
-    card.className = "polaroid";
-    card.style.setProperty("--rot", `${tilt}deg`);
-    card.style.setProperty("--offset-x", `${offset}px`);
-    card.style.setProperty("--delay", `${idx * 70}ms`);
+  if (current.layout === "scrap") {
+    if (noteTop) noteTop.style.display = "none";
+    if (noteBottom) noteBottom.style.display = "none";
+    (current.scraps || []).forEach((item, idx) => {
+      const card = document.createElement("div");
+      card.className = "scrap-card";
+      card.setAttribute("data-tilt", idx);
+      card.innerHTML = `
+        <div class="scrap-title">${item.title}</div>
+        <p class="scrap-text">${item.text}</p>
+      `;
+      board.appendChild(card);
+    });
 
-    card.innerHTML = `
-      <div class="polaroid-pin" aria-hidden="true"></div>
-      <img src="../assets/image/laujournal/${p.file}" alt="${p.caption}">
-      <p>${p.caption}</p>
+    // Photo strip with mini polaroids
+    const strip = document.createElement("div");
+    strip.className = "photo-strip";
+    const stripPhotos = shuffle(polaroids).slice(0, 3);
+    strip.innerHTML = `
+      <div class="strip-tape" aria-hidden="true"></div>
+      <div class="strip-tape right" aria-hidden="true"></div>
+      ${stripPhotos.map((p, i) => `
+        <div class="mini-polaroid" style="--rot:${(Math.random()*8-4).toFixed(1)}deg; --delay:${i*70}ms">
+          <img src="../assets/image/laujournal/${p.file}" alt="${p.caption}">
+          <span>${p.caption}</span>
+        </div>
+      `).join('')}
     `;
+    board.appendChild(strip);
 
-    board.appendChild(card);
-  });
+    // Folded letter block
+    const letter = document.createElement("div");
+    letter.className = "letter-card";
+    letter.innerHTML = `
+      <div class="letter-stamp" aria-hidden="true">💌</div>
+      <h4 class="letter-title">Abrir cuando sonrías</h4>
+      <p class="letter-text">Si hoy te sientes cansada, recuerda que te miro y vuelvo a creer en todo. Guarda esta página como guardo cada mirada tuya.</p>
+      <p class="letter-text">Firmado: quien no se cansa de decirte que te ama.</p>
+      <div class="letter-sign">— S</div>
+    `;
+    board.appendChild(letter);
+  } else {
+    subset.forEach((p, idx) => {
+      const tilt = (Math.random() * 10 - 5).toFixed(1);
+      const offset = (Math.random() * 12 - 6).toFixed(1);
+      const card = document.createElement("div");
+      card.className = "polaroid";
+      card.style.setProperty("--rot", `${tilt}deg`);
+      card.style.setProperty("--offset-x", `${offset}px`);
+      card.style.setProperty("--delay", `${idx * 70}ms`);
+
+      card.innerHTML = `
+        <div class="polaroid-pin" aria-hidden="true"></div>
+        <img src="../assets/image/laujournal/${p.file}" alt="${p.caption}">
+        <p>${p.caption}</p>
+      `;
+
+      board.appendChild(card);
+    });
+  }
 
   if (pageLabel) pageLabel.textContent = `${currentPage + 1}/${totalPages}`;
-  if (note) note.style.display = current.layout === "first" ? "block" : "none";
+  if (noteTop) noteTop.style.display = current.layout === "first" ? "block" : "none";
+  if (noteBottom) noteBottom.style.display = current.layout === "second" ? "block" : "none";
 }
 
 function initPolaroidPagination() {
