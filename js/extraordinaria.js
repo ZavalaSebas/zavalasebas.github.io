@@ -13,7 +13,8 @@ const polaroids = [
   { file: "lau80.jpg", caption: "Hola en medio del día" }
 ];
 
-const PAGE_SIZE_FIRST = 4;
+const PAGE_SIZE_FIRST = 2;
+const PAGE_SIZE_SECOND = 2;
 const PAGE_SIZE_OTHER = 6;
 let pages = [];
 let currentPage = 0;
@@ -28,26 +29,31 @@ function shuffle(array) {
 }
 
 function buildPages() {
-  const latest = polaroids.slice(-PAGE_SIZE_FIRST); // últimos 4
-  const rest = shuffle(polaroids.slice(0, -PAGE_SIZE_FIRST));
+  const latestTwo = polaroids.slice(-2);
+  const nextTwo = polaroids.slice(-4, -2);
+  const rest = shuffle(polaroids.slice(0, -4));
   pages = [];
-  pages.push(latest);
+  pages.push({ photos: latestTwo, layout: "first" });
+  pages.push({ photos: nextTwo, layout: "second" });
   for (let i = 0; i < rest.length; i += PAGE_SIZE_OTHER) {
-    pages.push(rest.slice(i, i + PAGE_SIZE_OTHER));
+    pages.push({ photos: rest.slice(i, i + PAGE_SIZE_OTHER), layout: "regular" });
   }
 }
 
 function renderPolaroidsPage() {
   const board = document.getElementById("polaroidBoard");
   const pageLabel = document.getElementById("polaroidPage");
+  const note = document.getElementById("polaroidNote");
   if (!board || pages.length === 0) return;
 
   const totalPages = pages.length;
   currentPage = ((currentPage % totalPages) + totalPages) % totalPages;
-  const subset = pages[currentPage] || [];
+  const current = pages[currentPage] || { photos: [], layout: "regular" };
+  const subset = current.photos || [];
 
   board.innerHTML = "";
-  board.classList.toggle("first-page", currentPage === 0);
+  board.classList.toggle("first-page", current.layout === "first");
+  board.classList.toggle("second-page", current.layout === "second");
 
   subset.forEach((p, idx) => {
     const tilt = (Math.random() * 10 - 5).toFixed(1);
@@ -68,6 +74,7 @@ function renderPolaroidsPage() {
   });
 
   if (pageLabel) pageLabel.textContent = `${currentPage + 1}/${totalPages}`;
+  if (note) note.style.display = current.layout === "first" ? "block" : "none";
 }
 
 function initPolaroidPagination() {
