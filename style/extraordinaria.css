@@ -281,6 +281,7 @@ body {
 .page-polaroids {
   min-height: 520px;
   background: linear-gradient(180deg, #f8f4ec, #f2ecdf);
+  padding-top: 2.8rem;
 }
 .polaroid-board {
   position: relative;
@@ -288,7 +289,8 @@ body {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 1rem;
-  margin-top: 1.2rem;
+  margin-top: 0.6rem;
+  padding-top: 1.2rem;
 }
 .polaroid {
   background: #fff;
@@ -351,6 +353,34 @@ body {
   font-size: 1.4rem;
   color: rgba(0,0,0,0.3);
 }
+
+.polaroid-controls {
+  margin-top: 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: rgba(255, 255, 255, 0.78);
+  padding: 0.45rem 0.75rem;
+  border-radius: 12px;
+  border: 1px solid rgba(0,0,0,0.06);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+  position: relative;
+  z-index: 2;
+}
+.polaroid-btn {
+  border: none;
+  background: linear-gradient(120deg, rgba(255,127,80,0.18), rgba(108,155,189,0.18));
+  color: var(--ink);
+  font-size: 1.1rem;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.08);
+  transition: transform 0.15s ease, box-shadow 0.2s ease;
+}
+.polaroid-btn:active { transform: translateY(1px); box-shadow: 0 2px 6px rgba(0,0,0,0.08); }
+.polaroid-page { font-weight: 700; letter-spacing: 0.04em; }
 
 @keyframes audioViz { 0%,100% { height: 4px; } 50% { height: 22px; } }
 @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }

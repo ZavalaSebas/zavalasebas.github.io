@@ -13,6 +13,10 @@ const polaroids = [
   { file: "lau80.jpg", caption: "Hola en medio del día" }
 ];
 
+const PAGE_SIZE = 4;
+let shuffledPolaroids = [];
+let currentPage = 0;
+
 function shuffle(array) {
   const a = [...array];
   for (let i = a.length - 1; i > 0; i--) {
@@ -22,14 +26,20 @@ function shuffle(array) {
   return a;
 }
 
-function renderPolaroids() {
+function renderPolaroidsPage() {
   const board = document.getElementById("polaroidBoard");
+  const pageLabel = document.getElementById("polaroidPage");
   if (!board) return;
 
-  const selected = shuffle(polaroids).slice(0, 6);
+  const totalPages = Math.max(1, Math.ceil(shuffledPolaroids.length / PAGE_SIZE));
+  currentPage = ((currentPage % totalPages) + totalPages) % totalPages;
+
+  const start = currentPage * PAGE_SIZE;
+  const subset = shuffledPolaroids.slice(start, start + PAGE_SIZE);
+
   board.innerHTML = "";
 
-  selected.forEach((p, idx) => {
+  subset.forEach((p, idx) => {
     const tilt = (Math.random() * 10 - 5).toFixed(1);
     const offset = (Math.random() * 12 - 6).toFixed(1);
     const card = document.createElement("div");
@@ -46,6 +56,25 @@ function renderPolaroids() {
 
     board.appendChild(card);
   });
+
+  if (pageLabel) pageLabel.textContent = `${currentPage + 1}/${totalPages}`;
+}
+
+function initPolaroidPagination() {
+  shuffledPolaroids = shuffle(polaroids);
+  const prev = document.getElementById("polaroidPrev");
+  const next = document.getElementById("polaroidNext");
+  const totalPages = Math.max(1, Math.ceil(shuffledPolaroids.length / PAGE_SIZE));
+  currentPage = 0;
+  renderPolaroidsPage();
+
+  const go = (delta) => {
+    currentPage = currentPage + delta;
+    renderPolaroidsPage();
+  };
+
+  if (prev) prev.addEventListener("click", () => go(-1));
+  if (next) next.addEventListener("click", () => go(1));
 }
 
 function initAudioControl() {
@@ -86,6 +115,6 @@ function initAudioControl() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  renderPolaroids();
+  initPolaroidPagination();
   initAudioControl();
 });
