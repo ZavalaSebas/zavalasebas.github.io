@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>La persona más extraordinaria</title>
+  <link rel="stylesheet" href="../style/extraordinaria.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&family=Caveat:wght@500;600&family=Shadows+Into+Light&display=swap" rel="stylesheet">
+</head>
+<body class="extra-page">
+  <div class="paper-grain" aria-hidden="true"></div>
+  <header class="extra-topbar glass">
+    <a href="noise.html" class="back-btn" aria-label="Volver a Noise">← ruido</a>
+    <div class="topbar-chip">Página de libreta</div>
+    <div class="topbar-actions">
+      <span class="topbar-heart">✶</span>
+      <div id="audioControl" class="audio-control" title="Música de Lau" aria-label="Música de Lau">
+        <div class="vinyl paused" aria-hidden="true"></div>
+        <div class="audio-visualizer" aria-hidden="true">
+          <div class="freq-bar paused"></div>
+          <div class="freq-bar paused"></div>
+          <div class="freq-bar paused"></div>
+          <div class="freq-bar paused"></div>
+          <div class="freq-bar paused"></div>
+        </div>
+        <div class="audio-hint"><span>click música</span><div class="arrow">➡️</div></div>
+      </div>
+    </div>
+  </header>
+
+  <section class="cover">
+    <div class="tape tape-left" aria-hidden="true"></div>
+    <div class="tape tape-right" aria-hidden="true"></div>
+    <p class="eyebrow">diario íntimo</p>
+    <h1>La persona más extraordinaria</h1>
+    <p class="cover-note">Una página arrancada de mi libreta solo para hablar de Lau.</p>
+  </section>
+
+  <main class="notebook-shell">
+    <div class="spiral" aria-hidden="true"></div>
+    <div class="page-grid">
+      <article class="page page-text">
+        <div class="page-lines" aria-hidden="true"></div>
+        <div class="page-hole" aria-hidden="true"></div>
+        <h2 class="marker-title">Lau en mi universo</h2>
+        <p class="handwrite">¿Cuántas veces se puede decir en la vida que conoces a <span class="highlight">una persona única</span>? Tal vez ninguna… excepto cuando aparece alguien que se siente única en tu propio universo. Así es Lau para mí: desproporcionadamente original, una chispa de autenticidad que admiro y atesoro.</p>
+        <p class="handwrite">Tiene una capacidad para ser genuina como nadie que conozca. Es sumamente dulce y se preocupa por ti, aunque a veces parezca que te regaña. Es fiel y leal como nadie que haya conocido; verla es sentir cómo irradia felicidad y belleza. A su lado me siento seguro, como si nada pudiera salir mal.</p>
+        <p class="handwrite">Me ha enseñado tanto con su manera particular de ser. Somos tan diferentes en ciertos aspectos que me recuerda lo mucho que tengo por aprender. Deseo seguir aprendiendo de ella y quedarme a su lado tanto como ella me lo permita.</p>
+        <p class="handwrite">Quiero cuidarla, amarla y ofrecerle todo lo que tengo. Aunque a veces se estrese al hablar de estas cosas, quiero casarme con ella y construir un futuro juntos. <span class="ink-heart">Te amo, Lau</span>, más que a mí mismo.</p>
+
+        <div class="sticky-grid">
+          <div class="sticky soft-pink">
+            <h3>Notas rápidas</h3>
+            <ul>
+              <li>Genuina y dulce, incluso cuando regaña.</li>
+              <li>Leal como nadie más.</li>
+              <li>Su risa ilumina cualquier sala.</li>
+            </ul>
+          </div>
+          <div class="sticky soft-yellow">
+            <h3>Promesas</h3>
+            <ul>
+              <li>Cuidarte y quedarme cerca.</li>
+              <li>Aprender de nuestras diferencias.</li>
+              <li>Soñar en voz alta: casarnos y compartirlo todo.</li>
+            </ul>
+          </div>
+        </div>
+
+        <p class="signature">Guardado en esta libreta, para no olvidarlo. — S</p>
+      </article>
+
+      <aside class="page page-polaroids" aria-label="Recuerdos en polaroid">
+        <div class="page-lines" aria-hidden="true"></div>
+        <div class="page-hole" aria-hidden="true"></div>
+        <div class="postit-corner">Recuerdos al azar de Lau</div>
+        <div class="polaroid-board" id="polaroidBoard"></div>
+        <div class="doodle">★</div>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="extra-footer">
+    <p>Esta página huele a marcador recién destapado y a futuro juntos.</p>
+  </footer>
+
+  <audio id="audioLau" preload="auto" loop>
+    <source src="../assets/audio/laumusic.mp3" type="audio/mpeg">
+  </audio>
+
+  <nav class="extra-tabbar" aria-label="Navegación principal">
+    <span class="tabbar-indicator" aria-hidden="true"></span>
+    <a class="tabbar-item" href="../index.html" aria-label="Inicio" data-tab="home">
+      <span class="tab-ico">🏠</span>
+      <span class="tab-label">Inicio</span>
+    </a>
+    <a class="tabbar-item" href="journals.html" aria-label="Journals" data-tab="journal">
+      <span class="tab-ico">📓</span>
+      <span class="tab-label">Journals</span>
+    </a>
+    <a class="tabbar-item" href="tools.html" aria-label="Herramientas" data-tab="tools">
+      <span class="tab-ico">🛠</span>
+      <span class="tab-label">Tools</span>
+    </a>
+    <a class="tabbar-item" href="rockola.html" aria-label="Rockola" data-tab="rockola">
+      <span class="tab-ico">🎵</span>
+      <span class="tab-label">Rockola</span>
+    </a>
+  </nav>
+
+  <script src="../js/extraordinaria.js"></script>
+  <script>
+    (function(){
+      const tabs=document.querySelectorAll('.extra-tabbar .tabbar-item');
+      const indicator=document.querySelector('.extra-tabbar .tabbar-indicator');
+      const currentFile=location.pathname.split('/').pop().toLowerCase();
+      tabs.forEach(tab=>{ const href=tab.getAttribute('href'); if(!href) return; const file=href.split('/').pop().toLowerCase(); if(file===currentFile) tab.classList.add('active'); });
+      function moveIndicator(target){
+        const active=target||document.querySelector('.extra-tabbar .tabbar-item.active')||tabs[0]; if(!active||!indicator) return;
+        const width=active.offsetWidth*0.55; const x=active.offsetLeft+(active.offsetWidth-width)/2;
+        indicator.style.width=width+'px'; indicator.style.transform='translateX('+x+'px)';
+      }
+      requestAnimationFrame(()=>moveIndicator());
+      tabs.forEach(t=>t.addEventListener('click', e=>moveIndicator(e.currentTarget)));
+      window.addEventListener('resize', ()=>moveIndicator());
+    })();
+  </script>
+</body>
+</html>

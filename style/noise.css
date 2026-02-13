@@ -226,6 +226,14 @@ footer {
   box-shadow: 0 12px 24px -14px #c5a575, 0 0 14px -6px #f2d7b5;
 }
 
+/* Tema 5: papel y plumón */
+.card:nth-child(5):hover {
+  background: linear-gradient(135deg, #fff7d6, #ffd6e8);
+  color: #1f1a17;
+  box-shadow: 0 12px 26px -10px #ffbfa3, 0 0 14px -8px #ffc9dc;
+  transform: rotate(-2deg) translateY(-4px) scale(1.03);
+}
+
 @keyframes settle {
   0% { transform: translateY(-4px); }
   50% { transform: translateY(2px); }
