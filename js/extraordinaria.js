@@ -218,7 +218,115 @@ function initAudioControl() {
   });
 }
 
+function initValentineOverlay() {
+  const overlay = document.getElementById("valentineOverlay");
+  if (!overlay) return;
+
+  const seen = localStorage.getItem("extraValentineAccepted");
+  if (seen === "yes") {
+    overlay.remove();
+    return;
+  }
+
+  const questionEl = overlay.querySelector(".val-question");
+  const yesBtn = overlay.querySelector(".val-btn.yes");
+  const noBtn = overlay.querySelector(".val-btn.no");
+  const foot = overlay.querySelector(".val-foot");
+  if (!questionEl || !yesBtn || !noBtn) return;
+
+  let growScale = 1;
+  const sadPhrases = [
+    "ouch, me dolió un poquito :(",
+    "me pongo triste si dices que no :(",
+    "hey, mi corazón se encoge :(",
+    "snif... vuelve al botón bonito :(",
+    "hasta el mariachi se fue llorando :(",
+    "la flor se marchita si dices no :(",
+    "suspiro triste... :(",
+    "ok, pero me dejas abrazarte? :(",
+    "nooo, mi botón necesita amor :(",
+    "prometo más risas si vuelves :(",
+  ];
+
+  const steps = [
+    { q: "¿Quieres ser mi San Valentín?", yes: "Sí", no: "No", foot: "☺️" },
+    { q: "¿Segura? Prometo besitos.", yes: "Segurísima", no: "Mmm...", foot: "☺️" },
+    { q: "Última oportunidad para huir (spoiler: no puedes).", yes: "Dale", no: "Intentar huir", foot: "☺️" }
+  ];
+  let idx = 0;
+
+  const resetButtons = () => {
+    growScale = 1;
+    yesBtn.style.transform = "scale(1)";
+    yesBtn.classList.remove("grow");
+    noBtn.style.position = "static";
+    noBtn.style.left = "";
+    noBtn.style.top = "";
+  };
+
+  const renderStep = () => {
+    questionEl.textContent = steps[idx].q;
+    yesBtn.textContent = steps[idx].yes;
+    noBtn.textContent = steps[idx].no;
+    if (foot) foot.textContent = steps[idx].foot || "";
+    resetButtons();
+  };
+
+  const moveNoButton = () => {
+    let x = 50;
+    let y = 50;
+    let tries = 0;
+    while (tries < 10 && Math.abs(x - 50) < 18 && Math.abs(y - 50) < 14) {
+      x = Math.floor(12 + Math.random() * 76);
+      y = Math.floor(12 + Math.random() * 64);
+      tries += 1;
+    }
+    noBtn.style.position = "absolute";
+    noBtn.style.left = `${x}%`;
+    noBtn.style.top = `${y}%`;
+    noBtn.classList.add("wiggle");
+    setTimeout(() => noBtn.classList.remove("wiggle"), 450);
+    growScale = Math.min(growScale + 0.12, 2.2);
+    yesBtn.classList.add("grow");
+    yesBtn.style.transform = `scale(${growScale})`;
+    setTimeout(() => yesBtn.classList.remove("grow"), 520);
+    if (foot) {
+      const msg = sadPhrases[Math.floor(Math.random() * sadPhrases.length)];
+      foot.textContent = `${msg} :(`;
+    }
+  };
+
+  const finish = () => {
+    resetButtons();
+    overlay.classList.add("is-closing");
+    overlay.classList.remove("is-active");
+    setTimeout(() => {
+      overlay.remove();
+      document.body.classList.remove("no-scroll");
+      localStorage.setItem("extraValentineAccepted", "yes");
+    }, 600);
+  };
+
+  yesBtn.addEventListener("click", () => {
+    if (idx < steps.length - 1) {
+      idx += 1;
+      renderStep();
+      return;
+    }
+    finish();
+  });
+
+  noBtn.addEventListener("click", moveNoButton);
+
+  renderStep();
+  requestAnimationFrame(() => {
+    overlay.classList.add("is-active");
+    document.body.classList.add("no-scroll");
+  });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
+  initValentineOverlay();
   initPolaroidPagination();
   initAudioControl();
 });
