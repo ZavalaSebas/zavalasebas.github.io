@@ -255,6 +255,40 @@ function initValentineOverlay() {
   ];
   let idx = 0;
 
+  const playMusic = () => {
+    const audio = document.getElementById("audioLau");
+    if (!audio) return;
+    audio.muted = false;
+    audio.volume = 0.85;
+    audio.play().catch(() => {});
+    const control = document.getElementById("audioControl");
+    if (control) {
+      const vinyl = control.querySelector(".vinyl");
+      const bars = control.querySelectorAll(".freq-bar");
+      const hint = control.querySelector(".audio-hint span");
+      if (vinyl) vinyl.classList.remove("paused");
+      bars.forEach(b => b.classList.remove("paused"));
+      if (hint) hint.textContent = "sonando";
+    }
+  };
+
+  const spawnConfetti = () => {
+    const layer = document.createElement("div");
+    layer.className = "valentine-confetti";
+    const symbols = ["♥", "♡", "✿", "✶", "✦"];
+    for (let i = 0; i < 26; i++) {
+      const piece = document.createElement("span");
+      piece.textContent = symbols[i % symbols.length];
+      piece.style.setProperty("--x", `${Math.random() * 100}%`);
+      piece.style.setProperty("--delay", `${Math.random() * 0.8}s`);
+      piece.style.setProperty("--duration", `${3 + Math.random() * 1.6}s`);
+      piece.style.setProperty("--spin", `${Math.random() > 0.5 ? 1 : -1}`);
+      layer.appendChild(piece);
+    }
+    document.body.appendChild(layer);
+    setTimeout(() => layer.remove(), 4200);
+  };
+
   const resetButtons = () => {
     growScale = 1;
     yesBtn.style.transform = "scale(1)";
@@ -298,6 +332,8 @@ function initValentineOverlay() {
 
   const finish = () => {
     resetButtons();
+    spawnConfetti();
+    playMusic();
     overlay.classList.add("is-closing");
     overlay.classList.remove("is-active");
     setTimeout(() => {
