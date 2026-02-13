@@ -1,16 +1,22 @@
 const polaroids = [
-  { file: "lau05.jpg", caption: "Movie night y manta compartida" },
+  { file: "lau02.jpg", caption: "Why are u looking at me" },
+  { file: "lau05.jpg", caption: "Movie night" },
   { file: "lau07.jpg", caption: "Sonrisa tranquila" },
-  { file: "lau12.jpg", caption: "Comer contigo todo sabe mejor" },
-  { file: "lau18.jpg", caption: "La playlist perfecta" },
+  { file: "lau12.jpg", caption: "Comer contigo siempre sabe mejor" },
+  { file: "lau14.jpg", caption: "Museo bajo lluvia" },
+  { file: "lau18.jpg", caption: "Patines" },
   { file: "lau23.jpg", caption: "Mini Lau, maxi ternura" },
-  { file: "lau32.jpg", caption: "Cielos de Milano" },
+  { file: "lau27.jpg", caption: "MILAAAN" },
+  { file: "lau32.jpg", caption: "Milano" },
   { file: "lau38.jpg", caption: "Te encontré por fin" },
   { file: "lau44.jpg", caption: "Vamos que se puede" },
+  { file: "lau48.jpg", caption: "Chinita" },
   { file: "lau55.jpg", caption: "Flores para ti" },
   { file: "lau62.jpg", caption: "Brillos de año nuevo" },
+  { file: "lau63.jpg", caption: "Playita" },
   { file: "lau70.jpg", caption: "Picnic de tarde" },
-  { file: "lau80.jpg", caption: "Hola en medio del día" }
+  { file: "lau73.jpg", caption: "PAAAN" },
+  { file: "lau80.jpg", caption: "De compras" }
 ];
 
 const PAGE_SIZE_FIRST = 2;
@@ -36,9 +42,27 @@ function buildPages() {
   pages.push({ photos: latestTwo, layout: "first" });
   pages.push({ photos: nextTwo, layout: "second" });
 
-  // Page 3: first regular batch of photos (up to 6)
-  if (rest.length > 0) {
-    pages.push({ photos: rest.slice(0, PAGE_SIZE_OTHER), layout: "regular" });
+  // Split remaining photos into regular pages
+  const regularChunks = [];
+  for (let i = 0; i < rest.length; i += PAGE_SIZE_OTHER) {
+    regularChunks.push(rest.slice(i, i + PAGE_SIZE_OTHER));
+  }
+
+  // Rebalance so the last regular page has at least 4 photos without repeating
+  if (regularChunks.length > 1) {
+    const last = regularChunks[regularChunks.length - 1];
+    for (let donorIdx = regularChunks.length - 2; donorIdx >= 0 && last.length < 4; donorIdx--) {
+      const donor = regularChunks[donorIdx];
+      const minSize = donorIdx === 0 ? 6 : 4; // keep page 3 robust, others at least 4
+      while (donor.length > minSize && last.length < 4) {
+        last.unshift(donor.pop());
+      }
+    }
+  }
+
+  // Page 3: first regular batch (if any)
+  if (regularChunks[0]) {
+    pages.push({ photos: regularChunks[0], layout: "regular" });
   }
 
   // Page 4: scrap notes / doodles page
@@ -52,10 +76,9 @@ function buildPages() {
   ];
   pages.push({ layout: "scrap", scraps: scrapNotes });
 
-  // Remaining photos after the first regular page
-  const remaining = rest.slice(PAGE_SIZE_OTHER);
-  for (let i = 0; i < remaining.length; i += PAGE_SIZE_OTHER) {
-    pages.push({ photos: remaining.slice(i, i + PAGE_SIZE_OTHER), layout: "regular" });
+  // Remaining regular pages after the scrap
+  for (let idx = 1; idx < regularChunks.length; idx++) {
+    pages.push({ photos: regularChunks[idx], layout: "regular" });
   }
 }
 
@@ -112,7 +135,7 @@ function renderPolaroidsPage() {
     letter.innerHTML = `
       <div class="letter-stamp" aria-hidden="true">💌</div>
       <h4 class="letter-title">Abrir cuando sonrías</h4>
-      <p class="letter-text">Si hoy te sientes cansada, recuerda que te miro y vuelvo a creer en todo. Guarda esta página como guardo cada mirada tuya.</p>
+      <p class="letter-text">Recuerda que te miro y vuelvo a creer en todo. Guarda esta página como guardo cada mirada tuya.</p>
       <p class="letter-text">Firmado: quien no se cansa de decirte que te ama.</p>
       <div class="letter-sign">— S</div>
     `;
