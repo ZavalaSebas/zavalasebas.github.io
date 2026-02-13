@@ -13,8 +13,9 @@ const polaroids = [
   { file: "lau80.jpg", caption: "Hola en medio del día" }
 ];
 
-const PAGE_SIZE = 4;
-let shuffledPolaroids = [];
+const PAGE_SIZE_FIRST = 4;
+const PAGE_SIZE_OTHER = 6;
+let pages = [];
 let currentPage = 0;
 
 function shuffle(array) {
@@ -26,18 +27,27 @@ function shuffle(array) {
   return a;
 }
 
+function buildPages() {
+  const latest = polaroids.slice(-PAGE_SIZE_FIRST); // últimos 4
+  const rest = shuffle(polaroids.slice(0, -PAGE_SIZE_FIRST));
+  pages = [];
+  pages.push(latest);
+  for (let i = 0; i < rest.length; i += PAGE_SIZE_OTHER) {
+    pages.push(rest.slice(i, i + PAGE_SIZE_OTHER));
+  }
+}
+
 function renderPolaroidsPage() {
   const board = document.getElementById("polaroidBoard");
   const pageLabel = document.getElementById("polaroidPage");
-  if (!board) return;
+  if (!board || pages.length === 0) return;
 
-  const totalPages = Math.max(1, Math.ceil(shuffledPolaroids.length / PAGE_SIZE));
+  const totalPages = pages.length;
   currentPage = ((currentPage % totalPages) + totalPages) % totalPages;
-
-  const start = currentPage * PAGE_SIZE;
-  const subset = shuffledPolaroids.slice(start, start + PAGE_SIZE);
+  const subset = pages[currentPage] || [];
 
   board.innerHTML = "";
+  board.classList.toggle("first-page", currentPage === 0);
 
   subset.forEach((p, idx) => {
     const tilt = (Math.random() * 10 - 5).toFixed(1);
@@ -61,10 +71,9 @@ function renderPolaroidsPage() {
 }
 
 function initPolaroidPagination() {
-  shuffledPolaroids = shuffle(polaroids);
+  buildPages();
   const prev = document.getElementById("polaroidPrev");
   const next = document.getElementById("polaroidNext");
-  const totalPages = Math.max(1, Math.ceil(shuffledPolaroids.length / PAGE_SIZE));
   currentPage = 0;
   renderPolaroidsPage();
 

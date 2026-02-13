@@ -292,6 +292,12 @@ body {
   margin-top: 0.6rem;
   padding-top: 1.2rem;
 }
+.polaroid-board.first-page {
+  align-content: end;
+  min-height: 460px;
+  grid-template-columns: repeat(2, minmax(180px, 1fr));
+  padding-top: 1.6rem;
+}
 .polaroid {
   background: #fff;
   padding: 0.65rem 0.65rem 0.9rem;
@@ -339,12 +345,14 @@ body {
   right: 14px;
   top: 16px;
   background: #fff7d6;
-  padding: 0.65rem 0.8rem;
-  border-radius: 10px;
+  padding: 0.95rem 1.1rem;
+  border-radius: 12px;
   font-family: 'Shadows Into Light', cursive;
-  box-shadow: 0 10px 18px rgba(0,0,0,0.08);
+  font-size: 1.05rem;
+  box-shadow: 0 14px 24px rgba(0,0,0,0.1);
   transform: rotate(3deg);
-  border: 1px solid rgba(0,0,0,0.04);
+  border: 1px solid rgba(0,0,0,0.06);
+  max-width: 230px;
 }
 .doodle {
   position: absolute;
