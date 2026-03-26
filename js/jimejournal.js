@@ -72,6 +72,54 @@ let currentScale = 1;
 let isLongPress = false;
 let longPressTimer = null;
 
+let isJournalUnlocked = false;
+const JOURNAL_PASSWORD_HINT = 'Pista: su apodo';
+const JOURNAL_PASSWORDS = new Set(['jime', 'negris']);
+const JOURNAL_ACCESS_STORAGE_KEY = 'jime_journal_unlocked_until';
+const JOURNAL_ACCESS_TTL_MS = 30 * 60 * 1000;
+
+function normalizeAccessKey(value) {
+  return (value || '')
+    .toString()
+    .trim()
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '');
+}
+
+function hasValidJournalSession() {
+  const unlockedUntil = Number(localStorage.getItem(JOURNAL_ACCESS_STORAGE_KEY) || '0');
+  return Number.isFinite(unlockedUntil) && unlockedUntil > Date.now();
+}
+
+function saveJournalSession() {
+  const unlockedUntil = Date.now() + JOURNAL_ACCESS_TTL_MS;
+  localStorage.setItem(JOURNAL_ACCESS_STORAGE_KEY, String(unlockedUntil));
+}
+
+function enforceJournalPasswordAccess() {
+  if (isJournalUnlocked || hasValidJournalSession()) {
+    isJournalUnlocked = true;
+    return;
+  }
+
+  const enteredPassword = prompt(`🔐 Este journal requiere clave.\n${JOURNAL_PASSWORD_HINT}`);
+
+  if (enteredPassword === null) {
+    window.location.href = 'journals.html';
+    return;
+  }
+
+  if (JOURNAL_PASSWORDS.has(normalizeAccessKey(enteredPassword))) {
+    isJournalUnlocked = true;
+    saveJournalSession();
+    return;
+  }
+
+  alert('Clave incorrecta. Intenta de nuevo.');
+  enforceJournalPasswordAccess();
+}
+
 // Parse Spanish date strings like "6 de septiembre 2025 18:18 - 22:19" or "4 de Octubre 2025 17:36"
 function parseSpanishFechaToTimestamp(fechaStr) {
   try {
@@ -805,6 +853,10 @@ document.addEventListener('DOMContentLoaded', function() {
   if (presentationPrev) presentationPrev.addEventListener('click', () => advancePresentation(-1));
   if (presentationNext) presentationNext.addEventListener('click', () => advancePresentation(1));
   if (presentationPlayPause) presentationPlayPause.addEventListener('click', togglePresentationPlay);
+
+  setTimeout(() => {
+    enforceJournalPasswordAccess();
+  }, 3000);
   
   console.log('All features initialized! ✨');
 });
