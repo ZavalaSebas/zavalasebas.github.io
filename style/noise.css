@@ -234,6 +234,15 @@ footer {
   transform: rotate(-2deg) translateY(-4px) scale(1.03);
 }
 
+/* Tema 6: vacío / eco */
+.card:nth-child(6):hover {
+  background: linear-gradient(150deg, #1d1a2f, #0f0d1a);
+  color: #e5dfff;
+  border-color: #9d94d4;
+  box-shadow: 0 14px 30px -12px #7e74bb66, 0 0 18px -8px #9d94d4;
+  transform: translateY(-5px) scale(1.04);
+}
+
 @keyframes settle {
   0% { transform: translateY(-4px); }
   50% { transform: translateY(2px); }
