@@ -5,17 +5,27 @@ const closeFullMessage = document.getElementById("closeFullMessage");
 const fullMessageTitle = document.getElementById("fullMessageTitle");
 const fullMessageText = document.getElementById("fullMessageText");
 const fullMessageVideo = document.getElementById("fullMessageVideo");
+const fullMessageVideoThumb = document.getElementById("fullMessageVideoThumb");
 
 cards.forEach((card) => {
   const face = card.querySelector(".secret-face");
   if (!face) return;
+  if (card.dataset.locked === "true") {
+    card.classList.add("is-locked");
+  }
   face.addEventListener("click", () => {
+    if (card.dataset.locked === "true") return;
     const name = card.dataset.name || "Mensaje completo";
     const fullText = card.dataset.full || "";
     const videoLabel = card.dataset.video || "Video (bloqueado)";
+    const videoSrc = card.dataset.videoSrc || "";
     if (fullMessageTitle) fullMessageTitle.textContent = `Mensaje para ${name}`;
     if (fullMessageText) fullMessageText.textContent = fullText;
     if (fullMessageVideo) fullMessageVideo.textContent = videoLabel;
+    if (fullMessageVideoThumb) {
+      fullMessageVideoThumb.src = videoSrc;
+      fullMessageVideoThumb.alt = `Miniatura de video para ${name}`;
+    }
     toggleOverlay(true);
   });
 });
