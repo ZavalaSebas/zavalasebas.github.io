@@ -1,0 +1,349 @@
+:root {
+  --bg: #f7f3ee;
+  --surface: #ffffff;
+  --text-main: #1b1a17;
+  --text-soft: #5c5a54;
+  --accent: #111111;
+  --line: #d9d4cd;
+  --radius: 6px;
+  --radius-sm: 4px;
+  --font-body: "Space Grotesk", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-display: "IBM Plex Mono", "Space Grotesk", monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body.blog {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text-main);
+  font-family: var(--font-body);
+  position: relative;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  padding-bottom: 2.5rem;
+}
+
+.blog-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+  padding: 0.9rem 1.2rem;
+  background: var(--bg);
+  border-bottom: 1px solid var(--line);
+}
+
+.back-btn {
+  color: var(--text-main);
+  text-decoration: none;
+  font-weight: 600;
+  padding: 0.35rem 0.6rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line);
+  background: var(--surface);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+}
+
+.brand-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  background: var(--accent);
+}
+
+.ghost-btn {
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--text-main);
+  border-radius: var(--radius-sm);
+  padding: 0.3rem 0.6rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.ghost-btn.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.visit-count {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-soft);
+  font-family: var(--font-display);
+}
+
+.audio-btn {
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--text-main);
+  border-radius: var(--radius-sm);
+  padding: 0.3rem 0.6rem;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-family: var(--font-display);
+  cursor: pointer;
+}
+
+.audio-btn.active {
+  background: var(--text-main);
+  color: var(--surface);
+}
+
+@media (max-width: 640px) {
+  .blog-topbar {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    row-gap: 0.5rem;
+    padding: 0.8rem 1rem;
+  }
+
+  .brand {
+    flex: 1 1 100%;
+  }
+
+  .back-btn,
+  .audio-btn,
+  .ghost-btn {
+    font-size: 0.65rem;
+    padding: 0.25rem 0.5rem;
+  }
+
+  .visit-count {
+    font-size: 0.6rem;
+  }
+}
+
+.hero {
+  padding: 1.6rem 1.2rem 1rem;
+  position: relative;
+  z-index: 1;
+}
+
+.hero-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.4rem 1.3rem;
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: 0.65rem;
+  color: var(--text-soft);
+  margin: 0 0 0.6rem;
+  font-family: var(--font-display);
+}
+
+.hero h1 {
+  font-family: var(--font-body);
+  font-size: 1.7rem;
+  margin: 0 0 0.6rem;
+}
+
+.hero-text {
+  margin: 0 0 0.8rem;
+  color: var(--text-soft);
+  line-height: 1.5;
+}
+
+.chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.chip {
+  padding: 0.2rem 0.7rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line);
+  color: var(--accent);
+  font-size: 0.72rem;
+  text-transform: lowercase;
+  background: transparent;
+}
+
+.feed {
+  display: grid;
+  gap: 1.2rem;
+  padding: 0.5rem 1.2rem 2rem;
+  position: relative;
+  z-index: 1;
+}
+
+.post-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.2rem 1.1rem 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.post-card.pinned {
+  border-color: var(--accent);
+}
+
+.post-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.75rem;
+  color: var(--text-soft);
+  font-family: var(--font-display);
+}
+
+.post-tag {
+  color: var(--text-main);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 700;
+}
+
+.post-title {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 1.25rem;
+}
+
+.post-body {
+  margin: 0;
+  color: var(--text-soft);
+  line-height: 1.55;
+  white-space: pre-wrap;
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.post-card.expanded .post-body {
+  -webkit-line-clamp: unset;
+  overflow: visible;
+}
+
+.read-more {
+  align-self: flex-start;
+  border: none;
+  background: transparent;
+  color: var(--text-main);
+  font-weight: 600;
+  padding: 0;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.7rem;
+}
+
+.signature-area {
+  margin-top: 0.4rem;
+  padding-top: 0.8rem;
+  border-top: 1px dashed var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.signature-meta {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-soft);
+  font-family: var(--font-display);
+}
+
+.stamp-btn {
+  position: relative;
+  border: 2px solid var(--text-main);
+  background: var(--surface);
+  color: var(--text-main);
+  padding: 0.35rem 0.9rem;
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.75rem;
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  transition: transform 0.12s ease, background 0.2s ease;
+}
+
+.stamp-btn:hover {
+  background: #f0ece6;
+}
+
+.stamp-btn.stamping {
+  animation: stampPress 0.45s ease forwards;
+}
+
+.stamp-btn.signed {
+  cursor: default;
+  background: var(--text-main);
+  color: var(--surface);
+}
+
+.stamp-mark {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  letter-spacing: 0.2em;
+}
+
+@keyframes stampPress {
+  0% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(2px) scale(0.96); }
+  100% { transform: translateY(0) scale(1); }
+}
+
+.footer-note {
+  text-align: center;
+  color: var(--text-soft);
+  font-size: 0.85rem;
+  padding: 0 1.2rem 2.5rem;
+  position: relative;
+  z-index: 1;
+  font-family: var(--font-display);
+}
+
+@media (min-width: 720px) {
+  .feed {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .hero {
+    max-width: 760px;
+    margin: 0 auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ghost-btn {
+    transition: none;
+  }
+}
