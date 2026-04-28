@@ -86,3 +86,55 @@ if (list) {
 
 updateProgress();
 loadState();
+
+// Audio (estilo blog)
+const beforeAudio = document.getElementById("beforeAudio");
+const audioToggle = document.getElementById("audioToggle");
+
+if (beforeAudio && audioToggle) {
+  beforeAudio.volume = 0.35;
+
+  function setAudioState(isOn) {
+    if (isOn) {
+      audioToggle.classList.add("active");
+      audioToggle.textContent = "audio on";
+      audioToggle.setAttribute("aria-pressed", "true");
+    } else {
+      audioToggle.classList.remove("active");
+      audioToggle.textContent = "audio";
+      audioToggle.setAttribute("aria-pressed", "false");
+    }
+  }
+
+  async function tryAutoplay() {
+    beforeAudio.muted = false;
+    try {
+      await beforeAudio.play();
+      setAudioState(true);
+    } catch (_) {
+      beforeAudio.muted = true;
+      setAudioState(false);
+    }
+  }
+
+  audioToggle.addEventListener("click", async () => {
+    const isMuted = beforeAudio.muted || beforeAudio.paused;
+    if (isMuted) {
+      beforeAudio.muted = false;
+      try {
+        await beforeAudio.play();
+      } catch (_) {}
+      setAudioState(true);
+    } else {
+      beforeAudio.pause();
+      beforeAudio.muted = true;
+      setAudioState(false);
+    }
+  });
+
+  if (document.readyState === "complete") {
+    tryAutoplay();
+  } else {
+    window.addEventListener("load", tryAutoplay);
+  }
+}

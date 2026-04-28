@@ -66,3 +66,55 @@ if (overlayVideoFrame) {
 document.addEventListener("keydown", (event) => {
   if (event.key === "Escape") toggleOverlay(false);
 });
+
+// Audio (estilo blog)
+const afterAudio = document.getElementById("afterAudio");
+const audioToggle = document.getElementById("audioToggle");
+
+if (afterAudio && audioToggle) {
+  afterAudio.volume = 0.35;
+
+  function setAudioState(isOn) {
+    if (isOn) {
+      audioToggle.classList.add("active");
+      audioToggle.textContent = "audio on";
+      audioToggle.setAttribute("aria-pressed", "true");
+    } else {
+      audioToggle.classList.remove("active");
+      audioToggle.textContent = "audio";
+      audioToggle.setAttribute("aria-pressed", "false");
+    }
+  }
+
+  async function tryAutoplay() {
+    afterAudio.muted = false;
+    try {
+      await afterAudio.play();
+      setAudioState(true);
+    } catch (_) {
+      afterAudio.muted = true;
+      setAudioState(false);
+    }
+  }
+
+  audioToggle.addEventListener("click", async () => {
+    const isMuted = afterAudio.muted || afterAudio.paused;
+    if (isMuted) {
+      afterAudio.muted = false;
+      try {
+        await afterAudio.play();
+      } catch (_) {}
+      setAudioState(true);
+    } else {
+      afterAudio.pause();
+      afterAudio.muted = true;
+      setAudioState(false);
+    }
+  });
+
+  if (document.readyState === "complete") {
+    tryAutoplay();
+  } else {
+    window.addEventListener("load", tryAutoplay);
+  }
+}

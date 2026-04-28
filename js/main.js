@@ -31,23 +31,23 @@ function hideLoader() {
 
 const frases = [
   // Mensajes de sistema falsos
-  "cargando loops...",
-  "renderizando distorsión...",
-  "sintetizando errores...",
+  "cargando sueño...",
+  "renderizando cansancio...",
+  "sintetizando nostalgia...",
 
   // Glitch / poesía digital
   "1nicio.0",
-  "signál fuera de rango",
-  "bit roto // eco eterno",
+  "senal fuera de rango",
+  "bit roto // eco lento",
 
   // Coordenadas y tiempos
   "lat: 47.6519 / long: -122.3502",
-  "último ruido: 03:17AM",
+  "ultimo ruido: 03:17AM",
 
   // Rockshow status
-  "rockshow // inicializando...",
-  "frecuencia encontrada",
-  "versión beta del silencio"
+  "rockshow // reiniciando...",
+  "frecuencia tenue",
+  "version beta del silencio"
 ];
 
 const footerText = document.getElementById("frase-footer");
@@ -118,7 +118,7 @@ function drawNoise() {
   const buffer = new Uint32Array(imageData.data.buffer);
 
   for (let i = 0; i < buffer.length; i++) {
-    if (Math.random() < 0.015) {
+    if (Math.random() < 0.008) {
       buffer[i] = 0xffffffff;
     }
   }
@@ -141,7 +141,7 @@ const glitchMap = {
   W: ['W', 'Ш', 'w'],
 };
 
-const originalText = "ROCKSHOW V2";
+const originalText = "ROCKSHOW V3";
 
 function glitchText(text) {
   return text.split('').map(char => {
@@ -182,7 +182,7 @@ window.addEventListener("load", () => {
 
 // Sistema de partículas flotantes
 const particleContainer = document.getElementById("particleContainer");
-const particleSymbols = ['♪', '♫', '♬', '🎸', '🤘', '⚡', '★', '♦', '◆', '▲', '►', '◄'];
+const particleSymbols = ['.', '·', '*', '+', 'o', 'O', '☾', '☁', '☂'];
 
 function createParticle() {
   const particle = document.createElement('div');
@@ -212,10 +212,10 @@ function createParticle() {
 
 // Crear una partícula cada 2-4 segundos
 setInterval(() => {
-  if (Math.random() < 0.7) { // 70% de probabilidad
+  if (Math.random() < 0.5) { // 50% de probabilidad
     createParticle();
   }
-}, 2000 + Math.random() * 2000);
+}, 3000 + Math.random() * 2000);
 
 // Cursor personalizado con trail
 const customCursor = document.getElementById('customCursor');
@@ -252,12 +252,12 @@ document.addEventListener('mousemove', (e) => {
 // Efecto hover en cursor
 document.addEventListener('mousedown', () => {
   customCursor.style.transform = 'scale(1.5)';
-  customCursor.style.background = 'rgba(79, 195, 247, 0.5)';
+  customCursor.style.background = 'rgba(154, 167, 178, 0.5)';
 });
 
 document.addEventListener('mouseup', () => {
   customCursor.style.transform = 'scale(1)';
-  customCursor.style.background = 'rgba(79, 195, 247, 0.2)';
+  customCursor.style.background = 'rgba(154, 167, 178, 0.2)';
 });
 
 // Konami Code Easter Egg
