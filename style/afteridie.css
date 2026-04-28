@@ -162,6 +162,7 @@ h1 {
   padding: 1.2rem 1.4rem;
   background: linear-gradient(140deg, rgba(10, 20, 32, 0.95), rgba(16, 28, 45, 0.95));
   overflow: hidden;
+  cursor: pointer;
 }
 
 .overlay-video__frame::before {

@@ -6,6 +6,7 @@ const fullMessageTitle = document.getElementById("fullMessageTitle");
 const fullMessageText = document.getElementById("fullMessageText");
 const fullMessageVideo = document.getElementById("fullMessageVideo");
 const fullMessageVideoThumb = document.getElementById("fullMessageVideoThumb");
+const overlayVideoFrame = document.querySelector(".overlay-video__frame");
 
 cards.forEach((card) => {
   const face = card.querySelector(".secret-face");
@@ -50,6 +51,15 @@ if (closeFullMessage) {
 if (fullMessageOverlay) {
   fullMessageOverlay.addEventListener("click", (event) => {
     if (event.target === fullMessageOverlay) toggleOverlay(false);
+  });
+}
+
+if (overlayVideoFrame) {
+  overlayVideoFrame.addEventListener("click", () => {
+    const input = window.prompt("Ingresa la contraseña para reproducir el video:");
+    if (input !== null) {
+      window.alert("Contraseña incorrecta.");
+    }
   });
 }
 
