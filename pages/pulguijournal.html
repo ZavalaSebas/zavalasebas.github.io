@@ -5,9 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>journal</title>
   <link rel="stylesheet" href="../style/pulguijournal.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style/password-gate.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand&family=Righteous&family=Staatliches&display=swap" rel="stylesheet">
 </head>
 <body>
+  <div class="password-gate" id="passwordGate">
+    <div class="password-gate__inner">
+      <span class="password-gate__smiley">☺</span>
+      <h2 class="password-gate__title">ACCESS CODE</h2>
+      <p class="password-gate__sub">enter the password to continue</p>
+      <div class="password-gate__input-wrap">
+        <input class="password-gate__input" id="passwordInput" type="password" placeholder="••••••••" autocomplete="off">
+        <button class="password-gate__btn" id="passwordBtn">enter</button>
+      </div>
+      <p class="password-gate__error" id="passwordError"></p>
+      <p class="password-gate__hint" id="passwordHint">?</p>
+    </div>
+  </div>
   <div class="background-stars"></div>
   
   <!-- Sakura decorative elements -->
@@ -151,6 +165,7 @@
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
 
+  <script src="../js/password-gate.js"></script>
   <script src="../js/pulguijournal.js"></script>
   <nav class="pulguijournal-tabbar" aria-label="Navegación principal">
     <span class="tabbar-indicator" aria-hidden="true"></span>

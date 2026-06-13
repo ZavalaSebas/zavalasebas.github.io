@@ -1,33 +1,34 @@
-# 🎛️ ROCKSHOW
+# 🎛️ ROCKSHOW V4
 
-No es una aplicación.  
-No es una idea clara.  
-Es una sesión de ensayo abierta.
+YA NO ES TRISTE. NI SOLITARIO.  
+Esto es color. Esto es ruido bonito.  
+Una cinta vintage corriendo sin parar.
 
-Algunas partes suenan afinadas, otras están en construcción.  
-Hay loops melancólicos, ruidos felices, capas que se superponen.  
-El orden no importa tanto como el ritmo de seguir probando.
+80s. 90s. Nirvana. Neón.  
+Grunge encendido. Colores que pesan.
 
-No hay plan maestro. Solo un setlist que se va escribiendo solo.
+No es un plan. Es una sesión a todo color.
 
 ---
 
-## 🚧 En desarrollo
+## 🎸 V4 — nueva era
 
-Esto no es un producto terminado.  
-Va creciendo cuando tiene que crecer.
+De la oscuridad salió esto.  
+Una paleta que explota. Líneas de batería que nunca fueron.  
+El silencio se pintó solo.
 
-- Ajustes para móvil (modo vertical)  
-- Más detalles visuales  
-- Más páginas, más desvíos
+- Colores infinitos
+- Scanlines y sintetizadores
+- Vibra retro // futuro incierto
+- Smile // Peace // Rock
 
 ---
 
 ## 👤 Autor
 
 Hecho por [zavalasebas](https://github.com/zavalasebas)  
-No hay objetivo final. Solo seguir armando.
+Porque el ruido también es un color.
 
 ---
 
-> _“Quiero el fin del secreto entre tus labios de plata y mi acero inoxidable.”_ 🎸🎤
+> _"Con la luz apagada, todo era más fácil. Pero a color, todo suena mejor."_ 🎸🌈

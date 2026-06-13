@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <title>Guitar Paint</title>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { width: 100%; height: 100%; overflow: hidden; background: #0f0a0f; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
+    canvas { display: block; position: fixed; inset: 0; width: 100%; height: 100%; touch-action: none; }
+
+    #startOverlay {
+      position: fixed; inset: 0; z-index: 100;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      background: radial-gradient(ellipse at center, #1a0f1a 0%, #0f0a0f 70%);
+      transition: opacity 0.8s ease, visibility 0.8s ease;
+    }
+    #startOverlay.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+    #startOverlay h1 {
+      font-size: clamp(2rem, 6vw, 4rem);
+      background: linear-gradient(135deg, #ff6b9d, #ffd700, #41e0b0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.3em;
+      filter: drop-shadow(0 0 30px rgba(255,107,157,0.3));
+    }
+    #startOverlay p {
+      color: #b8a9c4; font-size: clamp(0.9rem, 2vw, 1.1rem);
+      max-width: 420px; text-align: center; line-height: 1.5;
+      margin-bottom: 2rem; padding: 0 1rem;
+    }
+    #startBtn {
+      background: linear-gradient(135deg, #ff6b9d, #ffd700);
+      border: none; border-radius: 50px; padding: 1rem 3rem;
+      font-size: clamp(1rem, 2.5vw, 1.3rem); font-weight: 700;
+      color: #0f0a0f; cursor: pointer;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      box-shadow: 0 0 40px rgba(255,107,157,0.25);
+      letter-spacing: 0.03em;
+    }
+    #startBtn:hover { transform: scale(1.06); box-shadow: 0 0 60px rgba(255,107,157,0.4); }
+    #startBtn:active { transform: scale(0.96); }
+
+    #info {
+      position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%);
+      z-index: 50; color: rgba(255,255,255,0.12); font-size: 0.7rem;
+      letter-spacing: 0.05em; pointer-events: none; text-align: center;
+      transition: opacity 2s ease; line-height: 1.4;
+    }
+
+    #clearBtn {
+      position: fixed; top: 1rem; right: 1rem; z-index: 50;
+      background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 50%; width: 44px; height: 44px;
+      color: rgba(255,255,255,0.3); font-size: 1.2rem; cursor: pointer;
+      transition: all 0.25s ease; display: flex; align-items: center; justify-content: center;
+      backdrop-filter: blur(8px); opacity: 0; pointer-events: none;
+    }
+    #clearBtn:hover { background: rgba(255,107,157,0.15); color: #ff6b9d; border-color: #ff6b9d44; }
+    #clearBtn.visible { opacity: 1; pointer-events: auto; }
+
+    #backBtn {
+      position: fixed; top: 1rem; left: 1rem; z-index: 50;
+      background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px; padding: 0.5rem 1rem;
+      color: rgba(255,255,255,0.4); font-size: 0.85rem; cursor: pointer;
+      text-decoration: none; backdrop-filter: blur(8px);
+      transition: all 0.25s ease; font-family: inherit;
+    }
+    #backBtn:hover { background: rgba(255,255,255,0.1); color: #fff; }
+
+    #levelMeter {
+      position: fixed; bottom: 4rem; left: 50%; transform: translateX(-50%);
+      z-index: 50; width: 200px; height: 3px;
+      background: rgba(255,255,255,0.04); border-radius: 4px; overflow: hidden;
+      opacity: 0; transition: opacity 1s ease;
+    }
+    #levelMeter.visible { opacity: 1; }
+    #levelMeterFill {
+      height: 100%; width: 0%; border-radius: 4px;
+      background: linear-gradient(90deg, #41e0b0, #ffd700, #ff6b9d);
+      transition: width 0.04s linear;
+    }
+
+    #strokeInfo {
+      position: fixed; bottom: 5.5rem; left: 50%; transform: translateX(-50%);
+      z-index: 50; color: rgba(255,255,255,0.08); font-size: 0.65rem;
+      letter-spacing: 0.08em; pointer-events: none; text-transform: uppercase;
+      transition: opacity 1s ease; opacity: 0;
+    }
+    #strokeInfo.visible { opacity: 1; }
+
+  </style>
+</head>
+<body>
+  <canvas id="canvas"></canvas>
+
+  <div id="startOverlay">
+    <h1>Guitar Paint</h1>
+    <p>Conectá tu guitarra, toca y convertí el sonido en pintura. <br/>Cada nota crea trazos únicos. Mientras más fuerte toques, más pintura explota.</p>
+    <button id="startBtn">🎸 Iniciar Experiencia</button>
+  </div>
+
+  <a id="backBtn" href="zoom.html">← volver</a>
+  <button id="clearBtn" title="Limpiar lienzo">✕</button>
+  <div id="levelMeter"><div id="levelMeterFill"></div></div>
+  <div id="strokeInfo">brush</div>
+  <div id="info">silencio pinta tenue // sonido suave = spray // rasgueo fuerte = explosión de color</div>
+
+  <script>
+    (function () {
+      'use strict';
+
+      const canvas = document.getElementById('canvas');
+      const ctx = canvas.getContext('2d');
+      const startOverlay = document.getElementById('startOverlay');
+      const startBtn = document.getElementById('startBtn');
+      const clearBtn = document.getElementById('clearBtn');
+      const levelMeter = document.getElementById('levelMeter');
+      const levelFill = document.getElementById('levelMeterFill');
+      const strokeInfo = document.getElementById('strokeInfo');
+
+      let W, H;
+      function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+      window.addEventListener('resize', resize);
+      resize();
+
+      // --- Paint layers ---
+      let permCanvas, permCtx;
+      let audioCtx, analyser, dataArray;
+      let isActive = false;
+      let frameId = null;
+
+      // Audio state
+      let smoothVol = 0;
+      let prevVol = 0;
+      let sustainedFrames = 0;
+      let lastStrum = 0;
+
+      // Brush wander — paint moves smoothly across canvas
+      let bx = -1, by = -1;
+      let bvx = 0, bvy = 0;
+      let lastBX = -1, lastBY = -1;
+
+      // FX
+      let fxParticles = [];
+      let drips = [];
+      let ripples = [];
+
+      // --- Color ---
+      const PALETTE = [
+        { h: 340, s: 100, l: 65 },  // pink
+        { h: 45,  s: 100, l: 50 },  // gold
+        { h: 165, s: 70,  l: 57 },  // teal
+        { h: 280, s: 60,  l: 60 },  // purple
+        { h: 20,  s: 90,  l: 60 },  // coral
+        { h: 195, s: 80,  l: 55 },  // sky
+      ];
+
+      function freqColor(b, n) {
+        const t = n > 0 ? b / n : 0;
+        const i = Math.floor(t * (PALETTE.length - 1));
+        const ni = Math.min(i + 1, PALETTE.length - 1);
+        const f = (t * (PALETTE.length - 1)) - i;
+        return {
+          h: PALETTE[i].h + (PALETTE[ni].h - PALETTE[i].h) * f,
+          s: PALETTE[i].s + (PALETTE[ni].s - PALETTE[i].s) * f,
+          l: PALETTE[i].l + (PALETTE[ni].l - PALETTE[i].l) * f,
+        };
+      }
+
+      function cStr(c, a) { return `hsla(${c.h},${c.s}%,${c.l}%,${a})`; }
+      function randColor() { return PALETTE[Math.floor(Math.random() * PALETTE.length)]; }
+
+      function initPermCanvas() {
+        permCanvas = document.createElement('canvas');
+        permCanvas.width = W; permCanvas.height = H;
+        permCtx = permCanvas.getContext('2d');
+        permCtx.fillStyle = '#0f0a0f';
+        permCtx.fillRect(0, 0, W, H);
+      }
+      initPermCanvas();
+
+      function clearAll() {
+        permCtx.fillStyle = '#0f0a0f';
+        permCtx.fillRect(0, 0, W, H);
+        fxParticles = []; drips = []; ripples = [];
+        lastBX = lastBY = -1;
+      }
+      clearBtn.addEventListener('click', clearAll);
+
+      // --- STROKES ---
+
+      // Sweep: curved brush line between wander positions
+      function strokeSweep(x, y, vol, band, bands) {
+        const c = freqColor(band, bands);
+        const w = 2 + vol * 28;
+        const a = 0.35 + vol * 0.5;
+
+        if (lastBX >= 0 && lastBY >= 0) {
+          const dist = Math.hypot(x - lastBX, y - lastBY);
+          if (dist > 1) {
+            permCtx.beginPath();
+            permCtx.moveTo(lastBX, lastBY);
+            const cpx = (lastBX + x) / 2 + (Math.random() - 0.5) * dist * 0.5;
+            const cpy = (lastBY + y) / 2 + (Math.random() - 0.5) * dist * 0.5;
+            permCtx.quadraticCurveTo(cpx, cpy, x, y);
+            permCtx.strokeStyle = cStr(c, a);
+            permCtx.lineWidth = w;
+            permCtx.lineCap = 'round';
+            permCtx.stroke();
+
+            permCtx.beginPath();
+            permCtx.moveTo(lastBX, lastBY);
+            permCtx.quadraticCurveTo(cpx, cpy, x, y);
+            permCtx.strokeStyle = cStr(c, a * 0.12);
+            permCtx.lineWidth = w * 3;
+            permCtx.stroke();
+
+            // extra spark dots along stroke
+            if (vol > 0.2 && Math.random() < 0.3) {
+              const t = Math.random();
+              const px = (1 - t) * (1 - t) * lastBX + 2 * (1 - t) * t * cpx + t * t * x;
+              const py = (1 - t) * (1 - t) * lastBY + 2 * (1 - t) * t * cpy + t * t * y;
+              permCtx.beginPath();
+              permCtx.arc(px, py, 1 + Math.random() * 3, 0, Math.PI * 2);
+              permCtx.fillStyle = cStr(c, 0.15 + Math.random() * 0.2);
+              permCtx.fill();
+            }
+          }
+        } else {
+          permCtx.beginPath();
+          permCtx.arc(x, y, w * 0.4, 0, Math.PI * 2);
+          permCtx.fillStyle = cStr(c, a);
+          permCtx.fill();
+        }
+        lastBX = x; lastBY = y;
+      }
+
+      // Splatter: explosion
+      function strokeSplat(x, y, vol) {
+        const c = randColor();
+        const r = 10 + vol * 70;
+        const r2 = r * (0.3 + Math.random() * 0.7);
+
+        const grad = permCtx.createRadialGradient(x, y, 0, x, y, r2);
+        grad.addColorStop(0, cStr(c, 0.8 + vol * 0.15));
+        grad.addColorStop(0.5, cStr(c, 0.4 + vol * 0.2));
+        grad.addColorStop(1, cStr(c, 0));
+        permCtx.beginPath();
+        permCtx.arc(x, y, r2, 0, Math.PI * 2);
+        permCtx.fillStyle = grad;
+        permCtx.fill();
+
+        const drops = Math.floor(8 + vol * 30);
+        for (let i = 0; i < drops; i++) {
+          const a = Math.random() * Math.PI * 2;
+          const d = r2 * (0.2 + Math.random() * 1.4);
+          permCtx.beginPath();
+          permCtx.arc(x + Math.cos(a) * d, y + Math.sin(a) * d, 1 + Math.random() * r2 * 0.3, 0, Math.PI * 2);
+          const c2 = randColor();
+          permCtx.fillStyle = cStr(c2, 0.15 + Math.random() * 0.35);
+          permCtx.fill();
+        }
+
+        const pc = Math.floor(8 + vol * 35);
+        for (let i = 0; i < pc; i++) {
+          const a = Math.random() * Math.PI * 2;
+          const sp = 1 + vol * 12;
+          fxParticles.push({
+            x, y,
+            vx: Math.cos(a) * sp * (0.3 + Math.random() * 0.7),
+            vy: Math.sin(a) * sp * (0.3 + Math.random() * 0.7),
+            size: 2 + Math.random() * vol * 18,
+            life: 1, decay: 0.008 + Math.random() * 0.02, color: randColor(),
+          });
+        }
+
+        ripples.push({ x, y, radius: 5, maxRadius: 25 + vol * 90, life: 1, color: c });
+      }
+
+      // Spray: fine mist
+      function strokeSpray(x, y, vol) {
+        const c = freqColor(Math.floor(Math.random() * 3), 3);
+        const count = Math.floor(4 + vol * 20);
+        for (let i = 0; i < count; i++) {
+          const a = Math.random() * Math.PI * 2;
+          const d = Math.random() * (6 + vol * 50);
+          permCtx.beginPath();
+          permCtx.arc(x + Math.cos(a) * d, y + Math.sin(a) * d, 0.5 + Math.random() * (1 + vol * 5), 0, Math.PI * 2);
+          permCtx.fillStyle = cStr(c, 0.06 + Math.random() * 0.18);
+          permCtx.fill();
+        }
+      }
+
+      function addDrip(x, vol) {
+        const c = randColor();
+        drips.push({
+          x: x + (Math.random() - 0.5) * 30, y: -8,
+          speed: 0.5 + vol * 5 + Math.random() * 2,
+          size: 1 + vol * 8 + Math.random() * 4,
+          wobble: Math.random() * 0.6, color: c, life: 1,
+        });
+      }
+
+      // --- Audio ---
+      async function startAudio() {
+        try {
+          const stream = await navigator.mediaDevices.getUserMedia({
+            audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: false }
+          });
+          audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+          const source = audioCtx.createMediaStreamSource(stream);
+          analyser = audioCtx.createAnalyser();
+          analyser.fftSize = 256;
+          source.connect(analyser);
+          dataArray = new Uint8Array(analyser.frequencyBinCount);
+          isActive = true;
+          startOverlay.classList.add('hidden');
+          clearBtn.classList.add('visible');
+          levelMeter.classList.add('visible');
+          strokeInfo.classList.add('visible');
+
+          // init brush at center
+          bx = W / 2; by = H / 2;
+          bvx = (Math.random() - 0.5) * 2;
+          bvy = (Math.random() - 0.5) * 2;
+
+          loop();
+        } catch (e) {
+          alert('Necesitamos acceso al micrófono para que Guitar Paint funcione.');
+          console.error(e);
+        }
+      }
+
+      startBtn.addEventListener('click', startAudio);
+
+      // --- Loop ---
+      function loop() {
+        if (!isActive) return;
+        frameId = requestAnimationFrame(loop);
+        analyser.getByteFrequencyData(dataArray);
+
+        // --- Audio analysis (supercharged) ---
+        const BANDS = 5;
+        const binSize = Math.floor(dataArray.length / BANDS);
+        const bandVols = [];
+        let rawSum = 0;
+
+        for (let b = 0; b < BANDS; b++) {
+          let s = 0;
+          const start = b * binSize;
+          const end = b === BANDS - 1 ? dataArray.length : start + binSize;
+          for (let i = start; i < end; i++) s += dataArray[i];
+          const avg = s / (end - start);
+          bandVols.push(Math.min(avg / 50, 1));
+          rawSum += avg;
+        }
+
+        // More sensitive normalization
+        const overall = Math.min(rawSum / dataArray.length / 50, 1);
+        const onset = overall - prevVol;
+        const isOnset = onset > 0.06 && overall > 0.04;
+        prevVol = overall;
+
+        smoothVol += (overall - smoothVol) * 0.3;
+        levelFill.style.width = Math.min(smoothVol * 100, 100) + '%';
+
+        if (overall > 0.04) sustainedFrames++; else sustainedFrames = 0;
+        const isSustained = sustainedFrames > 4;
+
+        // --- Stroke decision ---
+        let sType = 'idle';
+        let sVol = 0;
+        let aBand = 2;
+        const now = Date.now();
+
+        if (isOnset && overall > 0.08 && now - lastStrum > 100) {
+          sType = 'splat';
+          const raw = Math.min((overall - 0.05) / 0.6, 1);
+          sVol = raw * raw; // square to emphasize loudness
+          lastStrum = now;
+          let maxV = 0;
+          for (let b = 0; b < BANDS; b++) {
+            if (bandVols[b] > maxV) { maxV = bandVols[b]; aBand = b; }
+          }
+        } else if (isSustained && overall > 0.04) {
+          sType = 'sweep';
+          sVol = Math.min(overall / 0.5, 1);
+          let maxV = 0;
+          for (let b = 0; b < BANDS; b++) {
+            if (bandVols[b] > maxV) { maxV = bandVols[b]; aBand = b; }
+          }
+        } else if (overall > 0.02) {
+          sType = 'spray';
+          sVol = overall * 2;
+          aBand = Math.floor(Math.random() * BANDS);
+        }
+
+        // --- Brush wander — moves around canvas naturally ---
+        if (sType !== 'idle' && overall > 0.02) {
+          // random walk with drift
+          const speed = 2 + sVol * 12;
+          bvx += (Math.random() - 0.5) * speed * 0.6;
+          bvy += (Math.random() - 0.5) * speed * 0.6;
+          const maxSpeed = 1 + sVol * 8;
+          const sp = Math.hypot(bvx, bvy);
+          if (sp > maxSpeed) { bvx = (bvx / sp) * maxSpeed; bvy = (bvy / sp) * maxSpeed; }
+          bx += bvx; by += bvy;
+          // bounce off edges
+          if (bx < 10) { bx = 10; bvx = Math.abs(bvx); }
+          if (bx > W - 10) { bx = W - 10; bvx = -Math.abs(bvx); }
+          if (by < 10) { by = 10; bvy = Math.abs(bvy); }
+          if (by > H - 10) { by = H - 10; bvy = -Math.abs(bvy); }
+        } else {
+          lastBX = lastBY = -1;
+        }
+
+        // --- Execute ---
+        if (bx >= 0 && by >= 0 && overall > 0.01) {
+          switch (sType) {
+            case 'splat':
+              strokeSplat(bx, by, sVol);
+              for (let i = 0; i < Math.floor(3 + sVol * 12); i++) addDrip(bx + (Math.random() - 0.5) * 50, sVol);
+              strokeInfo.textContent = '⚡ splatter';
+              break;
+            case 'sweep':
+              strokeSweep(bx, by, sVol, aBand, BANDS);
+              if (sVol > 0.3 && Math.random() < sVol * 0.1) addDrip(bx, sVol * 0.6);
+              strokeInfo.textContent = '🎨 brush';
+              break;
+            case 'spray':
+              strokeSpray(bx, by, sVol);
+              strokeInfo.textContent = '⁝ spray';
+              break;
+          }
+        }
+
+        // Idle ambient
+        if (overall < 0.03 && Math.random() < 0.04) {
+          const c = freqColor(Math.floor(Math.random() * BANDS), BANDS);
+          permCtx.beginPath();
+          permCtx.arc(Math.random() * W, Math.random() * H, 0.5 + Math.random() * 1.5, 0, Math.PI * 2);
+          permCtx.fillStyle = cStr(c, 0.03 + Math.random() * 0.04);
+          permCtx.fill();
+        }
+
+        // --- Update FX ---
+        for (let i = fxParticles.length - 1; i >= 0; i--) {
+          const p = fxParticles[i];
+          p.x += p.vx; p.y += p.vy;
+          p.vx *= 0.95; p.vy *= 0.95;
+          p.life -= p.decay;
+          if (p.life <= 0 || p.x < -60 || p.x > W + 60 || p.y < -60 || p.y > H + 60) fxParticles.splice(i, 1);
+        }
+        for (let i = drips.length - 1; i >= 0; i--) {
+          const d = drips[i];
+          d.y += d.speed; d.x += Math.sin(d.y * 0.02) * d.wobble;
+          d.life -= 0.003;
+          if (d.y > H + 20 || d.life <= 0) { drips.splice(i, 1); continue; }
+          permCtx.beginPath();
+          permCtx.arc(d.x, d.y, d.size * d.life, 0, Math.PI * 2);
+          permCtx.fillStyle = cStr(d.color, 0.1 + d.life * 0.2);
+          permCtx.fill();
+        }
+        for (let i = ripples.length - 1; i >= 0; i--) {
+          const r = ripples[i];
+          r.radius += (r.maxRadius - r.radius) * 0.06;
+          r.life -= 0.02;
+          if (r.life <= 0) ripples.splice(i, 1);
+        }
+
+        // --- Render ---
+        ctx.clearRect(0, 0, W, H);
+        const glow = smoothVol * 0.06;
+        if (glow > 0.003) {
+          const g = ctx.createRadialGradient(W / 2, H / 2, 0, W / 2, H / 2, H * 0.5);
+          g.addColorStop(0, `rgba(255,107,157,${glow * 0.5})`);
+          g.addColorStop(0.4, `rgba(255,215,0,${glow * 0.15})`);
+          g.addColorStop(1, 'rgba(15,10,15,0)');
+          ctx.fillStyle = g;
+          ctx.fillRect(0, 0, W, H);
+        } else {
+          ctx.fillStyle = '#0f0a0f';
+          ctx.fillRect(0, 0, W, H);
+        }
+
+        ctx.drawImage(permCanvas, 0, 0);
+
+        for (const d of drips) {
+          if (d.life <= 0) continue;
+          ctx.beginPath();
+          ctx.arc(d.x, d.y, d.size * d.life * 1.5, 0, Math.PI * 2);
+          ctx.fillStyle = cStr(d.color, 0.03 + d.life * 0.05);
+          ctx.fill();
+        }
+        for (const p of fxParticles) {
+          if (p.life <= 0) continue;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.size * p.life, 0, Math.PI * 2);
+          ctx.fillStyle = cStr(p.color, p.life * 0.6);
+          ctx.fill();
+        }
+        for (const r of ripples) {
+          if (r.life <= 0) continue;
+          ctx.beginPath();
+          ctx.arc(r.x, r.y, r.radius, 0, Math.PI * 2);
+          ctx.strokeStyle = cStr(r.color, r.life * 0.25);
+          ctx.lineWidth = 1.5;
+          ctx.stroke();
+        }
+      }
+
+      window.addEventListener('resize', () => {
+        const t = permCanvas;
+        resize();
+        permCanvas.width = W; permCanvas.height = H;
+        permCtx.drawImage(t, 0, 0);
+        if (bx < 0) { bx = W / 2; by = H / 2; }
+      });
+    })();
+  </script>
+</body>
+</html>

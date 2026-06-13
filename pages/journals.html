@@ -3,11 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Journals</title>
+  <title>ROCKSHOW V4 — Journals</title>
   <link rel="stylesheet" href="../style/journals.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Righteous&family=Staatliches&family=Spectral:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
+  <div class="scanline-overlay"></div>
+  <div class="grid-overlay"></div>
   <div class="stars"></div>
   <div class="nebula"></div>
 
@@ -44,7 +46,7 @@
   </section>
 
   <footer>
-    <p>forever</p>
+    <p id="frase-footer"></p>
   </footer>
   <!-- Barra de navegación inferior (móvil) -->
   <nav class="journals-tabbar" aria-label="Navegación principal">
@@ -67,6 +69,17 @@
     </a>
   </nav>
   <script>
+    const frases = [
+      "recuerdos a color // vibra eterna",
+      "cada journal es un vinilo",
+      "palabras pintadas // eco dorado",
+      "historias retro // memorias vintage",
+      "smile // write // remember",
+      "tinta rosa sobre papel grunge"
+    ];
+    document.getElementById("frase-footer").textContent =
+      frases[Math.floor(Math.random() * frases.length)];
+
     (function(){
       const tabs=document.querySelectorAll('.journals-tabbar .tabbar-item');
       const indicator=document.querySelector('.journals-tabbar .tabbar-indicator');

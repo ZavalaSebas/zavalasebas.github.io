@@ -30,24 +30,18 @@ function hideLoader() {
 }
 
 const frases = [
-  // Mensajes de sistema falsos
-  "cargando sueño...",
-  "renderizando cansancio...",
-  "sintetizando nostalgia...",
-
-  // Glitch / poesía digital
-  "1nicio.0",
-  "senal fuera de rango",
-  "bit roto // eco lento",
-
-  // Coordenadas y tiempos
-  "lat: 47.6519 / long: -122.3502",
-  "ultimo ruido: 03:17AM",
-
-  // Rockshow status
-  "rockshow // reiniciando...",
-  "frecuencia tenue",
-  "version beta del silencio"
+  "colores infinitos // buena vibra",
+  "todo suena mejor a color",
+  "retro // futuro // ahora",
+  "vintage revolution // V4",
+  "smile // peace // rock",
+  "cinta corriendo // señal abierta",
+  "sesion a todo color",
+  "frecuencia dorada // eco rosa",
+  "play // record // repeat",
+  "nueva era // nuevas voces",
+  "sintetizando primavera",
+  "rockshow vibra positiva"
 ];
 
 const footerText = document.getElementById("frase-footer");
@@ -97,7 +91,7 @@ audioControl.addEventListener("click", () => {
     audio.play().then(() => {
       vinyl.classList.remove("paused");
       freqBars.forEach(bar => bar.classList.remove("paused"));
-      if (hint) hint.innerHTML = "🎶 sonando...";
+      if (hint) hint.innerHTML = "🎶 retro vibra...";
       audioActivo = true;
       console.log("Audio activado");
     }).catch((e) => {
@@ -132,16 +126,16 @@ const logo = document.getElementById("logo");
 const mainTitle = document.getElementById("mainTitle");
 
 const glitchMap = {
-  R: ['R', 'Я', '®', '℞', 'r'],
-  O: ['O', '0', 'Θ', 'ø', 'o'],
-  C: ['C', '¢', '⊂', 'c'],
-  K: ['K', 'ʞ', 'κ', 'k'],
-  S: ['S', '$', '§', 's', 'Ƨ'],
-  H: ['H', '#', 'Ħ', 'h'],
-  W: ['W', 'Ш', 'w'],
+  R: ['R', 'Я', '®', '℞', 'r', 'Ʀ'],
+  O: ['O', '0', 'Θ', 'ø', 'o', '⭕'],
+  C: ['C', '¢', '⊂', 'c', 'Č'],
+  K: ['K', 'ʞ', 'κ', 'k', '₭'],
+  S: ['S', '$', '§', 's', 'Ƨ', 'Š'],
+  H: ['H', '#', 'Ħ', 'h', '♯'],
+  W: ['W', 'Ш', 'w', 'ω'],
 };
 
-const originalText = "ROCKSHOW V3";
+const originalText = "ROCKSHOW V4";
 
 function glitchText(text) {
   return text.split('').map(char => {
@@ -182,7 +176,7 @@ window.addEventListener("load", () => {
 
 // Sistema de partículas flotantes
 const particleContainer = document.getElementById("particleContainer");
-const particleSymbols = ['.', '·', '*', '+', 'o', 'O', '☾', '☁', '☂'];
+const particleSymbols = ['♪', '♫', '★', '☆', '✦', '◆', '☮', '♥', '♦', '◉', '✧', '○'];
 
 function createParticle() {
   const particle = document.createElement('div');
@@ -252,12 +246,12 @@ document.addEventListener('mousemove', (e) => {
 // Efecto hover en cursor
 document.addEventListener('mousedown', () => {
   customCursor.style.transform = 'scale(1.5)';
-  customCursor.style.background = 'rgba(154, 167, 178, 0.5)';
+  customCursor.style.background = 'rgba(255, 215, 0, 0.4)';
 });
 
 document.addEventListener('mouseup', () => {
   customCursor.style.transform = 'scale(1)';
-  customCursor.style.background = 'rgba(154, 167, 178, 0.2)';
+  customCursor.style.background = 'rgba(255, 215, 0, 0.15)';
 });
 
 // Konami Code Easter Egg
@@ -313,7 +307,7 @@ function createSpecialParticle() {
   particle.textContent = ['🚀', '💥', '⭐', '🌟', '✨', '🎯'][Math.floor(Math.random() * 6)];
   particle.style.left = Math.random() * 100 + '%';
   particle.style.fontSize = (1.5 + Math.random() * 1) + 'rem';
-  particle.style.color = ['#ff0080', '#ff8000', '#8000ff', '#0080ff'][Math.floor(Math.random() * 4)];
+  particle.style.color = ['#ff6b9d', '#ffd700', '#41e0b0', '#ff8a5c'][Math.floor(Math.random() * 4)];
   particle.style.animationDuration = '3s';
   
   particleContainer.appendChild(particle);
@@ -432,7 +426,6 @@ if (mainTitleEl) mainTitleEl.classList.add('breathing-glow');
 // --- Tilt 3D en cards ---
 const cards = document.querySelectorAll('.card');
 cards.forEach(card => {
-  card.classList.add('neon');
   const damp = 22;
   let rafId;
   function reset() { card.style.transform=''; card.style.setProperty('--rx','0'); card.style.setProperty('--ry','0'); }

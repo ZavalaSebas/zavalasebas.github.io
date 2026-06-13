@@ -1,9 +1,11 @@
 const frases = [
-  ":)",
-  "Que carajos sigo haciendo aqui?",
-  "A veces la extraño",
-  "Cuanto tiempo nos queda?",
-  "Sueño despierto a tu lado"
+  "colores infinitos // amor retro",
+  "tu sonrisa en vinilo",
+  "corazon grunge // alma vintage",
+  "nuestra cancion suena a color",
+  "luz dorada // eco rosa",
+  "smile // love // rock",
+  "todo brilla cuando estas"
 ];
 
 document.getElementById("frase-footer").textContent =
@@ -22,7 +24,6 @@ btn.addEventListener("click", () => {
   }
 });
 
-// --- Navegación inferior: activo + indicador ---
 document.addEventListener('DOMContentLoaded', () => {
   const tabs = document.querySelectorAll('.mobile-tabbar .tabbar-item');
   const indicator = document.querySelector('.tabbar-indicator');
@@ -33,7 +34,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const file = href.split('/').pop().toLowerCase();
     if (file === currentFile) tab.classList.add('active');
 
-    // Ripple + háptico
     tab.addEventListener('pointerdown', (e) => ripple(e, tab));
     const vibrateHandler = () => haptic(12);
     tab.addEventListener('click', vibrateHandler);
@@ -53,10 +53,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   tabs.forEach(t => t.addEventListener('click', e => moveIndicator(e.currentTarget)));
 
-  // Tilt 3D en cards + neon
   const cards = document.querySelectorAll('.card');
   cards.forEach(card => {
-    card.classList.add('neon');
     const damp = 22; let rafId;
     function reset() { card.style.transform=''; }
     card.addEventListener('pointermove', e => {
@@ -73,13 +71,11 @@ document.addEventListener('DOMContentLoaded', () => {
     card.addEventListener('pointerdown', () => card.style.transform += ' scale(0.98)');
     card.addEventListener('pointerup', () => card.style.transform = card.style.transform.replace(' scale(0.98)',''));
 
-    // Ripple en cards
     card.addEventListener('pointerdown', (e) => ripple(e, card));
     card.addEventListener('click', () => haptic(10));
   });
 });
 
-// Ripple helper
 function ripple(e, el) {
   const rect = el.getBoundingClientRect();
   const span = document.createElement('span');
@@ -92,7 +88,6 @@ function ripple(e, el) {
   setTimeout(() => span.remove(), 650);
 }
 
-// Vibración segura
 function haptic(ms = 10) {
   try {
     const canVibrate = 'vibrate' in navigator;
@@ -102,7 +97,6 @@ function haptic(ms = 10) {
   } catch (_) {}
 }
 
-// Evitar zoom de doble toque
 let lastTouchTime = 0;
 document.addEventListener('touchend', (e) => {
   const now = Date.now();

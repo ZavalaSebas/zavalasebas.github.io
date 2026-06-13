@@ -1,19 +1,19 @@
 const pensamientos = [
-  "hay cosas que solo se entienden en silencio.",
-  "no todo lo que se va, se pierde.",
-  "hay fragmentos de mí en lo que no digo.",
-  "el eco no es más que un intento de no desaparecer.",
-  "los recuerdos flotan como papel en el viento.",
-  "pensé en escribirte, pero me convertí en tinta."
+  "recuerdos a color // vibra eterna",
+  "cada pagina tiene su propio tono",
+  "palabras que brillan en la memoria",
+  "el eco rosa de lo que fuimos",
+  "historias vintage // momentos dorados",
+  "la tinta nunca se borra del alma"
 ];
 
 const frasesCartas = [
-  "te guardé en un rincón que no existe.",
-  "nunca fue olvido, fue cuidado.",
-  "hay palabras que solo el viento entiende.",
-  "esto también es una forma de quedarme.",
-  "la distancia no borra lo sentido.",
-  "cada carta es una despedida que no se dio."
+  "te guardo en un vinilo que nunca termina",
+  "cada palabra es un color nuevo",
+  "hay recuerdos que suenan a distortion",
+  "esto tambien es una forma de rockear",
+  "la distancia se pinta de neón",
+  "sonrisa grunge // corazon retro"
 ];
 
 // 📖 Diario base

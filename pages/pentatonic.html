@@ -3,11 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>pentatonic</title>
+  <title>ROCKSHOW V4 — pentatonic</title>
   <link rel="stylesheet" href="../style/pentatonic.css"/>
-  <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Righteous&family=Staatliches&family=Spectral:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body class="pentatonic-page">
+  <div class="scanline-overlay"></div>
+  <div class="grid-overlay"></div>
   <div class="glow-background"></div>
   <div class="floating-notes">
     <span class="note">🎵</span>
@@ -42,7 +44,7 @@
   </section>
 
   <footer>
-    <p>pentatonica como la escala</p>
+    <p id="frase-footer"></p>
   </footer>
 
   <!-- Barra de navegación inferior (móvil) -->
@@ -67,6 +69,17 @@
   </nav>
 
   <script>
+    const frases = [
+      "pentatonica como la escala",
+      "cada nota es un color",
+      "vibra dorada // eco grunge",
+      "musica retro // alma vintage",
+      "play // rock // repeat",
+      "sonidos que pintan el aire"
+    ];
+    document.getElementById("frase-footer").textContent =
+      frases[Math.floor(Math.random() * frases.length)];
+
     (function(){
       const tabs=document.querySelectorAll('.pentatonic-tabbar .tabbar-item');
       const indicator=document.querySelector('.pentatonic-tabbar .tabbar-indicator');

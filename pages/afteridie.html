@@ -5,9 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>After I Die</title>
   <link rel="stylesheet" href="../style/afteridie.css" />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Space+Grotesk:wght@500;600&family=Kalam:wght@300;400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style/password-gate.css" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Space+Grotesk:wght@500;600&family=Kalam:wght@300;400;700&family=Righteous&family=Staatliches&display=swap" rel="stylesheet">
 </head>
 <body class="after-page">
+  <div class="password-gate" id="passwordGate">
+    <div class="password-gate__inner">
+      <span class="password-gate__smiley">☺</span>
+      <h2 class="password-gate__title">ACCESS CODE</h2>
+      <p class="password-gate__sub">enter the password to continue</p>
+      <div class="password-gate__input-wrap">
+        <input class="password-gate__input" id="passwordInput" type="password" placeholder="••••••••" autocomplete="off">
+        <button class="password-gate__btn" id="passwordBtn">enter</button>
+      </div>
+      <p class="password-gate__error" id="passwordError"></p>
+      <p class="password-gate__hint" id="passwordHint">?</p>
+    </div>
+  </div>
   <div class="sky-dust" aria-hidden="true"></div>
   <div class="aurora" aria-hidden="true"></div>
 
@@ -215,6 +229,7 @@
     <source src="../assets/audio/die.mp3" type="audio/mpeg">
   </audio>
 
+  <script src="../js/password-gate.js"></script>
   <script src="../js/afteridie.js"></script>
 </body>
 </html>

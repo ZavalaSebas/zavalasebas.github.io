@@ -112,6 +112,12 @@ header.topbar.glass {
 .card span {
   margin-top: 0.5rem;
   font-size: 1rem;
+  background: rgba(10,10,35,0.7);
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.3);
+  font-weight: 700;
+  color: #fff;
 }
 
 .card:hover {
