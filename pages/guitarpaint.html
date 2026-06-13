@@ -108,7 +108,7 @@
   <button id="clearBtn" title="Limpiar lienzo">✕</button>
   <div id="levelMeter"><div id="levelMeterFill"></div></div>
   <div id="strokeInfo">brush</div>
-  <div id="info">silencio pinta tenue // sonido suave = spray // rasgueo fuerte = explosión de color</div>
+  <div id="info">graves = trazos fluidos // agudos = spray // rasgueo fuerte = explosión</div>
 
   <script>
     (function () {
@@ -137,8 +137,8 @@
       // Audio state
       let smoothVol = 0;
       let prevVol = 0;
-      let sustainedFrames = 0;
-      let lastStrum = 0;
+      let lastStroke = 0;
+      let brushCooldown = 0;
 
       // Brush wander — paint moves smoothly across canvas
       let bx = -1, by = -1;
@@ -194,42 +194,24 @@
 
       // --- STROKES ---
 
-      // Sweep: curved brush line between wander positions
-      function strokeSweep(x, y, vol, band, bands) {
+      // Brush: clean curved line (like original pink brush)
+      function strokeBrush(x, y, vol, band, bands) {
         const c = freqColor(band, bands);
-        const w = 2 + vol * 28;
-        const a = 0.35 + vol * 0.5;
+        const w = 2 + vol * 10;
+        const a = 0.5 + vol * 0.3;
 
         if (lastBX >= 0 && lastBY >= 0) {
           const dist = Math.hypot(x - lastBX, y - lastBY);
-          if (dist > 1) {
+          if (dist > 2) {
             permCtx.beginPath();
             permCtx.moveTo(lastBX, lastBY);
-            const cpx = (lastBX + x) / 2 + (Math.random() - 0.5) * dist * 0.5;
-            const cpy = (lastBY + y) / 2 + (Math.random() - 0.5) * dist * 0.5;
+            const cpx = (lastBX + x) / 2 + (Math.random() - 0.5) * dist * 0.4;
+            const cpy = (lastBY + y) / 2 + (Math.random() - 0.5) * dist * 0.4;
             permCtx.quadraticCurveTo(cpx, cpy, x, y);
             permCtx.strokeStyle = cStr(c, a);
             permCtx.lineWidth = w;
             permCtx.lineCap = 'round';
             permCtx.stroke();
-
-            permCtx.beginPath();
-            permCtx.moveTo(lastBX, lastBY);
-            permCtx.quadraticCurveTo(cpx, cpy, x, y);
-            permCtx.strokeStyle = cStr(c, a * 0.12);
-            permCtx.lineWidth = w * 3;
-            permCtx.stroke();
-
-            // extra spark dots along stroke
-            if (vol > 0.2 && Math.random() < 0.3) {
-              const t = Math.random();
-              const px = (1 - t) * (1 - t) * lastBX + 2 * (1 - t) * t * cpx + t * t * x;
-              const py = (1 - t) * (1 - t) * lastBY + 2 * (1 - t) * t * cpy + t * t * y;
-              permCtx.beginPath();
-              permCtx.arc(px, py, 1 + Math.random() * 3, 0, Math.PI * 2);
-              permCtx.fillStyle = cStr(c, 0.15 + Math.random() * 0.2);
-              permCtx.fill();
-            }
           }
         } else {
           permCtx.beginPath();
@@ -240,69 +222,80 @@
         lastBX = x; lastBY = y;
       }
 
-      // Splatter: explosion
+      // Stipple: soft dot scattering (puntillismo)
+      function strokeStipple(x, y, vol) {
+        const c = freqColor(Math.floor(Math.random() * 3), 3);
+        const count = Math.floor(4 + vol * 12);
+        for (let i = 0; i < count; i++) {
+          const a = Math.random() * Math.PI * 2;
+          const d = Math.random() * (3 + vol * 25);
+          permCtx.beginPath();
+          permCtx.arc(x + Math.cos(a) * d, y + Math.sin(a) * d, 0.5 + Math.random() * (1 + vol * 3), 0, Math.PI * 2);
+          permCtx.fillStyle = cStr(c, 0.08 + Math.random() * 0.2);
+          permCtx.fill();
+        }
+      }
+
+      // Splatter: small color burst
       function strokeSplat(x, y, vol) {
         const c = randColor();
-        const r = 10 + vol * 70;
-        const r2 = r * (0.3 + Math.random() * 0.7);
+        const r = 8 + vol * 30;
 
-        const grad = permCtx.createRadialGradient(x, y, 0, x, y, r2);
-        grad.addColorStop(0, cStr(c, 0.8 + vol * 0.15));
-        grad.addColorStop(0.5, cStr(c, 0.4 + vol * 0.2));
+        const grad = permCtx.createRadialGradient(x, y, 0, x, y, r);
+        grad.addColorStop(0, cStr(c, 0.7 + vol * 0.2));
+        grad.addColorStop(0.6, cStr(c, 0.3 + vol * 0.1));
         grad.addColorStop(1, cStr(c, 0));
         permCtx.beginPath();
-        permCtx.arc(x, y, r2, 0, Math.PI * 2);
+        permCtx.arc(x, y, r, 0, Math.PI * 2);
         permCtx.fillStyle = grad;
         permCtx.fill();
 
-        const drops = Math.floor(8 + vol * 30);
+        const drops = Math.floor(4 + vol * 12);
         for (let i = 0; i < drops; i++) {
           const a = Math.random() * Math.PI * 2;
-          const d = r2 * (0.2 + Math.random() * 1.4);
+          const d = r * (0.3 + Math.random());
           permCtx.beginPath();
-          permCtx.arc(x + Math.cos(a) * d, y + Math.sin(a) * d, 1 + Math.random() * r2 * 0.3, 0, Math.PI * 2);
-          const c2 = randColor();
-          permCtx.fillStyle = cStr(c2, 0.15 + Math.random() * 0.35);
+          permCtx.arc(x + Math.cos(a) * d, y + Math.sin(a) * d, 1 + Math.random() * 4, 0, Math.PI * 2);
+          permCtx.fillStyle = cStr(randColor(), 0.2 + Math.random() * 0.2);
           permCtx.fill();
         }
 
-        const pc = Math.floor(8 + vol * 35);
+        const pc = Math.floor(4 + vol * 15);
         for (let i = 0; i < pc; i++) {
           const a = Math.random() * Math.PI * 2;
-          const sp = 1 + vol * 12;
+          const sp = 1 + vol * 6;
           fxParticles.push({
             x, y,
             vx: Math.cos(a) * sp * (0.3 + Math.random() * 0.7),
             vy: Math.sin(a) * sp * (0.3 + Math.random() * 0.7),
-            size: 2 + Math.random() * vol * 18,
-            life: 1, decay: 0.008 + Math.random() * 0.02, color: randColor(),
+            size: 1 + Math.random() * vol * 6,
+            life: 1, decay: 0.015 + Math.random() * 0.02, color: randColor(),
           });
         }
 
-        ripples.push({ x, y, radius: 5, maxRadius: 25 + vol * 90, life: 1, color: c });
+        ripples.push({ x, y, radius: 3, maxRadius: 15 + vol * 30, life: 1, color: c });
       }
 
       // Spray: fine mist
       function strokeSpray(x, y, vol) {
         const c = freqColor(Math.floor(Math.random() * 3), 3);
-        const count = Math.floor(4 + vol * 20);
+        const count = Math.floor(3 + vol * 8);
         for (let i = 0; i < count; i++) {
           const a = Math.random() * Math.PI * 2;
-          const d = Math.random() * (6 + vol * 50);
+          const d = Math.random() * (5 + vol * 20);
           permCtx.beginPath();
-          permCtx.arc(x + Math.cos(a) * d, y + Math.sin(a) * d, 0.5 + Math.random() * (1 + vol * 5), 0, Math.PI * 2);
-          permCtx.fillStyle = cStr(c, 0.06 + Math.random() * 0.18);
+          permCtx.arc(x + Math.cos(a) * d, y + Math.sin(a) * d, 0.5 + Math.random() * 2, 0, Math.PI * 2);
+          permCtx.fillStyle = cStr(c, 0.06 + Math.random() * 0.1);
           permCtx.fill();
         }
       }
 
-      function addDrip(x, vol) {
-        const c = randColor();
+      function addDrip(x) {
         drips.push({
-          x: x + (Math.random() - 0.5) * 30, y: -8,
-          speed: 0.5 + vol * 5 + Math.random() * 2,
-          size: 1 + vol * 8 + Math.random() * 4,
-          wobble: Math.random() * 0.6, color: c, life: 1,
+          x: x + (Math.random() - 0.5) * 20, y: -5,
+          speed: 0.5 + Math.random() * 2,
+          size: 1 + Math.random() * 3,
+          wobble: Math.random() * 0.3, color: randColor(), life: 1,
         });
       }
 
@@ -344,73 +337,63 @@
         frameId = requestAnimationFrame(loop);
         analyser.getByteFrequencyData(dataArray);
 
-        // --- Audio analysis (supercharged) ---
-        const BANDS = 5;
-        const binSize = Math.floor(dataArray.length / BANDS);
-        const bandVols = [];
-        let rawSum = 0;
+        // --- Audio analysis ---
+        const totalBins = dataArray.length;
+        const lowEnd = Math.floor(totalBins * 0.2);
+        let lowSum = 0, highSum = 0;
 
-        for (let b = 0; b < BANDS; b++) {
-          let s = 0;
-          const start = b * binSize;
-          const end = b === BANDS - 1 ? dataArray.length : start + binSize;
-          for (let i = start; i < end; i++) s += dataArray[i];
-          const avg = s / (end - start);
-          bandVols.push(Math.min(avg / 50, 1));
-          rawSum += avg;
-        }
+        for (let i = 0; i < lowEnd; i++) lowSum += dataArray[i];
+        for (let i = lowEnd; i < totalBins; i++) highSum += dataArray[i];
 
-        // More sensitive normalization
-        const overall = Math.min(rawSum / dataArray.length / 50, 1);
+        const lowAvg = lowSum / lowEnd;
+        const highAvg = highSum / (totalBins - lowEnd);
+        const overallAvg = (lowSum + highSum) / totalBins;
+
+        const DIV = 100;
+        const low = Math.min(lowAvg / DIV, 1);
+        const high = Math.min(highAvg / DIV, 1);
+        const overall = Math.min(overallAvg / DIV, 1);
+
         const onset = overall - prevVol;
-        const isOnset = onset > 0.06 && overall > 0.04;
         prevVol = overall;
-
-        smoothVol += (overall - smoothVol) * 0.3;
+        smoothVol += (overall - smoothVol) * 0.25;
         levelFill.style.width = Math.min(smoothVol * 100, 100) + '%';
 
-        if (overall > 0.04) sustainedFrames++; else sustainedFrames = 0;
-        const isSustained = sustainedFrames > 4;
-
-        // --- Stroke decision ---
+        // --- Stroke decision with cooldown ---
+        const now = Date.now();
         let sType = 'idle';
         let sVol = 0;
-        let aBand = 2;
-        const now = Date.now();
+        if (brushCooldown > 0) brushCooldown--;
 
-        if (isOnset && overall > 0.08 && now - lastStrum > 100) {
-          sType = 'splat';
-          const raw = Math.min((overall - 0.05) / 0.6, 1);
-          sVol = raw * raw; // square to emphasize loudness
-          lastStrum = now;
-          let maxV = 0;
-          for (let b = 0; b < BANDS; b++) {
-            if (bandVols[b] > maxV) { maxV = bandVols[b]; aBand = b; }
+        const canStroke = now - lastStroke > 400;
+
+        if (overall > 0.18 && canStroke) {
+          const isAttack = onset > 0.12;
+          const lowDominant = low > high * 2.5;
+          const highDominant = high > low * 2.5;
+
+          if (isAttack || overall > 0.4) {
+            sType = 'splat';
+          } else if (lowDominant) {
+            sType = 'brush';
+          } else if (highDominant) {
+            sType = 'spray';
+          } else {
+            sType = 'stipple';
           }
-        } else if (isSustained && overall > 0.04) {
-          sType = 'sweep';
-          sVol = Math.min(overall / 0.5, 1);
-          let maxV = 0;
-          for (let b = 0; b < BANDS; b++) {
-            if (bandVols[b] > maxV) { maxV = bandVols[b]; aBand = b; }
-          }
-        } else if (overall > 0.02) {
-          sType = 'spray';
-          sVol = overall * 2;
-          aBand = Math.floor(Math.random() * BANDS);
+          sVol = Math.min(overall, 1);
+          lastStroke = now;
         }
 
-        // --- Brush wander — moves around canvas naturally ---
-        if (sType !== 'idle' && overall > 0.02) {
-          // random walk with drift
-          const speed = 2 + sVol * 12;
+        // --- Brush wander ---
+        if (sType !== 'idle') {
+          const speed = 5 + sVol * 12;
           bvx += (Math.random() - 0.5) * speed * 0.6;
           bvy += (Math.random() - 0.5) * speed * 0.6;
-          const maxSpeed = 1 + sVol * 8;
+          const maxSp = 3 + sVol * 8;
           const sp = Math.hypot(bvx, bvy);
-          if (sp > maxSpeed) { bvx = (bvx / sp) * maxSpeed; bvy = (bvy / sp) * maxSpeed; }
+          if (sp > maxSp) { bvx = (bvx / sp) * maxSp; bvy = (bvy / sp) * maxSp; }
           bx += bvx; by += bvy;
-          // bounce off edges
           if (bx < 10) { bx = 10; bvx = Math.abs(bvx); }
           if (bx > W - 10) { bx = W - 10; bvx = -Math.abs(bvx); }
           if (by < 10) { by = 10; bvy = Math.abs(bvy); }
@@ -420,17 +403,38 @@
         }
 
         // --- Execute ---
-        if (bx >= 0 && by >= 0 && overall > 0.01) {
+        if (bx >= 0 && by >= 0 && sType !== 'idle') {
           switch (sType) {
             case 'splat':
               strokeSplat(bx, by, sVol);
-              for (let i = 0; i < Math.floor(3 + sVol * 12); i++) addDrip(bx + (Math.random() - 0.5) * 50, sVol);
+              strokeStipple(bx, by, sVol * 0.3);
               strokeInfo.textContent = '⚡ splatter';
               break;
-            case 'sweep':
-              strokeSweep(bx, by, sVol, aBand, BANDS);
-              if (sVol > 0.3 && Math.random() < sVol * 0.1) addDrip(bx, sVol * 0.6);
-              strokeInfo.textContent = '🎨 brush';
+            case 'brush': {
+              // Long flowing line: multiple wander-draw cycles
+              const steps = 4 + Math.floor(sVol * 6);
+              for (let i = 0; i < steps; i++) {
+                if (i > 0) {
+                  const spd = 5 + sVol * 12;
+                  bvx += (Math.random() - 0.5) * spd * 0.6;
+                  bvy += (Math.random() - 0.5) * spd * 0.6;
+                  const mx = 3 + sVol * 8;
+                  const sp = Math.hypot(bvx, bvy);
+                  if (sp > mx) { bvx = (bvx / sp) * mx; bvy = (bvy / sp) * mx; }
+                  bx += bvx; by += bvy;
+                  if (bx < 10) { bx = 10; bvx = Math.abs(bvx); }
+                  if (bx > W - 10) { bx = W - 10; bvx = -Math.abs(bvx); }
+                  if (by < 10) { by = 10; bvy = Math.abs(bvy); }
+                  if (by > H - 10) { by = H - 10; bvy = -Math.abs(bvy); }
+                }
+                strokeBrush(bx, by, sVol * (0.6 + i / steps * 0.4), 0, 5);
+              }
+              strokeInfo.textContent = '〰️ brush';
+              break;
+            }
+            case 'stipple':
+              strokeStipple(bx, by, sVol);
+              strokeInfo.textContent = '• stipple';
               break;
             case 'spray':
               strokeSpray(bx, by, sVol);
@@ -439,13 +443,9 @@
           }
         }
 
-        // Idle ambient
-        if (overall < 0.03 && Math.random() < 0.04) {
-          const c = freqColor(Math.floor(Math.random() * BANDS), BANDS);
-          permCtx.beginPath();
-          permCtx.arc(Math.random() * W, Math.random() * H, 0.5 + Math.random() * 1.5, 0, Math.PI * 2);
-          permCtx.fillStyle = cStr(c, 0.03 + Math.random() * 0.04);
-          permCtx.fill();
+        // drips from top
+        if (sType !== 'idle' && Math.random() < 0.4 + sVol * 0.3) {
+          for (let i = 0; i < Math.floor(1 + sVol * 4); i++) addDrip(10 + Math.random() * (W - 20));
         }
 
         // --- Update FX ---
@@ -475,7 +475,7 @@
 
         // --- Render ---
         ctx.clearRect(0, 0, W, H);
-        const glow = smoothVol * 0.06;
+        const glow = smoothVol * 0.08;
         if (glow > 0.003) {
           const g = ctx.createRadialGradient(W / 2, H / 2, 0, W / 2, H / 2, H * 0.5);
           g.addColorStop(0, `rgba(255,107,157,${glow * 0.5})`);
