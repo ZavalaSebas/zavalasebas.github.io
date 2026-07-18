@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OrbSpoofer — Discord Orb Quest Spoofer | Skip Downloads, Get Orbs</title>
+  <meta name="description" content="OrbSpoofer is a free, open-source Discord Orb Quest spoofer. Complete orb quests without downloading 500GB+ games. Works with Discord's official API. No code injection. No client modification." />
+  <meta name="keywords" content="discord orb quest, orb spoofer, discord quest tool, orbshacker, discord game spoofer, skip game download, discord orbs free" />
+  <meta name="author" content="ZavalaSebas" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://zavalasebas.github.io/orbspoofer/" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://zavalasebas.github.io/orbspoofer/" />
+  <meta property="og:title" content="OrbSpoofer — Discord Orb Quest Spoofer" />
+  <meta property="og:description" content="Complete Discord orb quests without downloading 500GB+ games. Free, open-source, and safe." />
+  <meta property="og:image" content="https://zavalasebas.github.io/orbspoofer/og-image.png" />
+  <meta property="og:site_name" content="OrbSpoofer" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="OrbSpoofer — Discord Orb Quest Spoofer" />
+  <meta name="twitter:description" content="Complete Discord orb quests without downloading 500GB+ games. Free, open-source, and safe." />
+  <meta name="twitter:image" content="https://zavalasebas.github.io/orbspoofer/og-image.png" />
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "OrbSpoofer",
+    "description": "Discord Orb Quest Game Spoofer — complete quests without downloading games",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Windows 10/11",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "author": {
+      "@type": "Person",
+      "name": "ZavalaSebas"
+    }
+  }
+  </script>
+
+  <meta name="theme-color" content="#5865F2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --blurple: #5865F2;
+      --blurple-light: #7289da;
+      --blurple-dark: #4752c4;
+      --green: #57F287;
+      --yellow: #FEE75C;
+      --red: #ED4245;
+      --bg: #0d0f14;
+      --bg-card: #14161d;
+      --bg-card-hover: #1a1d27;
+      --text: #e8e8e8;
+      --text-muted: #8a8e9a;
+      --border: rgba(88, 101, 242, 0.15);
+      --glow: rgba(88, 101, 242, 0.3);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ─── Hero ─── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(ellipse at 50% 50%, rgba(88,101,242,0.08) 0%, transparent 50%);
+      animation: pulse 8s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 0.5; }
+      50% { transform: scale(1.1); opacity: 1; }
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(88,101,242,0.1);
+      border: 1px solid rgba(88,101,242,0.3);
+      border-radius: 100px;
+      padding: 0.5rem 1.2rem;
+      font-size: 0.85rem;
+      color: var(--blurple-light);
+      margin-bottom: 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-badge .dot {
+      width: 8px;
+      height: 8px;
+      background: var(--green);
+      border-radius: 50%;
+      animation: blink 2s infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 7vw, 5rem);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      position: relative;
+      z-index: 1;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 .gradient {
+      background: linear-gradient(135deg, var(--blurple-light), var(--blurple), #a855f7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      font-size: clamp(1rem, 2.5vw, 1.3rem);
+      color: var(--text-muted);
+      max-width: 600px;
+      position: relative;
+      z-index: 1;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.9rem 2rem;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.25s ease;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-primary {
+      background: var(--blurple);
+      color: white;
+      box-shadow: 0 4px 20px rgba(88,101,242,0.3);
+    }
+
+    .btn-primary:hover {
+      background: var(--blurple-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(88,101,242,0.4);
+    }
+
+    .btn-secondary {
+      background: rgba(255,255,255,0.05);
+      color: var(--text);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255,255,255,0.1);
+      border-color: rgba(255,255,255,0.2);
+      transform: translateY(-2px);
+    }
+
+    /* ─── Section ─── */
+    section { padding: 6rem 2rem; }
+    .container { max-width: 1100px; margin: 0 auto; }
+
+    .section-label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--blurple-light);
+      margin-bottom: 0.8rem;
+    }
+
+    .section-title {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+    }
+
+    .section-desc {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin-bottom: 3rem;
+    }
+
+    /* ─── How it works ─── */
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .step {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2rem;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    .step:hover {
+      border-color: var(--blurple);
+      background: var(--bg-card-hover);
+      transform: translateY(-4px);
+      box-shadow: 0 8px 40px rgba(88,101,242,0.1);
+    }
+
+    .step-num {
+      width: 40px;
+      height: 40px;
+      background: rgba(88,101,242,0.15);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      color: var(--blurple-light);
+      font-size: 1.1rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .step h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .step p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    /* ─── Features ─── */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .feature {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2rem;
+      transition: all 0.3s ease;
+    }
+
+    .feature:hover {
+      border-color: var(--blurple);
+      transform: translateY(-2px);
+    }
+
+    .feature-icon {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .feature h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .feature p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    /* ─── Safety ─── */
+    .safety-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(87, 242, 135, 0.2);
+      border-radius: 20px;
+      padding: 3rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    .safety-card h3 {
+      font-size: 1.8rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+    }
+
+    .safety-card p {
+      color: var(--text-muted);
+      font-size: 1rem;
+      line-height: 1.7;
+      margin-bottom: 1rem;
+    }
+
+    .safety-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .safety-list li {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      font-size: 1rem;
+    }
+
+    .safety-list .check {
+      width: 24px;
+      height: 24px;
+      background: rgba(87,242,135,0.15);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--green);
+      font-size: 0.8rem;
+      flex-shrink: 0;
+    }
+
+    /* ─── Disclaimer ─── */
+    .disclaimer {
+      background: rgba(237,66,69,0.06);
+      border: 1px solid rgba(237,66,69,0.2);
+      border-radius: 16px;
+      padding: 2rem;
+      margin-top: 3rem;
+    }
+
+    .disclaimer h4 {
+      color: var(--red);
+      font-size: 0.9rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.8rem;
+    }
+
+    .disclaimer p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      line-height: 1.7;
+    }
+
+    /* ─── CTA ─── */
+    .cta {
+      text-align: center;
+      padding: 8rem 2rem;
+      position: relative;
+    }
+
+    .cta::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 1px;
+      height: 60px;
+      background: linear-gradient(to bottom, transparent, var(--blurple));
+    }
+
+    .cta h2 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 900;
+      margin-bottom: 1.5rem;
+    }
+
+    .cta p {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+
+    /* ─── Footer ─── */
+    footer {
+      text-align: center;
+      padding: 3rem 2rem;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    footer a {
+      color: var(--blurple-light);
+      text-decoration: none;
+    }
+
+    footer a:hover { text-decoration: underline; }
+
+    /* ─── Responsive ─── */
+    @media (max-width: 768px) {
+      .safety-card {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        padding: 2rem;
+      }
+      .hero { min-height: 90vh; }
+      section { padding: 4rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-badge">
+      <span class="dot"></span>
+      Free &amp; Open Source
+    </div>
+    <h1><span class="gradient">OrbSpoofer</span></h1>
+    <p class="hero-sub">
+      Complete Discord orb quests without downloading 500GB+ games.<br/>
+      Just run the app, pick a game, done.
+    </p>
+    <div class="hero-buttons">
+      <a href="https://github.com/ZavalaSebas/OrbSpoofer/releases/latest" class="btn btn-primary" download>
+        ⬇ Download OrbSpoofer
+      </a>
+      <a href="https://github.com/ZavalaSebas/OrbSpoofer" class="btn btn-secondary" target="_blank">
+        View on GitHub →
+      </a>
+    </div>
+  </section>
+
+  <!-- How It Works -->
+  <section>
+    <div class="container">
+      <p class="section-label">How it works</p>
+      <h2 class="section-title">5 steps. Zero downloads.</h2>
+      <p class="section-desc">
+        Discord detects games by checking your running process list. OrbSpoofer creates a fake process with the exact name Discord expects.
+      </p>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <h3>Open OrbSpoofer</h3>
+          <p>Launch the app. It connects to Discord's official detectable games API automatically.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <h3>Search a game</h3>
+          <p>Find any game by name, abbreviation, or alias. The database is always up to date.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <h3>Click Spoof</h3>
+          <p>OrbSpoofer creates a fake process with the exact executable name Discord scans for.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <h3>Discord detects it</h3>
+          <p>Discord sees the process name in your task list and shows "Playing [Game]" on your profile.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section>
+    <div class="container">
+      <p class="section-label">Features</p>
+      <h2 class="section-title">Everything you need</h2>
+      <p class="section-desc">
+        Built for simplicity. No terminal, no dependencies, no complicated setup.
+      </p>
+      <div class="features-grid">
+        <div class="feature">
+          <div class="feature-icon">🔌</div>
+          <h3>No Dependencies</h3>
+          <p>Single .exe file. No Python, no Node.js, no .NET runtime needed. Just download and run.</p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">📡</div>
+          <h3>Live Discord API</h3>
+          <p>Pulls the official detectable games list directly from Discord's API. Always current, always accurate.</p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">🎮</div>
+          <h3>Multi-Game Support</h3>
+          <p>Stack multiple quests at once. Launch one game, go back, launch another. Discord sees them all.</p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">⏱️</div>
+          <h3>Built-in Timer</h3>
+          <p>15-minute countdown with auto-cleanup. When it's done, the fake process and files are removed automatically.</p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">🎮</div>
+          <h3>Steam Quest Mode</h3>
+          <p>For games that need Steam verification. Generates fake appmanifests and places files in the right directory.</p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">✏️</div>
+          <h3>Manual Mode</h3>
+          <p>Spoof any executable name directly. For games not in the database or custom process names.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Safety -->
+  <section>
+    <div class="container">
+      <div class="safety-card">
+        <div>
+          <p class="section-label">Safety</p>
+          <h3>How is this safe?</h3>
+          <p>
+            OrbSpoofer doesn't touch Discord at all. No injection, no modified JavaScript, no fake network requests. It simply creates a local Windows process with a specific name.
+          </p>
+          <p>
+            Since Discord's detection works by reading your running process list, it sees the expected .exe and assumes the game is running. That's it.
+          </p>
+        </div>
+        <div>
+          <ul class="safety-list">
+            <li><span class="check">✓</span> No code injection into Discord</li>
+            <li><span class="check">✓</span> No client modification</li>
+            <li><span class="check">✓</span> No fake network requests</li>
+            <li><span class="check">✓</span> No memory scanning</li>
+            <li><span class="check">✓</span> Open source — verify the code yourself</li>
+            <li><span class="check">✓</span> Auto-cleanup on timer completion</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="disclaimer">
+        <h4>⚠ Disclaimer</h4>
+        <p>
+          This tool is for <strong>educational purposes only</strong>. You are solely responsible for compliance with Discord's Terms of Service. Use at your own risk. OrbSpoofer is essentially just automating a manual process — creating local files with specific names — so it's quite safe in principle, but always exercise caution.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta">
+    <div class="container">
+      <h2>Ready to skip the downloads?</h2>
+      <p>Free, open source, and built by the community.</p>
+      <div class="hero-buttons" style="justify-content: center;">
+        <a href="https://github.com/ZavalaSebas/OrbSpoofer/releases/latest" class="btn btn-primary" download>
+          ⬇ Download v1.0.0
+        </a>
+        <a href="https://github.com/ZavalaSebas/OrbSpoofer" class="btn btn-secondary" target="_blank">
+          View Source Code →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>
+      Built with ❤ by <a href="https://github.com/ZavalaSebas" target="_blank">ZavalaSebas</a> ·
+      Based on the concept by <a href="https://github.com/strykey/orbshacker" target="_blank">orbshacker</a> ·
+      <a href="https://github.com/ZavalaSebas/OrbSpoofer/blob/main/LICENSE" target="_blank">GPL-3.0 License</a>
+    </p>
+  </footer>
+
+</body>
+</html>
