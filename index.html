@@ -4,99 +4,229 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ROCKSHOW V4</title>
-  <link rel="stylesheet" href="style/main.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Righteous&family=Spectral:wght@400;500;600&family=Staatliches&display=swap" rel="stylesheet">
-  <meta name="theme-color" content="#0f0a0f" />
+  <meta name="description" content="ROCKSHOW V4 — Mixtape personal de Sebas. Música, journals, herramientas y reflexiones." />
+  <meta name="theme-color" content="#08060d" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-<!-- Favicon -->
-<link rel="icon" type="image/x-icon" href="favicon.ico" />
-<meta name="google-site-verification" content="ozmeVk-pXk9G0clVn3MJPAX5xn1plmvLhtApl4m3iAM" />
+  <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  <link rel="stylesheet" href="style/main.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Righteous&family=Spectral:wght@400;500;600&family=Staatliches&display=swap" rel="stylesheet">
+  <meta name="google-site-verification" content="ozmeVk-pXk9G0clVn3MJPAX5xn1plmvLhtApl4m3iAM" />
 </head>
 <body class="home">
-  <div id="terminalLoader">
-    <div id="terminalContent">
-      <div class="terminal-line">> ROCKSHOW V4 — inicializando...</div>
-      <div class="terminal-line">> Cargando cinta vintage... [OK]</div>
-      <div class="terminal-line">> Sintetizando colores retro... [OK]</div>
-      <div class="terminal-line">> Calibrando frecuencia grunge... [OK]</div>
-      <div class="terminal-line">> Activando modo technicolor... [OK]</div>
-      <div class="terminal-line terminal-cursor">> Nueva era. Presiona cualquier tecla...</div>
-      <div class="skip-hint">Presiona cualquier tecla o haz click para continuar</div>
-    </div>
+
+  <div id="loader">
+    <span class="loader-text">INSERT COTAPE</span>
+    <span class="loader-cursor"></span>
   </div>
-  
-  <div class="background-gradient"></div>
-  <div class="scanline-overlay"></div>
-  <div class="grid-overlay"></div>
+
   <canvas id="glitchCanvas"></canvas>
-  <div id="particleContainer"></div>
-  <div id="customCursor"></div>
+  <div class="bg-gradient"></div>
+  <div class="scanlines"></div>
+  <div id="particles"></div>
+  <div id="cursor"></div>
 
-<header class="topbar glass">
-  <h2 id="logo">ROCKSHOW</h2>
-<div id="audioControl">
-  <div class="vinyl"></div>
-  <div class="audio-visualizer">
-    <div class="freq-bar"></div>
-    <div class="freq-bar"></div>
-    <div class="freq-bar"></div>
-    <div class="freq-bar"></div>
-    <div class="freq-bar"></div>
-  </div>
-  <div class="audio-hint">
-  <span>¡click aquí!</span>
-  <div class="arrow">➡️</div>
-  </div>
-</div>
-</header>
+  <header class="header">
+    <h2 class="logo">ROCKSHOW</h2>
+    <div id="audioControl" class="audio-ctrl">
+      <div class="audio-ctrl__hint">
+        <span id="audioHint">click aqui</span>
+        <span class="arrow">&#10132;</span>
+      </div>
+      <div class="vu-meter" id="vuMeter">
+        <span></span><span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span>
+      </div>
+      <div class="vinyl" id="vinyl">
+        <div class="vinyl__label"></div>
+      </div>
+    </div>
+  </header>
 
-<section class="hero">
-  <h1 id="mainTitle">ROCKSHOW V4</h1>
-  <p class="subtext" id="rotatingSubtext" aria-live="polite">nueva era // colores infinitos</p>
-</section>
+  <main>
+    <section class="hero">
+      <div class="cassette">
+        <div class="cassette__screw cassette__screw--tl"></div>
+        <div class="cassette__screw cassette__screw--tr"></div>
+        <div class="cassette__screw cassette__screw--bl"></div>
+        <div class="cassette__screw cassette__screw--br"></div>
 
-<section class="menu-grid">
-  <a href="pages/mylove.html" class="card">🖤<span>mylove</span></a>
-  <a href="pages/journals.html" class="card">📓<span>journal</span></a>
-  <a href="pages/pentatonic.html" class="card">🎸<span>pentatonic</span></a>
-  <a href="pages/tools.html" class="card">🛠<span>Tools</span></a>
-  <a href="pages/projects.html" class="card">💻<span>Projects</span></a>
-  <a href="pages/beforeidie.html" class="card">🕯️<span>before i die</span></a>
-  <a href="pages/afteridie.html" class="card">🕊️<span>after i die</span></a>
-  <a href="pages/zoom.html" class="card">🔍<span>zoom</span></a>
-  <a href="pages/blog.html" class="card">📝<span>blog</span></a>
-  <a href="pages/noise.html" class="card">💭<span>Noise</span></a>
-</section>
+        <div class="cassette__window">
+          <div class="reel" id="reelL">
+            <div class="reel__spoke"></div>
+            <div class="reel__spoke"></div>
+            <div class="reel__spoke"></div>
+          </div>
+          <div class="cassette__tape"></div>
+          <div class="reel" id="reelR">
+            <div class="reel__spoke"></div>
+            <div class="reel__spoke"></div>
+            <div class="reel__spoke"></div>
+          </div>
+        </div>
 
-  <footer>
-    <p id="frase-footer"></p>
+        <div class="cassette__label">
+          <div class="cassette__label-top">
+            <span class="cassette__brand">Maxell</span>
+            <span class="cassette__type">UD 120</span>
+          </div>
+          <h1 class="cassette__title">ROCKSHOW V4</h1>
+          <p class="cassette__subtitle">side A &middot; 2026</p>
+          <div class="cassette__label-lines">
+            <span></span><span></span><span></span>
+          </div>
+          <p class="cassette__tagline" id="cassetteTagline">la mezcla perfecta</p>
+        </div>
+
+        <div class="cassette__spokes">
+          <div class="cassette__spoke-hole"></div>
+          <div class="cassette__spoke-hole"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="tracklist" id="tracklist">
+      <div class="tracklist__side">
+        <span class="tracklist__side-indicator">A</span>
+        <span class="tracklist__side-label">Side A</span>
+      </div>
+
+      <a href="pages/mylove.html" class="track" style="--i:0">
+        <span class="track__num">01</span>
+        <span class="track__icon">&#128420;</span>
+        <div class="track__info">
+          <span class="track__title">mylove</span>
+          <span class="track__sub">un mundo aparte</span>
+        </div>
+        <div class="track__vinyl"></div>
+      </a>
+
+      <a href="pages/journals.html" class="track" style="--i:1">
+        <span class="track__num">02</span>
+        <span class="track__icon">&#128213;</span>
+        <div class="track__info">
+          <span class="track__title">journals</span>
+          <span class="track__sub">recuerdos a color</span>
+        </div>
+        <div class="track__vinyl"></div>
+      </a>
+
+      <a href="pages/pentatonic.html" class="track" style="--i:2">
+        <span class="track__num">03</span>
+        <span class="track__icon">&#127928;</span>
+        <div class="track__info">
+          <span class="track__title">pentatonic</span>
+          <span class="track__sub">riffs y artefactos</span>
+        </div>
+        <div class="track__vinyl"></div>
+      </a>
+
+      <a href="pages/tools.html" class="track" style="--i:3">
+        <span class="track__num">04</span>
+        <span class="track__icon">&#128736;</span>
+        <div class="track__info">
+          <span class="track__title">toolbox</span>
+          <span class="track__sub">algo que necesites</span>
+        </div>
+        <div class="track__vinyl"></div>
+      </a>
+
+      <a href="pages/projects.html" class="track" style="--i:4">
+        <span class="track__num">05</span>
+        <span class="track__icon">&#128187;</span>
+        <div class="track__info">
+          <span class="track__title">projects</span>
+          <span class="track__sub">cosas que he construido</span>
+        </div>
+        <div class="track__vinyl"></div>
+      </a>
+
+      <a href="pages/beforeidie.html" class="track" style="--i:5">
+        <span class="track__num">06</span>
+        <span class="track__icon">&#128367;</span>
+        <div class="track__info">
+          <span class="track__title">before i die</span>
+          <span class="track__sub">cosas que quiero vivir</span>
+        </div>
+        <div class="track__vinyl"></div>
+      </a>
+
+      <a href="pages/afteridie.html" class="track" style="--i:6">
+        <span class="track__num">07</span>
+        <span class="track__icon">&#128330;</span>
+        <div class="track__info">
+          <span class="track__title">after i die</span>
+          <span class="track__sub">lo que quiero dejar</span>
+        </div>
+        <div class="track__vinyl"></div>
+      </a>
+
+      <a href="pages/zoom.html" class="track" style="--i:7">
+        <span class="track__num">08</span>
+        <span class="track__icon">&#128269;</span>
+        <div class="track__info">
+          <span class="track__title">zoom</span>
+          <span class="track__sub">confetti y audio</span>
+        </div>
+        <div class="track__vinyl"></div>
+      </a>
+
+      <a href="pages/blog.html" class="track" style="--i:8">
+        <span class="track__num">09</span>
+        <span class="track__icon">&#128221;</span>
+        <div class="track__info">
+          <span class="track__title">blog</span>
+          <span class="track__sub">notas privadas</span>
+        </div>
+        <div class="track__vinyl"></div>
+      </a>
+
+      <a href="pages/noise.html" class="track" style="--i:9">
+        <span class="track__num">10</span>
+        <span class="track__icon">&#128172;</span>
+        <div class="track__info">
+          <span class="track__title">noise</span>
+          <span class="track__sub">ruido interno</span>
+        </div>
+        <div class="track__vinyl"></div>
+      </a>
+
+      <div class="tracklist__side">
+        <span class="tracklist__side-indicator">B</span>
+        <span class="tracklist__side-label">Side B</span>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer__divider"></div>
+    <p class="footer__text" id="footerText">colores infinitos // buena vibra</p>
+    <p class="footer__credit">Side B &middot; 2026 &middot; Hecho con cinta y codigo</p>
   </footer>
 
-  <!-- Barra de navegación inferior (solo móvil) -->
-  <nav class="mobile-tabbar" aria-label="Navegación principal">
-    <span class="tabbar-indicator" aria-hidden="true"></span>
-    <a class="tabbar-item" href="index.html" aria-label="Inicio" data-tab="home">
-      <span class="tab-ico">🏠</span>
-      <span class="tab-label">Inicio</span>
+  <nav class="tabbar" aria-label="Navegacion principal">
+    <span class="tabbar__indicator" aria-hidden="true"></span>
+    <a class="tabbar__item" href="index.html" aria-label="Inicio">
+      <span class="tabbar__ico">&#127968;</span>
+      <span class="tabbar__label">Inicio</span>
     </a>
-    <a class="tabbar-item" href="pages/journals.html" aria-label="Journal" data-tab="journal">
-      <span class="tab-ico">📓</span>
-      <span class="tab-label">Journal</span>
+    <a class="tabbar__item" href="pages/journals.html" aria-label="Journal">
+      <span class="tabbar__ico">&#128213;</span>
+      <span class="tabbar__label">Journal</span>
     </a>
-    <a class="tabbar-item" href="pages/tools.html" aria-label="Herramientas" data-tab="tools">
-      <span class="tab-ico">🛠</span>
-      <span class="tab-label">Tools</span>
+    <a class="tabbar__item" href="pages/tools.html" aria-label="Tools">
+      <span class="tabbar__ico">&#128736;</span>
+      <span class="tabbar__label">Tools</span>
     </a>
-    <a class="tabbar-item" href="pages/rockola.html" aria-label="Rockola" data-tab="rockola">
-      <span class="tab-ico">🎵</span>
-      <span class="tab-label">Rockola</span>
+    <a class="tabbar__item" href="pages/rockola.html" aria-label="Rockola">
+      <span class="tabbar__ico">&#127925;</span>
+      <span class="tabbar__label">Rockola</span>
     </a>
   </nav>
 
-<audio id="audioAmbiente" autoplay muted loop>
-  <source src="assets/audio/never.mp3" type="audio/mpeg">
-</audio>
+  <audio id="bgAudio" loop>
+    <source src="assets/audio/never.mp3" type="audio/mpeg">
+  </audio>
 
   <script src="js/main.js"></script>
 </body>
