@@ -116,9 +116,12 @@
   var canvas = document.getElementById('glitchCanvas');
   if (canvas) {
     var ctx = canvas.getContext('2d');
+    var scale = .25;
     function resizeCanvas() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+      canvas.width = Math.ceil(window.innerWidth * scale);
+      canvas.height = Math.ceil(window.innerHeight * scale);
+      canvas.style.width = '100%';
+      canvas.style.height = '100%';
     }
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
@@ -127,16 +130,16 @@
       var imgData = ctx.createImageData(canvas.width, canvas.height);
       var buf = new Uint32Array(imgData.data.buffer);
       for (var i = 0; i < buf.length; i++) {
-        if (Math.random() < 0.006) buf[i] = 0xffffffff;
+        if (Math.random() < 0.008) buf[i] = 0xffffffff;
       }
       ctx.putImageData(imgData, 0, 0);
-    }, 120);
+    }, 200);
   }
 
   // ── Floating particles ──
   var particleContainer = document.getElementById('particles');
   var symbols = ['\u266A', '\u266B', '\u2605', '\u2726', '\u2661', '\u25C6', '\u2736', '\u2606'];
-  var maxParticles = 28;
+  var maxParticles = 20;
 
   function spawnParticle() {
     if (particleContainer.children.length >= maxParticles) return;
@@ -153,7 +156,29 @@
     setTimeout(function () { if (p.parentNode) p.remove(); }, dur * 1000);
   }
 
-  setInterval(function () { if (Math.random() < .45) spawnParticle(); }, 3500);
+  setInterval(function () { if (Math.random() < .35) spawnParticle(); }, 4500);
+
+  // ── Underwater bubbles ──
+  var bubbleContainer = document.getElementById('bubbles');
+
+  function spawnBubble() {
+    if (!bubbleContainer) return;
+    var b = document.createElement('div');
+    b.className = 'bubble';
+    var size = 4 + Math.random() * 16;
+    b.style.width = size + 'px';
+    b.style.height = size + 'px';
+    b.style.left = Math.random() * 100 + '%';
+    b.style.setProperty('--drift', (Math.random() * 60 - 30) + 'px');
+    var dur = 6 + Math.random() * 10;
+    b.style.animationDuration = dur + 's';
+    bubbleContainer.appendChild(b);
+    setTimeout(function () { if (b.parentNode) b.remove(); }, dur * 1000);
+  }
+
+  setInterval(function () {
+    if (Math.random() < .4) spawnBubble();
+  }, 3000);
 
   // ── Custom cursor ──
   var cursorEl = document.getElementById('cursor');
@@ -161,18 +186,17 @@
     var trailThrottle = 0;
 
     document.addEventListener('mousemove', function (e) {
-      cursorEl.style.left = (e.clientX - 13) + 'px';
-      cursorEl.style.top = (e.clientY - 13) + 'px';
+      cursorEl.style.transform = 'translate(' + e.clientX + 'px, ' + e.clientY + 'px)';
 
       var now = Date.now();
-      if (now - trailThrottle > 50) {
+      if (now - trailThrottle > 80) {
         trailThrottle = now;
         var dot = document.createElement('div');
         dot.className = 'cursor-dot';
-        dot.style.left = (e.clientX - 2.5) + 'px';
-        dot.style.top = (e.clientY - 2.5) + 'px';
+        dot.style.left = e.clientX + 'px';
+        dot.style.top = e.clientY + 'px';
         document.body.appendChild(dot);
-        setTimeout(function () { if (dot.parentNode) dot.remove(); }, 600);
+        setTimeout(function () { if (dot.parentNode) dot.remove(); }, 400);
       }
     });
 
@@ -204,7 +228,7 @@
       return opts ? opts[Math.floor(Math.random() * opts.length)] : c;
     }).join('');
   }
-  setInterval(glitchLogo, 1800);
+  setInterval(glitchLogo, 3000);
 
   // ── Konami Code ──
   var konami = [38,38,40,40,37,39,37,39,66,65];
