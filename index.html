@@ -2,74 +2,102 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Bienvenido</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;600&display=swap');
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-      color: #ffffff;
-      font-family: 'Raleway', sans-serif;
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      padding: 30px;
-    }
-
-    .container {
-      max-width: 600px;
-      background-color: rgba(255, 255, 255, 0.05);
-      padding: 40px;
-      border-radius: 16px;
-      backdrop-filter: blur(10px);
-      box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
-      transition: all 0.3s ease-in-out;
-    }
-
-    h1 {
-      font-size: 2.5em;
-      margin-bottom: 20px;
-      font-weight: 600;
-    }
-
-    p {
-      font-size: 1.2em;
-      opacity: 0.8;
-    }
-
-    .footer {
-      margin-top: 30px;
-      font-size: 0.9em;
-      color: #aaa;
-    }
-
-    a {
-      color: #fbd0ff;
-      text-decoration: none;
-    }
-
-    a:hover {
-      text-decoration: underline;
-    }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ROCKSHOW V4</title>
+  <link rel="stylesheet" href="style/main.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Righteous&family=Spectral:wght@400;500;600&family=Staatliches&display=swap" rel="stylesheet">
+  <meta name="theme-color" content="#0f0a0f" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<!-- Favicon -->
+<link rel="icon" type="image/x-icon" href="favicon.ico" />
+<meta name="google-site-verification" content="ozmeVk-pXk9G0clVn3MJPAX5xn1plmvLhtApl4m3iAM" />
 </head>
-<body>
-  <div class="container">
-    <h1>Bienvenido a mi rincón digital</h1>
-    <p>Este es el comienzo de algo pequeño pero especial. 🌌</p>
-
-    <div class="footer">
-      Hecho con 💜 · <a href="https://github.com/" target="_blank">Ver en GitHub</a>
+<body class="home">
+  <div id="terminalLoader">
+    <div id="terminalContent">
+      <div class="terminal-line">> ROCKSHOW V4 — inicializando...</div>
+      <div class="terminal-line">> Cargando cinta vintage... [OK]</div>
+      <div class="terminal-line">> Sintetizando colores retro... [OK]</div>
+      <div class="terminal-line">> Calibrando frecuencia grunge... [OK]</div>
+      <div class="terminal-line">> Activando modo technicolor... [OK]</div>
+      <div class="terminal-line terminal-cursor">> Nueva era. Presiona cualquier tecla...</div>
+      <div class="skip-hint">Presiona cualquier tecla o haz click para continuar</div>
     </div>
   </div>
+  
+  <div class="background-gradient"></div>
+  <div class="scanline-overlay"></div>
+  <div class="grid-overlay"></div>
+  <canvas id="glitchCanvas"></canvas>
+  <div id="particleContainer"></div>
+  <div id="customCursor"></div>
+
+<header class="topbar glass">
+  <h2 id="logo">ROCKSHOW</h2>
+<div id="audioControl">
+  <div class="vinyl"></div>
+  <div class="audio-visualizer">
+    <div class="freq-bar"></div>
+    <div class="freq-bar"></div>
+    <div class="freq-bar"></div>
+    <div class="freq-bar"></div>
+    <div class="freq-bar"></div>
+  </div>
+  <div class="audio-hint">
+  <span>¡click aquí!</span>
+  <div class="arrow">➡️</div>
+  </div>
+</div>
+</header>
+
+<section class="hero">
+  <h1 id="mainTitle">ROCKSHOW V4</h1>
+  <p class="subtext" id="rotatingSubtext" aria-live="polite">nueva era // colores infinitos</p>
+</section>
+
+<section class="menu-grid">
+  <a href="pages/mylove.html" class="card">🖤<span>mylove</span></a>
+  <a href="pages/journals.html" class="card">📓<span>journal</span></a>
+  <a href="pages/pentatonic.html" class="card">🎸<span>pentatonic</span></a>
+  <a href="pages/tools.html" class="card">🛠<span>Tools</span></a>
+  <a href="pages/projects.html" class="card">💻<span>Projects</span></a>
+  <a href="pages/beforeidie.html" class="card">🕯️<span>before i die</span></a>
+  <a href="pages/afteridie.html" class="card">🕊️<span>after i die</span></a>
+  <a href="pages/zoom.html" class="card">🔍<span>zoom</span></a>
+  <a href="pages/blog.html" class="card">📝<span>blog</span></a>
+  <a href="pages/noise.html" class="card">💭<span>Noise</span></a>
+</section>
+
+  <footer>
+    <p id="frase-footer"></p>
+  </footer>
+
+  <!-- Barra de navegación inferior (solo móvil) -->
+  <nav class="mobile-tabbar" aria-label="Navegación principal">
+    <span class="tabbar-indicator" aria-hidden="true"></span>
+    <a class="tabbar-item" href="index.html" aria-label="Inicio" data-tab="home">
+      <span class="tab-ico">🏠</span>
+      <span class="tab-label">Inicio</span>
+    </a>
+    <a class="tabbar-item" href="pages/journals.html" aria-label="Journal" data-tab="journal">
+      <span class="tab-ico">📓</span>
+      <span class="tab-label">Journal</span>
+    </a>
+    <a class="tabbar-item" href="pages/tools.html" aria-label="Herramientas" data-tab="tools">
+      <span class="tab-ico">🛠</span>
+      <span class="tab-label">Tools</span>
+    </a>
+    <a class="tabbar-item" href="pages/rockola.html" aria-label="Rockola" data-tab="rockola">
+      <span class="tab-ico">🎵</span>
+      <span class="tab-label">Rockola</span>
+    </a>
+  </nav>
+
+<audio id="audioAmbiente" autoplay muted loop>
+  <source src="assets/audio/never.mp3" type="audio/mpeg">
+</audio>
+
+  <script src="js/main.js"></script>
 </body>
 </html>
