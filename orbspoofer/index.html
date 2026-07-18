@@ -285,41 +285,108 @@
       line-height: 1.6;
     }
 
-    /* ─── Features ─── */
-    .features-grid {
+    /* ─── Screenshots ─── */
+    .screenshots-row {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      grid-template-columns: 1fr 1fr;
       gap: 1.5rem;
     }
 
-    .feature {
+    .screenshot-card {
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: 16px;
-      padding: 2rem;
-      transition: all 0.3s ease;
+      overflow: hidden;
+      transition: border-color 0.3s ease;
     }
 
-    .feature:hover {
+    .screenshot-card:hover {
       border-color: var(--blurple);
-      transform: translateY(-2px);
     }
 
-    .feature-icon {
-      font-size: 2rem;
+    .screenshot-placeholder {
+      aspect-ratio: 16/10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      background: rgba(88,101,242,0.03);
+    }
+
+    .screenshot-card img {
+      width: 100%;
+      display: block;
+    }
+
+    /* ─── Features ─── */
+    .feature-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .feature-block {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2.5rem;
+      transition: border-color 0.3s ease;
+    }
+
+    .feature-block:hover {
+      border-color: var(--blurple);
+    }
+
+    .feature-block.wide {
+      grid-column: 1 / -1;
+      padding: 3rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    .feature-block .tag {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--blurple-light);
+      background: rgba(88,101,242,0.1);
+      border: 1px solid rgba(88,101,242,0.2);
+      border-radius: 6px;
+      padding: 0.25rem 0.7rem;
       margin-bottom: 1rem;
     }
 
-    .feature h3 {
-      font-size: 1.1rem;
-      font-weight: 700;
+    .feature-block h3 {
+      font-size: 1.4rem;
+      font-weight: 800;
+      margin-bottom: 0.8rem;
+      letter-spacing: -0.01em;
+    }
+
+    .feature-block p {
+      color: var(--text-muted);
+      font-size: 1rem;
+      line-height: 1.7;
+    }
+
+    .feature-block .stat {
+      font-size: 3.5rem;
+      font-weight: 900;
+      color: var(--blurple);
+      line-height: 1;
       margin-bottom: 0.5rem;
     }
 
-    .feature p {
+    .feature-block .stat-label {
+      font-size: 0.85rem;
       color: var(--text-muted);
-      font-size: 0.95rem;
-      line-height: 1.6;
+      font-weight: 500;
     }
 
     /* ─── Safety ─── */
@@ -451,6 +518,9 @@
         gap: 2rem;
         padding: 2rem;
       }
+      .feature-row { grid-template-columns: 1fr; }
+      .feature-block.wide { grid-template-columns: 1fr; text-align: center; }
+      .screenshots-row { grid-template-columns: 1fr; }
       .hero { min-height: 90vh; }
       section { padding: 4rem 1.5rem; }
     }
@@ -512,6 +582,29 @@
     </div>
   </section>
 
+  <!-- Screenshots -->
+  <section>
+    <div class="container">
+      <p class="section-label">Screenshots</p>
+      <h2 class="section-title">See it in action</h2>
+      <p class="section-desc">
+        The interface is clean and straightforward. Pick a game, hit spoof, done.
+      </p>
+      <div class="screenshots-row">
+        <div class="screenshot-card">
+          <div class="screenshot-placeholder">
+            <span>Add screenshots here</span>
+          </div>
+        </div>
+        <div class="screenshot-card">
+          <div class="screenshot-placeholder">
+            <span>Add screenshots here</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Features -->
   <section>
     <div class="container">
@@ -520,36 +613,57 @@
       <p class="section-desc">
         Built for simplicity. No terminal, no dependencies, no complicated setup.
       </p>
-      <div class="features-grid">
-        <div class="feature">
-          <div class="feature-icon">🔌</div>
-          <h3>No Dependencies</h3>
-          <p>Single .exe file. No Python, no Node.js, no .NET runtime needed. Just download and run.</p>
+
+      <div class="feature-block wide" style="margin-bottom: 1.5rem;">
+        <div>
+          <span class="tag">Core</span>
+          <h3>Single .exe, zero setup</h3>
+          <p>
+            Download one file, run it. No Python, no Node.js, no runtime installers.
+            OrbSpoofer is a self-contained Windows executable that works out of the box.
+          </p>
         </div>
-        <div class="feature">
-          <div class="feature-icon">📡</div>
-          <h3>Live Discord API</h3>
-          <p>Pulls the official detectable games list directly from Discord's API. Always current, always accurate.</p>
+        <div style="text-align: center;">
+          <div class="stat">1</div>
+          <div class="stat-label">file to download</div>
         </div>
-        <div class="feature">
-          <div class="feature-icon">🎮</div>
-          <h3>Multi-Game Support</h3>
-          <p>Stack multiple quests at once. Launch one game, go back, launch another. Discord sees them all.</p>
+      </div>
+
+      <div class="feature-row">
+        <div class="feature-block">
+          <span class="tag">API</span>
+          <h3>Live Discord data</h3>
+          <p>
+            Pulls the official detectable games list directly from Discord's API every time you open the app.
+            No stale databases, no manual updates.
+          </p>
         </div>
-        <div class="feature">
-          <div class="feature-icon">⏱️</div>
-          <h3>Built-in Timer</h3>
-          <p>15-minute countdown with auto-cleanup. When it's done, the fake process and files are removed automatically.</p>
+        <div class="feature-block">
+          <span class="tag">Multi-quest</span>
+          <h3>Stack your quests</h3>
+          <p>
+            Launch one game, go back, launch another. Discord sees them all running at the same time.
+            Complete multiple orb quests in a single session.
+          </p>
         </div>
-        <div class="feature">
-          <div class="feature-icon">🎮</div>
-          <h3>Steam Quest Mode</h3>
-          <p>For games that need Steam verification. Generates fake appmanifests and places files in the right directory.</p>
+      </div>
+
+      <div class="feature-row">
+        <div class="feature-block">
+          <span class="tag">Timer</span>
+          <h3>15-minute auto-cleanup</h3>
+          <p>
+            Built-in countdown that kills the fake process and deletes all generated files when done.
+            Set it and forget it.
+          </p>
         </div>
-        <div class="feature">
-          <div class="feature-icon">✏️</div>
-          <h3>Manual Mode</h3>
-          <p>Spoof any executable name directly. For games not in the database or custom process names.</p>
+        <div class="feature-block">
+          <span class="tag">Steam</span>
+          <h3>Steam quest mode</h3>
+          <p>
+            For games that need Steam verification. Generates fake appmanifests and places files
+            in the right directory automatically.
+          </p>
         </div>
       </div>
     </div>
