@@ -37,8 +37,7 @@ body {
 }
 
 body.home {
-  overflow: hidden;
-  height: 100dvh;
+  height: auto;
 }
 
 a { color: inherit; text-decoration: none; }
@@ -411,9 +410,9 @@ a { color: inherit; text-decoration: none; }
 .cassette__tagline {
   font-family: var(--font-body);
   font-size: .75rem;
-  color: var(--gold);
-  opacity: .7;
+  color: var(--dim);
   font-style: italic;
+  min-height: 1em;
 }
 
 .cassette__spokes {
@@ -431,7 +430,7 @@ a { color: inherit; text-decoration: none; }
    TRACKLIST
    ═══════════════════════════════════════════ */
 .tracklist {
-  max-width: 680px;
+  max-width: 800px;
   margin: 0 auto;
   padding: 0 1rem 2rem;
   opacity: 0;
@@ -440,6 +439,22 @@ a { color: inherit; text-decoration: none; }
 @keyframes listIn {
   from { opacity:0; transform:translateY(20px); }
   to { opacity:1; transform:translateY(0); }
+}
+
+.tracklist__columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+@media (max-width: 600px) {
+  .tracklist__columns {
+    grid-template-columns: 1fr;
+  }
+}
+
+.tracklist__col {
+  display: flex;
+  flex-direction: column;
 }
 
 .tracklist__side {
