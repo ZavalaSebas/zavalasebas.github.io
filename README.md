@@ -1,60 +1,123 @@
-<h1 align="center">zavalasebas.github.io</h1>
+<div align="center">
 
-<p align="center">
-  <img src="https://readme-typing-svg.demolab.com?font=Inter&weight=600&size=28&duration=3000&pause=1000&color=7289DA&center=true&vCenter=true&multiline=true&repeat=true&width=600&height=100&lines=My+personal+space+on+the+internet" alt="Typing SVG" />
-</p>
+<img src="https://raw.githubusercontent.com/saadeghi/saadeghi/master/dino.gif" width="100%">
 
-<p align="center">
-  <a href="https://zavalasebas.github.io" target="_blank">
-    <img src="https://img.shields.io/badge/Live_Site-zavalasebas.github.io-5865F2?style=for-the-badge&logo=github&logoColor=white" alt="Live Site" />
-  </a>
-</p>
+# Hey there! I'm Sebas
+
+### This is my corner of the internet
+
+<img src="https://readme-typing-svg.demolab.com?font=Inter&size=20&pause=1200&color=7289DA&center=true&vCenter=true&width=600&lines=Photos+that+feel+like+home.;Music+that+stays+in+your+head.;Pages+built+with+love+and+code.;Sugar+%2B+HTML+%2B+Guitar." />
+
+</div>
 
 ---
 
-## What's inside
+## What lives here
 
-A collection of personal pages, experiments, and small projects — all static, no frameworks, just HTML/CSS/JS.
+<table>
+<tr>
 
-| Page | Description |
-|------|-------------|
-| **Eco** | A diary with cards, thoughts, and ambient audio |
-| **Journals** | Photo galleries — Jime, Lau, Pulgui — with lightbox and notes |
-| **Rockola** | Music player with covers, lyrics, and track history |
-| **Pentatonic** | Archive of musical artefacts and riffs |
-| **Before I Die / After I Die** | Bucket list and reflections |
-| **Amor / Padres / Extraordinaria** | Dedicated pages for the people that matter |
-| **Tools** | QR generator, color picker, timer, word counter |
-| **Guitar Paint** | Draw on a guitar canvas with different brushes |
-| **Zoom** | Ambient audio experience with confetti |
-| **NSFW** | ...you'll see |
+<td width="50%" valign="top">
+
+### 📷 Journals
+Photo galleries of the people I love
+
+- **Jime Journal** — moments frozen in time
+- **Lau Journal** — 85 photos and counting
+- **Pulgui Journal** — tiny memories, big feelings
+
+</td>
+
+<td width="50%" valign="top">
+
+### 🎵 Music
+Sounds that I made or that made me
+
+- **Rockola** — tracks, covers, and stories
+- **Pentatonic** — riffs and artefacts
+- **Music Archive** — everything in one place
+
+</td>
+
+</tr>
+<tr>
+
+<td width="50%" valign="top">
+
+### 💙 For the people
+Pages dedicated to who matters
+
+- **Amor** — because some words need a page
+- **Padres** — for the ones who gave everything
+- **Extraordinaria** — just because she is
+- **My Love** — a little world of its own
+
+</td>
+
+<td width="50%" valign="top">
+
+### ✨ Experiments
+Things I built because I was curious
+
+- **Eco** — a diary with cards and ambient sound
+- **Guitar Paint** — draw on a canvas with brushes
+- **Zoom** — confetti and audio
+- **Tools** — QR, timer, color picker, word counter
+
+</td>
+
+</tr>
+<tr>
+
+<td width="50%" valign="top">
+
+### 🌙 Reflections
+Pages that feel different
+
+- **Before I Die** — what I want to experience
+- **After I Die** — what I want to leave behind
+- **Absolute** — thoughts on fate and noise
+- **Void** — silence, but pretty
+
+</td>
+
+<td width="50%" valign="top">
+
+### 🎮 Fun stuff
+Because not everything has to mean something
+
+- **NSFW** — you'll see
+- **Tap** — a game
+- **Roulette** — spin it
+- **Journey** — follow the path
+
+</td>
+
+</tr>
+</table>
 
 ---
 
 ## Stack
 
-Just the basics:
-
 ```
-HTML • CSS • JavaScript • Firebase (notes) • GitHub Pages
+HTML • CSS • JavaScript • Firebase • GitHub Pages
 ```
 
-No React. No Vue. No build tools. Just files.
+No frameworks. No build tools. Just files and love.
 
 ---
 
-## Preview
-
 <p align="center">
-  <img src="assets/image/preview.gif" alt="Site preview" width="600" />
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:0d0f14,50:5865F2,100:0d0f14&height=120&section=header"/>
 </p>
 
 ---
 
-## Author
+<div align="center">
 
-**Sebastián Zavala** — [@ZavalaSebas](https://github.com/ZavalaSebas)
+### Made with ♥ by [ZavalaSebas](https://github.com/ZavalaSebas)
 
-<p align="center">
-  <sub>Made with ♥</sub>
-</p>
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/sebastianzavala82573)
+
+</div>
