@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>zoom</title>
+  <meta name="theme-color" content="#0a0a23" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <link rel="stylesheet" href="../style/main.css" />
+  <link rel="stylesheet" href="../style/zoom.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body class="zoom-page">
+  <div class="background-stars"></div>
+
+  <header class="topbar glass">
+    <a href="../index.html" class="back-btn" aria-label="Volver a inicio">←</a>
+    <h2>zoom</h2>
+    <button id="audioBtn" class="btn-audio" title="Activar sonido" aria-label="Activar sonido">🎧</button>
+  </header>
+
+  <section class="hero">
+    <h1 class="typewriter">Zoooooom</h1>
+    <p>Lol.</p>
+  </section>
+
+<section class="menu-grid">
+  <a href="nsfw.html" class="card">🧬<span>DittoKonga</span></a>
+  <a href="journey.html" class="card">⏳<span>journey</span></a>
+  <a href="tap.html" class="card">⭐<span>Tap</span></a>
+  <a href="guitarpaint.html" class="card">🎸<span>Guitar Paint</span></a>
+</section>
+
+  <footer>
+    <p id="frase-footer"></p>
+  </footer>
+
+  <audio id="audioAmbiente" loop>
+    <source src="../../assets/audio/ambient.mp3" type="audio/mpeg">
+  </audio>
+
+  <canvas id="confetti-canvas"></canvas>
+
+  <!-- Barra de navegación inferior (móvil) -->
+  <nav class="mobile-tabbar" aria-label="Navegación principal">
+    <span class="tabbar-indicator" aria-hidden="true"></span>
+    <a class="tabbar-item" href="../index.html" aria-label="Inicio" data-tab="home">
+      <span class="tab-ico">🏠</span>
+      <span class="tab-label">Inicio</span>
+    </a>
+    <a class="tabbar-item" href="journals.html" aria-label="Journal" data-tab="journal">
+      <span class="tab-ico">📓</span>
+      <span class="tab-label">Journal</span>
+    </a>
+    <a class="tabbar-item" href="tools.html" aria-label="Herramientas" data-tab="tools">
+      <span class="tab-ico">🛠</span>
+      <span class="tab-label">Tools</span>
+    </a>
+    <a class="tabbar-item" href="rockola.html" aria-label="Rockola" data-tab="rockola">
+      <span class="tab-ico">🎵</span>
+      <span class="tab-label">Rockola</span>
+    </a>
+  </nav>
+  <script src="../js/zoom.js"></script>
+</body>
+</html>

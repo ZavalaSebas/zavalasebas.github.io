@@ -1,0 +1,206 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Quicksand', sans-serif;
+  background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+  color: #333;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  touch-action: manipulation;
+}
+
+/* Zoom theme variables */
+.zoom-page {
+  --accent: #ff4081;
+  --accent-2: #ff80ab;
+  --tabbar-bg: rgba(255,245,247,0.88);
+  --tabbar-border: #ff80ab55;
+  --tabbar-fg: #ff4081;
+}
+
+.background-stars {
+  display: none; /* ya no usamos estrellas, ahora es confetti */
+}
+
+header.topbar.glass {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.2rem;
+  color: #ff4081;
+  backdrop-filter: blur(14px) saturate(160%);
+  background: rgba(255,245,247,0.55);
+  border-bottom: 1px solid #ff80ab55;
+}
+
+.back-btn { text-decoration:none; color:#ff4081; font-size:1.2rem; }
+.back-btn:active { transform: translateY(1px); }
+.btn-audio { background:none; border:none; color:#ff4081; font-size:1.5rem; cursor:pointer; -webkit-tap-highlight-color:transparent; }
+.btn-audio:active { transform: scale(.92); }
+
+#audioBtn {
+  background: none;
+  border: none;
+  color: #ff4081;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.hero {
+  text-align: center;
+  padding: 5vh 2rem 2rem;
+  animation: pop-in 1.2s ease-out;
+}
+
+@keyframes pop-in {
+  0% { transform: scale(0.95); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.typewriter {
+  font-size: 2.8rem;
+  font-weight: bold;
+  color: #ff4081;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  animation: typing 3s steps(30, end) forwards;
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 2px solid #ff4081;
+  width: 0;
+}
+
+@keyframes typing {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+.hero p {
+  font-size: 1.2rem;
+  color: #ff4081;
+  animation: fadeInUp 2s ease;
+}
+
+.menu-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  padding: 4vh 2rem 12vh; /* deja espacio para tabbar en móvil */
+}
+
+.card {
+  background-color: #fff;
+  border: 3px solid #ff80ab;
+  border-radius: 20px;
+  width: 160px;
+  height: 160px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  color: #ff4081;
+  font-size: 2.5rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(255, 128, 171, 0.3);
+  animation: float 3s ease-in-out infinite;
+  position: relative;
+  overflow: hidden;
+}
+.card:active { transform: scale(.97); }
+
+.card span {
+  margin-top: 0.5rem;
+  font-size: 1rem;
+  background: rgba(10,10,35,0.7);
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.3);
+  font-weight: 700;
+  color: #fff;
+}
+
+.card:hover {
+  background-color: #ffebf0;
+  color: #d81b60;
+  transform: scale(1.07) rotateZ(2deg);
+}
+
+#confetti-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999; /* bien arriba */
+}
+
+/* Tabbar overrides for this page */
+.zoom-page .mobile-tabbar {
+  background: var(--tabbar-bg);
+  border-top: 1px solid var(--tabbar-border);
+}
+.zoom-page .tabbar-item {
+  color: var(--tabbar-fg);
+}
+.zoom-page .tabbar-item:hover { background: #ff80ab20; }
+.zoom-page .tabbar-item.active {
+  color: #fff;
+  background: var(--accent);
+  box-shadow: 0 0 0 1px #ff80abaa, 0 4px 12px -2px #ff80ab55;
+}
+.zoom-page .tabbar-item.active::after {
+  background: linear-gradient(90deg, var(--accent), #ffbcd6 70%);
+  box-shadow: 0 0 8px -2px #ff80ab, 0 0 14px -4px #ff80ab;
+}
+.zoom-page .tabbar-indicator {
+  background: linear-gradient(90deg, var(--accent), #ffbcd6);
+  box-shadow: 0 0 8px #ff80ab80;
+}
+
+/* Ripple color override matching zoom */
+.zoom-page .ripple { background: rgba(255, 128, 171, 0.35); }
+
+
+footer {
+  text-align: center;
+  padding: 2rem;
+  font-size: 0.9rem;
+  color: #555;
+  background: #fff5f7;
+  border-top: 3px dashed #ff80ab;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
+  100% { transform: translateY(0px); }
+}
+
+@media (max-width: 600px) {
+  body { padding-bottom: 72px; }
+  .menu-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.9rem;
+    padding: 2.5vh .8rem 14vh;
+  }
+  .card { width: 100%; height: 100px; font-size: 1.6rem; }
+  .card span { font-size: .7rem; }
+  .typewriter { font-size: 1.8rem; }
+  header.topbar.glass { padding: .9rem .8rem; }
+}
+
+/* Ripple (reusa main.css .ripple si presente) */
+.ripple { position:absolute; border-radius:50%; transform:scale(0); background:rgba(255,128,171,0.4); animation:ripple 600ms ease-out; pointer-events:none; }
+@keyframes ripple { to { transform:scale(4); opacity:0; } }
+
+@media (prefers-reduced-motion: reduce){
+  .card { animation:none; }
+}
