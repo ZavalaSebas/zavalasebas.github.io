@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ROCKSHOW V4 — TOOLBOX</title>
+  <meta name="theme-color" content="#0f0a0f" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <link rel="stylesheet" href="../style/tools.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Righteous&family=Staatliches&family=Spectral:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body class="tools-page">
+  <div class="scanline-overlay"></div>
+  <div class="grid-overlay"></div>
+  <div class="background-grid"></div>
+
+  <header class="tools-topbar" role="banner">
+    <a href="../index.html" class="tools-back" aria-label="Volver a inicio">← volver</a>
+    <h2 class="tools-title">🛠 TOOLBOX</h2>
+    <div class="tools-spacer" aria-hidden="true"></div>
+  </header>
+
+  <section class="hero">
+    <h1 class="glitch-title" data-text="TOOLBOX">TOOLBOX</h1>
+    <p>Algo que necesites :)</p>
+  </section>
+
+<section class="menu-grid">
+  <a href="roulette.html" class="card">🎡 <span>Ruleta de Decisiones</span></a>
+  <a href="timer.html" class="card">⏱️ <span>Focus Timer</span></a>
+  <a href="qr.html" class="card">📷 <span>QR Generator</span></a>
+  <a href="colorpicker.html" class="card">🎨 <span>Color Picker</span></a>
+  <a href="wordcounter.html" class="card">📝 <span>Contador de Palabras</span></a>
+</section>
+
+  <footer>
+    <p id="frase-footer"></p>
+  </footer>
+
+  <!-- Barra de navegación inferior (móvil). No altera estilos existentes -->
+  <nav class="tools-tabbar" aria-label="Navegación principal">
+    <span class="tabbar-indicator" aria-hidden="true"></span>
+    <a class="tabbar-item" href="../index.html" aria-label="Inicio" data-tab="home">
+      <span class="tab-ico">🏠</span>
+      <span class="tab-label">Inicio</span>
+    </a>
+    <a class="tabbar-item" href="journals.html" aria-label="Journal" data-tab="journal">
+      <span class="tab-ico">📓</span>
+      <span class="tab-label">Journal</span>
+    </a>
+    <a class="tabbar-item" href="tools.html" aria-label="Herramientas" data-tab="tools">
+      <span class="tab-ico">🛠</span>
+      <span class="tab-label">Tools</span>
+    </a>
+    <a class="tabbar-item" href="rockola.html" aria-label="Rockola" data-tab="rockola">
+      <span class="tab-ico">🎵</span>
+      <span class="tab-label">Rockola</span>
+    </a>
+  </nav>
+  <script src="../js/tools.js"></script>
+</body>
+</html>

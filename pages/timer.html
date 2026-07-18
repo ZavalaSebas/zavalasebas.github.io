@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ROCKSHOW — FOCUS TIMER</title>
+  <link rel="stylesheet" href="../style/timer.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="background-ambient"></div>
+
+  <header>
+    <h2>⏱️ FOCUS TIMER</h2>
+    <a href="tools.html" class="back-btn">← volver</a>
+  </header>
+
+  <main class="timer-container">
+    <!-- Timer Mode Toggle -->
+    <div class="mode-toggle">
+      <button class="mode-btn active" data-mode="pomodoro">
+        <span class="mode-icon">🍅</span>
+        <span>Pomodoro</span>
+      </button>
+      <button class="mode-btn" data-mode="stopwatch">
+        <span class="mode-icon">⏱️</span>
+        <span>Cronómetro</span>
+      </button>
+    </div>
+
+    <!-- Pomodoro Section -->
+    <section id="pomodoro-section" class="timer-section active">
+      <div class="session-tabs">
+        <button class="session-btn active" data-session="work">
+          <span>Trabajo</span>
+          <small>25 min</small>
+        </button>
+        <button class="session-btn" data-session="short">
+          <span>Descanso Corto</span>
+          <small>5 min</small>
+        </button>
+        <button class="session-btn" data-session="long">
+          <span>Descanso Largo</span>
+          <small>15 min</small>
+        </button>
+      </div>
+
+      <div class="timer-display">
+        <div class="time-circle">
+          <svg class="progress-ring" width="300" height="300">
+            <circle
+              class="progress-ring-bg"
+              cx="150"
+              cy="150"
+              r="140"
+              fill="transparent"
+              stroke-width="8"
+            />
+            <circle
+              class="progress-ring-fill"
+              cx="150"
+              cy="150"
+              r="140"
+              fill="transparent"
+              stroke-width="8"
+              stroke-linecap="round"
+              transform="rotate(-90 150 150)"
+            />
+          </svg>
+          <div class="time-text">
+            <span class="time-main" id="pomodoro-time">25:00</span>
+            <span class="time-label" id="pomodoro-label">Tiempo de Trabajo</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="timer-controls">
+        <button id="pomodoro-start" class="control-btn primary">
+          <span class="btn-icon">▶️</span>
+          <span class="btn-text">Iniciar</span>
+        </button>
+        <button id="pomodoro-pause" class="control-btn secondary" style="display: none;">
+          <span class="btn-icon">⏸️</span>
+          <span class="btn-text">Pausar</span>
+        </button>
+        <button id="pomodoro-reset" class="control-btn tertiary">
+          <span class="btn-icon">🔄</span>
+          <span class="btn-text">Reiniciar</span>
+        </button>
+      </div>
+
+      <div class="session-info">
+        <div class="session-counter">
+          <span class="counter-label">Sesiones completadas:</span>
+          <span class="counter-value" id="session-count">0</span>
+        </div>
+        <div class="next-break">
+          <span id="next-break-text">Próximo: Descanso corto</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stopwatch Section -->
+    <section id="stopwatch-section" class="timer-section">
+      <div class="timer-display">
+        <div class="time-circle simple">
+          <div class="time-text">
+            <span class="time-main" id="stopwatch-time">00:00:00</span>
+            <span class="time-label">Cronómetro</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="timer-controls">
+        <button id="stopwatch-start" class="control-btn primary">
+          <span class="btn-icon">▶️</span>
+          <span class="btn-text">Iniciar</span>
+        </button>
+        <button id="stopwatch-pause" class="control-btn secondary" style="display: none;">
+          <span class="btn-icon">⏸️</span>
+          <span class="btn-text">Pausar</span>
+        </button>
+        <button id="stopwatch-reset" class="control-btn tertiary">
+          <span class="btn-icon">🔄</span>
+          <span class="btn-text">Reiniciar</span>
+        </button>
+        <button id="stopwatch-lap" class="control-btn quaternary" style="display: none;">
+          <span class="btn-icon">🏁</span>
+          <span class="btn-text">Vuelta</span>
+        </button>
+      </div>
+
+      <div class="laps-container" id="laps-container" style="display: none;">
+        <h3 class="laps-title">Vueltas</h3>
+        <div class="laps-list" id="laps-list"></div>
+      </div>
+    </section>
+
+    <!-- Settings Panel -->
+    <div class="settings-panel" id="settings-panel">
+      <h3>⚙️ Configuración</h3>
+      
+      <div class="setting-group">
+        <label>Tiempo de Trabajo (min)</label>
+        <input type="range" id="work-time" min="15" max="60" value="25" step="5">
+        <span class="setting-value" id="work-value">25</span>
+      </div>
+      
+      <div class="setting-group">
+        <label>Descanso Corto (min)</label>
+        <input type="range" id="short-break" min="3" max="15" value="5" step="1">
+        <span class="setting-value" id="short-value">5</span>
+      </div>
+      
+      <div class="setting-group">
+        <label>Descanso Largo (min)</label>
+        <input type="range" id="long-break" min="10" max="30" value="15" step="5">
+        <span class="setting-value" id="long-value">15</span>
+      </div>
+      
+      <div class="setting-group">
+        <label>
+          <input type="checkbox" id="auto-start-breaks" checked>
+          Iniciar descansos automáticamente
+        </label>
+      </div>
+      
+      <div class="setting-group">
+        <label>
+          <input type="checkbox" id="sound-notifications" checked>
+          Notificaciones de sonido
+        </label>
+      </div>
+    </div>
+
+    <button class="settings-toggle" id="settings-toggle" title="Configuración">
+      ⚙️
+    </button>
+
+    <!-- Settings overlay for mobile -->
+    <div class="settings-overlay" id="settings-overlay"></div>
+  </main>
+
+  <footer>
+    <p id="timer-footer">Mantén el foco y mejora tu productividad</p>
+  </footer>
+
+  <script src="../js/timer.js"></script>
+</body>
+</html>

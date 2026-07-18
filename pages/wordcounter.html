@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ROCKSHOW — CONTADOR DE PALABRAS</title>
+  <link rel="stylesheet" href="../style/wordcounter.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="background-ambient"></div>
+
+  <header>
+    <h2>📝 CONTADOR DE PALABRAS</h2>
+    <a href="tools.html" class="back-btn">← volver</a>
+  </header>
+
+  <main class="counter-container">
+    <!-- Main Text Input Section -->
+    <section class="input-section">
+      <div class="textarea-container">
+        <textarea 
+          id="text-input" 
+          placeholder="Escribe o pega tu texto aquí para analizarlo en tiempo real..."
+          rows="15"
+        ></textarea>
+        <div class="textarea-actions">
+          <button id="clear-text" class="action-btn clear">
+            <span class="btn-icon">🗑️</span>
+            <span>Limpiar</span>
+          </button>
+          <button id="copy-text" class="action-btn copy">
+            <span class="btn-icon">📋</span>
+            <span>Copiar</span>
+          </button>
+          <button id="paste-text" class="action-btn paste">
+            <span class="btn-icon">📝</span>
+            <span>Pegar</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stats Display Section -->
+    <section class="stats-section">
+      <div class="stats-grid">
+        <!-- Basic Stats -->
+        <div class="stat-card primary">
+          <div class="stat-icon">📝</div>
+          <div class="stat-content">
+            <div class="stat-value" id="word-count">0</div>
+            <div class="stat-label">Palabras</div>
+          </div>
+        </div>
+
+        <div class="stat-card secondary">
+          <div class="stat-icon">🔤</div>
+          <div class="stat-content">
+            <div class="stat-value" id="char-count">0</div>
+            <div class="stat-label">Caracteres</div>
+          </div>
+        </div>
+
+        <div class="stat-card tertiary">
+          <div class="stat-icon">📏</div>
+          <div class="stat-content">
+            <div class="stat-value" id="char-no-spaces">0</div>
+            <div class="stat-label">Sin Espacios</div>
+          </div>
+        </div>
+
+        <div class="stat-card quaternary">
+          <div class="stat-icon">📄</div>
+          <div class="stat-content">
+            <div class="stat-value" id="paragraph-count">0</div>
+            <div class="stat-label">Párrafos</div>
+          </div>
+        </div>
+
+        <!-- Reading Stats -->
+        <div class="stat-card reading">
+          <div class="stat-icon">⏱️</div>
+          <div class="stat-content">
+            <div class="stat-value" id="reading-time">0 min</div>
+            <div class="stat-label">Tiempo de Lectura</div>
+          </div>
+        </div>
+
+        <div class="stat-card speaking">
+          <div class="stat-icon">🎤</div>
+          <div class="stat-content">
+            <div class="stat-value" id="speaking-time">0 min</div>
+            <div class="stat-label">Tiempo de Habla</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Advanced Analysis -->
+    <section class="analysis-section">
+      <div class="analysis-tabs">
+        <button class="tab-btn active" data-tab="social">📱 Redes Sociales</button>
+        <button class="tab-btn" data-tab="detailed">📊 Análisis Detallado</button>
+        <button class="tab-btn" data-tab="keywords">🔍 Palabras Clave</button>
+      </div>
+
+      <!-- Social Media Tab -->
+      <div class="tab-content active" id="social-tab">
+        <div class="social-grid">
+          <div class="social-card twitter">
+            <div class="social-header">
+              <span class="social-icon">🐦</span>
+              <span class="social-name">Twitter</span>
+            </div>
+            <div class="social-stats">
+              <div class="social-count" id="twitter-chars">0/280</div>
+              <div class="social-bar">
+                <div class="social-progress" id="twitter-progress"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="social-card facebook">
+            <div class="social-header">
+              <span class="social-icon">📘</span>
+              <span class="social-name">Facebook</span>
+            </div>
+            <div class="social-stats">
+              <div class="social-count" id="facebook-chars">0/63206</div>
+              <div class="social-bar">
+                <div class="social-progress" id="facebook-progress"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="social-card instagram">
+            <div class="social-header">
+              <span class="social-icon">📷</span>
+              <span class="social-name">Instagram</span>
+            </div>
+            <div class="social-stats">
+              <div class="social-count" id="instagram-chars">0/2200</div>
+              <div class="social-bar">
+                <div class="social-progress" id="instagram-progress"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="social-card linkedin">
+            <div class="social-header">
+              <span class="social-icon">💼</span>
+              <span class="social-name">LinkedIn</span>
+            </div>
+            <div class="social-stats">
+              <div class="social-count" id="linkedin-chars">0/3000</div>
+              <div class="social-bar">
+                <div class="social-progress" id="linkedin-progress"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Detailed Analysis Tab -->
+      <div class="tab-content" id="detailed-tab">
+        <div class="detailed-grid">
+          <div class="detail-card">
+            <h4>📈 Estadísticas Avanzadas</h4>
+            <div class="detail-stats">
+              <div class="detail-item">
+                <span class="detail-label">Promedio de palabras por oración:</span>
+                <span class="detail-value" id="avg-words-sentence">0</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Promedio de caracteres por palabra:</span>
+                <span class="detail-value" id="avg-chars-word">0</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Oraciones:</span>
+                <span class="detail-value" id="sentence-count">0</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Palabras únicas:</span>
+                <span class="detail-value" id="unique-words">0</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="detail-card">
+            <h4>📝 Calidad del Texto</h4>
+            <div class="quality-metrics">
+              <div class="metric">
+                <span class="metric-label">Legibilidad</span>
+                <div class="metric-bar">
+                  <div class="metric-fill" id="readability-fill"></div>
+                </div>
+                <span class="metric-value" id="readability-score">0%</span>
+              </div>
+              <div class="metric">
+                <span class="metric-label">Diversidad</span>
+                <div class="metric-bar">
+                  <div class="metric-fill" id="diversity-fill"></div>
+                </div>
+                <span class="metric-value" id="diversity-score">0%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Keywords Tab -->
+      <div class="tab-content" id="keywords-tab">
+        <div class="keywords-container">
+          <div class="keywords-header">
+            <h4>🔍 Palabras Más Frecuentes</h4>
+            <div class="keywords-controls">
+              <label>
+                <input type="checkbox" id="ignore-common" checked>
+                Ignorar palabras comunes
+              </label>
+              <select id="min-length">
+                <option value="1">Todas las longitudes</option>
+                <option value="3" selected>Mínimo 3 caracteres</option>
+                <option value="4">Mínimo 4 caracteres</option>
+                <option value="5">Mínimo 5 caracteres</option>
+              </select>
+            </div>
+          </div>
+          <div class="keywords-list" id="keywords-list">
+            <!-- Keywords will be generated here -->
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p id="counter-footer">Analiza tu texto y optimiza tu escritura</p>
+  </footer>
+
+  <script src="../js/wordcounter.js"></script>
+</body>
+</html>

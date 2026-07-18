@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Círculos Tap — Zoom</title>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: sans-serif;
+      background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #fcb69f, #ffe29f);
+      background-size: 400% 400%;
+      animation: gradient 15s ease infinite;
+    }
+
+    @keyframes gradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    #game {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #startBtn {
+      padding: 1rem 2rem;
+      font-size: 1.5rem;
+      background: #ff4081;
+      border: none;
+      border-radius: 12px;
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      z-index: 10;
+    }
+
+    .circle {
+      position: absolute;
+      border-radius: 50%;
+      background: radial-gradient(circle at center, #ff4081, #d81b60);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      animation: shrink 1.2s linear forwards;
+    }
+
+    @keyframes shrink {
+      from { transform: scale(1); opacity: 1; }
+      to { transform: scale(0); opacity: 0; }
+    }
+
+    #hud {
+      position: absolute;
+      top: 15px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 3rem;
+      font-size: 1.6rem;
+      color: #fff;
+      font-weight: bold;
+      text-shadow: 0 2px 6px rgba(0,0,0,0.4);
+      display: none;
+    }
+
+    #hud span {
+      display: inline-block;
+      transition: transform 0.2s;
+    }
+
+    #hud span.pop {
+      transform: scale(1.4);
+    }
+
+    #gameover {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 2rem;
+      color: #fff;
+      background: rgba(0,0,0,0.8);
+      padding: 2rem;
+      border-radius: 15px;
+      display: none;
+      text-align: center;
+      width: 90%;
+      max-width: 400px;
+    }
+
+    #restart {
+      margin-top: 1rem;
+      padding: 0.7rem 1.5rem;
+      background: #ff4081;
+      border: none;
+      border-radius: 10px;
+      color: white;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    #restart:hover {
+      background: #d81b60;
+    }
+
+    .emoji {
+      position: absolute;
+      font-size: 2rem;
+      animation: floatUp 1s ease forwards;
+      pointer-events: none;
+    }
+
+    @keyframes floatUp {
+      from { opacity: 1; transform: translateY(0); }
+      to { opacity: 0; transform: translateY(-50px); }
+    }
+
+    #topScores {
+      margin-top: 1rem;
+      text-align: left;
+    }
+
+    #topScores li {
+      margin: 0.3rem 0;
+    }
+  </style>
+</head>
+<body>
+  <div id="game">
+    <button id="startBtn">¡Empezar!</button>
+
+    <div id="hud">
+      <div>⭐ Puntos: <span id="score">0</span></div>
+      <div>❤️ Vidas: <span id="lives">5</span></div>
+    </div>
+
+    <div id="gameover">
+      <p>¡Game Over!</p>
+      <p>Puntaje final: <span id="finalScore"></span></p>
+      <p>Top 5:</p>
+      <ul id="topScores"></ul>
+      <button id="restart">Reintentar</button>
+    </div>
+  </div>
+
+  <!-- Música y sonidos -->
+  <audio id="bgMusic" loop>
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="hitSound">
+    <source src="https://actions.google.com/sounds/v1/cartoon/clang_and_wobble.ogg" type="audio/ogg">
+  </audio>
+  <audio id="failSound">
+    <source src="https://actions.google.com/sounds/v1/cartoon/wood_plank_flicks.ogg" type="audio/ogg">
+  </audio>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyCEt6uttsBNcOTdmpLzz1eoOXc3Jk-IKfk",
+      authDomain: "rockshow-61a77.firebaseapp.com",
+      projectId: "rockshow-61a77",
+      storageBucket: "rockshow-61a77.firebasestorage.app",
+      messagingSenderId: "1052089619676",
+      appId: "1:1052089619676:web:eb9cc50b73363ae95d9019",
+      measurementId: "G-CTC0Y1KW8E"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    const game = document.getElementById("game");
+    const scoreEl = document.getElementById("score");
+    const livesEl = document.getElementById("lives");
+    const gameoverEl = document.getElementById("gameover");
+    const finalScoreEl = document.getElementById("finalScore");
+    const restartBtn = document.getElementById("restart");
+    const startBtn = document.getElementById("startBtn");
+    const hud = document.getElementById("hud");
+    const topScoresEl = document.getElementById("topScores");
+
+    const bgMusic = document.getElementById("bgMusic");
+    const hitSound = document.getElementById("hitSound");
+    const failSound = document.getElementById("failSound");
+
+    let score = 0;
+    let lives = 5;
+    let speed = 2000;
+    let circleTimeout;
+    let gameActive = false;
+    const emojis = ["🎉","✨","💥","💖","🕺","💃"];
+
+    function playPop(el) {
+      el.classList.add("pop");
+      setTimeout(() => el.classList.remove("pop"), 200);
+    }
+
+    function spawnEmoji(x, y) {
+      const emoji = document.createElement("div");
+      emoji.className = "emoji";
+      emoji.style.left = x + "px";
+      emoji.style.top = y + "px";
+      emoji.textContent = emojis[Math.floor(Math.random()*emojis.length)];
+      game.appendChild(emoji);
+      setTimeout(() => emoji.remove(), 1000);
+    }
+
+    async function saveScore(name, score) {
+      const docRef = db.collection("tap_scores").doc(name);
+      const doc = await docRef.get();
+      if (doc.exists && doc.data().score >= score) {
+        alert("Ya existe un puntaje mayor o igual para ese nombre.");
+        return false;
+      }
+      await docRef.set({ score, date: new Date().toLocaleDateString("es-CR", { day: "2-digit", month: "short", year: "numeric" }) });
+      return true;
+    }
+
+    async function loadTopScores() {
+      const snapshot = await db.collection("tap_scores").orderBy("score","desc").limit(5).get();
+      topScoresEl.innerHTML = "";
+      snapshot.forEach(doc => {
+        const li = document.createElement("li");
+        li.textContent = `${doc.id}: ⭐ ${doc.data().score}`;
+        topScoresEl.appendChild(li);
+      });
+    }
+
+    function spawnCircle() {
+      if (!gameActive) return;
+
+      const circle = document.createElement("div");
+      circle.classList.add("circle");
+
+      const size = 60 + Math.random() * 60;
+      circle.style.width = size + "px";
+      circle.style.height = size + "px";
+
+      const x = Math.random() * (window.innerWidth - size);
+      const y = Math.random() * (window.innerHeight - size - 80) + 80;
+
+      circle.style.left = x + "px";
+      circle.style.top = y + "px";
+
+      game.appendChild(circle);
+
+      let clicked = false;
+
+      circle.addEventListener("click", () => {
+        if (!clicked && gameActive) {
+          clicked = true;
+          score++;
+          scoreEl.textContent = score;
+          playPop(scoreEl);
+          hitSound.currentTime = 0;
+          hitSound.play();
+          spawnEmoji(x + size/2, y + size/2);
+          circle.remove();
+        }
+      });
+
+      setTimeout(() => {
+        if (!clicked && gameActive) {
+          circle.remove();
+          lives--;
+          livesEl.textContent = lives;
+          playPop(livesEl);
+          failSound.currentTime = 0;
+          failSound.play();
+          if (lives <= 0) endGame();
+        }
+      }, speed);
+
+      circleTimeout = setTimeout(spawnCircle, speed);
+      if (speed > 500) speed -= 15;
+    }
+
+    async function endGame() {
+      gameActive = false;
+      clearTimeout(circleTimeout);
+      finalScoreEl.textContent = score;
+      gameoverEl.style.display = "block";
+      hud.style.display = "none";
+      bgMusic.pause();
+
+      let name = prompt("¡Juego terminado! Ingresa tu nombre para guardar el puntaje:");
+      if (name) {
+        name = name.trim();
+        if (name.length > 0) await saveScore(name, score);
+      }
+      await loadTopScores();
+    }
+
+    restartBtn.addEventListener("click", startGame);
+    startBtn.addEventListener("click", startGame);
+
+    function startGame() {
+      startBtn.style.display = "none";
+      hud.style.display = "flex";
+      score = 0;
+      lives = 5;
+      speed = 2000;
+      scoreEl.textContent = score;
+      livesEl.textContent = lives;
+      gameoverEl.style.display = "none";
+      gameActive = true;
+      bgMusic.currentTime = 0;
+      bgMusic.volume = 0.4;
+      bgMusic.play();
+      spawnCircle();
+    }
+  </script>
+</body>
+</html>
