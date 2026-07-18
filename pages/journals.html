@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ROCKSHOW V4 — Journals</title>
+  <link rel="stylesheet" href="../style/journals.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Righteous&family=Staatliches&family=Spectral:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="scanline-overlay"></div>
+  <div class="grid-overlay"></div>
+  <div class="stars"></div>
+  <div class="nebula"></div>
+
+  <header class="journals-topbar">
+    <h2 class="title">📓 Journals</h2>
+    <a href="../index.html" class="back-btn">← volver</a>
+  </header>
+
+  <section class="intro">
+    <h1>Journals</h1>
+    <p>Recuerdos con las personas más importantes ✨</p>
+  </section>
+
+  <section class="journal-grid">
+    <a href="jimejournal.html" class="journal-card">
+      <div class="icon">🌌</div>
+      <span>JS</span>
+    </a>
+
+  <a href="pulguijournal.html" class="journal-card">
+      <div class="icon">🌿</div>
+      <span>P</span>
+    </a>
+
+    <a href="laujournal.html" class="journal-card">
+      <div class="icon">✨</div>
+      <span>L</span>
+    </a>
+
+    <a href="#" class="journal-card">
+      <div class="icon">🌊</div>
+      <span>Under Construction</span>
+    </a>
+  </section>
+
+  <footer>
+    <p id="frase-footer"></p>
+  </footer>
+  <!-- Barra de navegación inferior (móvil) -->
+  <nav class="journals-tabbar" aria-label="Navegación principal">
+    <span class="tabbar-indicator" aria-hidden="true"></span>
+    <a class="tabbar-item" href="../index.html" aria-label="Inicio" data-tab="home">
+      <span class="tab-ico">🏠</span>
+      <span class="tab-label">Inicio</span>
+    </a>
+    <a class="tabbar-item" href="journals.html" aria-label="Journals" data-tab="journal">
+      <span class="tab-ico">📓</span>
+      <span class="tab-label">Journals</span>
+    </a>
+    <a class="tabbar-item" href="tools.html" aria-label="Herramientas" data-tab="tools">
+      <span class="tab-ico">🛠</span>
+      <span class="tab-label">Tools</span>
+    </a>
+    <a class="tabbar-item" href="rockola.html" aria-label="Rockola" data-tab="rockola">
+      <span class="tab-ico">🎵</span>
+      <span class="tab-label">Rockola</span>
+    </a>
+  </nav>
+  <script>
+    const frases = [
+      "recuerdos a color // vibra eterna",
+      "cada journal es un vinilo",
+      "palabras pintadas // eco dorado",
+      "historias retro // memorias vintage",
+      "smile // write // remember",
+      "tinta rosa sobre papel grunge"
+    ];
+    document.getElementById("frase-footer").textContent =
+      frases[Math.floor(Math.random() * frases.length)];
+
+    (function(){
+      const tabs=document.querySelectorAll('.journals-tabbar .tabbar-item');
+      const indicator=document.querySelector('.journals-tabbar .tabbar-indicator');
+      const currentFile=location.pathname.split('/').pop().toLowerCase();
+      tabs.forEach(tab=>{ const href=tab.getAttribute('href'); if(!href) return; const file=href.split('/').pop().toLowerCase(); if(file===currentFile) tab.classList.add('active'); });
+      function moveIndicator(target){
+        const active=target||document.querySelector('.journals-tabbar .tabbar-item.active')||tabs[0]; if(!active||!indicator) return;
+        const width=active.offsetWidth*0.55; const x=active.offsetLeft+(active.offsetWidth-width)/2;
+        indicator.style.width=width+'px'; indicator.style.transform='translateX('+x+'px)';
+      }
+      requestAnimationFrame(()=>moveIndicator());
+      tabs.forEach(t=>t.addEventListener('click', e=>moveIndicator(e.currentTarget)));
+      window.addEventListener('resize', ()=>moveIndicator());
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <title>Lau Journal</title>
+  <link rel="stylesheet" href="../style/laujournal.css" />
+  <link rel="stylesheet" href="../style/password-gate.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand&family=Dancing+Script&family=Righteous&family=Staatliches&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="password-gate" id="passwordGate">
+    <div class="password-gate__inner">
+      <span class="password-gate__smiley">☺</span>
+      <h2 class="password-gate__title">ACCESS CODE</h2>
+      <p class="password-gate__sub">enter the password to continue</p>
+      <div class="password-gate__input-wrap">
+        <input class="password-gate__input" id="passwordInput" type="password" placeholder="••••••••" autocomplete="off">
+        <button class="password-gate__btn" id="passwordBtn">enter</button>
+      </div>
+      <p class="password-gate__error" id="passwordError"></p>
+      <p class="password-gate__hint" id="passwordHint">?</p>
+    </div>
+  </div>
+  <div class="background-hearts"></div>
+  
+  <!-- Rose decorative elements -->
+  <div class="rose-decoration">
+    <div class="floating-rose">🌹</div>
+    <div class="floating-rose">💖</div>
+    <div class="floating-rose">🌸</div>
+    <div class="floating-rose">🌹</div>
+    <div class="floating-rose">💖</div>
+    <div class="floating-rose">🌸</div>
+  </div>
+  
+  <!-- Corner decorations -->
+  <div class="corner-decoration top-left">💝</div>
+  <div class="corner-decoration top-right">🌹</div>
+  <div class="corner-decoration bottom-left">💕</div>
+  <div class="corner-decoration bottom-right">🌸</div>
+
+  <header class="laujournal-topbar">
+    <h2>Lau Journal</h2>
+    <div class="header-controls">
+  <button class="control-btn dashboard-btn" id="stats-btn" title="Dashboard de Estadísticas">📊</button>
+  <button class="control-btn mosaic-btn" id="mosaic-btn" title="Vista Mosaico">🎨</button>
+  <button class="control-btn today-btn" id="today-btn" title="En Este Día">📅</button>
+  <a href="journals.html" class="back-btn">← volver</a>
+    </div>
+  </header>
+
+  <section class="diary">
+    <h1 class="initials-title">💖 LAU 💖</h1>
+
+    <!-- Statistics Dashboard -->
+    <div class="stats-dashboard" id="stats-dashboard" style="display: none;">
+      <div class="dashboard-header">
+        <h3>📊 Dashboard de Recuerdos</h3>
+        <button class="close-dashboard" id="close-stats">×</button>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-card total-memories">
+          <div class="stat-icon">📸</div>
+          <div class="stat-content">
+            <div class="stat-number" id="total-photos">22</div>
+            <div class="stat-label">Total de Recuerdos</div>
+          </div>
+        </div>
+        <div class="stat-card total-notes">
+          <div class="stat-icon">💭</div>
+          <div class="stat-content">
+            <div class="stat-number" id="total-notes">0</div>
+            <div class="stat-label">Notas Escritas</div>
+          </div>
+        </div>
+        <div class="stat-card years-active">
+          <div class="stat-icon">🗓️</div>
+          <div class="stat-content">
+            <div class="stat-number" id="years-span">2</div>
+            <div class="stat-label">Años de Recuerdos</div>
+          </div>
+        </div>
+        <div class="stat-card most-noted">
+          <div class="stat-icon">⭐</div>
+          <div class="stat-content">
+            <div class="stat-number" id="most-noted-photo">-</div>
+            <div class="stat-label">Recuerdo Más Especial</div>
+          </div>
+        </div>
+      </div>
+      <div class="charts-section">
+        <div class="chart-card">
+          <h4>📈 Recuerdos por Año</h4>
+          <div class="year-chart" id="year-chart"></div>
+        </div>
+        <div class="chart-card">
+          <h4>💕 Lugares Favoritos</h4>
+          <div class="places-chart" id="places-chart"></div>
+        </div>
+      </div>
+      <div class="recent-activity">
+        <h4>🕒 Actividad Reciente</h4>
+        <div class="activity-list" id="activity-list"></div>
+      </div>
+    </div>
+
+    <!-- On This Day Section -->
+    <div class="on-this-day" id="on-this-day" style="display: none;">
+      <div class="today-header">
+        <h3>📅 En Este Día</h3>
+        <button class="close-today" id="close-today">×</button>
+      </div>
+      <div class="today-content" id="today-content">
+        <!-- Will be populated by JavaScript -->
+      </div>
+    </div>
+
+    <div class="timeline"></div> <!-- timeline -->
+
+    <div class="view-controls">
+      <button class="view-toggle active" data-view="grid" id="grid-view" aria-label="Cuadrícula" title="Cuadrícula">🔲</button>
+      <button class="view-toggle" data-view="mosaic" id="mosaic-view" aria-label="Mosaico" title="Mosaico">🎨</button>
+      <button class="view-toggle" data-view="presentation" id="presentation-view" aria-label="Presentación" title="Presentación">🎞️</button>
+    </div>
+
+    <div class="collage-grid" id="collage-grid">
+      <!-- Se llena dinámicamente con JS -->
+    </div>
+
+    <!-- Mosaic Container -->
+    <div class="mosaic-container" id="mosaic-container">
+      <!-- Se llena dinámicamente con JS -->
+    </div>
+  </section>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox">
+    <span class="lightbox-close">&times;</span>
+    <div class="lightbox-content">
+      <img class="lightbox-img" id="lightbox-img" src="" alt="">
+      <p class="lightbox-caption" id="lightbox-caption"></p>
+
+      <!-- Memory Notes Section -->
+      <div class="memory-notes-section">
+        <div class="notes-header">
+          <h4>💭 Notas</h4>
+          <div class="lightbox-control-group">
+            <button class="action-btn favorite-star-btn" onclick="toggleFavorite(currentPhotoId)" title="Favorito" aria-label="Favorito">☆</button>
+            <!-- Download button removed: long-press on image provides native save option -->
+            <span class="controls-divider">|</span>
+            <button class="lightbox-nav-btn" id="lightbox-prev" aria-label="Anterior" title="Anterior">⟨</button>
+            <button class="lightbox-nav-btn" id="lightbox-next" aria-label="Siguiente" title="Siguiente">⟩</button>
+            <button class="add-note-btn" id="add-note-btn" aria-label="Agregar Nota" title="Agregar Nota">+</button>
+          </div>
+        </div>
+        <div class="notes-container" id="notes-container">
+          <!-- Notes will be loaded here -->
+        </div>
+        <div class="add-note-form" id="add-note-form" style="display: none;">
+          <textarea id="note-input" placeholder="Escribe tu recuerdo, pensamiento o sentimiento sobre esta foto..."></textarea>
+          <div class="note-actions">
+            <button class="save-note-btn" id="save-note-btn">💾 Guardar</button>
+            <button class="cancel-note-btn" id="cancel-note-btn">❌ Cancelar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Presentation Overlay -->
+  <div class="presentation-overlay" id="presentation-overlay" style="display: none;">
+    <div class="presentation-content">
+      <img class="presentation-image" id="presentation-image" alt="">
+      <div class="presentation-caption" id="presentation-caption"></div>
+      <div class="presentation-controls">
+        <button id="presentation-prev" class="presentation-btn" title="Anterior">⟨</button>
+        <button id="presentation-playpause" class="presentation-btn" title="Pausar/Reanudar">⏸</button>
+        <button id="presentation-next" class="presentation-btn" title="Siguiente">⟩</button>
+        <button id="presentation-exit" class="presentation-btn" title="Salir">✕</button>
+      </div>
+    </div>
+    <audio id="presentation-audio" preload="auto" loop src="../assets/audio/rockola/EscapateConmigo.mp3"></audio>
+  </div>
+
+  <!-- Firebase Scripts -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+
+  <script src="../js/password-gate.js"></script>
+  <script src="../js/laujournal.js"></script>
+  <nav class="laujournal-tabbar" aria-label="Navegación principal">
+    <span class="tabbar-indicator" aria-hidden="true"></span>
+    <a class="tabbar-item" href="../index.html" aria-label="Inicio" data-tab="home">
+      <span class="tab-ico">🏠</span>
+      <span class="tab-label">Inicio</span>
+    </a>
+    <a class="tabbar-item" href="journals.html" aria-label="Journals" data-tab="journal">
+      <span class="tab-ico">📓</span>
+      <span class="tab-label">Journals</span>
+    </a>
+    <a class="tabbar-item" href="tools.html" aria-label="Herramientas" data-tab="tools">
+      <span class="tab-ico">🛠</span>
+      <span class="tab-label">Tools</span>
+    </a>
+    <a class="tabbar-item" href="rockola.html" aria-label="Rockola" data-tab="rockola">
+      <span class="tab-ico">🎵</span>
+      <span class="tab-label">Rockola</span>
+    </a>
+  </nav>
+  <script>
+    (function(){
+      const tabs=document.querySelectorAll('.laujournal-tabbar .tabbar-item');
+      const indicator=document.querySelector('.laujournal-tabbar .tabbar-indicator');
+      const currentFile=location.pathname.split('/').pop().toLowerCase();
+      tabs.forEach(tab=>{ const href=tab.getAttribute('href'); if(!href) return; const file=href.split('/').pop().toLowerCase(); if(file===currentFile) tab.classList.add('active'); });
+      function moveIndicator(target){
+        const active=target||document.querySelector('.laujournal-tabbar .tabbar-item.active')||tabs[0]; if(!active||!indicator) return;
+        const width=active.offsetWidth*0.55; const x=active.offsetLeft+(active.offsetWidth-width)/2;
+        indicator.style.width=width+'px'; indicator.style.transform='translateX('+x+'px)';
+      }
+      requestAnimationFrame(()=>moveIndicator());
+      tabs.forEach(t=>t.addEventListener('click', e=>moveIndicator(e.currentTarget)));
+      window.addEventListener('resize', ()=>moveIndicator());
+    })();
+  </script>
+</body>
+</html>
