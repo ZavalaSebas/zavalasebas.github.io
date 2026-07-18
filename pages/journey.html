@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contador Misterioso</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #111;
+      color: #eee;
+      font-family: 'Quicksand', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      color: #ff4081;
+      font-weight: bold;
+    }
+
+    .progress-container {
+      position: relative;
+      width: 80%;
+      height: 40px;
+      background: #333;
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, #ff4081, #ff80ab);
+      width: 0;
+      transition: width 1s linear;
+    }
+
+    .walker {
+      position: absolute;
+      top: -35px;
+      left: 0;
+      font-size: 30px;
+      transition: left 1s linear;
+    }
+
+    .events {
+      margin-top: 40px;
+      width: 80%;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .event {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 1s ease;
+      padding: 10px;
+      background: #222;
+      border-left: 3px solid #ff4081;
+      border-radius: 6px;
+    }
+
+    .event.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    #secret {
+      text-align: center;
+      font-size: 1.2rem;
+      margin-top: 30px;
+      opacity: 0;
+      transition: opacity 2s ease;
+      color: #ff80ab;
+    }
+
+    #secret.show {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+  <h1>Camino Misterioso</h1>
+
+  <div class="progress-container">
+    <div class="progress-bar" id="progress"></div>
+    <div class="walker" id="walker">🚶</div>
+  </div>
+
+  <div class="events">
+    <div class="event" data-progress="10">🌑 Todo parece vacío…</div>
+    <div class="event" data-progress="30">🌌 Una primera señal en la distancia.</div>
+    <div class="event" data-progress="50">✨ Algo comienza a cobrar sentido.</div>
+    <div class="event" data-progress="70">🔥 El camino se enciende con misterio.</div>
+    <div class="event" data-progress="90">🔮 El final está cerca…</div>
+  </div>
+
+  <div id="secret">🎉 Has llegado al final. El secreto se revela…</div>
+
+  <script>
+    const totalSeconds = 600; // 10 minutos
+    let elapsed = 0;
+
+    const progressBar = document.getElementById("progress");
+    const walker = document.getElementById("walker");
+    const events = document.querySelectorAll(".event");
+    const secret = document.getElementById("secret");
+
+    function updateProgress() {
+      elapsed++;
+      let percent = (elapsed / totalSeconds) * 100;
+      if (percent > 100) percent = 100;
+
+      progressBar.style.width = percent + "%";
+      walker.style.left = `calc(${percent}% - 15px)`; // 15px corrige el emoji centrado
+
+      // Mostrar eventos según progreso
+      events.forEach(ev => {
+        const trigger = parseInt(ev.getAttribute("data-progress"));
+        if (percent >= trigger) {
+          ev.classList.add("show");
+        }
+      });
+
+      // Mostrar secreto al final
+      if (percent >= 100) {
+        secret.classList.add("show");
+        clearInterval(timer);
+      }
+    }
+
+    const timer = setInterval(updateProgress, 1000); // cada segundo
+  </script>
+</body>
+</html>

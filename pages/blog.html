@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blog</title>
+  <link rel="stylesheet" href="../style/blog.css" />
+  <link rel="stylesheet" href="../style/password-gate.css" />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&family=Righteous&family=Staatliches&display=swap" rel="stylesheet">
+  <meta name="theme-color" content="#f7f3ee" />
+</head>
+<body class="blog">
+  <div class="password-gate" id="passwordGate">
+    <div class="password-gate__inner">
+      <span class="password-gate__smiley">☺</span>
+      <h2 class="password-gate__title">ACCESS CODE</h2>
+      <p class="password-gate__sub">enter the password to continue</p>
+      <div class="password-gate__input-wrap">
+        <input class="password-gate__input" id="passwordInput" type="password" placeholder="••••••••" autocomplete="off">
+        <button class="password-gate__btn" id="passwordBtn">enter</button>
+      </div>
+      <p class="password-gate__error" id="passwordError"></p>
+      <p class="password-gate__hint" id="passwordHint">?</p>
+    </div>
+  </div>
+  <header class="blog-topbar">
+    <a href="../index.html" class="back-btn">← volver</a>
+    <div class="brand">
+      <span class="brand-dot" aria-hidden="true"></span>
+      <span class="brand-name">Adventure time</span>
+    </div>
+    <span id="visitCount" class="visit-count" aria-live="polite">visitas: --</span>
+    <button id="audioToggle" class="audio-btn" type="button" aria-pressed="false">audio</button>
+    <button id="scrollTop" class="ghost-btn" type="button" aria-label="Subir">subir</button>
+  </header>
+
+  <section class="hero">
+    <div class="hero-card">
+      <p class="eyebrow">Adventure time</p>
+      <h1>🥸♥️</h1>
+      <p class="hero-text">Notes for you.</p>
+    </div>
+  </section>
+
+  <main class="feed" id="postList" aria-live="polite"></main>
+
+  <section class="footer-note">
+    <p>Stay Tune.</p>
+  </section>
+
+  <audio id="blogAudio" autoplay muted loop>
+    <source src="../assets/audio/blog.mp3" type="audio/mpeg">
+  </audio>
+
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+  <script src="../js/password-gate.js"></script>
+  <script src="../js/blog.js"></script>
+</body>
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Before I Die</title>
+  <link rel="stylesheet" href="../style/beforeidie.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;700&family=Kalam:wght@300;400;700&family=Space+Grotesk:wght@500&display=swap" rel="stylesheet">
+</head>
+<body class="die-page">
+  <div class="chalk-grain" aria-hidden="true"></div>
+  <div class="chalk-glow" aria-hidden="true"></div>
+
+  <header class="die-topbar">
+    <a href="../index.html" class="back-btn" aria-label="Volver al inicio">← volver</a>
+    <div class="title-block">
+      <p class="eyebrow">muro de deseos</p>
+      <h1>Before I Die</h1>
+      <p class="subtitle">Cosas que quiero hacer antes de morir</p>
+    </div>
+    <div class="progress" aria-live="polite" id="progressText">0/10</div>
+    <button class="ghost-btn" id="audioToggle" type="button" aria-pressed="false">audio</button>
+  </header>
+
+  <main class="wall">
+    <section class="intro-note">
+      <p class="intro-title">Un recordatorio para no olvidarme</p>
+      <p class="intro-text">Esta lista es una libreta abierta: ideas locas, promesas suaves y una que otra aventura pendiente. Si una está marcada, es porque la viví de verdad.</p>
+    </section>
+
+    <ul class="bucket-list" id="bucketList">
+      <li class="bucket-item" data-item-id="amor" style="--delay: 0ms;">
+        <button class="item-btn" type="button" aria-pressed="false">
+          <span class="check" aria-hidden="true">☐</span>
+          <span class="text"><span class="old-idea">Quiero conocer al amor de mi vida</span><span class="swap">-></span><span class="new-idea">Quiero conocer a alguien que me ame como soy.</span></span>
+          <span class="tag">amor</span>
+        </button>
+      </li>
+      <li class="bucket-item" data-item-id="viajar-desconocido" style="--delay: 80ms;">
+        <button class="item-btn" type="button" aria-pressed="false">
+          <span class="check" aria-hidden="true">☐</span>
+          <span class="text"><span class="plain-text">Quiero viajar a donde nadie haya ido.</span></span>
+          <span class="tag">viaje</span>
+        </button>
+      </li>
+      <li class="bucket-item" data-item-id="amigos" style="--delay: 160ms;">
+        <button class="item-btn" type="button" aria-pressed="false">
+          <span class="check" aria-hidden="true">☐</span>
+          <span class="text"><span class="plain-text">Quiero que mis amigos sepan que me importaron mas que nada.</span></span>
+          <span class="tag">amistad</span>
+        </button>
+      </li>
+      <li class="bucket-item" data-item-id="recordado" style="--delay: 240ms;">
+        <button class="item-btn" type="button" aria-pressed="false">
+          <span class="check" aria-hidden="true">☐</span>
+          <span class="text"><span class="plain-text">Quiero ser recordado alegremente.</span></span>
+          <span class="tag">memoria</span>
+        </button>
+      </li>
+      <li class="bucket-item" data-item-id="24h" style="--delay: 320ms;">
+        <button class="item-btn" type="button" aria-pressed="false">
+          <span class="check" aria-hidden="true">☐</span>
+          <span class="text"><span class="plain-text">Quiero pasar 24 horas despiertas con alguien.</span></span>
+          <span class="tag">tiempo</span>
+        </button>
+      </li>
+      <li class="bucket-item" data-item-id="bailar" style="--delay: 400ms;">
+        <button class="item-btn" type="button" aria-pressed="false">
+          <span class="check" aria-hidden="true">☐</span>
+          <span class="text"><span class="plain-text">Quiero bailar con alguien especial.</span></span>
+          <span class="tag">ritmo</span>
+        </button>
+      </li>
+      <li class="bucket-item" data-item-id="amarme" style="--delay: 480ms;">
+        <button class="item-btn" type="button" aria-pressed="false">
+          <span class="check" aria-hidden="true">☐</span>
+          <span class="text"><span class="plain-text">Quiero aprender a amarme.</span></span>
+          <span class="tag">calma</span>
+        </button>
+      </li>
+      <li class="bucket-item" data-item-id="estrella" style="--delay: 560ms;">
+        <button class="item-btn" type="button" aria-pressed="false">
+          <span class="check" aria-hidden="true">☐</span>
+          <span class="text"><span class="plain-text">Quiero ver una estrella fugaz.</span></span>
+          <span class="tag">cielo</span>
+        </button>
+      </li>
+      <li class="bucket-item" data-item-id="independiente" style="--delay: 640ms;">
+        <button class="item-btn" type="button" aria-pressed="false">
+          <span class="check" aria-hidden="true">☐</span>
+          <span class="text"><span class="plain-text">Quiero ser mas independiente.</span></span>
+          <span class="tag">yo</span>
+        </button>
+      </li>
+      <li class="bucket-item" data-item-id="paracaidismo" style="--delay: 720ms;">
+        <button class="item-btn" type="button" aria-pressed="false">
+          <span class="check" aria-hidden="true">☐</span>
+          <span class="text"><span class="plain-text">Quiero hacer paracaidismo.</span></span>
+          <span class="tag">adrenalina</span>
+        </button>
+      </li>
+      <li class="bucket-item" data-item-id="vivir-juntos" style="--delay: 800ms;">
+        <button class="item-btn" type="button" aria-pressed="false">
+          <span class="check" aria-hidden="true">☐</span>
+          <span class="text"><span class="old-idea">Quiero casarme</span><span class="swap">-></span><span class="new-idea">Quiero vivir con alguien especial.</span></span>
+          <span class="tag">hogar</span>
+        </button>
+      </li>
+      <li class="bucket-item" data-item-id="hijos" style="--delay: 880ms;">
+        <button class="item-btn" type="button" aria-pressed="false">
+          <span class="check" aria-hidden="true">☐</span>
+          <span class="text"><span class="old-idea">Quiero tener hijos</span><span class="swap">-></span><span class="new-idea">?</span></span>
+          <span class="tag">misterio</span>
+        </button>
+      </li>
+      <li class="bucket-item" data-item-id="acampar" style="--delay: 960ms;">
+        <button class="item-btn" type="button" aria-pressed="false">
+          <span class="check" aria-hidden="true">☐</span>
+          <span class="text"><span class="plain-text">Quiero acampar con amigos.</span></span>
+          <span class="tag">fuego</span>
+        </button>
+      </li>
+      <li class="bucket-item" data-item-id="impacto" style="--delay: 1040ms;">
+        <button class="item-btn" type="button" aria-pressed="false">
+          <span class="check" aria-hidden="true">☐</span>
+          <span class="text"><span class="plain-text">Quiero hacer algo que deje un impacto.</span></span>
+          <span class="tag">huella</span>
+        </button>
+      </li>
+    </ul>
+
+    <section class="closing">
+      <div class="stamp">2026</div>
+      <p>Todo se ve mejor cuando hay una lista y un lápiz cerca.</p>
+      <span class="signature">— S</span>
+    </section>
+  </main>
+
+    <audio id="beforeAudio" autoplay muted loop>
+      <source src="../assets/audio/letdown.mp3" type="audio/mpeg">
+    </audio>
+
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+  <script src="../js/beforeidie.js"></script>
+</body>
+</html>
