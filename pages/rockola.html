@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Rockola</title>
+  <link rel="stylesheet" href="../style/rockola.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="glow-background"></div>
+  <header class="rockola-topbar">
+    <h2 class="music-title">Rockola</h2>
+    <a href="pentatonic.html" class="back-btn">← volver</a>
+  </header>
+  <section class="rockola-section">
+    <h1 class="section-title">Love is True Rock</h1>
+    <button id="toggle-view-btn" class="toggle-view-btn">Ver como lista</button>
+    <div id="rockola-shelf-view">
+      <div class="rockola-shelf-group">
+        <h3 class="shelf-title">Instrumental y Covers</h3>
+        <div id="rockola-shelf-instrumental" class="rockola-shelf"></div>
+      </div>
+      <div class="rockola-shelf-group">
+        <h3 class="shelf-title">Singles</h3>
+        <div id="rockola-shelf-singles" class="rockola-shelf"></div>
+      </div>
+      <div class="rockola-shelf-group">
+        <h3 class="shelf-title">Studio / Sesiones</h3>
+        <div id="rockola-shelf-studio" class="rockola-shelf"></div>
+      </div>
+      <div class="rockola-shelf-group">
+        <h3 class="shelf-title">Álbumes</h3>
+        <div id="rockola-shelf-albums" class="rockola-shelf"></div>
+      </div>
+      <div class="rockola-shelf-group">
+        <h3 class="shelf-title">Todo</h3>
+        <div id="rockola-shelf-todo" class="rockola-shelf"></div>
+      </div>
+    </div>
+    <div id="rockola-list-view" class="rockola-list-view" style="display:none">
+      <table class="rockola-list-table">
+        <thead>
+          <tr><th>Portada</th><th>Título</th><th>Duración</th></tr>
+        </thead>
+        <tbody id="rockola-list-tbody"></tbody>
+      </table>
+    </div>
+    <div id="rockola-player" class="rockola-player">
+      <div class="player-bg"></div>
+      <button id="close-player" class="close-player">✖</button>
+      <div class="player-disc-container">
+        <button id="prev-track" class="player-nav left">⏮</button>
+        <img id="player-portada" class="player-portada" src="" alt="portada" />
+        <button id="next-track" class="player-nav right">⏭</button>
+      </div>
+      <div class="player-info">
+        <h2 id="player-nombre"></h2>
+        <span id="player-duracion"></span>
+      </div>
+      <audio id="player-audio" controls></audio>
+      <div class="player-lyrics">
+        <h3>Lyrics</h3>
+        <div id="player-letra" class="player-letra-content">(Lyrics not available)</div>
+      </div>
+      <div class="player-history">
+        <h3>Backpage</h3>
+        <div id="player-historia" class="player-historia-content">(Backpage not available)</div>
+      </div>
+    </div>
+  </section>
+  <footer>
+    <p>pentatonic: rockola musical</p>
+  </footer>
+  <!-- Barra de navegación inferior (móvil) -->
+  <nav class="rockola-tabbar" aria-label="Navegación principal">
+    <span class="tabbar-indicator" aria-hidden="true"></span>
+    <a class="tabbar-item" href="../index.html" aria-label="Inicio" data-tab="home">
+      <span class="tab-ico">🏠</span>
+      <span class="tab-label">Inicio</span>
+    </a>
+    <a class="tabbar-item" href="journals.html" aria-label="Journal" data-tab="journal">
+      <span class="tab-ico">📓</span>
+      <span class="tab-label">Journal</span>
+    </a>
+    <a class="tabbar-item" href="tools.html" aria-label="Herramientas" data-tab="tools">
+      <span class="tab-ico">🛠</span>
+      <span class="tab-label">Tools</span>
+    </a>
+    <a class="tabbar-item" href="rockola.html" aria-label="Rockola" data-tab="rockola">
+      <span class="tab-ico">🎵</span>
+      <span class="tab-label">Rockola</span>
+    </a>
+  </nav>
+  <script>
+    (function(){
+      const tabs=document.querySelectorAll('.rockola-tabbar .tabbar-item');
+      const indicator=document.querySelector('.rockola-tabbar .tabbar-indicator');
+      const currentFile=location.pathname.split('/').pop().toLowerCase();
+      tabs.forEach(tab=>{ const href=tab.getAttribute('href'); if(!href) return; const file=href.split('/').pop().toLowerCase(); if(file===currentFile) tab.classList.add('active'); });
+      function moveIndicator(target){
+        const active=target||document.querySelector('.rockola-tabbar .tabbar-item.active')||tabs[0]; if(!active||!indicator) return;
+        const width=active.offsetWidth*0.55; const x=active.offsetLeft+(active.offsetWidth-width)/2;
+        indicator.style.width=width+'px'; indicator.style.transform='translateX('+x+'px)';
+      }
+      requestAnimationFrame(()=>moveIndicator());
+      tabs.forEach(t=>t.addEventListener('click', e=>moveIndicator(e.currentTarget)));
+      window.addEventListener('resize', ()=>moveIndicator());
+    })();
+  </script>
+  <script src="../js/rockola.js"></script>
+</body>
+</html>

@@ -1,0 +1,464 @@
+/* --- Botón de alternar vista --- */
+.toggle-view-btn {
+  display: inline-block;
+  margin: 1.5rem auto 2.5rem auto;
+  padding: 0.85rem 2.2rem 0.85rem 2.8rem;
+  font-size: 1.15rem;
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 700;
+  color: #fff;
+  background: linear-gradient(90deg, #f72585 0%, #f9c74f 100%);
+  border: none;
+  border-radius: 32px;
+  box-shadow: 0 2px 16px #f9c74f44, 0 1.5px 8px #f7258522;
+  cursor: pointer;
+  letter-spacing: 1px;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+  position: relative;
+  z-index: 2;
+  outline: none;
+  overflow: hidden;
+}
+.toggle-view-btn:hover, .toggle-view-btn:focus {
+  background: linear-gradient(90deg, #f9c74f 0%, #f72585 100%);
+  color: #222;
+  transform: scale(1.06) rotate(-1deg);
+  box-shadow: 0 4px 24px #f9c74f66, 0 2px 12px #f7258555;
+}
+.toggle-view-btn::before {
+  content: '\1F3B5'; /* nota musical */
+  position: absolute;
+  left: 0.9rem;
+  top: 50%;
+  transform: translateY(-50%) scale(1.15) rotate(-10deg);
+  font-size: 1.25em;
+  opacity: 0.85;
+  pointer-events: none;
+  transition: left 0.2s;
+}
+.toggle-view-btn:active {
+  transform: scale(0.98);
+}
+/* --- Vista de lista tipo Spotify --- */
+.rockola-list-view {
+  margin: 2.5rem auto 2rem auto;
+  max-width: 700px;
+  background: #181825;
+  border-radius: 18px;
+  box-shadow: 0 2px 24px #f9c74f22;
+  padding: 1.5rem 1rem;
+}
+.rockola-list-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.rockola-list-table th, .rockola-list-table td {
+  padding: 0.7rem 0.5rem;
+  text-align: left;
+}
+.rockola-list-table th {
+  color: #f72585;
+  font-size: 1.1rem;
+  border-bottom: 2px solid #f9c74f44;
+}
+.rockola-list-row {
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.rockola-list-row:hover {
+  background: #f9c74f11;
+}
+.rockola-list-img {
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  object-fit: cover;
+  box-shadow: 0 2px 8px #f7258522;
+}
+.player-disc-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  margin-bottom: 2rem;
+  position: relative;
+}
+.player-nav.left {
+  margin-right: 2.5rem;
+}
+.player-nav.right {
+  margin-left: 2.5rem;
+}
+.player-portada {
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  box-shadow: 0 2px 32px #f9c74f80, 0 8px 48px #f7258580;
+  object-fit: cover;
+  background: #222;
+  animation: discoIdle 2s infinite alternate;
+  transition: box-shadow 0.2s;
+}
+.rockola-player.active .player-portada.playing {
+  animation: discoSpin 2.5s linear infinite;
+}
+@keyframes discoSpin {
+  100% { transform: rotate(360deg); }
+}
+.player-nav {
+  font-size: 2.2rem;
+  background: transparent;
+  border: none;
+  color: #f72585;
+  cursor: pointer;
+  transition: color 0.2s, transform 0.2s;
+  z-index: 2;
+}
+.player-nav:hover {
+  color: #f9c74f;
+  transform: scale(1.2);
+}
+.player-info {
+  text-align: center;
+  margin-bottom: 1.2rem;
+  position: relative;
+  z-index: 2;
+}
+.player-info::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 110%;
+  height: 120%;
+  background: rgba(20, 18, 34, 0.82);
+  filter: blur(2.5px);
+  border-radius: 18px;
+  z-index: -1;
+}
+.player-info h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 0.5rem 0 0.2rem 0;
+  color: #f72585;
+  text-shadow: 0 2px 8px #000a, 0 1px 0 #fff2;
+}
+.player-info span {
+  font-size: 1.1rem;
+  color: #fff;
+  opacity: 0.92;
+  text-shadow: 0 1px 6px #000a;
+}
+#player-audio {
+  width: 320px;
+  max-width: 90vw;
+  margin-top: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 16px #f9c74f40;
+}
+.player-lyrics, .player-history {
+  background: #1a1a2e;
+  border-radius: 16px;
+  margin: 2rem auto 1rem auto;
+  max-width: 420px;
+  padding: 1.2rem 1rem;
+  color: #f9c74f;
+  box-shadow: 0 2px 16px #f9c74f22;
+  max-height: 180px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #f72585 #181825;
+}
+.player-lyrics h3, .player-history h3 {
+  margin: 0 0 0.5rem 0;
+  color: #f72585;
+  font-size: 1.1rem;
+}
+.player-letra-content, .player-historia-content {
+  font-size: 1rem;
+  color: #fff;
+  opacity: 0.9;
+  white-space: pre-line;
+  max-height: 140px;
+  overflow-y: auto;
+  padding-right: 0.5em;
+  scrollbar-width: thin;
+  scrollbar-color: #f72585 #181825;
+}
+body.noscroll {
+  overflow: hidden !important;
+}
+/* Shelf group y títulos */
+.rockola-shelf-group {
+  margin-bottom: 2.5rem;
+}
+.shelf-title {
+  text-align: left;
+  font-size: 1.3rem;
+  color: #f72585;
+  margin: 1.5rem 0 0.5rem 2vw;
+  letter-spacing: 1px;
+  font-weight: 700;
+  text-shadow: 0 2px 8px #f9c74f40;
+}
+body {
+  margin: 0;
+  font-family: 'Quicksand', sans-serif;
+  background: linear-gradient(120deg, #0e0b16 60%, #1a1a2e 100%);
+  color: #f9c74f;
+  overflow-x: hidden;
+}
+.glow-background {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: radial-gradient(circle at 60% 40%, #f9c74f22 0%, #1a1a2e 80%, #0e0b16 100%);
+  z-index: -1;
+  animation: bgPulse 8s infinite alternate;
+}
+@keyframes bgPulse {
+  0% { filter: brightness(1) blur(0px); }
+  100% { filter: brightness(1.2) blur(2px); }
+}
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.2rem 2rem;
+  background: linear-gradient(90deg, #1a1a2e 60%, #f9c74f22 100%);
+  box-shadow: 0 2px 16px #f9c74f10;
+}
+.music-title {
+  font-size: 2.1rem;
+  color: #f9c74f;
+  letter-spacing: 2px;
+  font-family: 'Quicksand', sans-serif;
+  text-shadow: 0 2px 12px #f9c74f60;
+  font-weight: 900;
+}
+.back-btn {
+  color: #f9c74f;
+  text-decoration: none;
+  border: 1px solid #f9c74f;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  font-weight: bold;
+  background: #1a1a2e;
+  box-shadow: 0 2px 8px #f9c74f22;
+}
+.back-btn:hover {
+  background: #f9c74f;
+  color: #0e0b16;
+  box-shadow: 0 2px 16px #f9c74f80;
+}
+.section-title {
+  text-align: center;
+  margin-top: 2.5rem;
+  font-size: 2.3rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #43aa8b;
+  text-shadow: 0 2px 24px #f9c74f80, 0 4px 32px #f72585;
+  font-family: 'Quicksand', sans-serif;
+  animation: titlePulse 2.5s infinite alternate;
+}
+@keyframes titlePulse {
+  to { color: #f72585; text-shadow: 0 2px 32px #43aa8b80, 0 4px 32px #f9c74f; }
+}
+/* Selector de grabaciones */
+.rockola-section {
+  margin: 0 auto;
+  max-width: 900px;
+  padding: 2rem 1rem 0 1rem;
+  text-align: center;
+}
+.rockola-shelf {
+  display: flex;
+  flex-direction: row;
+  gap: 2.5rem;
+  margin-top: 2.5rem;
+  overflow-x: auto;
+  padding-bottom: 2rem;
+  scrollbar-width: thin;
+  scrollbar-color: #f9c74f #222;
+}
+.rockola-shelf::-webkit-scrollbar {
+  height: 12px;
+}
+.rockola-shelf::-webkit-scrollbar-thumb {
+  background: #f9c74f;
+  border-radius: 6px;
+}
+.rockola-shelf::-webkit-scrollbar-track {
+  background: #222;
+}
+.rockola-card {
+  background: linear-gradient(135deg, #1a1a2e 70%, #f9c74f22 100%);
+  border: 2px solid #f9c74f80;
+  border-radius: 20px;
+  min-width: 220px;
+  max-width: 220px;
+  color: #f9c74f;
+  text-align: center;
+  box-shadow: 0 0 24px #f9c74f22, 0 4px 32px #f7258522;
+  padding: 1.2rem 1rem 1.5rem 1rem;
+  transition: transform 0.25s cubic-bezier(.77,0,.18,1), box-shadow 0.2s, background 0.2s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+  will-change: transform;
+}
+.rockola-card:hover {
+  background: linear-gradient(135deg, #f9c74f 80%, #f72585 100%);
+  color: #0e0b16;
+  transform: scale(1.12) translateY(-12px) rotate(-6deg);
+  box-shadow: 0 0 48px #f9c74f80, 0 12px 64px #f7258580;
+  z-index: 2;
+}
+.rockola-card:active {
+  transform: scale(0.98) translateY(2px);
+}
+.rockola-img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  box-shadow: 0 2px 16px #f9c74f60;
+  margin-bottom: 1rem;
+  object-fit: cover;
+  background: #222;
+}
+.rockola-info h3 {
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin: 0.5rem 0 0.2rem 0;
+}
+.rockola-info span {
+  font-size: 0.95rem;
+  color: #fff;
+  opacity: 0.8;
+}
+
+/* Reproductor animado */
+.rockola-player {
+  background: rgba(20, 18, 34, 0.93);
+  backdrop-filter: blur(28px);
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 1500; /* sobrepasa topbar para no ocultar el disco */
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.rockola-player.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+.rockola-player.active .player-portada {
+  animation: discoIn 0.5s cubic-bezier(.77,0,.18,1) forwards;
+}
+@keyframes discoIn {
+  0% { transform: scale(0.5) rotate(-180deg); opacity: 0; }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+.player-bg {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background: radial-gradient(circle, #f9c74f22 0%, #1a1a2e 80%, #0e0b16 100%);
+  z-index: -1;
+  filter: blur(22px);
+/* Scrollbar personalizado para lyrics y backpage */
+.player-lyrics::-webkit-scrollbar, .player-history::-webkit-scrollbar,
+.player-letra-content::-webkit-scrollbar, .player-historia-content::-webkit-scrollbar {
+  width: 7px;
+  background: #181825;
+}
+.player-lyrics::-webkit-scrollbar-thumb, .player-history::-webkit-scrollbar-thumb,
+.player-letra-content::-webkit-scrollbar-thumb, .player-historia-content::-webkit-scrollbar-thumb {
+  background: #f72585;
+  border-radius: 8px;
+}
+}
+.close-player {
+  position: absolute;
+  top: 40px; right: 60px;
+  font-size: 2rem;
+  background: transparent;
+  border: none;
+  color: #f72585;
+  cursor: pointer;
+  z-index: 2;
+  transition: color 0.2s;
+}
+.close-player:hover {
+  color: #f9c74f;
+}
+.player-portada {
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  box-shadow: 0 2px 32px #f9c74f80, 0 8px 48px #f7258580;
+  margin-bottom: 2rem;
+  object-fit: cover;
+  background: #222;
+  animation: discoIdle 2s infinite alternate;
+}
+@keyframes discoIdle {
+  to { transform: rotate(8deg) scale(1.04); }
+}
+.player-info {
+  text-align: center;
+  margin-bottom: 1.2rem;
+}
+.player-info h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 0.5rem 0 0.2rem 0;
+  color: #f72585;
+}
+.player-info span {
+  font-size: 1.1rem;
+  color: #fff;
+  opacity: 0.8;
+}
+#player-audio {
+  width: 320px;
+  max-width: 90vw;
+  margin-top: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 16px #f9c74f40;
+}
+footer {
+  text-align: center;
+  padding: 2rem;
+  font-size: 1.1rem;
+  opacity: 0.8;
+  color: #f72585;
+  text-shadow: 0 2px 12px #f9c74f60;
+}
+
+/* Topbar isolation */
+.rockola-topbar { position:sticky; top:0; z-index:120; }
+
+/* Bottom tabbar (isolated, non-invasive) */
+.rockola-tabbar { position:fixed; bottom:0; left:0; width:100%; display:flex; justify-content:space-around; align-items:stretch; background:rgba(10,10,25,0.85); backdrop-filter:blur(12px) saturate(140%); border-top:1px solid #f9c74f33; z-index:1000; padding:.35rem 0 .3rem; }
+.rockola-tabbar .tabbar-item { flex:1; text-align:center; text-decoration:none; color:#f9c74f; font-size:.65rem; font-weight:600; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:.2rem; padding:.55rem 0 .45rem; border-radius:8px; position:relative; transition:background .35s,color .35s; user-select:none; }
+.rockola-tabbar .tabbar-item .tab-ico { font-size:1.25rem; }
+.rockola-tabbar .tabbar-item:hover { background:#f9c74f10; }
+.rockola-tabbar .tabbar-item:active { transform:translateY(1px); }
+.rockola-tabbar .tabbar-item.active { color:#0e0b16; background:#f9c74f; box-shadow:0 0 0 1px #f9c74f88, 0 4px 12px -2px #f9c74f66; }
+.rockola-tabbar .tabbar-item.active::after { content:''; position:absolute; top:0; left:50%; transform:translate(-50%,-50%); width:42%; height:4px; border-radius:10px; background:linear-gradient(90deg,#f9c74f,#ffd66b 70%); box-shadow:0 0 8px -2px #f9c74f, 0 0 14px -4px #f9c74f; }
+.rockola-tabbar .tabbar-indicator { position:absolute; bottom:0; left:0; height:4px; width:40px; background:linear-gradient(90deg,#f9c74f,#ffd66b); border-radius:4px 4px 0 0; box-shadow:0 0 8px #f9c74f80; transition: transform .45s cubic-bezier(.22,.8,.25,1), width .35s ease; pointer-events:none; }
+@media (max-width:600px){ body { padding-bottom:72px; } }
+@media (prefers-reduced-motion: reduce){ .rockola-tabbar { backdrop-filter:none; } }

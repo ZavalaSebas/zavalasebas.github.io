@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ROCKSHOW V4 — pentatonic</title>
+  <link rel="stylesheet" href="../style/pentatonic.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Righteous&family=Staatliches&family=Spectral:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body class="pentatonic-page">
+  <div class="scanline-overlay"></div>
+  <div class="grid-overlay"></div>
+  <div class="glow-background"></div>
+  <div class="floating-notes">
+    <span class="note">🎵</span>
+    <span class="note">🎶</span>
+    <span class="note">🎷</span>
+    <span class="note">🎸</span>
+    <span class="note">🎺</span>
+    <span class="note">🥁</span>
+    <span class="note">🎤</span>
+  </div>
+
+  <header class="pentatonic-topbar">
+    <h2 class="music-title">pentatonic</h2>
+    <a href="../index.html" class="back-btn">← volver</a>
+  </header>
+
+
+  <section class="music-menu">
+    <h1 class="section-title">choose track</h1>
+    <div class="music-grid">
+      <a href="musicarchive.html" class="music-card">
+        <div class="icon">🎼</div>
+        <span>Archivo Sonoro</span>
+        <p>canciones favoritas</p>
+      </a>
+      <a href="rockola.html" class="music-card">
+        <div class="icon">�</div>
+        <span>Rockola</span>
+        <p>Legacy</p>
+      </a>
+    </div>
+  </section>
+
+  <footer>
+    <p id="frase-footer"></p>
+  </footer>
+
+  <!-- Barra de navegación inferior (móvil) -->
+  <nav class="pentatonic-tabbar" aria-label="Navegación principal">
+    <span class="tabbar-indicator" aria-hidden="true"></span>
+    <a class="tabbar-item" href="../index.html" aria-label="Inicio" data-tab="home">
+      <span class="tab-ico">🏠</span>
+      <span class="tab-label">Inicio</span>
+    </a>
+    <a class="tabbar-item" href="journals.html" aria-label="Journal" data-tab="journal">
+      <span class="tab-ico">📓</span>
+      <span class="tab-label">Journal</span>
+    </a>
+    <a class="tabbar-item" href="tools.html" aria-label="Herramientas" data-tab="tools">
+      <span class="tab-ico">🛠</span>
+      <span class="tab-label">Tools</span>
+    </a>
+    <a class="tabbar-item" href="rockola.html" aria-label="Rockola" data-tab="rockola">
+      <span class="tab-ico">🎵</span>
+      <span class="tab-label">Rockola</span>
+    </a>
+  </nav>
+
+  <script>
+    const frases = [
+      "pentatonica como la escala",
+      "cada nota es un color",
+      "vibra dorada // eco grunge",
+      "musica retro // alma vintage",
+      "play // rock // repeat",
+      "sonidos que pintan el aire"
+    ];
+    document.getElementById("frase-footer").textContent =
+      frases[Math.floor(Math.random() * frases.length)];
+
+    (function(){
+      const tabs=document.querySelectorAll('.pentatonic-tabbar .tabbar-item');
+      const indicator=document.querySelector('.pentatonic-tabbar .tabbar-indicator');
+      const currentFile=location.pathname.split('/').pop().toLowerCase();
+      tabs.forEach(tab=>{
+        const href=tab.getAttribute('href'); if(!href) return; const file=href.split('/').pop().toLowerCase();
+        if(file===currentFile) tab.classList.add('active');
+      });
+      function moveIndicator(target){
+        const active=target||document.querySelector('.pentatonic-tabbar .tabbar-item.active')||tabs[0]; if(!active||!indicator) return;
+        const width=active.offsetWidth*0.55; const x=active.offsetLeft+(active.offsetWidth-width)/2;
+        indicator.style.width=width+'px'; indicator.style.transform='translateX('+x+'px)';
+      }
+      requestAnimationFrame(()=>moveIndicator());
+      tabs.forEach(t=>t.addEventListener('click', e=>moveIndicator(e.currentTarget)));
+      window.addEventListener('resize', ()=>moveIndicator());
+    })();
+  </script>
+</body>
+</html>
