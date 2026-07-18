@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>?</title>
+  <style>
+    body {
+      background: black;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      position: relative;
+      font-family: sans-serif;
+      transition: background 2s ease;
+    }
+
+    body.gradient-active {
+      background: linear-gradient(-45deg, #ff69b4, #ff6b6b, #ffcc70, #ccf381);
+      background-size: 400% 400%;
+      animation: gradient 10s ease infinite;
+    }
+
+    @keyframes gradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    #trust {
+      padding: 20px 40px;
+      font-size: 24px;
+      background-color: #fff;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      z-index: 2;
+      position: relative;
+      animation: pulse 1.5s infinite ease-in-out;
+      box-shadow: 0 0 0 rgba(255, 255, 255, 0.7);
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4);
+      }
+      70% {
+        transform: scale(1.05);
+        box-shadow: 0 0 0 20px rgba(255, 255, 255, 0);
+      }
+      100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+      }
+    }
+
+    video {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 100px;
+      height: auto;
+      transform: translate(-50%, -50%) scale(0);
+      transition: transform 1s ease-in-out;
+      z-index: 1;
+      border-radius: 16px;
+      display: block;
+    }
+
+    video.expanded {
+      transform: translate(-50%, -50%) scale(10);
+      filter: contrast(1.2) saturate(1.3) hue-rotate(30deg);
+    }
+
+    #intensifies {
+      position: absolute;
+      bottom: 40px;
+      width: 100%;
+      text-align: center;
+      color: white;
+      font-size: 36px;
+      font-weight: bold;
+      opacity: 0;
+      transition: opacity 1s ease;
+      text-shadow: 0 0 10px #000;
+      z-index: 3;
+    }
+
+    #intensifies.show {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+  <button id="trust">Trust me</button>
+
+  <video
+    id="ditto"
+    loop
+    preload="auto"
+    playsinline
+    webkit-playsinline
+    muted
+  >
+    <source src="/assets/video/DittoKonga.mp4" type="video/mp4" />
+    Tu navegador no soporta el video.
+  </video>
+
+  <div id="intensifies">KONGA!</div>
+
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <script>
+    const button = document.getElementById('trust');
+    const video = document.getElementById('ditto');
+    const intensifies = document.getElementById('intensifies');
+
+    let easterEggKeys = [];
+
+    button.addEventListener('click', () => {
+      document.title = "KONGA!";
+      document.body.classList.add('gradient-active');
+      button.style.display = 'none';
+
+      video.classList.add('expanded');
+      video.muted = false;
+      video.volume = 1;
+      video.play();
+
+      confetti({
+        particleCount: 150,
+        spread: 120,
+        origin: { y: 0.6 },
+      });
+
+      // Mostrar “KONGA!” a los 30 segundos
+      setTimeout(() => {
+        intensifies.classList.add('show');
+      }, 30000);
+    });
+
+    // Easter Egg: Presiona D + I + T para confeti con emojis
+    document.addEventListener('keydown', (e) => {
+      easterEggKeys.push(e.key.toUpperCase());
+      if (easterEggKeys.join('').includes('DIT')) {
+        for (let i = 0; i < 3; i++) {
+          setTimeout(() => {
+            confetti({
+              particleCount: 100,
+              spread: 150,
+              scalar: 1.2,
+              origin: { x: Math.random(), y: Math.random() },
+              emojis: ["🎉", "🕺", "💃", "🎶", "✨"]
+            });
+          }, i * 400);
+        }
+        easterEggKeys = [];
+      }
+      if (easterEggKeys.length > 3) easterEggKeys.shift();
+    });
+  </script>
+</body>
+</html>
