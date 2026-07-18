@@ -133,7 +133,30 @@
         if (Math.random() < 0.008) buf[i] = 0xffffffff;
       }
       ctx.putImageData(imgData, 0, 0);
-    }, 200);
+    }, 400);
+  }
+
+  // ── Film grain canvas ──
+  var grainCanvas = document.getElementById('grainCanvas');
+  if (grainCanvas) {
+    var gCtx = grainCanvas.getContext('2d');
+    var gScale = .06;
+    function resizeGrain() {
+      grainCanvas.width = Math.ceil(window.innerWidth * gScale);
+      grainCanvas.height = Math.ceil(window.innerHeight * gScale);
+    }
+    resizeGrain();
+    window.addEventListener('resize', resizeGrain);
+    setInterval(function () {
+      var w = grainCanvas.width, h = grainCanvas.height;
+      var imgData = gCtx.createImageData(w, h);
+      var buf = imgData.data;
+      for (var i = 0; i < buf.length; i += 4) {
+        var v = (Math.random() * 255) | 0;
+        buf[i] = v; buf[i + 1] = v; buf[i + 2] = v; buf[i + 3] = 255;
+      }
+      gCtx.putImageData(imgData, 0, 0);
+    }, 250);
   }
 
   // ── Floating particles ──
@@ -180,7 +203,8 @@
     if (Math.random() < .4) spawnBubble();
   }, 3000);
 
-  // ── Custom cursor ──
+  // ── Custom cursor (disabled for performance) ──
+  /*
   var cursorEl = document.getElementById('cursor');
   if (cursorEl && window.matchMedia('(pointer: fine)').matches) {
     var trailThrottle = 0;
@@ -211,6 +235,7 @@
       if (e.target.closest(hoverEls)) cursorEl.classList.remove('hover');
     });
   }
+  */
 
   // ── Logo glitch ──
   var logo = document.querySelector('.logo');
