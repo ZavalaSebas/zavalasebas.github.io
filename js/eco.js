@@ -19,171 +19,122 @@ const clearBtn = document.getElementById('clearThoughts');
 const charCount = document.getElementById('charCount');
 let loading = false;
 
-// Haptic helper seguro
-function haptic(ms = 10) {
+function haptic(ms) {
   try {
-    const ua = navigator.userActivation;
-    if ('vibrate' in navigator && ua && (ua.isActive || ua.hasBeenActive)) navigator.vibrate(ms);
+    var ua = navigator.userActivation;
+    if ('vibrate' in navigator && ua && (ua.isActive || ua.hasBeenActive)) navigator.vibrate(ms || 10);
   } catch (_) {}
 }
 
-// Ripple helper
-function ripple(e, el) {
-  const rect = el.getBoundingClientRect();
-  const span = document.createElement('span');
-  span.className = 'ripple';
-  const size = Math.max(rect.width, rect.height);
-  span.style.width = span.style.height = size + 'px';
-  span.style.left = (e.clientX - rect.left - size / 2) + 'px';
-  span.style.top = (e.clientY - rect.top - size / 2) + 'px';
-  el.appendChild(span);
-  setTimeout(() => span.remove(), 650);
-}
-
-// Scroll vertical -> horizontal cuando corresponda
-function enableWheelHorizontalScroll(el) {
-  el.addEventListener('wheel', (e) => {
-    if (Math.abs(e.deltaX) < Math.abs(e.deltaY)) {
-      el.scrollLeft += e.deltaY * 0.85;
-      e.preventDefault();
-    }
-  }, { passive: false });
-}
-
-// Contador y auto-grow
 function updateCharCount() {
-  const len = input.value.length;
-  charCount.textContent = `${len}/280`;
-  charCount.style.color = len > 260 ? '#ee4444' : 'var(--dim)';
+  var len = input.value.length;
+  charCount.textContent = len + '/280';
+  charCount.style.color = len > 260 ? '#ee4444' : 'rgba(240,192,64,.4)';
 }
+
 function autoGrow() {
   input.style.height = 'auto';
-  input.style.height = Math.min(input.scrollHeight, window.innerHeight * 0.38) + 'px';
+  input.style.height = Math.min(input.scrollHeight, window.innerHeight * 0.3) + 'px';
 }
-input.addEventListener('input', () => { autoGrow(); updateCharCount(); });
 
-// Submit
+input.addEventListener('input', function() { autoGrow(); updateCharCount(); });
+
 saveBtn.addEventListener('click', submitThought);
-input.addEventListener('keydown', (e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); submitThought(); } });
+input.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); submitThought(); }
+});
+
 async function submitThought() {
   haptic(12);
-  const text = input.value.trim();
+  var text = input.value.trim();
   if (!text) return;
   await db.collection('eco_thoughts').add({
-    text,
+    text: text,
     date: new Date().toLocaleDateString('es-CR', { day: '2-digit', month: 'short', year: 'numeric' }),
     createdAt: Date.now()
   });
   input.value = '';
   autoGrow();
   updateCharCount();
-  await renderSavedThoughts();
+  await renderNotes();
 }
 
-// Borrar todo
-clearBtn.addEventListener('click', async () => {
+clearBtn.addEventListener('click', async function() {
   haptic(12);
-  const pass = prompt('Para borrar todo, ingresá la contraseña:');
+  var pass = prompt('Para borrar todo, ingresá la contraseña:');
   if (pass !== 'rock') { alert('Contraseña incorrecta.'); return; }
   if (!confirm('¿Seguro que querés borrar todos los mensajes?')) return;
-  const snapshot = await db.collection('eco_thoughts').get();
-  const batch = db.batch();
-  snapshot.forEach(doc => batch.delete(doc.ref));
+  var snapshot = await db.collection('eco_thoughts').get();
+  var batch = db.batch();
+  snapshot.forEach(function(doc) { batch.delete(doc.ref); });
   await batch.commit();
-  await renderSavedThoughts();
+  await renderNotes();
 });
 
-// Render horizontal por columnas de 3
-async function renderSavedThoughts() {
-  if (loading) return; loading = true;
-  const snapshot = await db.collection('eco_thoughts').orderBy('createdAt', 'desc').get();
-  const thoughts = [];
-  snapshot.forEach(doc => thoughts.push({ id: doc.id, data: doc.data() }));
+async function renderNotes() {
+  if (loading) return;
+  loading = true;
+
+  var snapshot = await db.collection('eco_thoughts').orderBy('createdAt', 'desc').get();
+  var thoughts = [];
+  snapshot.forEach(function(doc) { thoughts.push({ id: doc.id, data: doc.data() }); });
 
   container.innerHTML = '';
-  if (thoughts.length === 0) { container.style.height = '320px'; loading = false; return; }
+  container.classList.add('eco-masonry');
 
-  const isMobile = window.innerWidth < 600;
-  if (isMobile) {
-    container.style.height = 'auto';
-    container.style.position = 'static';
-    container.style.display = 'grid';
-    container.style.gridAutoFlow = 'column';
-    container.style.gridAutoColumns = window.innerWidth < 400 ? '86vw' : '60vw';
-    container.style.gap = '10px';
-    container.style.overflowX = 'auto';
-    container.style.alignItems = 'start';
-    enableWheelHorizontalScroll(container);
-    for (let i = 0; i < thoughts.length; i += 3) {
-      const slice = thoughts.slice(i, i + 3);
-      const column = document.createElement('div');
-      column.style.display = 'flex';
-      column.style.flexDirection = 'column';
-      slice.forEach(thought => column.appendChild(createMobileNote(thought)));
-      container.appendChild(column);
-    }
-    loading = false; return;
+  if (thoughts.length === 0) {
+    container.style.minHeight = '200px';
+    loading = false;
+    return;
   }
 
-  // Desktop
-  container.style.display = 'flex';
-  container.style.alignItems = 'flex-start';
-  container.style.overflowX = 'auto';
-  container.style.overflowY = 'hidden';
-  container.style.gap = '16px';
-  container.style.padding = '12px 2vw';
-  enableWheelHorizontalScroll(container);
-  for (let i = 0; i < thoughts.length; i += 3) {
-    const slice = thoughts.slice(i, i + 3);
-    const column = document.createElement('div');
-    column.style.display = 'grid';
-    column.style.gridAutoRows = 'minmax(100px, auto)';
-    column.style.gap = '14px';
-    column.style.width = 'clamp(220px, 24vw, 320px)';
-    column.style.scrollSnapAlign = 'start';
-    slice.forEach(thought => column.appendChild(createDesktopNote(thought)));
-    container.appendChild(column);
-  }
+  container.style.minHeight = 'auto';
+
+  thoughts.forEach(function(thought) {
+    var note = createNote(thought);
+    container.appendChild(note);
+  });
+
   loading = false;
 }
 
-function createMobileNote(thought) {
-  const note = document.createElement('div');
-  note.classList.add('creative-note', 'mobile-note');
-  const content = document.createElement('span');
-  content.textContent = thought.data.text; note.appendChild(content);
-  const dateEl = document.createElement('time');
-  dateEl.textContent = thought.data.date; dateEl.style.display = 'block'; dateEl.style.textAlign = 'right'; dateEl.style.opacity = '0.7'; note.appendChild(dateEl);
-  note.addEventListener('click', async () => { haptic(8); const pass = prompt('Para borrar esta nota, ingresa contraseña:'); if (pass === 'rock') { await db.collection('eco_thoughts').doc(thought.id).delete(); await renderSavedThoughts(); } });
-  note.addEventListener('pointerdown', e => ripple(e, note));
+function createNote(thought) {
+  var note = document.createElement('div');
+  note.classList.add('creative-note');
+
+  var content = document.createElement('span');
+  content.textContent = thought.data.text;
+  note.appendChild(content);
+
+  var dateEl = document.createElement('time');
+  dateEl.textContent = thought.data.date;
+  note.appendChild(dateEl);
+
+  var rotation = (Math.random() - 0.5) * 3;
+  var tapeRotation = (Math.random() - 0.5) * 8;
+  note.style.setProperty('--note-rotation', rotation + 'deg');
+  note.style.setProperty('--tape-rotation', tapeRotation + 'deg');
+
+  note.addEventListener('click', async function() {
+    haptic(8);
+    var pass = prompt('Para borrar esta nota, ingresa contraseña:');
+    if (pass === 'rock') {
+      await db.collection('eco_thoughts').doc(thought.id).delete();
+      await renderNotes();
+    }
+  });
+
   return note;
 }
 
-function createDesktopNote(thought) {
-  const note = document.createElement('div'); note.classList.add('creative-note');
-  const content = document.createElement('span'); content.textContent = thought.data.text; note.appendChild(content);
-  const dateEl = document.createElement('time'); dateEl.textContent = thought.data.date; dateEl.style.display = 'block'; dateEl.style.textAlign = 'right'; dateEl.style.opacity = '0.7'; note.appendChild(dateEl);
-  const rotation = (Math.random() - 0.5) * 4;
-  const tapeRotation = (Math.random() - 0.5) * 6;
-  note.style.transform = `rotate(${rotation}deg)`;
-  note.style.setProperty('--note-rotation', `${rotation}deg`);
-  note.style.setProperty('--tape-rotation', `${tapeRotation}deg`);
-  note.addEventListener('click', async () => { haptic(8); const pass = prompt('Para borrar esta nota, ingresa contraseña:'); if (pass === 'rock') { await db.collection('eco_thoughts').doc(thought.id).delete(); await renderSavedThoughts(); } });
-  note.addEventListener('pointerdown', e => ripple(e, note));
-  return note;
-}
-
-// Inicializar
-window.addEventListener('resize', () => { renderSavedThoughts(); });
+// Init
 updateCharCount();
 autoGrow();
-renderSavedThoughts();
+renderNotes();
 
-// Evitar zoom doble tap
-let lastTouchTime = 0;
-document.addEventListener('touchend', (e) => {
-  const now = Date.now();
+var lastTouchTime = 0;
+document.addEventListener('touchend', function(e) {
+  var now = Date.now();
   if (now - lastTouchTime <= 350) { e.preventDefault(); }
   lastTouchTime = now;
 }, { passive: false });
-
