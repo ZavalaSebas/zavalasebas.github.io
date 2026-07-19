@@ -112,76 +112,6 @@ a { color: inherit; text-decoration: none; }
   z-index: -3;
 }
 
-/* ── grunge vignette ── */
-.vignette {
-  position: fixed; inset: 0;
-  background: radial-gradient(ellipse 70% 65% at 50% 50%, transparent 40%, rgba(2,5,10,.7) 100%);
-  pointer-events: none; z-index: 50;
-}
-.vignette::before {
-  content: '';
-  position: absolute; inset: 0;
-  background:
-    radial-gradient(ellipse 20% 40% at 0% 50%, rgba(2,5,10,.6), transparent),
-    radial-gradient(ellipse 20% 40% at 100% 50%, rgba(2,5,10,.6), transparent),
-    radial-gradient(ellipse 30% 20% at 50% 0%, rgba(2,5,10,.4), transparent),
-    radial-gradient(ellipse 30% 20% at 50% 100%, rgba(2,5,10,.5), transparent);
-}
-.vignette::after {
-  content: '';
-  position: absolute; inset: -5%;
-  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 128 128' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.12'/%3E%3C/svg%3E");
-  background-size: 128px 128px;
-  mix-blend-mode: multiply;
-  opacity: .3;
-}
-
-/* ── light leaks ── */
-.light-leaks {
-  position: fixed; inset: 0;
-  pointer-events: none; z-index: 51;
-  opacity: .35;
-  animation: leakPulse 8s ease-in-out infinite alternate;
-}
-.light-leaks::before {
-  content: '';
-  position: absolute;
-  width: 45vw; height: 55vh;
-  top: -10%; left: -8%;
-  background: radial-gradient(ellipse at center, rgba(200,60,30,.6), rgba(180,40,20,.2) 50%, transparent 75%);
-  animation: leakDrift1 12s ease-in-out infinite alternate;
-}
-.light-leaks::after {
-  content: '';
-  position: absolute;
-  width: 40vw; height: 50vh;
-  bottom: -10%; right: -5%;
-  background: radial-gradient(ellipse at center, rgba(180,80,20,.5), rgba(120,30,15,.2) 50%, transparent 75%);
-  animation: leakDrift2 10s ease-in-out infinite alternate;
-}
-@keyframes leakPulse {
-  0% { opacity: .25; }
-  100% { opacity: .45; }
-}
-@keyframes leakDrift1 {
-  0% { transform: translate(0, 0) scale(1); }
-  100% { transform: translate(5vw, 3vh) scale(1.1); }
-}
-@keyframes leakDrift2 {
-  0% { transform: translate(0, 0) scale(1); }
-  100% { transform: translate(-4vw, -2vh) scale(1.05); }
-}
-
-/* ── film grain canvas ── */
-#grainCanvas {
-  position: fixed; inset: 0;
-  width: 100%; height: 100%;
-  pointer-events: none; z-index: 52;
-  opacity: .035;
-  mix-blend-mode: overlay;
-  image-rendering: pixelated;
-}
-
 .scanlines {
   position: fixed; inset: 0;
   background: repeating-linear-gradient(
@@ -350,8 +280,7 @@ a { color: inherit; text-decoration: none; }
   display: flex; align-items: center; justify-content: space-between;
   padding: .9rem 1.5rem;
   border-bottom: 1px solid rgba(0,212,255,.15);
-  backdrop-filter: blur(var(--blur)) saturate(140%);
-  background: rgba(8,6,13,.7);
+  background: rgba(8,6,13,.85);
 }
 
 .logo {
@@ -806,7 +735,6 @@ a { color: inherit; text-decoration: none; }
   display: none;
   justify-content: space-around;
   background: rgba(4,14,26,.95);
-  backdrop-filter: blur(16px) saturate(160%);
   border-top: 1px solid rgba(0,212,255,.2);
   box-shadow: 0 -6px 24px -16px rgba(0,0,0,.8);
   z-index: 1000;
