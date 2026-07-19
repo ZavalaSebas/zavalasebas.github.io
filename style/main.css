@@ -20,6 +20,9 @@
   --font-mono: 'Courier New', monospace;
 }
 
+/* ── responsive root — scales ALL rem-based sizes ── */
+html { font-size: clamp(14px, 1.1vw + 6px, 20px); }
+
 /* ── reset ── */
 *,*::before,*::after { margin:0; padding:0; box-sizing:border-box; }
 html { height:100%; -webkit-tap-highlight-color:transparent; }
@@ -35,7 +38,19 @@ body {
 }
 
 body.home {
-  height: auto;
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  overflow: hidden;
+}
+
+body.home main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+  min-height: 0;
 }
 
 a { color: inherit; text-decoration: none; }
@@ -246,7 +261,8 @@ a { color: inherit; text-decoration: none; }
    HEADER
    ═══════════════════════════════════════════ */
 .header {
-  position: sticky; top: 0; z-index: 100;
+  flex-shrink: 0;
+  position: relative; z-index: 100;
   display: flex; align-items: center; justify-content: center;
   padding: .7rem 1.5rem;
   border-bottom: 1px solid rgba(0,212,255,.15);
@@ -255,7 +271,7 @@ a { color: inherit; text-decoration: none; }
 
 .logo {
   font-family: var(--font-display);
-  font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+  font-size: clamp(1.1rem, 2.5vw, 2rem);
   color: var(--gold);
   letter-spacing: .1em;
   text-shadow: 0 0 20px var(--glow-gold);
@@ -275,7 +291,7 @@ a { color: inherit; text-decoration: none; }
 }
 
 .cassette {
-  width: min(85vw, 420px);
+  width: min(85vw, 60vmin);
   aspect-ratio: 1.58 / 1;
   background: linear-gradient(175deg, #0a1e30 0%, #081828 55%, #0c2035 100%);
   border-radius: 14px;
@@ -338,8 +354,8 @@ a { color: inherit; text-decoration: none; }
 }
 
 .reel {
-  width: clamp(36px, 12vw, 56px);
-  height: clamp(36px, 12vw, 56px);
+  width: clamp(36px, 12vw, 8vmin);
+  height: clamp(36px, 12vw, 8vmin);
   border-radius: 50%;
   background: radial-gradient(circle,
     #1a2a40 18%, #0e1a2e 22%,
@@ -405,7 +421,7 @@ a { color: inherit; text-decoration: none; }
 }
 .cassette__title {
   font-family: var(--font-display);
-  font-size: clamp(1rem, 3.5vw, 1.4rem);
+  font-size: clamp(1rem, 3.5vw, 1.8rem);
   letter-spacing: .12em;
   background: linear-gradient(135deg, var(--pink), var(--gold) 50%, var(--peach));
   -webkit-background-clip: text;
@@ -550,7 +566,7 @@ a { color: inherit; text-decoration: none; }
    TRACKLIST
    ═══════════════════════════════════════════ */
 .tracklist {
-  max-width: 800px;
+  max-width: min(90vw, 70vmin);
   margin: 0 auto;
   padding: 0 1rem 1rem;
   opacity: 0;
@@ -610,16 +626,18 @@ a { color: inherit; text-decoration: none; }
 }
 .tracklist__strip-type {
   font-family: var(--font-mono);
-  font-size: .55rem;
+  font-size: .6rem;
   color: var(--dim);
   letter-spacing: .15em;
+  font-weight: 700;
 }
 .tracklist__strip-total {
   font-family: var(--font-mono);
-  font-size: .5rem;
+  font-size: .55rem;
   color: var(--dim);
-  opacity: .6;
+  opacity: .7;
   letter-spacing: .2em;
+  font-weight: 700;
 }
 
 .tracklist__columns {
@@ -700,9 +718,10 @@ a { color: inherit; text-decoration: none; }
 
 .track__dur {
   font-family: var(--font-mono);
-  font-size: .55rem;
+  font-size: .6rem;
   color: var(--dim);
-  opacity: .45;
+  opacity: .55;
+  font-weight: 700;
   letter-spacing: .05em;
   flex-shrink: 0;
   position: relative; z-index: 1;
@@ -742,11 +761,12 @@ a { color: inherit; text-decoration: none; }
    FOOTER
    ═══════════════════════════════════════════ */
 .footer {
+  flex-shrink: 0;
   text-align: center;
-  padding: 1rem 1rem 5rem;
+  padding: .6rem 1rem;
 }
 .footer__divider {
-  width: 60px; height: 2px; margin: 0 auto .7rem;
+  width: 60px; height: 2px; margin: 0 auto .5rem;
   background: linear-gradient(90deg, var(--pink), var(--gold));
   border-radius: 1px;
   opacity: .5;
@@ -756,6 +776,7 @@ a { color: inherit; text-decoration: none; }
   font-size: .8rem;
   color: var(--gold);
   letter-spacing: .1em;
+  min-height: 1.2em;
   animation: footerBlink 2s steps(1) infinite;
 }
 @keyframes footerBlink {
@@ -763,10 +784,12 @@ a { color: inherit; text-decoration: none; }
 }
 .footer__credit {
   font-family: var(--font-mono);
-  font-size: .55rem;
+  font-size: .65rem;
+  font-weight: 700;
   color: var(--dim);
   letter-spacing: .15em;
-  margin-top: .4rem;
+  margin-top: .3rem;
+  opacity: .8;
 }
 
 /* ═══════════════════════════════════════════
@@ -841,8 +864,9 @@ a { color: inherit; text-decoration: none; }
    RESPONSIVE
    ═══════════════════════════════════════════ */
 @media (max-width: 600px) {
+  body.home { height: auto; overflow: visible; }
   .tabbar { display: flex; }
-  .footer { padding-bottom: 4.5rem; }
+  .footer { padding-bottom: 3.5rem; }
   .header { padding: .6rem 1rem; }
   .hero { padding: .6rem 1rem .3rem; }
   .cassette { width: 90vw; padding: 10px; }
@@ -859,6 +883,10 @@ a { color: inherit; text-decoration: none; }
   .track__dur { font-size: .5rem; }
   .cassette__sticker { font-size: .6rem; top: -4px; right: 6px; }
   .cassette__counter { top: 24px; left: 8px; }
+}
+@media (min-width: 1200px) {
+  .cassette { width: min(70vw, 55vmin); }
+  .tracklist { max-width: min(80vw, 65vmin); }
 }
 @media (min-width: 601px) {
   .tabbar { display: none; }
