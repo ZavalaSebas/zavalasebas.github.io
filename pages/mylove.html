@@ -3,62 +3,83 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ROCKSHOW V4 — mylove</title>
-  <meta name="theme-color" content="#0f0a0f" />
+  <title>mylove</title>
+  <meta name="theme-color" content="#040e1a" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Righteous&family=Spectral:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../style/main.css" />
   <link rel="stylesheet" href="../style/mylove.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Righteous&family=Staatliches&family=Spectral:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
-  <div class="scanline-overlay"></div>
-  <div class="grid-overlay"></div>
-  <div class="background-stars"></div>
 
-  <header class="topbar glass">
-  <a href="../index.html" class="back-btn" title="Volver a la principal" aria-label="Volver a la principal">←</a>
-    <h2>ROCKSHOW — mylove</h2>
-    <button id="audioBtn" title="Activar sonido">🎧</button>
+  <div class="scanlines"></div>
+  <div class="water-surface"></div>
+  <div class="underwater">
+    <div class="light-ray"></div>
+    <div class="light-ray"></div>
+    <div class="light-ray"></div>
+  </div>
+  <div class="caustics"></div>
+  <div id="bubbles"></div>
+
+  <header class="header">
+    <a href="../index.html" class="back-btn" aria-label="Volver">&#8592;</a>
+    <h2 class="logo">mylove</h2>
+    <button class="audio-btn" id="audioBtn" aria-label="Activar sonido">&#127925;</button>
   </header>
 
-  <section class="hero">
-    <h1 class="typewriter">Holaa :)</h1>
-    <p>Weird Things Here :p.</p>
-  </section>
+  <main>
+    <section class="hero">
+      <div class="vinilo" id="viniloLau">
+        <div class="vinilo__grooves"></div>
+        <div class="vinilo__label">
+        <span class="vinilo__name">our song</span>
+        </div>
+      </div>
+    </section>
 
-  <section class="menu-grid">
-    <a href="eco.html" class="card">🧠<span>eco</span></a>
-    <a href="epilogo.html" class="card">📜<span>epílogo</span></a>
-  </section>
+    <section class="menu-grid">
+      <a href="eco.html" class="card">
+        <div class="card__vinyl">
+          <div class="card__vinyl-inner"></div>
+        </div>
+        <span class="card__title">eco</span>
+        <span class="card__desc">deja una nota</span>
+      </a>
+    </section>
 
-  <footer>
-    <p id="frase-footer"></p>
-  </footer>
+    <footer class="footer">
+      <div class="footer__divider"></div>
+      <p class="footer__text" id="frase-footer"></p>
+      <p class="footer__credit">made with love by <a href="https://github.com/ZavalaSebas" target="_blank">ZavalaSebas</a></p>
+    </footer>
+  </main>
 
-  <!-- Barra de navegación inferior (móvil) -->
-  <nav class="mobile-tabbar" aria-label="Navegación principal">
-    <span class="tabbar-indicator" aria-hidden="true"></span>
-    <a class="tabbar-item" href="../index.html" aria-label="Inicio" data-tab="home">
-      <span class="tab-ico">🏠</span>
-      <span class="tab-label">Inicio</span>
+  <nav class="tabbar" aria-label="Navegacion principal">
+    <span class="tabbar__indicator" aria-hidden="true"></span>
+    <a class="tabbar__item" href="../index.html" aria-label="Inicio">
+      <span class="tabbar__ico">&#127968;</span>
+      <span class="tabbar__label">Inicio</span>
     </a>
-    <a class="tabbar-item" href="journals.html" aria-label="Journal" data-tab="journal">
-      <span class="tab-ico">📓</span>
-      <span class="tab-label">Journal</span>
+    <a class="tabbar__item active" href="mylove.html" aria-label="Mylove">
+      <span class="tabbar__ico">&#128420;</span>
+      <span class="tabbar__label">mylove</span>
     </a>
-    <a class="tabbar-item" href="tools.html" aria-label="Herramientas" data-tab="tools">
-      <span class="tab-ico">🛠</span>
-      <span class="tab-label">Tools</span>
+    <a class="tabbar__item" href="journals.html" aria-label="Journal">
+      <span class="tabbar__ico">&#128213;</span>
+      <span class="tabbar__label">Journal</span>
     </a>
-    <a class="tabbar-item" href="rockola.html" aria-label="Rockola" data-tab="rockola">
-      <span class="tab-ico">🎵</span>
-      <span class="tab-label">Rockola</span>
+    <a class="tabbar__item" href="tools.html" aria-label="Tools">
+      <span class="tabbar__ico">&#128736;</span>
+      <span class="tabbar__label">Tools</span>
     </a>
   </nav>
 
-  <audio id="audioAmbiente" loop>
-    <source src="../assets/audio/ambient.mp3" type="audio/mpeg">
+  <audio id="bgAudio" loop>
+    <source src="../assets/audio/ambientrock2.mp3" type="audio/mpeg">
   </audio>
 
   <script src="../js/mylove.js"></script>

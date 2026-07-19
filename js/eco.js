@@ -54,7 +54,7 @@ function enableWheelHorizontalScroll(el) {
 function updateCharCount() {
   const len = input.value.length;
   charCount.textContent = `${len}/280`;
-  charCount.style.color = len > 260 ? '#ee4444' : 'var(--text-secondary)';
+  charCount.style.color = len > 260 ? '#ee4444' : 'var(--dim)';
 }
 function autoGrow() {
   input.style.height = 'auto';
@@ -163,7 +163,11 @@ function createDesktopNote(thought) {
   const note = document.createElement('div'); note.classList.add('creative-note');
   const content = document.createElement('span'); content.textContent = thought.data.text; note.appendChild(content);
   const dateEl = document.createElement('time'); dateEl.textContent = thought.data.date; dateEl.style.display = 'block'; dateEl.style.textAlign = 'right'; dateEl.style.opacity = '0.7'; note.appendChild(dateEl);
-  const rotation = (Math.random() - 0.5) * 4; note.style.transform = `rotate(${rotation}deg)`; note.style.setProperty('--note-rotation', `${rotation}deg`);
+  const rotation = (Math.random() - 0.5) * 4;
+  const tapeRotation = (Math.random() - 0.5) * 6;
+  note.style.transform = `rotate(${rotation}deg)`;
+  note.style.setProperty('--note-rotation', `${rotation}deg`);
+  note.style.setProperty('--tape-rotation', `${tapeRotation}deg`);
   note.addEventListener('click', async () => { haptic(8); const pass = prompt('Para borrar esta nota, ingresa contraseña:'); if (pass === 'rock') { await db.collection('eco_thoughts').doc(thought.id).delete(); await renderSavedThoughts(); } });
   note.addEventListener('pointerdown', e => ripple(e, note));
   return note;
@@ -174,33 +178,6 @@ window.addEventListener('resize', () => { renderSavedThoughts(); });
 updateCharCount();
 autoGrow();
 renderSavedThoughts();
-
-// Tabbar activo + indicador
-document.addEventListener('DOMContentLoaded', () => {
-  const tabs = document.querySelectorAll('.mobile-tabbar .tabbar-item');
-  const indicator = document.querySelector('.tabbar-indicator');
-  const currentFile = location.pathname.split('/').pop().toLowerCase();
-  tabs.forEach(tab => {
-    const href = tab.getAttribute('href');
-    if (!href) return; const file = href.split('/').pop().toLowerCase();
-    if (file === currentFile) tab.classList.add('active');
-    tab.addEventListener('pointerdown', e => ripple(e, tab));
-    tab.addEventListener('click', () => haptic(12));
-    tab.addEventListener('touchend', () => haptic(12), { passive: true });
-  });
-  requestAnimationFrame(() => moveIndicator());
-  function moveIndicator(target) {
-    const active = target || document.querySelector('.mobile-tabbar .tabbar-item.active') || tabs[0];
-    if (!active || !indicator) return;
-    const rect = active.getBoundingClientRect();
-    const parentRect = active.parentElement.getBoundingClientRect();
-    const width = rect.width * 0.55;
-    const x = rect.left - parentRect.left + (rect.width - width) / 2;
-    indicator.style.width = width + 'px';
-    indicator.style.transform = `translateX(${x}px)`;
-  }
-  tabs.forEach(t => t.addEventListener('click', e => moveIndicator(e.currentTarget)));
-});
 
 // Evitar zoom doble tap
 let lastTouchTime = 0;
