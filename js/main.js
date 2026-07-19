@@ -129,48 +129,79 @@
     ctx.putImageData(imgData, 0, 0);
   }
 
-  // ── Floating particles ──
+  // ── Floating particles (pooled) ──
   var particleContainer = document.getElementById('particles');
   var symbols = ['\u266A', '\u266B', '\u2605', '\u2726', '\u2661', '\u25C6', '\u2736', '\u2606'];
+  var particleColors = ['var(--pink)', 'var(--gold)', 'var(--mint)', 'var(--peach)'];
   var maxParticles = 6;
+  var particles = [];
 
-  function spawnParticle() {
-    if (particleContainer.children.length >= maxParticles) return;
+  for (var i = 0; i < maxParticles; i++) {
     var p = document.createElement('div');
     p.className = 'particle';
+    p.textContent = symbols[i % symbols.length];
+    p.style.opacity = '0';
+    particleContainer.appendChild(p);
+    particles.push(p);
+  }
+
+  function activateParticle(idx) {
+    var p = particles[idx];
     p.textContent = symbols[Math.floor(Math.random() * symbols.length)];
     p.style.left = Math.random() * 100 + '%';
     p.style.bottom = '-20px';
     var dur = 10 + Math.random() * 12;
+    p.style.animation = 'none';
+    p.offsetHeight;
     p.style.animationDuration = dur + 's';
     p.style.fontSize = (.7 + Math.random() * .8) + 'rem';
-    p.style.color = ['var(--pink)', 'var(--gold)', 'var(--mint)', 'var(--peach)'][Math.floor(Math.random() * 4)];
-    particleContainer.appendChild(p);
-    setTimeout(function () { if (p.parentNode) p.remove(); }, dur * 1000);
+    p.style.color = particleColors[Math.floor(Math.random() * 4)];
+    p.style.animation = '';
   }
 
-  setInterval(function () { if (Math.random() < .35) spawnParticle(); }, 4500);
+  var particleIdx = 0;
+  setInterval(function () {
+    if (Math.random() < .35) {
+      activateParticle(particleIdx % maxParticles);
+      particleIdx++;
+    }
+  }, 4500);
 
-  // ── Underwater bubbles ──
+  // ── Underwater bubbles (pooled) ──
   var bubbleContainer = document.getElementById('bubbles');
+  var maxBubbles = 8;
+  var bubbles = [];
 
-  function spawnBubble() {
-    if (!bubbleContainer) return;
-    var b = document.createElement('div');
-    b.className = 'bubble';
+  if (bubbleContainer) {
+    for (var j = 0; j < maxBubbles; j++) {
+      var b = document.createElement('div');
+      b.className = 'bubble';
+      b.style.opacity = '0';
+      bubbleContainer.appendChild(b);
+      bubbles.push(b);
+    }
+  }
+
+  var bubbleIdx = 0;
+  function activateBubble(idx) {
+    var b = bubbles[idx];
     var size = 4 + Math.random() * 16;
     b.style.width = size + 'px';
     b.style.height = size + 'px';
     b.style.left = Math.random() * 100 + '%';
     b.style.setProperty('--drift', (Math.random() * 60 - 30) + 'px');
     var dur = 6 + Math.random() * 10;
+    b.style.animation = 'none';
+    b.offsetHeight;
     b.style.animationDuration = dur + 's';
-    bubbleContainer.appendChild(b);
-    setTimeout(function () { if (b.parentNode) b.remove(); }, dur * 1000);
+    b.style.animation = '';
   }
 
   setInterval(function () {
-    if (Math.random() < .4) spawnBubble();
+    if (Math.random() < .4 && bubbleContainer) {
+      activateBubble(bubbleIdx % maxBubbles);
+      bubbleIdx++;
+    }
   }, 3000);
 
   // ── Custom cursor (disabled for performance) ──
@@ -218,10 +249,13 @@
 
   function glitchLogo() {
     if (!logo) return;
-    logo.textContent = logoBase.split('').map(function (c) {
+    var result = '';
+    for (var i = 0; i < logoBase.length; i++) {
+      var c = logoBase[i];
       var opts = glitchMap[c.toUpperCase()];
-      return opts ? opts[Math.floor(Math.random() * opts.length)] : c;
-    }).join('');
+      result += opts ? opts[Math.floor(Math.random() * opts.length)] : c;
+    }
+    if (result !== logo.textContent) logo.textContent = result;
   }
   setInterval(glitchLogo, 3000);
 

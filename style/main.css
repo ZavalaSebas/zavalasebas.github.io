@@ -110,6 +110,7 @@ a { color: inherit; text-decoration: none; }
     radial-gradient(ellipse 500px 350px at 25% 75%, rgba(91,184,255,.05), transparent 45%),
     linear-gradient(180deg, #0a1e35 0%, #06152a 25%, #040e1a 55%, #030a12 100%);
   z-index: -3;
+  contain: layout style paint;
 }
 
 .scanlines {
@@ -119,6 +120,7 @@ a { color: inherit; text-decoration: none; }
     rgba(0,0,0,.04) 2px, rgba(0,0,0,.04) 4px
   );
   pointer-events: none; z-index: -1;
+  contain: layout style paint;
 }
 
 /* ── water surface: bright top + wave edge ── */
@@ -135,6 +137,7 @@ a { color: inherit; text-decoration: none; }
   );
   pointer-events: none;
   z-index: -1;
+  contain: layout style paint;
 }
 .water-surface::before {
   content: '';
@@ -167,6 +170,7 @@ a { color: inherit; text-decoration: none; }
   position: fixed; inset: 0;
   pointer-events: none; z-index: -1;
   overflow: hidden;
+  contain: layout style paint;
 }
 .light-ray {
   position: absolute;
@@ -181,7 +185,6 @@ a { color: inherit; text-decoration: none; }
   );
   transform-origin: top center;
   animation: rayDrift 8s ease-in-out infinite;
-  will-change: transform, opacity;
   opacity: .6;
 }
 .light-ray:nth-child(1) { left: 8%; animation-delay: 0s; animation-duration: 9s; }
@@ -201,6 +204,7 @@ a { color: inherit; text-decoration: none; }
 .caustics {
   position: fixed; inset: 0;
   pointer-events: none; z-index: -1;
+  contain: layout style paint;
   background:
     radial-gradient(ellipse 200px 200px at 30% 40%, rgba(0,212,255,.04), transparent),
     radial-gradient(ellipse 150px 250px at 70% 30%, rgba(224,247,255,.03), transparent),
@@ -212,10 +216,10 @@ a { color: inherit; text-decoration: none; }
   opacity: .5;
 }
 @keyframes causticShift {
-  0% { background-position: 0% 0%; }
-  33% { background-position: 100% 50%; }
-  66% { background-position: 50% 100%; }
-  100% { background-position: 0% 0%; }
+  0% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(-4%, -3%) scale(1.02); }
+  66% { transform: translate(3%, -4%) scale(.98); }
+  100% { transform: translate(0, 0) scale(1); }
 }
 
 /* ── underwater: bubbles ── */
@@ -223,6 +227,7 @@ a { color: inherit; text-decoration: none; }
   position: fixed; inset: 0;
   pointer-events: none; z-index: -1;
   overflow: hidden;
+  contain: layout style paint;
 }
 .bubble {
   position: absolute;
@@ -256,6 +261,7 @@ a { color: inherit; text-decoration: none; }
   position: fixed; inset: 0;
   pointer-events: none; z-index: -1;
   overflow: hidden;
+  contain: layout style paint;
 }
 .particle {
   position: absolute;
@@ -381,7 +387,6 @@ a { color: inherit; text-decoration: none; }
     0 0 80px -20px rgba(0,212,255,.08),
     inset 0 1px 0 rgba(255,255,255,.03);
   transition: transform .4s ease, box-shadow .4s ease;
-  will-change: transform;
   animation: cassetteFloat 6s ease-in-out infinite;
   opacity: 0; animation: cassetteIn 1s ease forwards, cassetteFloat 6s 1s ease-in-out infinite;
 }
@@ -598,7 +603,7 @@ a { color: inherit; text-decoration: none; }
   padding: .85rem 1rem;
   border-radius: 10px;
   border: 1px solid transparent;
-  transition: all .25s ease;
+  transition: border-color .25s ease, background .25s ease;
   cursor: pointer;
   position: relative;
   overflow: hidden;
