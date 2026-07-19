@@ -81,34 +81,52 @@
 
   // ── Audio ──
   var audio = document.getElementById('bgAudio');
-  var audioControl = document.getElementById('audioControl');
-  var vinyl = document.getElementById('vinyl');
-  var vuMeter = document.getElementById('vuMeter');
-  var audioHint = document.getElementById('audioHint');
+  var cassetteEl = document.getElementById('cassette');
+  var btnPlay = document.getElementById('btnPlay');
+  var btnPause = document.getElementById('btnPause');
+  var btnStop = document.getElementById('btnStop');
   var audioOn = false;
+
+  function setActiveBtn(btn) {
+    btnPlay.classList.remove('active');
+    btnPause.classList.remove('active');
+    btnStop.classList.remove('active');
+    if (btn) btn.classList.add('active');
+  }
 
   function setAudioState(on) {
     audioOn = on;
     if (on) {
-      vinyl.classList.remove('off');
-      vuMeter.classList.remove('off');
-      if (audioHint) audioHint.textContent = 'sonando...';
+      cassetteEl.classList.add('playing');
+      setActiveBtn(btnPlay);
     } else {
-      vinyl.classList.add('off');
-      vuMeter.classList.add('off');
-      if (audioHint) audioHint.textContent = 'click aqui';
+      cassetteEl.classList.remove('playing');
     }
   }
 
-  if (audioControl) {
-    audioControl.addEventListener('click', function () {
-      if (audioOn) {
-        audio.pause();
-        setAudioState(false);
-      } else {
+  if (btnPlay) {
+    btnPlay.addEventListener('click', function () {
+      if (!audioOn) {
         audio.muted = false;
         audio.play().then(function () { setAudioState(true); }).catch(function () {});
       }
+    });
+  }
+  if (btnPause) {
+    btnPause.addEventListener('click', function () {
+      if (audioOn) {
+        audio.pause();
+        setAudioState(false);
+        setActiveBtn(btnPause);
+      }
+    });
+  }
+  if (btnStop) {
+    btnStop.addEventListener('click', function () {
+      audio.pause();
+      audio.currentTime = 0;
+      setAudioState(false);
+      setActiveBtn(btnStop);
     });
   }
 
@@ -127,6 +145,27 @@
       if (Math.random() < 0.008) buf[i] = 0xffffffff;
     }
     ctx.putImageData(imgData, 0, 0);
+  }
+
+  // ── Tape counter (rAF-throttled scroll) ──
+  var counterDigits = document.querySelectorAll('.cassette__counter-digit');
+  if (counterDigits.length) {
+    var ticking = false;
+    function updateCounter() {
+      var scrollH = document.documentElement.scrollHeight - window.innerHeight;
+      var pct = scrollH > 0 ? Math.min(window.scrollY / scrollH, 1) : 0;
+      var num = Math.floor(pct * 999);
+      var str = ('00' + num).slice(-3);
+      for (var d = 0; d < 3; d++) {
+        if (counterDigits[d].textContent !== str[d]) {
+          counterDigits[d].textContent = str[d];
+        }
+      }
+      ticking = false;
+    }
+    window.addEventListener('scroll', function () {
+      if (!ticking) { ticking = true; requestAnimationFrame(updateCounter); }
+    }, { passive: true });
   }
 
   // ── Floating particles (pooled) ──
@@ -203,40 +242,6 @@
       bubbleIdx++;
     }
   }, 3000);
-
-  // ── Custom cursor (disabled for performance) ──
-  /*
-  var cursorEl = document.getElementById('cursor');
-  if (cursorEl && window.matchMedia('(pointer: fine)').matches) {
-    var trailThrottle = 0;
-
-    document.addEventListener('mousemove', function (e) {
-      cursorEl.style.transform = 'translate(' + e.clientX + 'px, ' + e.clientY + 'px)';
-
-      var now = Date.now();
-      if (now - trailThrottle > 80) {
-        trailThrottle = now;
-        var dot = document.createElement('div');
-        dot.className = 'cursor-dot';
-        dot.style.left = e.clientX + 'px';
-        dot.style.top = e.clientY + 'px';
-        document.body.appendChild(dot);
-        setTimeout(function () { if (dot.parentNode) dot.remove(); }, 400);
-      }
-    });
-
-    document.addEventListener('mousedown', function () { cursorEl.classList.add('click'); });
-    document.addEventListener('mouseup', function () { cursorEl.classList.remove('click'); });
-
-    var hoverEls = 'a, .track, .audio-ctrl, .tabbar__item, button';
-    document.addEventListener('mouseover', function (e) {
-      if (e.target.closest(hoverEls)) cursorEl.classList.add('hover');
-    });
-    document.addEventListener('mouseout', function (e) {
-      if (e.target.closest(hoverEls)) cursorEl.classList.remove('hover');
-    });
-  }
-  */
 
   // ── Logo glitch ──
   var logo = document.querySelector('.logo');

@@ -10,7 +10,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <link rel="icon" type="image/x-icon" href="favicon.ico" />
   <link rel="stylesheet" href="style/main.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Righteous&family=Spectral:wght@400;500;600&family=Staatliches&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600&family=Righteous&family=Spectral:wght@400;500;600&family=Staatliches&display=swap" rel="stylesheet">
   <meta name="google-site-verification" content="ozmeVk-pXk9G0clVn3MJPAX5xn1plmvLhtApl4m3iAM" />
 </head>
 <body class="home">
@@ -37,24 +37,17 @@
 
   <header class="header">
     <h2 class="logo">ROCKSHOW</h2>
-    <div id="audioControl" class="audio-ctrl">
-      <div class="audio-ctrl__hint">
-        <span id="audioHint">click aqui</span>
-        <span class="arrow">&#10132;</span>
-      </div>
-      <div class="vu-meter" id="vuMeter">
-        <span></span><span></span><span></span><span></span><span></span>
-        <span></span><span></span><span></span>
-      </div>
-      <div class="vinyl" id="vinyl">
-        <div class="vinyl__label"></div>
-      </div>
-    </div>
   </header>
 
   <main>
     <section class="hero">
-      <div class="cassette">
+      <div class="cassette" id="cassette">
+        <div class="cassette__sticker">sebas vol.5</div>
+        <div class="cassette__counter" id="tapeCounter">
+          <span class="cassette__counter-digit">0</span>
+          <span class="cassette__counter-digit">0</span>
+          <span class="cassette__counter-digit">0</span>
+        </div>
         <div class="cassette__screw cassette__screw--tl"></div>
         <div class="cassette__screw cassette__screw--tr"></div>
         <div class="cassette__screw cassette__screw--bl"></div>
@@ -83,6 +76,11 @@
           <p class="cassette__subtitle">V5 &middot; side A &middot; 2026</p>
           <div class="cassette__label-lines">
             <span></span><span></span><span></span>
+          </div>
+          <div class="cassette__controls">
+            <button class="cassette__btn" id="btnPlay" aria-label="Play">&#9654;</button>
+            <button class="cassette__btn" id="btnPause" aria-label="Pause">&#10074;&#10074;</button>
+            <button class="cassette__btn" id="btnStop" aria-label="Stop">&#9632;</button>
           </div>
         </div>
 
