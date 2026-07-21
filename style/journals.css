@@ -53,6 +53,9 @@ a { color: inherit; text-decoration: none; }
    ═══════════════════════════════════════════ */
 .hero {
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   padding: clamp(1.5rem, 4vh, 3rem) 1.25rem clamp(.5rem, 1.5vh, 1rem);
 }
 
