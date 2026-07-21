@@ -3,97 +3,137 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ROCKSHOW V4 — Journals</title>
+  <title>journals</title>
+  <meta name="theme-color" content="#040e1a" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Righteous&family=Spectral:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style/main.css" />
   <link rel="stylesheet" href="../style/journals.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Righteous&family=Staatliches&family=Spectral:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
-  <div class="scanline-overlay"></div>
-  <div class="grid-overlay"></div>
-  <div class="stars"></div>
-  <div class="nebula"></div>
 
-  <header class="journals-topbar">
-    <h2 class="title">📓 Journals</h2>
-    <a href="../index.html" class="back-btn">← volver</a>
+  <div class="scanlines"></div>
+  <div class="water-surface"></div>
+  <div class="underwater">
+    <div class="light-ray"></div>
+    <div class="light-ray"></div>
+    <div class="light-ray"></div>
+  </div>
+  <div class="caustics"></div>
+  <div id="bubbles"></div>
+
+  <header class="header">
+    <a href="../index.html" class="back-btn" aria-label="Volver">&#8592;</a>
+    <h2 class="logo">journals</h2>
+    <span></span>
   </header>
 
-  <section class="intro">
-    <h1>Journals</h1>
-    <p>Recuerdos con las personas más importantes ✨</p>
-  </section>
+  <main>
+    <section class="hero">
+      <h1 class="hero__title">journals</h1>
+      <p class="hero__sub">recuerdos con las personas mas importantes</p>
+    </section>
 
-  <section class="journal-grid">
-    <a href="jimejournal.html" class="journal-card">
-      <div class="icon">🌌</div>
-      <span>JS</span>
-    </a>
+    <section class="journal-grid">
+      <a href="jimejournal.html" class="journal-card" style="--card-hue: 190">
+        <div class="journal-card__book">
+          <div class="journal-card__spine"></div>
+          <div class="journal-card__page">
+            <span class="journal-card__name">jime</span>
+            <span class="journal-card__tag">JS</span>
+          </div>
+        </div>
+      </a>
 
-  <a href="pulguijournal.html" class="journal-card">
-      <div class="icon">🌿</div>
-      <span>P</span>
-    </a>
+      <a href="pulguijournal.html" class="journal-card" style="--card-hue: 130">
+        <div class="journal-card__book">
+          <div class="journal-card__spine"></div>
+          <div class="journal-card__page">
+            <span class="journal-card__name">pulgui</span>
+            <span class="journal-card__tag">P</span>
+          </div>
+        </div>
+      </a>
 
-    <a href="laujournal.html" class="journal-card">
-      <div class="icon">✨</div>
-      <span>L</span>
-    </a>
+      <a href="laujournal.html" class="journal-card" style="--card-hue: 340">
+        <div class="journal-card__book">
+          <div class="journal-card__spine"></div>
+          <div class="journal-card__page">
+            <span class="journal-card__name">lau</span>
+            <span class="journal-card__tag">L</span>
+          </div>
+        </div>
+      </a>
+    </section>
 
-    <a href="#" class="journal-card">
-      <div class="icon">🌊</div>
-      <span>Under Construction</span>
-    </a>
-  </section>
+    <footer class="footer">
+      <div class="footer__divider"></div>
+      <p class="footer__text" id="frase-footer"></p>
+      <p class="footer__credit">made with love by <a href="https://github.com/ZavalaSebas" target="_blank">ZavalaSebas</a></p>
+    </footer>
+  </main>
 
-  <footer>
-    <p id="frase-footer"></p>
-  </footer>
-  <!-- Barra de navegación inferior (móvil) -->
-  <nav class="journals-tabbar" aria-label="Navegación principal">
-    <span class="tabbar-indicator" aria-hidden="true"></span>
-    <a class="tabbar-item" href="../index.html" aria-label="Inicio" data-tab="home">
-      <span class="tab-ico">🏠</span>
-      <span class="tab-label">Inicio</span>
+  <nav class="tabbar" aria-label="Navegacion principal">
+    <span class="tabbar__indicator" aria-hidden="true"></span>
+    <a class="tabbar__item" href="../index.html" aria-label="Inicio">
+      <span class="tabbar__ico">&#127968;</span>
+      <span class="tabbar__label">Inicio</span>
     </a>
-    <a class="tabbar-item" href="journals.html" aria-label="Journals" data-tab="journal">
-      <span class="tab-ico">📓</span>
-      <span class="tab-label">Journals</span>
+    <a class="tabbar__item active" href="journals.html" aria-label="Journals">
+      <span class="tabbar__ico">&#128213;</span>
+      <span class="tabbar__label">Journals</span>
     </a>
-    <a class="tabbar-item" href="tools.html" aria-label="Herramientas" data-tab="tools">
-      <span class="tab-ico">🛠</span>
-      <span class="tab-label">Tools</span>
+    <a class="tabbar__item" href="tools.html" aria-label="Tools">
+      <span class="tabbar__ico">&#128736;</span>
+      <span class="tabbar__label">Tools</span>
     </a>
-    <a class="tabbar-item" href="rockola.html" aria-label="Rockola" data-tab="rockola">
-      <span class="tab-ico">🎵</span>
-      <span class="tab-label">Rockola</span>
+    <a class="tabbar__item" href="rockola.html" aria-label="Rockola">
+      <span class="tabbar__ico">&#127925;</span>
+      <span class="tabbar__label">Rockola</span>
     </a>
   </nav>
-  <script>
-    const frases = [
-      "recuerdos a color // vibra eterna",
-      "cada journal es un vinilo",
-      "palabras pintadas // eco dorado",
-      "historias retro // memorias vintage",
-      "smile // write // remember",
-      "tinta rosa sobre papel grunge"
-    ];
-    document.getElementById("frase-footer").textContent =
-      frases[Math.floor(Math.random() * frases.length)];
 
-    (function(){
-      const tabs=document.querySelectorAll('.journals-tabbar .tabbar-item');
-      const indicator=document.querySelector('.journals-tabbar .tabbar-indicator');
-      const currentFile=location.pathname.split('/').pop().toLowerCase();
-      tabs.forEach(tab=>{ const href=tab.getAttribute('href'); if(!href) return; const file=href.split('/').pop().toLowerCase(); if(file===currentFile) tab.classList.add('active'); });
-      function moveIndicator(target){
-        const active=target||document.querySelector('.journals-tabbar .tabbar-item.active')||tabs[0]; if(!active||!indicator) return;
-        const width=active.offsetWidth*0.55; const x=active.offsetLeft+(active.offsetWidth-width)/2;
-        indicator.style.width=width+'px'; indicator.style.transform='translateX('+x+'px)';
+  <script>
+    var frases = [
+      "those memories will never fade",
+      "never gonna give you up... those memories",
+      "to infinity and beyond... the past",
+      "i am your memories",
+      "may the memories be with you",
+      "gotta remember em all",
+      "its dangerous to forget alone",
+      "remember me before the cold",
+      "theres no place like home... in memory",
+      "after all tomorrow is another memory"
+    ];
+    var footerEl = document.getElementById("frase-footer");
+    if (footerEl) footerEl.textContent = frases[Math.floor(Math.random() * frases.length)];
+
+    document.addEventListener('DOMContentLoaded', function() {
+      var tabs = document.querySelectorAll('.tabbar .tabbar__item');
+      var indicator = document.querySelector('.tabbar__indicator');
+      tabs.forEach(function(tab) {
+        var href = tab.getAttribute('href');
+        if (!href) return;
+        var file = href.split('/').pop().toLowerCase();
+        var currentFile = location.pathname.split('/').pop().toLowerCase();
+        if (file === currentFile) tab.classList.add('active');
+      });
+      if (indicator) {
+        var active = document.querySelector('.tabbar .tabbar__item.active') || tabs[0];
+        if (active) {
+          var rect = active.getBoundingClientRect();
+          var parentRect = active.parentElement.getBoundingClientRect();
+          var width = rect.width * 0.55;
+          var x = rect.left - parentRect.left + (rect.width - width) / 2;
+          indicator.style.width = width + 'px';
+          indicator.style.transform = 'translateX(' + x + 'px)';
+        }
       }
-      requestAnimationFrame(()=>moveIndicator());
-      tabs.forEach(t=>t.addEventListener('click', e=>moveIndicator(e.currentTarget)));
-      window.addEventListener('resize', ()=>moveIndicator());
-    })();
+    });
   </script>
 </body>
 </html>
